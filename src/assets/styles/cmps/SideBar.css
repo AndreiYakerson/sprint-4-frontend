@@ -1,0 +1,10 @@
+.side-bar{
+    display: flex;
+    place-content:center;
+
+    padding: .5em;
+    
+    width: 300px;
+
+    border: 2px solid black;
+}

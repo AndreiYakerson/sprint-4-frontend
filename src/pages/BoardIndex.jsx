@@ -8,6 +8,7 @@ import { boardService } from '../services/board'
 
 import { BoardList } from '../cmps/BoardList'
 import { BoardFilter } from '../cmps/BoardFilter'
+import { SideBar } from '../cmps/SideBar'
 
 
 export function BoardIndex() {
@@ -59,10 +60,13 @@ export function BoardIndex() {
                 <button onClick={onAddBoard}>Add a Board</button>
             </header>
             <BoardFilter filterBy={filterBy} setFilterBy={setFilterBy} />
-            <BoardList
-                boards={boards}
-                onRemoveBoard={onRemoveBoard}
-                onUpdateBoard={onUpdateBoard} />
+            <section className="main-section-layout">
+                <SideBar/>
+                <BoardList
+                    boards={boards}
+                    onRemoveBoard={onRemoveBoard}
+                    onUpdateBoard={onUpdateBoard} />
+            </section>
         </section>
     )
 }
