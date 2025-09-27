@@ -1,6 +1,9 @@
 import { boardService } from '../../services/board'
 import { store } from '../store'
-import { ADD_BOARD, REMOVE_BOARD, SET_BOARDS, SET_BOARD, UPDATE_BOARD, ADD_BOARD_MSG } from '../reducers/board.reducer'
+import { ADD_BOARD, REMOVE_BOARD, SET_BOARDS, SET_BOARD, UPDATE_BOARD, ADD_BOARD_MSG, SET_SIDE_BAR_OPEN } from '../reducers/board.reducer'
+
+
+// LIST
 
 export async function loadBoards(filterBy) {
     try {
@@ -22,16 +25,7 @@ export async function loadBoard(boardId) {
     }
 }
 
-
-export async function removeBoard(boardId) {
-    try {
-        await boardService.remove(boardId)
-        store.dispatch(getCmdRemoveBoard(boardId))
-    } catch (err) {
-        console.log('Cannot remove board', err)
-        throw err
-    }
-}
+// CREATE
 
 export async function addBoard(board) {
     try {
@@ -43,6 +37,7 @@ export async function addBoard(board) {
         throw err
     }
 }
+// UPDATE
 
 export async function updateBoard(board) {
     try {
@@ -55,8 +50,39 @@ export async function updateBoard(board) {
     }
 }
 
+export async function onIsSideBarOpen(value) {
+    console.log("🚀 ~ isSideBarOpen ~ value:", value)
+    try {
+        store.dispatch(setIsSideBarOpen(value))
+        return console.log(`Side Bar is-open set to ${value}`)
+    } catch (err) {
+        console.log('Cannot Close Side Bar', err)
+        throw err
+    }
+}
+
+// DELETE
+
+export async function removeBoard(boardId) {
+    try {
+        await boardService.remove(boardId)
+        store.dispatch(getCmdRemoveBoard(boardId))
+    } catch (err) {
+        console.log('Cannot remove board', err)
+        throw err
+    }
+}
+
+
+
 
 // Command Creators:
+function setIsSideBarOpen(value) {
+    return {
+        type: SET_SIDE_BAR_OPEN,
+        value
+    }
+}
 function getCmdSetBoards(boards) {
     return {
         type: SET_BOARDS,

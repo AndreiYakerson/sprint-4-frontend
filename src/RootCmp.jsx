@@ -18,6 +18,7 @@ import { SideBar } from './cmps/SideBar.jsx'
 
 
 export function RootCmp() {
+
     return (
         <div className="main-container">
             <AppHeader />

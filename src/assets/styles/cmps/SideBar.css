@@ -6,6 +6,26 @@
 
     width: 300px;
     min-height: 80vh;
+    transition: width 0.4s ease;
+
 
     border: 2px solid black;
+
+    & .close-btn {
+        display: flex;
+        align-items: center;
+        background-color: gray;
+        height: 30px;
+        padding: 1em;
+        border-radius: 15px;
+    }
+
+    &.false {
+        width: 0;
+
+        & .side-bar-content {
+            display: none;
+        }
+    }
+
 }

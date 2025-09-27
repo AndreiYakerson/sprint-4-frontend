@@ -11,7 +11,7 @@ import { BoardFilter } from '../cmps/BoardFilter'
 import { SideBar } from '../cmps/SideBar'
 
 
-export function BoardIndex() {
+export function BoardIndex({setIsSideBarOpen}) {
 
     const [filterBy, setFilterBy] = useState(boardService.getDefaultFilter())
     const boards = useSelector(storeState => storeState.boardModule.boards)
@@ -60,12 +60,10 @@ export function BoardIndex() {
                 <button onClick={onAddBoard}>Add a Board</button>
             </header>
             <BoardFilter filterBy={filterBy} setFilterBy={setFilterBy} />
-            {/* <section className="main-section-layout"> */}
                 <BoardList
                     boards={boards}
                     onRemoveBoard={onRemoveBoard}
                     onUpdateBoard={onUpdateBoard} />
-            {/* </section> */}
         </section>
     )
 }

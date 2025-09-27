@@ -1,5 +1,6 @@
 export const SET_BOARDS = 'SET_BOARDS'
 export const SET_BOARD = 'SET_BOARD'
+export const SET_SIDE_BAR_OPEN = 'SET_SIDE_BAR_OPEN'
 export const REMOVE_BOARD = 'REMOVE_BOARD'
 export const ADD_BOARD = 'ADD_BOARD'
 export const UPDATE_BOARD = 'UPDATE_BOARD'
@@ -7,7 +8,8 @@ export const ADD_BOARD_MSG = 'ADD_BOARD_MSG'
 
 const initialState = {
     boards: [],
-    board: null
+    board: null,
+    isSideBarOpen: true,
 }
 
 export function boardReducer(state = initialState, action) {
@@ -19,6 +21,9 @@ export function boardReducer(state = initialState, action) {
             break
         case SET_BOARD:
             newState = { ...state, board: action.board }
+            break
+        case SET_SIDE_BAR_OPEN:
+            newState = { ...state, isSideBarOpen: action.value }
             break
         case REMOVE_BOARD:
             const lastRemovedBoard = state.boards.find(board => board._id === action.boardId)
