@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux'
 
 import { showSuccessMsg, showErrorMsg } from '../services/event-bus.service'
 import { loadBoard } from '../store/actions/board.actions'
+import { GroupList } from '../cmps/GroupList'
 
 
 export function BoardDetails() {
@@ -18,13 +19,7 @@ export function BoardDetails() {
 
   return (
     <section className="board-details">
-      <h1>Board</h1>
-      {board &&
-        <div>
-          <h3>{board.title}</h3>
-          <pre> {JSON.stringify(board, null, 2)} </pre>
-        </div>
-      }
+      <GroupList groups={board.groups} />
     </section>
   )
 }
