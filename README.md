@@ -40,11 +40,10 @@ src/
 - `UserMsg` - Toast notifications
 - `BoardList` - Grid display of boards with actions
 - `BoardFilter` - Search and filter interface
-- `ReviewList` - User reviews with CRUD
+
 
 ### Pages
 - `BoardIndex` - Main board management
-- `ReviewIndex` - Review system
 - `UserDetails` - User profile
 - `AboutUs` - Static content with nested routes
 - `Chat` - Real-time messaging
@@ -54,7 +53,6 @@ src/
 Using Redux with the following modules:
 - `boardModule` - Board CRUD operations
 - `userModule` - Authentication and user data
-- `reviewModule` - Review system
 - `systemModule` - App-wide settings
 
 ### Example Usage
