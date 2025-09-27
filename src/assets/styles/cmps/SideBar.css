@@ -1,10 +1,11 @@
-.side-bar{
+.side-bar {
     display: flex;
-    place-content:center;
+    place-content: center;
 
     padding: .5em;
-    
+
     width: 300px;
+    min-height: 80vh;
 
     border: 2px solid black;
 }

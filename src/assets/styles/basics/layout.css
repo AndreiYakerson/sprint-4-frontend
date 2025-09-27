@@ -59,11 +59,9 @@
     }
 }
 
-.main-section-layout {
+.main-content-layout{
     display: grid;
     grid-auto-flow: column;
-    
-    padding: .5em;
+    grid-template-columns: max-content;
 
-    min-height: 70vh;
 }

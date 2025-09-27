@@ -60,13 +60,12 @@ export function BoardIndex() {
                 <button onClick={onAddBoard}>Add a Board</button>
             </header>
             <BoardFilter filterBy={filterBy} setFilterBy={setFilterBy} />
-            <section className="main-section-layout">
-                <SideBar/>
+            {/* <section className="main-section-layout"> */}
                 <BoardList
                     boards={boards}
                     onRemoveBoard={onRemoveBoard}
                     onUpdateBoard={onUpdateBoard} />
-            </section>
+            {/* </section> */}
         </section>
     )
 }
