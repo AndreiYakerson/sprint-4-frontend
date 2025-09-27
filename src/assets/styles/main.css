@@ -19,6 +19,9 @@
 @import "cmps/UserDetails";
 @import "cmps/LoginSignup";
 @import "cmps/Chat";
+@import "cmps/GroupList";
+@import "cmps/TaskList";
+@import "cmps/TaskDetails";
 
 @import "cmps/AppHeader";
 @import "cmps/AppFooter";
@@ -27,4 +30,8 @@
 @import "cmps/board/BoardIndex";
 @import "cmps/board/BoardList";
 @import "cmps/board/BoardFilter";
+
+
+
+
 
