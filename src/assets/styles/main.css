@@ -1,14 +1,18 @@
 
+/* SETUP */
 @import "setup/var";
 @import "setup/typography";
 
+/* BASICS */
 @import "basics/helpers";
 @import "basics/layout";
 @import "basics/base";
 @import "basics/forms";
 
+/* ROOT */
 @import "RootCmp";
 
+/* CMPS */
 @import "cmps/AboutUs";
 @import "cmps/HomePage";
 @import "cmps/UserDetails";
@@ -19,11 +23,7 @@
 @import "cmps/AppFooter";
 @import "cmps/UserMsg";
 
-@import "cmps/car/CarIndex";
-@import "cmps/car/CarList";
-@import "cmps/car/CarPreview";
-@import "cmps/car/CarFilter";
+@import "cmps/board/BoardIndex";
+@import "cmps/board/BoardList";
+@import "cmps/board/BoardFilter";
 
-@import "cmps/review/ReviewEdit";
-@import "cmps/review/ReviewList";
-@import "cmps/review/ReviewPreview";
