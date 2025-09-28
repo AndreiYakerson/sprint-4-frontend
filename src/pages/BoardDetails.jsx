@@ -51,7 +51,7 @@ export function BoardDetails() {
     try {
       const savedBoard = await boardService.updateGroup(board?._id, group)
       setBoard(savedBoard)
-      showSuccessMsg('group updated successful')
+      showSuccessMsg('group updated successfully')
     } catch (err) {
       console.log(err)
       showErrorMsg('cannot update group')
@@ -62,12 +62,54 @@ export function BoardDetails() {
     try {
       const savedBoard = await boardService.removeGroup(board?._id, groupId)
       setBoard(savedBoard)
-      showSuccessMsg('group removed successful')
+      showSuccessMsg('group removed successfully')
     } catch (err) {
       console.log(err)
       showErrorMsg('cannot remove group')
     }
   }
+
+
+  // task functions
+  async function onAddTsak(groupId) {
+    try {
+      const savedBoard = await boardService.addTask(board?._id, groupId)
+      setBoard(savedBoard)
+      showSuccessMsg('task added to the board')
+    } catch (err) {
+      console.log(err)
+      showErrorMsg('cannot add task')
+    }
+  }
+
+  async function onRemoveTask(groupId, taskId) {
+    try {
+      const savedBoard = await boardService.removeTask(board?._id, groupId, taskId)
+      setBoard(savedBoard)
+      showSuccessMsg('task removed successfully')
+    } catch (err) {
+      console.log(err)
+      showErrorMsg('cannot remove task')
+    }
+  }
+
+  // for now its just for task title
+  async function onUpdateTask(groupId, task) {
+    const title = prompt('New title?', task.title) || ''
+    if (title === '' || title === board.title) return
+
+    task.title = title
+
+    try {
+      const savedBoard = await boardService.updateTask(board?._id, groupId, task)
+      setBoard(savedBoard)
+      showSuccessMsg('task updated successfully')
+    } catch (err) {
+      console.log(err)
+      showErrorMsg('cannot update task')
+    }
+  }
+
 
 
   //FIXME  CRUD זה רק עד שנוכל להפיק בורד עם כל הפרמטרים הרלוונטים דרך 
@@ -132,6 +174,9 @@ export function BoardDetails() {
           groups={board.groups}
           onRemoveGroup={onRemoveGroup}
           onUpdateGroup={onUpdateGroup}
+          onAddTsak={onAddTsak}
+          onRemoveTask={onRemoveTask}
+          onUpdateTask={onUpdateTask}
         />}
 
 

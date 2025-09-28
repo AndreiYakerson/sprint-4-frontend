@@ -14,6 +14,10 @@ export const boardService = {
     addGroup,
     updateGroup,
     removeGroup,
+    //task 
+    addTask,
+    removeTask,
+    updateTask
 }
 window.cs = boardService
 
@@ -112,6 +116,68 @@ async function removeGroup(boardId, groupId) {
     }
 }
 
+//  task functions
+
+async function addTask(boardId, groupId) {
+
+    try {
+        const board = await getById(boardId)
+        if (!board) throw new Error(`Board ${boardId} not found`);
+
+        const idx = board.groups.findIndex(group => group.id === groupId)
+        if (idx === -1) throw new Error(`Board ${groupId} not found`);
+
+        const newTaskToAdd = _getEmptyTask()
+
+        board.groups[idx].tasks.push(newTaskToAdd)
+
+        return await save(board)
+
+    } catch (err) {
+        throw err
+    }
+}
+
+async function updateTask(boardId, groupId, taskToUpdate) {
+
+    try {
+        const board = await getById(boardId)
+        if (!board) throw new Error(`Board ${boardId} not found`);
+
+        const idx = board.groups.findIndex(group => group.id === groupId)
+        if (idx === -1) throw new Error(`Board ${groupId} not found`);
+
+        board.groups[idx].tasks = board.groups[idx].tasks.map(task => {
+            return task.id === taskToUpdate.id ? { ...task, ...taskToUpdate } : task
+        })
+
+        return await save(board)
+
+    } catch (err) {
+        throw err
+    }
+}
+
+
+
+async function removeTask(boardId, groupId, taskId) {
+
+    try {
+        const board = await getById(boardId)
+        if (!board) throw new Error(`Board ${boardId} not found`);
+
+        const idx = board.groups.findIndex(group => group.id === groupId)
+        if (idx === -1) throw new Error(`Board ${groupId} not found`);
+
+        board.groups[idx].tasks = board.groups[idx].tasks.filter(task => task.id !== taskId)
+
+        return await save(board)
+
+    } catch (err) {
+        throw err
+    }
+}
+
 
 
 function _setBaordToSave(title = 'New board') {
@@ -147,5 +213,13 @@ function _getEmptyGroup() {
         title: 'New group',
         createdAt: Date.now(),
         tasks: []
+    }
+}
+
+function _getEmptyTask() {
+    return {
+        id: makeId(),
+        title: 'new task',
+        createdAt: Date.now(),
     }
 }
