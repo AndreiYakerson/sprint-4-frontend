@@ -1,4 +1,4 @@
-import { DynamicCmp } from "./DynamicCmp"
+import { DynamicCmp } from "../DynamicCmp"
 
 export function TaskPreview({ task }) {
     const cmpsOrder = ['StatusPicker', 'MemberPicker', 'DatePicker', 'PriorityPicker']

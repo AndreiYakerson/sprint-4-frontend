@@ -10,7 +10,7 @@ import { ChatApp } from './pages/Chat.jsx'
 import { BoardDetails } from './pages/BoardDetails.jsx'
 import { UserDetails } from './pages/UserDetails'
 
-import { AppHeader } from './cmps/AppHeader'
+import { AppHeader } from './cmps/AppHeader.jsx'
 import { AppFooter } from './cmps/AppFooter'
 import { UserMsg } from './cmps/UserMsg.jsx'
 import { LoginSignup, Login, Signup } from './pages/LoginSignup.jsx'

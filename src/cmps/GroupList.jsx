@@ -1,4 +1,4 @@
-import { TaskList } from "./TaskList"
+import { TaskList } from "./Task/TaskList"
 
 export function GroupList({ groups }) {
     return (

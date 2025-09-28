@@ -1,4 +1,4 @@
-import { DynamicCmp } from "./DynamicCmp";
+import { DynamicCmp } from "../DynamicCmp.jsx";
 
 export function TaskDetails({ task }) {
     return (

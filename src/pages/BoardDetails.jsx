@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux'
 
 import { showSuccessMsg, showErrorMsg } from '../services/event-bus.service'
 import { loadBoard } from '../store/actions/board.actions'
-import { GroupList } from '../cmps/GroupList'
+import { GroupList } from '../cmps/GroupList.jsx'
 
 
 export function BoardDetails() {

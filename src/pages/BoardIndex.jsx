@@ -6,8 +6,8 @@ import { loadBoards, addBoard, updateBoard, removeBoard } from '../store/actions
 import { showSuccessMsg, showErrorMsg } from '../services/event-bus.service'
 import { boardService } from '../services/board'
 
-import { BoardList } from '../cmps/BoardList'
-import { BoardFilter } from '../cmps/BoardFilter'
+import { BoardList } from '../cmps/Board/BoardList'
+import { BoardFilter } from '../cmps/Board/BoardFilter'
 import { SideBar } from '../cmps/SideBar'
 
 

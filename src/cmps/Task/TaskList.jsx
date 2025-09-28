@@ -1,4 +1,4 @@
-import { TaskDetails } from "./TaskDetails"
+import { TaskDetails } from "../Task/TaskDetails"
 
 export function TaskList({ tasks }) {
     return (
