@@ -21,8 +21,8 @@
 @import "cmps/LoginSignup";
 @import "cmps/Chat";
 @import "cmps/GroupList";
-@import "cmps/TaskList";
-@import "cmps/TaskDetails";
+@import "cmps/tasks/TaskList.css";
+@import "cmps/tasks/TaskDetails.css";
 
 @import "cmps/AppHeader";
 @import "cmps/AppFooter";
