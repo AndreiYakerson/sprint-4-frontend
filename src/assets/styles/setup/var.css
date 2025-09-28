@@ -14,4 +14,172 @@
 
   --success: rgb(41, 189, 73);
   --error: rgb(216, 59, 59);
+
+
+  /* site background-color */
+  --surface-color: #edf1fc;
+  --primary-background-color: #ffffff;
+
+  /* hover background-color  */
+  --primary-background-hover-color: rgba(103, 104, 121, 0.1);
+  /* active selected background-color: ; */
+  --primary-selected-color: rgba(194, 213, 255, 0.40);
+
+  /* text color -  icon use this colors  */
+  --primary-text-color: #323338;
+  --secondary-text-color: #676879;
+  --text-color-on-primary: #ffffff;
+
+  /* border */
+  --layout-border-color: #d0d4e4;
+  /* for btns border */
+  --ui-border-color: #c3c6d4;
+
+  /* btns */
+  --primary-color: #0073ea;
+  --primary-hover-color: #0060b9;
+  --primary-background-color: #ffffff;
+  --primary-background-hover-color: rgba(103, 104, 121, 0.1);
+
+  /* icon */
+  --star-color: #ffcb00;
+  --header-icon-size: 20px;
+  --aside-menu-icon-size: 16px
+    /* group title colors */
+    --group-title-clr1: #17804d;
+  --group-title-clr2: #27c977;
+  --group-title-clr3: #9dd435;
+  --group-title-clr4: #c8b649;
+  --group-title-clr5: #fccb29;
+  --group-title-clr6: #794acf;
+  --group-title-clr7: #9d4edb;
+  --group-title-clr8: #1e7eb3;
+  --group-title-clr9: #5f9bf9;
+  --group-title-clr10: #6fccfd;
+  --group-title-clr11: #b83055;
+  --group-title-clr12: #db2a4d;
+  --group-title-clr13: #fa0080;
+  --group-title-clr14: #fb57c3;
+  --group-title-clr15: #fa6237;
+  --group-title-clr16: #f9aa47;
+  --group-title-clr17: #7d5348;
+  --group-title-clr18: #c4c4c4;
+  --group-title-clr19: #757575;
+
+  /* status colors */
+  --working-on-it: #fdab3d;
+  --stuck: #db2a4d;
+  --done: #27c977;
+  --defult-label-color: #c4c4c4;
+
+  /* success */
+  --positive-color: #00854d;
+  --positive-color-hover: #007038;
+
+  /* error */
+  --negative-color: #d83a52;
+  --negative-color-hover: #b63546;
+
+
+  /* box-shadow */
+  --box-shadow-xs: 0px 4px 6px -4px rgba(0, 0, 0, 0.1);
+  --box-shadow-small: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  --box-shadow-medium: 0px 6px 20px rgba(0, 0, 0, 0.2);
+  --box-shadow-large: 0px 15px 50px rgba(0, 0, 0, 0.3);
+
+  /* padding / margin*/
+  --spacing-xs: 4px;
+  --spacing-small: 8px;
+  --spacing-medium: 16px;
+  --spacing-large: 24px;
+  --spacing-xl: 32px;
+  --spacing-xxl: 48px;
+  --spacing-xxxl: 64px;
+  --space-2: 2px;
+  --space-4: 4px;
+  --space-8: 8px;
+  --space-12: 12px;
+  --space-16: 16px;
+  --space-20: 20px;
+  --space-24: 24px;
+  --space-32: 32px;
+  --space-40: 40px;
+  --space-48: 48px;
+  --space-64: 64px;
+  --space-80: 80px;
+
+
+  /* font sizes */
+
+  /* font-weight:400 */
+  --site-font-size: 14px;
+
+  /* logo */
+  /* font-weight: 700 / 300 */
+  --logo-font-size: 16px;
+
+  /* aside menu */
+  
+
+
+
+
+  /* monday colors  */
+
+  /* background colors */
+  /* --surface-color: #edf1fc;
+  --primary-background-color: #ffffff;
+  --layout-border-color: #d0d4e4; */
+
+  /* haeder */
+  /* --layout-border-color: #d0d4e4;
+  --avatar-image-size: 32px;
+  --primary-background-hover-color: rgba(103, 104, 121, 0.1);
+  --primary-text-color: #323338;
+  --avatar-background: rgba(255, 255, 255, 0.5);
+  --icon-size: 20px; */
+
+  /* aside */
+  /* The background is a mix of these two colors.*/
+  /* --surface-color: #edf1fc;
+  --primary-background-color: #ffffff; */
+
+  /* --secondary-text-color: #676879; */
+  /* hover */
+  /* --primary-background-hover-color: rgba(103, 104, 121, 0.1);
+  --primary-text-color: #323338; */
+  /* active */
+  /* --primary-selected-color: rgba(194, 213, 255, 0.40);
+  --icon-size: 16px; */
+
+  /* btns */
+  /* --primary-color: #0073ea;
+  --primary-hover-color: #0060b9; */
+
+  /* main */
+  /* --primary-background-color: #ffffff; */
+
+  /* borad-list-item */
+  /* --layout-border-color: #d0d4e4;
+  --star-color: #ffcb00;
+  --box-shadow-medium: 0px 6px 20px rgba(0, 0, 0, 0.2); */
+
+  /* btn like (add group / invite) */
+  /* --ui-border-color: #c3c6d4;
+  --primary-background-color: #ffffff;
+  --primary-background-hover-color: rgba(103, 104, 121, 0.1); */
+
+  /* btns like(add item) */
+  /* --primary-color: #0073ea;
+  --primary-hover-color: #0060b9; */
+
+  /* group table */
+  /* --layout-border-color: #d0d4e4; */
+  /* background color when hover on task line */
+  /* --pulse-background-color-rgb: 245, 246, 248; */
+  /* background color when task line active */
+  /* --primary-selected-color-rgb: 204, 229, 255; */
+  /* when column of task selected */
+  /* --primary-color: #0073ea; */
+
 }
