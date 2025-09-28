@@ -10,9 +10,15 @@ export const boardService = {
     getById,
     save,
     remove,
+    // group
+    addGroup,
+    updateGroup,
+    removeGroup,
 }
 window.cs = boardService
 
+
+// board functions
 
 async function query(filterBy = { txt: '' }) {
     var boards = await storageService.query(STORAGE_KEY)
@@ -53,6 +59,59 @@ async function save(board) {
 
 }
 
+// group functions 
+
+async function addGroup(boardId) {
+
+    try {
+        const board = await getById(boardId)
+        if (!board) throw new Error(`Board ${boardId} not found`);
+
+        const newGroupToAdd = _getEmptyGroup()
+
+        board.groups.push(newGroupToAdd)
+
+        return await save(board)
+
+    } catch (err) {
+        throw err
+    }
+}
+
+async function updateGroup(boardId, groupToUpdate) {
+
+    try {
+        const board = await getById(boardId)
+        if (!board) throw new Error(`Board ${boardId} not found`);
+
+        const idx = board.groups.findIndex(group => group.id === groupToUpdate.id)
+        if (idx === -1) throw new Error(`Board ${groupToUpdate.id} not found`);
+
+        board.groups[idx] = { ...board.groups[idx], ...groupToUpdate }
+
+        return await save(board)
+
+    } catch (err) {
+        throw err
+    }
+}
+
+
+async function removeGroup(boardId, groupId) {
+
+    try {
+        const board = await getById(boardId)
+        if (!board) throw new Error(`Board ${boardId} not found`);
+
+        board.groups = board.groups.filter(group => group.id !== groupId)
+
+        return await save(board)
+
+    } catch (err) {
+        throw err
+    }
+}
+
 
 
 function _setBaordToSave(title = 'New board') {
@@ -79,5 +138,14 @@ function _setBaordToSave(title = 'New board') {
                 ],
             },
         ],
+    }
+}
+
+function _getEmptyGroup() {
+    return {
+        id: makeId(),
+        title: 'New group',
+        createdAt: Date.now(),
+        tasks: []
     }
 }

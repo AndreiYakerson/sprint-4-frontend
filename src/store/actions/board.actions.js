@@ -75,7 +75,6 @@ export async function removeBoard(boardId) {
 
 
 
-
 // Command Creators:
 function setIsSideBarOpen(value) {
     return {
