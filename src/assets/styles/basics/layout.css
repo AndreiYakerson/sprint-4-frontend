@@ -34,13 +34,11 @@
     }
 
     >*.full {
-        background-color: var(--clr1);
         grid-column: 1 / -1;
     }
 
-    >*:not(.full) {
-        background-color: var(--clr4);
-    }
+    /* >*:not(.full) {
+    } */
 }
 
 .grid-container {
@@ -70,5 +68,7 @@
 
     & .main-content {
         padding: 1em;
+        background-color: var(--primary-background-color);
+        border-radius: 12px;
     }
 }

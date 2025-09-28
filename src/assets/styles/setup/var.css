@@ -1,21 +1,4 @@
 :root {
-  --clr1: #ce2e6c;
-  --clr2: #4f3a65;
-  --clr3: #574f7d;
-  --clr4: #edf1fc;
-  --clr5: #dff0ea;
-
-  --clr1-light: color-mix(in lab, var(--clr1), white 15%);
-
-  --gray1: #ddd;
-  --gray2: #aaa;
-  --gray3: #777;
-  --gray4: #333;
-
-  --success: rgb(41, 189, 73);
-  --error: rgb(216, 59, 59);
-
-
   /* site background-color */
   --surface-color: #edf1fc;
   --primary-background-color: #ffffff;
@@ -31,7 +14,9 @@
   --text-color-on-primary: #ffffff;
 
   /* border */
+  --application-border-color: #e6e9ef;
   --layout-border-color: #d0d4e4;
+
   /* for btns border */
   --ui-border-color: #c3c6d4;
 

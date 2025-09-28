@@ -5,16 +5,19 @@
 body {
     margin: 0 auto;
 
-    font-family: Poppins;
-    font-family: Figtree;
-    font-family: Roboto;
     font-family: Noto-Sans-Hebrew;
+    font-family: Poppins;
+    font-family: Roboto;
+    font-family: Figtree;
     font-family: var(--font-family);
 
     line-height: 1.5;
 
     color: var(--primary-text-color);
 
+    background-color: var(--surface-color);
+
+    font-size: 0.875rem;
 }
 
 h1,
@@ -35,9 +38,9 @@ a {
     color: unset;
 }
 
-a:hover {
+/* a:hover {
     text-decoration: underline;
-}
+} */
 
 ul {
     list-style: none;
