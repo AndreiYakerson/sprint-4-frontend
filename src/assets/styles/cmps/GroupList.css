@@ -1,1 +1,14 @@
-/* GroupList */
+.group-list {
+    display: grid;
+    gap: 2em;
+
+    & .group-container {
+        display: grid;
+        gap: 1em;
+    }
+
+
+    & .task-list {
+        border: 1px solid black;
+    }
+}
