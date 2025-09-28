@@ -11,10 +11,11 @@ import { BoardFilter } from '../cmps/Board/BoardFilter'
 import { SideBar } from '../cmps/SideBar'
 
 
-export function BoardIndex({setIsSideBarOpen}) {
+export function BoardIndex({ setIsSideBarOpen }) {
 
     const [filterBy, setFilterBy] = useState(boardService.getDefaultFilter())
     const boards = useSelector(storeState => storeState.boardModule.boards)
+
 
     useEffect(() => {
         loadBoards(filterBy)
@@ -41,10 +42,12 @@ export function BoardIndex({setIsSideBarOpen}) {
     }
 
     async function onUpdateBoard(board) {
-        const title = +prompt('New title?', board.title) || ''
+        const title = prompt('New title?', board.title) || ''
         if (title === '' || title === board.title) return
 
-        const boardToSave = { ...board, title }
+        const boardToSave = structuredClone(board)
+        boardToSave.title = title
+
         try {
             const savedBoard = await updateBoard(boardToSave)
             showSuccessMsg(`Board updated, new speed: ${savedBoard.title}`)
@@ -60,10 +63,11 @@ export function BoardIndex({setIsSideBarOpen}) {
                 <button onClick={onAddBoard}>Add a Board</button>
             </header>
             {/* <BoardFilter filterBy={filterBy} setFilterBy={setFilterBy} /> */}
-                <BoardList
-                    boards={boards}
-                    onRemoveBoard={onRemoveBoard}
-                    onUpdateBoard={onUpdateBoard} />
+            <BoardList
+                boards={boards}
+                onRemoveBoard={onRemoveBoard}
+                onUpdateBoard={onUpdateBoard}
+            />
         </section>
     )
 }

@@ -10,14 +10,16 @@ import { GroupList } from '../cmps/GroupList'
 export function BoardDetails() {
 
   const { boardId } = useParams()
-  // const board = useSelector(storeState => storeState.boardModule.board)
+  const board = useSelector(storeState => storeState.boardModule.board)
 
   useEffect(() => {
     loadBoard(boardId)
   }, [boardId])
 
+  console.log('board:', board)
+
   //FIXME  CRUD זה רק עד שנוכל להפיק בורד עם כל הפרמטרים הרלוונטים דרך 
-  const board = {
+  const demoBoard = {
     _id: 'g101',
     title: 'board',
     createdAt: 1589983468418,
@@ -71,7 +73,7 @@ export function BoardDetails() {
 
   return (
     <section className="board-details">
-      <GroupList groups={board.groups} />
+      {board?.groups?.length > 0 && < GroupList groups={board.groups} />}
     </section>
   )
 }

@@ -15,7 +15,7 @@
     margin-top: 16px;
     box-shadow: 0px 3px 12px var(--application-border-color);
 
-    & li {
+    .board-item {
         flex-direction: column;
         padding: 8px;
         border: 1px solid;

@@ -37,6 +37,7 @@ export async function addBoard(board) {
         throw err
     }
 }
+
 // UPDATE
 
 export async function updateBoard(board) {

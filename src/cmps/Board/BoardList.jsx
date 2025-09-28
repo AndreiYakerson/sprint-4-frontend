@@ -1,4 +1,5 @@
 // import { userService } from '../services/user'
+import { Link } from 'react-router-dom'
 import { BoardPreview } from './BoardPreview'
 
 export function BoardList({ boards, onRemoveBoard, onUpdateBoard }) {
@@ -14,12 +15,13 @@ export function BoardList({ boards, onRemoveBoard, onUpdateBoard }) {
     return <section>
         <ul className="board-list">
             {boards.map(board =>
-                <li key={board._id}>
+                <li key={board._id} className='board-item'>
                     <BoardPreview board={board} />
-                    {/* <div className="actions">
-                        <button onClick={() => onUpdateBoard(board)}>Edit</button>
-                        <button onClick={() => onRemoveBoard(board._id)}>x</button>
-                    </div> */}
+                    <div className='board-actions'>
+                        <button onClick={() => onRemoveBoard(board._id)}>Remove</button>
+                        <button onClick={() => onUpdateBoard(board)}>Update</button>
+                        <Link to={`/board/${board._id}`} className='btn'>Details</Link>
+                    </div>
                 </li>)
             }
         </ul>
