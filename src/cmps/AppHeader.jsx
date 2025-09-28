@@ -17,18 +17,15 @@ export function AppHeader() {
 			showErrorMsg('Cannot logout')
 		}
 	}
-
 	return (
 		<header className="app-header full">
 			<nav>
-				<NavLink to="/" className="logo">
-					E2E Demo
-				</NavLink>
-				{/* <NavLink to="about">About</NavLink>
-				<NavLink to="board">Boards</NavLink>
-				<NavLink to="chat">Chat</NavLink> */}
+					<label className='logo'>
+						<img className='' src="../../public/img/logo.png" alt="logo" />
+						 NodeDay
+					</label>
 
-                {user?.isAdmin && <NavLink to="/admin">Admin</NavLink>}
+				{user?.isAdmin && <NavLink to="/admin">Admin</NavLink>}
 
 				{!user && <NavLink to="auth/login" className="login-link">Login</NavLink>}
 				{user && (

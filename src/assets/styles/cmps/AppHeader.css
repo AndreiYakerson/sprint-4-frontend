@@ -18,9 +18,10 @@
         }
 
         .logo {
-            font-size: 1.4em;
-            font-weight: bold;
-            margin-inline-end: 2em;
+            display: flex;
+            align-items: end;
+            font-size: large;
+            width: 50px;
         }
 
         .login-link {
