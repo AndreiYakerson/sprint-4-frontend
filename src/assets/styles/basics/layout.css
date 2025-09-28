@@ -1,7 +1,8 @@
 .main-container {
     display: grid;
-    grid-template-columns: 1rem 1fr 1rem;
+    grid-template-columns: 1rem 1fr;
 
+    
     >* {
         grid-column: 2;
 
@@ -64,6 +65,8 @@
     grid-auto-flow: column;
     grid-template-columns: max-content;
     height: 90vh;
+    border-radius: var(--border-radius-medium);
+    border: 1px solid var(--layout-border-color);
 
     & .main-content {
         padding: 1em;
