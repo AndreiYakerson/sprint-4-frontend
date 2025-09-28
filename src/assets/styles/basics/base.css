@@ -58,3 +58,12 @@ object {
     max-width: 100%;
     display: block;
 }
+
+.icon {
+    width: 16px;
+    aspect-ratio: 1/1;
+
+    &.big {
+        width: 20px;
+    }
+}
