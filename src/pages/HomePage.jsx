@@ -4,9 +4,6 @@ import { BoardIndex } from "./BoardIndex"
 export function HomePage() {
 
     const user = useSelector(state => state.userModule.user)
-    console.log("🚀 ~ HomePage ~ user:", user)
-
-
     return (
         <section className="home-page">
             <header className="home-page-header">

@@ -59,12 +59,13 @@
     }
 }
 
-.main-layout{
+.main-layout {
     display: grid;
     grid-auto-flow: column;
-    grid-template-columns:max-content;
+    grid-template-columns: max-content;
+    height: 90vh;
 
-    & .main-content{
+    & .main-content {
         padding: 1em;
     }
 }
