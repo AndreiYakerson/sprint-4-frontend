@@ -1,7 +1,20 @@
+import { useSelector } from "react-redux"
+import { BoardIndex } from "./BoardIndex"
+
 export function HomePage() {
+
+    const user = useSelector(state => state.userModule.user)
+    console.log("🚀 ~ HomePage ~ user:", user)
+
+
     return (
-        <section className="home">
-            <h1>Monday</h1>
+        <section className="home-page">
+            <header className="home-page-header">
+                <h1> Good morning {user?.fullname} </h1>
+                <p>Quickly access your recent boards, Inbox and workspaces</p>
+            </header>
+            <BoardIndex />
+
         </section >
     )
 }

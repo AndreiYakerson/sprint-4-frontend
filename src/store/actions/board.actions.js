@@ -51,7 +51,6 @@ export async function updateBoard(board) {
 }
 
 export async function onIsSideBarOpen(value) {
-    console.log("🚀 ~ isSideBarOpen ~ value:", value)
     try {
         store.dispatch(setIsSideBarOpen(value))
         return console.log(`Side Bar is-open set to ${value}`)

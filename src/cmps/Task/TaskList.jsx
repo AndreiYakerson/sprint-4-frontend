@@ -1,6 +1,7 @@
 import { TaskDetails } from "../Task/TaskDetails"
 
 export function TaskList({ tasks }) {
+    console.log("🚀 ~ TaskList ~ tasks:", tasks)
     return (
         <section className="task-list">
             {tasks.map(task => {
