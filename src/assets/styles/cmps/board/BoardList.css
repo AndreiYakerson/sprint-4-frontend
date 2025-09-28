@@ -21,6 +21,7 @@
         border: 1px solid;
         border-color: var(--layout-border-color);
         border-radius: 4px;
+        transition: 200ms ease-in-out;
 
         &:hover {
             background-color: transparent;

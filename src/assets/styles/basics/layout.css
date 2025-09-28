@@ -1,8 +1,13 @@
 .main-container {
     display: grid;
-    grid-template-columns: 1rem 1fr;
+    grid-template-columns: max-content 1fr;
+    grid-template-areas:
+        "app-header app-header"
+        "app-aside app-main-content";
+    align-content: start;
+    min-height: 100vh;
 
-    
+
     >* {
         grid-column: 2;
 
@@ -10,9 +15,51 @@
             grid-column: 1 / -1;
         }
     }
+
+    .app-header {
+        grid-area: app-header;
+        height: 48px;
+        max-height: 48px;
+        padding-inline-start: var(--spacing-medium);
+        padding-inline-end: var(--spacing-large);
+    }
+
+    .app-aside {
+        grid-area: app-aside;
+        max-height: calc(100vh - 48px);
+    }
+
+    .app-main-content {
+        grid-area: app-main-content;
+        height: calc(100vh - 48px);
+        background-color: var(--primary-background-color);
+        overflow: auto;
+        border-radius: 12px 0 0 0;
+    }
+
+
 }
 
-.sample-grid-layout {
+
+/* .main-layout {
+    display: grid;
+    grid-auto-flow: column;
+    grid-template-columns: max-content;
+    height: 90vh;
+    border-radius: var(--border-radius-medium);
+    border: 1px solid var(--layout-border-color);
+
+    & .main-content {
+        padding: 1em;
+        background-color: var(--primary-background-color);
+        border-radius: 12px;
+    }
+}
+ */
+
+
+
+/* .sample-grid-layout {
     display: grid;
     grid-template-columns: 12px 1fr 12px;
 
@@ -36,39 +83,4 @@
     >*.full {
         grid-column: 1 / -1;
     }
-
-    /* >*:not(.full) {
-    } */
-}
-
-.grid-container {
-    display: grid;
-    /* grid-template-columns: repeat(4, 1fr); */
-    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-    gap: 10px;
-
-    >article {
-        border: 1px solid #ccc;
-        border-radius: 6px;
-        padding: 2rem;
-        text-align: center;
-        display: grid;
-        grid-template-rows: subgrid;
-        grid-row: span 3;
-    }
-}
-
-.main-layout {
-    display: grid;
-    grid-auto-flow: column;
-    grid-template-columns: max-content;
-    height: 90vh;
-    border-radius: var(--border-radius-medium);
-    border: 1px solid var(--layout-border-color);
-
-    & .main-content {
-        padding: 1em;
-        background-color: var(--primary-background-color);
-        border-radius: 12px;
-    }
-}
+} */

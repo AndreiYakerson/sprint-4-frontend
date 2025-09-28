@@ -23,10 +23,11 @@ export function AppHeader() {
 	}
 	return (
 		<header className="app-header full">
-			<label className='logo'>
-				<img className='' src="../../public/img/logo.png" alt="logo" />
-				NodeDay
-			</label>
+			<Link to="/" className='app-logo'>
+				<img className='logo-img' src="../../public/img/logo.png" alt="logo-img" />
+				<div className='app-name'>NodeDay</div>
+			</Link>
+
 			<section className='main-nav'>
 				<div className='icon-container flex'>
 					<img className='icon' src={notifiction} alt="icon notifications" data-tooltip="Notifications" />

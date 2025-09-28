@@ -23,25 +23,23 @@ export function RootCmp() {
         <div className="main-container">
             <AppHeader />
             <UserMsg />
-            <div className="main-layout">
-                <aside>
-                    <SideBar />
-                </aside>
-                <main className='main-content'>
-                    <Routes>
-                        <Route path="" element={<HomePage />} />
-                        <Route path="about" element={<AboutUs />} />
-                        <Route path="board" element={<BoardIndex />} />
-                        <Route path="board/:boardId" element={<BoardDetails />} />
-                        <Route path="user/:id" element={<UserDetails />} />
-                        <Route path="chat" element={<ChatApp />} />
-                        <Route path="auth" element={<LoginSignup />}>
-                            <Route path="login" element={<Login />} />
-                            <Route path="signup" element={<Signup />} />
-                        </Route>
-                    </Routes>
-                </main>
-            </div>
+            <aside className='app-aside'>
+                <SideBar />
+            </aside>
+            <main className='app-main-content'>
+                <Routes>
+                    <Route path="" element={<HomePage />} />
+                    <Route path="about" element={<AboutUs />} />
+                    <Route path="board" element={<BoardIndex />} />
+                    <Route path="board/:boardId" element={<BoardDetails />} />
+                    <Route path="user/:id" element={<UserDetails />} />
+                    <Route path="chat" element={<ChatApp />} />
+                    <Route path="auth" element={<LoginSignup />}>
+                        <Route path="login" element={<Login />} />
+                        <Route path="signup" element={<Signup />} />
+                    </Route>
+                </Routes>
+            </main>
             {/* <AppFooter /> */}
         </div>
     )

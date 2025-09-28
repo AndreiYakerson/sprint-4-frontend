@@ -8,10 +8,9 @@
     background: linear-gradient(135deg, var(--primary-background-color)5%, var(--surface-color)100%);
     box-shadow: inset -5px -20px 20px 0 var(--surface-color);
 
-    width: 300px;
+    width: 225px;
     height: 100%;
 
-    
     .icon {
         width: 16px;
     }
