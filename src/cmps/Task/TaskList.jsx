@@ -1,4 +1,5 @@
 import { TaskPreview } from "../Task/TaskPreview"
+import { TaskDetails } from "./TaskDetails"
 
 export function TaskList({ tasks, onRemoveTask, onUpdateTask }) {
     console.log("🚀 ~ TaskList ~ tasks:", tasks)
