@@ -3,16 +3,19 @@
     display: flex;
     place-content: center;
 
+    margin-left: var(--space-12);
+    background-color: var(--primary-background-color);
+    background: linear-gradient(135deg, var(--primary-background-color)5%, var(--surface-color)100%);
+    box-shadow: inset -5px -20px 20px 0 var(--surface-color);
+
     width: 300px;
     height: 100%;
-    border-radius: var(--border-radius-medium);
-    border: 1px solid var(--layout-border-color);
 
     & .close-btn {
         display: grid;
         grid-auto-flow: column;
         align-items: center;
-        background-color: gray;
+        background-color: var(--surface-color);
         width: 30px;
         height: 30px;
         border-radius: var(--border-radius-big);
@@ -35,6 +38,19 @@
         flex-direction: column;
         width: 100%;
 
+        a {
+            color: var(--secondary-text-color);
+
+            &:hover {
+                background-color: var(--primary-background-hover-color);
+                color: var(--primary-text-color);
+            }
+
+            &.active {
+                background-color: var(--primary-selected-color);
+                color: var(--primary-text-color);
+            }
+        }
     }
 
     &:hover .close-btn {
@@ -47,8 +63,7 @@
 .side-bar .side-nav-list>*,
 .favorites {
     padding: 1em;
-    border-radius: var(--border-radius-medium);
-    border: 1px solid black;
+    border-radius: 1vh;
 }
 
 .side-bar .close-btn {
@@ -66,4 +81,4 @@
     transition: opacity 0.4s ease;
 }
 
-.side-bar .favorites {}
+/* .side-bar .favorites {} */
