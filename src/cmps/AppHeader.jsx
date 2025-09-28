@@ -4,6 +4,9 @@ import { useSelector } from 'react-redux'
 import { showErrorMsg, showSuccessMsg } from '../services/event-bus.service'
 import { logout } from '../store/actions/user.actions'
 
+// images
+import defaultAvatarImg from "/img/default-avatar.png"
+
 export function AppHeader() {
 	const user = useSelector(storeState => storeState.userModule.user)
 	const navigate = useNavigate()
@@ -20,12 +23,13 @@ export function AppHeader() {
 	return (
 		<header className="app-header full">
 			<nav>
-					<label className='logo'>
-						<img className='' src="../../public/img/logo.png" alt="logo" />
-						 NodeDay
-					</label>
+				<label className='logo'>
+					<img className='' src="../../public/img/logo.png" alt="logo" />
+					NodeDay
+				</label>
 
 				{user?.isAdmin && <NavLink to="/admin">Admin</NavLink>}
+
 
 				{!user && <NavLink to="auth/login" className="login-link">Login</NavLink>}
 				{user && (
