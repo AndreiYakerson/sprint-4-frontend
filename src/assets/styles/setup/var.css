@@ -125,66 +125,70 @@
 
   /* aside menu */
 
+  /*border radius */
+
+  --border-radius-small: 4px;
+  --border-radius-medium: 8px;
+  --border-radius-big: 16px;
 
 
 
+/* monday colors  */
 
-  /* monday colors  */
-
-  /* background colors */
-  /* --surface-color: #edf1fc;
+/* background colors */
+/* --surface-color: #edf1fc;
   --primary-background-color: #ffffff;
   --layout-border-color: #d0d4e4; */
 
-  /* haeder */
-  /* --layout-border-color: #d0d4e4;
+/* haeder */
+/* --layout-border-color: #d0d4e4;
   --avatar-image-size: 32px;
   --primary-background-hover-color: rgba(103, 104, 121, 0.1);
   --primary-text-color: #323338;
   --avatar-background: rgba(255, 255, 255, 0.5);
   --icon-size: 20px; */
 
-  /* aside */
-  /* The background is a mix of these two colors.*/
-  /* --surface-color: #edf1fc;
+/* aside */
+/* The background is a mix of these two colors.*/
+/* --surface-color: #edf1fc;
   --primary-background-color: #ffffff; */
 
-  /* --secondary-text-color: #676879; */
-  /* hover */
-  /* --primary-background-hover-color: rgba(103, 104, 121, 0.1);
+/* --secondary-text-color: #676879; */
+/* hover */
+/* --primary-background-hover-color: rgba(103, 104, 121, 0.1);
   --primary-text-color: #323338; */
-  /* active */
-  /* --primary-selected-color: rgba(194, 213, 255, 0.40);
+/* active */
+/* --primary-selected-color: rgba(194, 213, 255, 0.40);
   --icon-size: 16px; */
 
-  /* btns */
-  /* --primary-color: #0073ea;
+/* btns */
+/* --primary-color: #0073ea;
   --primary-hover-color: #0060b9; */
 
-  /* main */
-  /* --primary-background-color: #ffffff; */
+/* main */
+/* --primary-background-color: #ffffff; */
 
-  /* borad-list-item */
-  /* --layout-border-color: #d0d4e4;
+/* borad-list-item */
+/* --layout-border-color: #d0d4e4;
   --star-color: #ffcb00;
   --box-shadow-medium: 0px 6px 20px rgba(0, 0, 0, 0.2); */
 
-  /* btn like (add group / invite) */
-  /* --ui-border-color: #c3c6d4;
+/* btn like (add group / invite) */
+/* --ui-border-color: #c3c6d4;
   --primary-background-color: #ffffff;
   --primary-background-hover-color: rgba(103, 104, 121, 0.1); */
 
-  /* btns like(add item) */
-  /* --primary-color: #0073ea;
+/* btns like(add item) */
+/* --primary-color: #0073ea;
   --primary-hover-color: #0060b9; */
 
-  /* group table */
-  /* --layout-border-color: #d0d4e4; */
-  /* background color when hover on task line */
-  /* --pulse-background-color-rgb: 245, 246, 248; */
-  /* background color when task line active */
-  /* --primary-selected-color-rgb: 204, 229, 255; */
-  /* when column of task selected */
-  /* --primary-color: #0073ea; */
+/* group table */
+/* --layout-border-color: #d0d4e4; */
+/* background color when hover on task line */
+/* --pulse-background-color-rgb: 245, 246, 248; */
+/* background color when task line active */
+/* --primary-selected-color-rgb: 204, 229, 255; */
+/* when column of task selected */
+/* --primary-color: #0073ea; */
 
 }
