@@ -16,10 +16,10 @@ export function BoardList({ boards, onRemoveBoard, onUpdateBoard }) {
             {boards.map(board =>
                 <li key={board._id}>
                     <BoardPreview board={board} />
-                    <div className="actions">
+                    {/* <div className="actions">
                         <button onClick={() => onUpdateBoard(board)}>Edit</button>
                         <button onClick={() => onRemoveBoard(board._id)}>x</button>
-                    </div>
+                    </div> */}
                 </li>)
             }
         </ul>

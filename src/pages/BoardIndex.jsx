@@ -56,10 +56,10 @@ export function BoardIndex({setIsSideBarOpen}) {
     return (
         <section className="board-index">
             <header>
-                <h2>Boards</h2>
+                <h2> Recently viewed</h2>
                 <button onClick={onAddBoard}>Add a Board</button>
             </header>
-            <BoardFilter filterBy={filterBy} setFilterBy={setFilterBy} />
+            {/* <BoardFilter filterBy={filterBy} setFilterBy={setFilterBy} /> */}
                 <BoardList
                     boards={boards}
                     onRemoveBoard={onRemoveBoard}
