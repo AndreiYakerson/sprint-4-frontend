@@ -11,6 +11,11 @@
     width: 300px;
     height: 100%;
 
+    
+    .icon {
+        width: 16px;
+    }
+
     & .close-btn {
         display: grid;
         grid-auto-flow: column;
@@ -39,6 +44,8 @@
         width: 100%;
 
         a {
+            display: flex;
+            gap: 15px;
             color: var(--secondary-text-color);
 
             &:hover {
