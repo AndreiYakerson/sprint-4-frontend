@@ -167,7 +167,11 @@ export function BoardDetails() {
 
   return (
     <section className="board-details">
-      <button onClick={() => onAddGroup(board?._id)}>+ Add group</button>
+
+      <header className='board-details-header'>
+        <h2>{board?.title}</h2>
+        <button onClick={() => onAddGroup(board?._id)} className='blue'>+ Add group</button>
+      </header>
 
       {board?.groups?.length > 0 &&
         < GroupList
