@@ -4,9 +4,26 @@
 
     padding: .8rem 1rem;
 
-    & nav {
+    .logo {
         display: flex;
-        width: 100%;
+        align-items: end;
+        font-size: large;
+        width: 50px;
+    }
+
+    .icon-container {
+        gap: 2em;
+    }
+
+    .icon-container .icon {
+        cursor: pointer;
+        width: 20px;
+        height: 20px;
+    }
+
+    & section {
+        display: flex;
+        margin-inline-start: auto;
         align-items: center;
         gap: 1em;
 
@@ -14,12 +31,6 @@
 
         /* .active {} */
 
-        .logo {
-            display: flex;
-            align-items: end;
-            font-size: large;
-            width: 50px;
-        }
 
         .login-link {
             margin-inline-start: auto;
