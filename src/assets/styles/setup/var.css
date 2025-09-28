@@ -20,6 +20,13 @@
   /* for btns border */
   --ui-border-color: #c3c6d4;
 
+  /*border radius */
+
+  --border-radius-small: 4px;
+  --border-radius-medium: 8px;
+  --border-radius-big: 16px;
+
+
   /* btns */
   --primary-color: #0073ea;
   --primary-hover-color: #0060b9;
@@ -110,11 +117,6 @@
 
   /* aside menu */
 
-  /*border radius */
-
-  --border-radius-small: 4px;
-  --border-radius-medium: 8px;
-  --border-radius-big: 16px;
 
 
 
