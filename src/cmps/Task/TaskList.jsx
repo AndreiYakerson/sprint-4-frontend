@@ -8,7 +8,7 @@ export function TaskList({ tasks, onRemoveTask, onUpdateTask }) {
             {tasks.map(task => {
                 return <div key={task.id} className="task-detail flex align-center">
                     <button onClick={() => onRemoveTask(task.id)}>X</button>
-                    <TaskDetails task={task} />
+                    <TaskPreview task={task} />
                     <button onClick={() => onUpdateTask(task)}>Update Title</button>
                 </div>
             })}

@@ -6,6 +6,7 @@ import { showSuccessMsg, showErrorMsg } from '../services/event-bus.service'
 // import { loadBoard } from '../store/actions/board.actions'
 import { boardService } from '../services/board/index.js'
 import { GroupList } from '../cmps/GroupList'
+import { SortFilterCmp } from '../cmps/SortFilterCmp.jsx'
 
 
 export function BoardDetails() {
@@ -111,65 +112,14 @@ export function BoardDetails() {
   }
 
 
-
-  //FIXME  CRUD זה רק עד שנוכל להפיק בורד עם כל הפרמטרים הרלוונטים דרך 
-  const demoBoard = {
-    _id: 'g101',
-    title: 'board',
-    createdAt: 1589983468418,
-    groups: [
-      {
-        id: 'g101',
-        title: 'Design',
-        createdAt: 1589983468418,
-        tasks: [
-          {
-            id: 'c101',
-            title: 'task 1',
-            createdAt: 1589983468418,
-          },
-          {
-            id: 'c102',
-            title: 'task 2',
-            createdAt: 1589983468418,
-          },
-          {
-            id: 'c103',
-            title: 'task 3',
-            createdAt: 1589983468418,
-          },
-        ],
-      },
-      {
-        id: 'g102',
-        title: 'toDo',
-        createdAt: 1589983468418,
-        tasks: [
-          {
-            id: 'c101',
-            title: 'task 1',
-            createdAt: 1589983468418,
-          },
-          {
-            id: 'c102',
-            title: 'task 2',
-            createdAt: 1589983468418,
-          },
-          {
-            id: 'c103',
-            title: 'task 3',
-            createdAt: 1589983468418,
-          },
-        ],
-      },
-    ],
-  }
-
   return (
     <section className="board-details">
 
       <header className='board-details-header'>
+
         <h2>{board?.title}</h2>
+        
+        <SortFilterCmp/>
         <button onClick={() => onAddGroup(board?._id)} className='blue'>+ Add group</button>
       </header>
 
