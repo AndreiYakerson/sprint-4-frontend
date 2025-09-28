@@ -23,23 +23,26 @@ export function RootCmp() {
         <div className="main-container">
             <AppHeader />
             <UserMsg />
-
-            <main className='main-content-layout' >
-                <SideBar />
-                <Routes>
-                    <Route path="" element={<HomePage />} />
-                    <Route path="about" element={<AboutUs />} />
-                    <Route path="board" element={<BoardIndex />} />
-                    <Route path="board/:boardId" element={<BoardDetails />} />
-                    <Route path="user/:id" element={<UserDetails />} />
-                    <Route path="chat" element={<ChatApp />} />
-                    <Route path="auth" element={<LoginSignup />}>
-                        <Route path="login" element={<Login />} />
-                        <Route path="signup" element={<Signup />} />
-                    </Route>
-                </Routes>
-            </main>
-            <AppFooter />
+            <div className="main-layout">
+                <aside>
+                    <SideBar />
+                </aside>
+                <main>
+                    <Routes>
+                        <Route path="" element={<HomePage />} />
+                        <Route path="about" element={<AboutUs />} />
+                        <Route path="board" element={<BoardIndex />} />
+                        <Route path="board/:boardId" element={<BoardDetails />} />
+                        <Route path="user/:id" element={<UserDetails />} />
+                        <Route path="chat" element={<ChatApp />} />
+                        <Route path="auth" element={<LoginSignup />}>
+                            <Route path="login" element={<Login />} />
+                            <Route path="signup" element={<Signup />} />
+                        </Route>
+                    </Routes>
+                </main>
+            </div>
+            {/* <AppFooter /> */}
         </div>
     )
 }

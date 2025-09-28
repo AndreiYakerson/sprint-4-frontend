@@ -4,7 +4,7 @@
     place-content: center;
 
     width: 300px;
-    min-height: 80vh;
+    min-height: calc(100vh - 50px);
 
     border: 2px solid black;
 
@@ -33,28 +33,29 @@
     & .side-nav-list {
         display: flex;
         flex-direction: column;
-
         width: 100%;
+        
+    }
+
+    &:hover .close-btn {
+        opacity: 1;
     }
 
     transition: width 0.4s ease;
 }
 
-.side-bar .side-nav-list >* {
+.side-bar .side-nav-list>*,
+.favorites {
     padding: 1em;
     border-radius: 1vh;
     border: 1px solid black;
 }
 
-.close-btn {
+.side-bar .close-btn {
     position: absolute;
     top: 0;
     right: -22px;
     opacity: 0;
-
-    &:hover {
-        opacity: 1;
-    }
 
     &.false {
         opacity: 1;
@@ -65,6 +66,4 @@
     transition: opacity 0.4s ease;
 }
 
-.favorites{
-    
-}
+.side-bar .favorites {}
