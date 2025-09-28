@@ -10,7 +10,7 @@ export function HomePage() {
     return (
         <section className="home-page">
             <header className="home-page-header">
-                <h1> Good morning {user.fullname} </h1>
+                <h1> Good morning {user?.fullname} </h1>
                 <p>Quickly access your recent boards, Inbox and workspaces</p>
             </header>
             <BoardIndex />
