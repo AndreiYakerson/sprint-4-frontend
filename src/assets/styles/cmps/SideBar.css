@@ -4,7 +4,7 @@
     place-content: center;
 
     width: 300px;
-    min-height: calc(100vh - 50px);
+    height:100%;
 
     border: 2px solid black;
 
