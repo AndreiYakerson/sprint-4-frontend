@@ -1,24 +1,32 @@
 .user-msg {
     position: fixed;
-    top: 70px;
-    right: 0;
+    left: 50%;
+    top: 0;
 
     display: flex;
     align-items: center;
+    justify-content: space-between;
+    gap: 0.5em;
 
-    padding: .2em;
-    padding-inline-end: 1.5em;
+    padding: var(--spacing-small);
+    margin: var(--spacing-medium);
 
-    color: white;
-    font-size: .9em;
+    min-width: 200px;
+    width: auto;
 
+    border-radius: var(--border-radius-small);
+    color: var(--text-color-on-primary);
+    box-shadow: var(--box-shadow-medium);
+
+    transform: translateX(-50%) translateY(-200%);
+    transition: 200ms ease-in-out;
     opacity: 0;
-    translate: 150%;
-    transition: 600ms;
 
     &.visible {
+        animation: jump 300ms ease-in-out;
         opacity: 1;
-        translate: 0;
+        transform: translateX(-50%) translateY(0);
+        z-index: 1000;
     }
 
     &.success {
@@ -30,9 +38,37 @@
     }
 
     & button {
-        padding: 1px 6px;
         border: 0;
-        border-radius: 50%;
+        margin: 0;
+        padding: 0;
+        width: 32PX;
+        aspect-ratio: 1/1;
+
+        background-color: inherit;
+        color: inherit;
+        place-items: center;
+        transition: 10ms;
+
+
+
+        &:hover {
+            backdrop-filter: brightness(85%)
+        }
     }
 
+}
+
+
+@keyframes jump {
+    0% {
+        transform: translateX(-50%) translateY(-200%);
+    }
+
+    80% {
+        transform: translateX(-50%) translateY(50%);
+    }
+
+    100% {
+        transform: translateX(-50%) translateY(0%);
+    }
 }

@@ -66,6 +66,10 @@ object {
     &.big {
         width: 20px;
     }
+
+    &.white {
+        filter: invert(1);
+    }
 }
 
 .hover-show {
