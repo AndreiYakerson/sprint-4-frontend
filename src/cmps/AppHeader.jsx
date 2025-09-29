@@ -10,11 +10,13 @@ import updateFeed from '/icons/update-feed.svg'
 import { IconCmp } from './IconCmp'
 import { PopUp } from './PopUp'
 import { useState } from 'react'
+import { FloatingContainerCmp } from './FloatingContainerCmp'
+import { LoginSignup } from '../pages/LoginSignup'
 
 export function AppHeader() {
 	const user = useSelector(storeState => storeState.userModule.user)
 	const [isPopUpOpen, setIsPopUpOpen] = useState(false)
-	console.log("🚀 ~ AppHeader ~ isPopUpOpen:", isPopUpOpen)
+	const [anchorEl, setAnchorEl] = useState(null)
 	const navigate = useNavigate()
 
 	async function onLogout() {
@@ -35,9 +37,10 @@ export function AppHeader() {
 			</Link>
 
 			<section className='main-nav'>
+
 				<div className='icon-container flex'>
-					<IconCmp  src={notification} label={'Notifications'} position={'down'} />
-					<span onClick={()=>setIsPopUpOpen(true)} className="update-feed-icon">
+						<IconCmp onClick={(el) => setAnchorEl(el)} src={notification} label={'Notifications'} position={'down'} />
+					<span onClick={() => setIsPopUpOpen(true)} className="update-feed-icon">
 						<IconCmp src={updateFeed} label={'Update Feed'} position={'down'} />
 					</span>
 				</div>
@@ -59,7 +62,15 @@ export function AppHeader() {
 						isOpen={isPopUpOpen}
 						onClose={setIsPopUpOpen}
 					>
+						{/* <LoginSignup /> */}
 					</PopUp>
+
+					<FloatingContainerCmp
+						anchorEl={anchorEl}
+						onClose={() => setAnchorEl(null)}
+					>
+						{/* <LoginSignup /> */}
+					</FloatingContainerCmp>
 				</section>
 			</section>
 		</header>
