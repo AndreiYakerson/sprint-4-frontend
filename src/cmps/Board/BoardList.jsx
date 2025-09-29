@@ -1,8 +1,11 @@
 // import { userService } from '../services/user'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
+
+// cmps
 import { BoardPreview } from './BoardPreview'
 
-export function BoardList({ boards, onRemoveBoard, onUpdateBoard }) {
+export function BoardList({ boards, onRemoveBoard, onUpdateBoard, isSideBarDispaly = false }) {
+    const location = useLocation()
 
     // function shouldShowActionBtns(board) {
     //     const user = userService.getLoggedinUser()
@@ -12,17 +15,20 @@ export function BoardList({ boards, onRemoveBoard, onUpdateBoard }) {
     //     return board.owner?._id === user._id
     // }
 
+
+
     return <section>
-        <ul className="board-list">
-            {boards.map(board =>
-                <li key={board._id} className='board-item'>
+        <ul className={`board-list ${isSideBarDispaly ? "side-bar-dispaly" : ""}`}>
+            {boards.map(board => {
+                return <li key={board._id} className={`board-item ${location.pathname.includes(board._id) ? "active" : ""}`}>
                     <BoardPreview board={board} />
                     <div className='board-actions'>
                         <button onClick={() => onRemoveBoard(board._id)}>Remove</button>
                         <button onClick={() => onUpdateBoard(board)}>Update</button>
                         <Link to={`/board/${board._id}`} className='btn'>Details</Link>
                     </div>
-                </li>)
+                </li>
+            })
             }
         </ul>
     </section>
