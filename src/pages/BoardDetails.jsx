@@ -19,8 +19,6 @@ export function BoardDetails() {
     loadBoard(boardId)
   }, [boardId])
 
-  console.log('board:', board)
-
   async function loadBoard(boardId) {
     try {
       const board = await boardService.getById(boardId)
@@ -72,7 +70,7 @@ export function BoardDetails() {
 
 
   // task functions
-  async function onAddTsak(groupId) {
+  async function onAddTask(groupId) {
     try {
       const savedBoard = await boardService.addTask(board?._id, groupId)
       setBoard(savedBoard)
@@ -128,7 +126,7 @@ export function BoardDetails() {
           groups={board.groups}
           onRemoveGroup={onRemoveGroup}
           onUpdateGroup={onUpdateGroup}
-          onAddTsak={onAddTsak}
+          onAddTask={onAddTask}
           onRemoveTask={onRemoveTask}
           onUpdateTask={onUpdateTask}
         />}
