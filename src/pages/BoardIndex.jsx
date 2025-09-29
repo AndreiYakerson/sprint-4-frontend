@@ -7,8 +7,6 @@ import { showSuccessMsg, showErrorMsg } from '../services/event-bus.service'
 import { boardService } from '../services/board'
 
 import { BoardList } from '../cmps/Board/BoardList'
-import { BoardFilter } from '../cmps/Board/BoardFilter'
-import { SideBar } from '../cmps/SideBar'
 
 
 export function BoardIndex({ setIsSideBarOpen }) {

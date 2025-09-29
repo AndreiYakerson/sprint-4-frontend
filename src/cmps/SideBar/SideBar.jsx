@@ -3,9 +3,9 @@ import { NavLink } from "react-router-dom";
 import { useEffect } from "react";
 
 // services
-import { loadBoards, onIsSideBarOpen } from "../store/actions/board.actions.js";
+import { loadBoards, onIsSideBarOpen } from "../../store/actions/board.actions.js";
 // cmps
-import { BoardList } from "./Board/BoardList.jsx";
+import { BoardList } from "../Board/BoardList.jsx";
 
 // icons 
 import homeIcon from '/icons/home.svg'
@@ -13,7 +13,7 @@ import myWork from '/icons/my-work.svg'
 import chevronRight from '/icons/chevron-right.svg'
 import chevronLeft from '/icons/chevron-left.svg'
 import chevronDown from '/icons/chevron-down.svg'
-import { IconCmp } from "./IconCmp.jsx";
+import { IconCmp } from "../IconCmp.jsx";
 
 export function SideBar() {
 
