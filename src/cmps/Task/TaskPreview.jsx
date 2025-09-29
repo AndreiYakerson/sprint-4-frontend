@@ -7,7 +7,7 @@ export function TaskPreview({ task }) {
         <section>
             {cmpsOrder.map((cmp, idx) => {
                 return (
-                    <h5>{task.title}</h5>
+                    <h5 key={idx}>{task.title}</h5>
 
 
                     // <DynamicCmp
