@@ -118,8 +118,8 @@ export function BoardDetails() {
       <header className='board-details-header'>
 
         <h2>{board?.title}</h2>
-        
-        <SortFilterCmp/>
+
+        {/* <SortFilterCmp/> */}
         <button onClick={() => onAddGroup(board?._id)} className='blue'>+ Add group</button>
       </header>
 

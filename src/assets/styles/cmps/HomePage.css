@@ -1,7 +1,12 @@
-.home-page{
-/* display: grid; */
+.home-page {
 
-    & .home-page-header{
-        /* border: 1px solid black; */
+    .home-page-header {
+        display: flex;
+        flex-direction: column;
+        align-items: start;
+        justify-content: space-between;
+
+        padding-inline: 20px;
+        padding-block-start: 20px;
     }
 }

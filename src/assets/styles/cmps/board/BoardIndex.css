@@ -1,10 +1,11 @@
 .board-index {
-    & header {
+    .board-index-haeder {
         display: flex;
         align-items: center;
         justify-content: space-between;
 
-        padding-block: .3em;
+        padding-inline: 20px;
+        padding-block-start: 20px;
     }
 
     & h2 {
