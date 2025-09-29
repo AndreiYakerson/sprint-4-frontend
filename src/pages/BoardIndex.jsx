@@ -68,6 +68,7 @@ export function BoardIndex({ setIsSideBarOpen }) {
                 onRemoveBoard={onRemoveBoard}
                 onUpdateBoard={onUpdateBoard}
             />
+
         </section>
     )
 }
