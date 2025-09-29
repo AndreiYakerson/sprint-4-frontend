@@ -1,0 +1,14 @@
+.fcc-container {
+    display: flex;
+    flex-direction: column;
+    
+    width: max-content;
+    padding: 1em;
+    
+    z-index: 1000;
+    box-shadow: var(--box-shadow-large);
+
+    background-color:var(--primary-background-color);
+    border-radius:var(--border-radius-medium);
+
+}
