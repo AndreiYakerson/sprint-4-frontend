@@ -1,0 +1,28 @@
+
+/* EXAMPLE USAGE */
+
+/* .status-box {
+
+    SET POSITION RELATIVE
+    position: relative;
+
+    SET HOVER SCALE
+    &:hover .status-animation {
+        scale: 1;
+    }
+
+} */
+
+
+
+.status-animation {
+    position: absolute;
+    right: 0;
+
+    width: 20px;
+    height: 20px;
+
+    scale: 0;
+    transition: scale .3s ease-in-out;
+    transform-origin: right top;
+}

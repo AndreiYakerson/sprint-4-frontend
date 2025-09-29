@@ -32,3 +32,5 @@
 @import "cmps/board/BoardList";
 @import "cmps/board/BoardFilter";
 @import "cmps/board/BoardDetails";
+
+@import "cmps/StatusAnimation.css";
