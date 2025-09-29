@@ -1,12 +1,10 @@
-export function IconCmp({ src, label = '', position='' }) {
-
-  if (!label) return (
-    <span className='icon' data-type={label}>
-      <img className="icon" src={src} alt={`icon ${label}`} />
-    </span>
-  )
-  else return (
-    <span className={`hover-show ${position}`} data-type={label}>
+export function IconCmp({ src, label = '', position = '', onClick }) {
+  return (
+    <span
+      className={`${label ? `hover-show ${position}` : 'icon'}`}
+      data-type={label}
+      onClick={(e) => onClick?.(e.currentTarget)}
+    >
       <img className="icon" src={src} alt={`icon ${label}`} />
     </span>
   )
