@@ -11,10 +11,9 @@ import { BoardDetails } from './pages/BoardDetails.jsx'
 import { UserDetails } from './pages/UserDetails'
 
 import { AppHeader } from './cmps/AppHeader.jsx'
-import { AppFooter } from './cmps/AppFooter'
 import { UserMsg } from './cmps/UserMsg.jsx'
 import { LoginSignup, Login, Signup } from './pages/LoginSignup.jsx'
-import { SideBar } from './cmps/SideBar.jsx'
+import { SideBar } from './cmps/SideBar/SideBar.jsx'
 
 
 export function RootCmp() {
@@ -40,7 +39,6 @@ export function RootCmp() {
                     </Route>
                 </Routes>
             </main>
-            {/* <AppFooter /> */}
         </div>
     )
 }
