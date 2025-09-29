@@ -8,9 +8,13 @@ import { logout } from '../store/actions/user.actions'
 import notification from '/icons/notification.svg'
 import updateFeed from '/icons/update-feed.svg'
 import { IconCmp } from './IconCmp'
+import { PopUp } from './PopUp'
+import { useState } from 'react'
 
 export function AppHeader() {
 	const user = useSelector(storeState => storeState.userModule.user)
+	const [isPopUpOpen, setIsPopUpOpen] = useState(false)
+	console.log("🚀 ~ AppHeader ~ isPopUpOpen:", isPopUpOpen)
 	const navigate = useNavigate()
 
 	async function onLogout() {
@@ -22,6 +26,7 @@ export function AppHeader() {
 			showErrorMsg('Cannot logout')
 		}
 	}
+
 	return (
 		<header className="app-header full">
 			<Link to="/" className='app-logo'>
@@ -31,8 +36,10 @@ export function AppHeader() {
 
 			<section className='main-nav'>
 				<div className='icon-container flex'>
-					<IconCmp src={notification} label={'Notification'} position={'down'} />
-					<IconCmp src={updateFeed} label={'Update Feed'}  position={'down'} />
+					<IconCmp  src={notification} label={'Notifications'} position={'down'} />
+					<span onClick={()=>setIsPopUpOpen(true)} className="update-feed-icon">
+						<IconCmp src={updateFeed} label={'Update Feed'} position={'down'} />
+					</span>
 				</div>
 				{/* //FIXME לעצב את הקו המפריד בין הקונטיינרים */}
 				<span className='middle-line'>!</span>
@@ -48,6 +55,11 @@ export function AppHeader() {
 							<button onClick={onLogout}>logout</button>
 						</div>
 					)}
+					<PopUp
+						isOpen={isPopUpOpen}
+						onClose={setIsPopUpOpen}
+					>
+					</PopUp>
 				</section>
 			</section>
 		</header>
