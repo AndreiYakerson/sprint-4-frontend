@@ -5,8 +5,9 @@ import { showErrorMsg, showSuccessMsg } from '../services/event-bus.service'
 import { logout } from '../store/actions/user.actions'
 // images
 
-import notifiction from '/icons/notifiction.svg'
+import notification from '/icons/notification.svg'
 import updateFeed from '/icons/update-feed.svg'
+import { IconCmp } from './IconCmp'
 
 export function AppHeader() {
 	const user = useSelector(storeState => storeState.userModule.user)
@@ -30,8 +31,8 @@ export function AppHeader() {
 
 			<section className='main-nav'>
 				<div className='icon-container flex'>
-					<img className='icon' src={notifiction} alt="icon notifications" data-tooltip="Notifications" />
-					<img className='icon' src={updateFeed} alt="icon updateFeed" data-tooltip="Update Feed" />
+					<IconCmp src={notification} label={'Notification'} position={'down'} />
+					<IconCmp src={updateFeed} label={'Update Feed'}  position={'down'} />
 				</div>
 				{/* //FIXME לעצב את הקו המפריד בין הקונטיינרים */}
 				<span className='middle-line'>!</span>

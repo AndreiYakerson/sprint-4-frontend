@@ -67,3 +67,37 @@ object {
         width: 20px;
     }
 }
+
+.hover-show {
+  position: relative;
+
+  &::after {
+    content: attr(data-type);
+
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+
+    padding: 4px 8px;
+    white-space: nowrap;
+    pointer-events: none;
+
+    color: var(--text-color-on-primary);
+    border-radius: 4px;
+    opacity: 0;
+    background-color: #474747;
+    transition: opacity 0.2s ease-in-out;
+  }
+
+  &.up::after {
+    bottom: 150%;
+  }
+
+  &.down::after {
+    top: 150%;
+  }
+
+  &:hover::after {
+    opacity: 1;
+  }
+}

@@ -1,3 +1,4 @@
+import { IconCmp } from './IconCmp'
 import chevronDown from '/icons/chevron-down.svg'
 
 export function SortFilterCmp() {
@@ -8,7 +9,7 @@ export function SortFilterCmp() {
                 <button className="add-new-task">
                     New Task
                 </button>
-                <button className="button-arrow-down"> <img src={chevronDown} alt="arrow down icon" /></button>
+                <button className="button-arrow-down"><IconCmp src={chevronDown}/></button>
             </div>
         </div>
     )

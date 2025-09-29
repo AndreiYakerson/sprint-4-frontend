@@ -1,7 +1,6 @@
 import { TaskList } from "./Task/TaskList"
 
 export function GroupList({ groups, onRemoveGroup, onUpdateGroup, onAddTsak, onRemoveTask, onUpdateTask }) {
-    console.log("🚀 ~ GroupList ~ groups:", groups)
     return (
         <section className="group-list">
             {groups.map(group => {
