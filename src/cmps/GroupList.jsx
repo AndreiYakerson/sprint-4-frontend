@@ -1,6 +1,12 @@
+import { useState } from "react"
+import { ConfirmCmp } from "./ConfirmCmp"
+import { PopUp } from "./PopUp"
 import { TaskList } from "./Task/TaskList"
 
 export function GroupList({ groups, onRemoveGroup, onUpdateGroup, onAddTask, onRemoveTask, onUpdateTask }) {
+    
+
+
     return (
         <section className="group-list">
             {groups.map(group => {
@@ -17,6 +23,14 @@ export function GroupList({ groups, onRemoveGroup, onUpdateGroup, onAddTask, onR
                         onRemoveTask={(taskId) => onRemoveTask(group.id, taskId)}
                         onUpdateTask={(task) => onUpdateTask(group.id, task)}
                     />
+					<PopUp
+						// isOpen={isPopUpOpen}
+						// onClose={setIsPopUpOpen}
+					>
+						<ConfirmCmp
+                        //  onSave={(taskId) => onRemoveTask(group.id, taskId)} onClose={''} header={} mainTxt={} 
+                         />
+					</PopUp>
 
                     <button onClick={() => onAddTask(group.id)}>+ Add task</button>
                 </div>

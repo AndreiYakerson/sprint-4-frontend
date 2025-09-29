@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react"
+import { useSelector } from "react-redux"
+import { onSetPopUpIsOpen } from "../store/actions/board.actions"
 
-export function PopUp({ children,isOpen = false, onClose = () => { } }) {
+export function PopUp({ children = false, onClose = () => { } }) {
 
-    const [isOpenPopUp, setIsOpenPopUp] = useState(isOpen)
-
+    const isPopUpOpen = useSelector(state => state.boardModule.isPopUpOpen)
 
     useEffect(() => {
         const EscapePress = window.addEventListener("keydown", onKey)
@@ -13,20 +14,20 @@ export function PopUp({ children,isOpen = false, onClose = () => { } }) {
     }, [])
 
     function onKey(ev) {
-        if (ev.key == 'Escape') onClosePopUp()
+        if (ev.key == 'Escape') onSetPopUpIsOpen()
     }
-    useEffect(() => {
-        setIsOpenPopUp(isOpen)
-    }, [isOpen])
+    // useEffect(() => {
+    //     onSetPopUpIsOpen()
+    // }, [isOpen])
 
-    function onClosePopUp() {
-        setIsOpenPopUp(false)
-        onClose()
-    }
+    // function onClosePopUp() {
+    //     onSetPopUpIsOpen(false)
+    //     onClose()
+    // }
 
-    if (!isOpenPopUp) return null
+    if (!isPopUpOpen) return null
     return (
-        <div  onClick={onClosePopUp} className="popup-backdrop">
+        <div onClick={onSetPopUpIsOpen} className="popup-backdrop">
             <div onClick={ev => ev.stopPropagation()} className="popup-container">
                 <div className="popup-main">
                     {children}

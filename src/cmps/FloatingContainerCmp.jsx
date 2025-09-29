@@ -38,7 +38,7 @@ export function FloatingContainerCmp({ anchorEl, children, onClose }) {
     }
 
     return (
-        <div className="fcc-container" style={style} ref={popupRef}>
+        <div className="fcc-container" style={style} ref={popupRef} >
             {children}
         </div>
     )
