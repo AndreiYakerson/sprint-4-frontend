@@ -1,8 +1,8 @@
 import { Link } from 'react-router-dom'
 
 // images
-import boardIcon from '../../../public/img/icons/board.svg'
-import boardItemLogo from '../../../public/img/board-item-img.svg'
+import boardIcon from '/icons/board.svg'
+import boardItemLogo from '/img/board-item-img.svg'
 
 export function BoardPreview({ board }) {
 

@@ -5,8 +5,8 @@ import { showErrorMsg, showSuccessMsg } from '../services/event-bus.service'
 import { logout } from '../store/actions/user.actions'
 // images
 
-import notifiction from '../../public/img/icons/notifiction.svg'
-import updateFeed from '../../public/img/icons/update-feed.svg'
+import notifiction from '/icons/notifiction.svg'
+import updateFeed from '/icons/update-feed.svg'
 
 export function AppHeader() {
 	const user = useSelector(storeState => storeState.userModule.user)
@@ -24,7 +24,7 @@ export function AppHeader() {
 	return (
 		<header className="app-header full">
 			<Link to="/" className='app-logo'>
-				<img className='logo-img' src="../../public/img/logo.png" alt="logo-img" />
+				<img className='logo-img' src="/img/logo.png" alt="logo-img" />
 				<div className='app-name'>NodeDay</div>
 			</Link>
 
@@ -40,7 +40,7 @@ export function AppHeader() {
 					{!user && <NavLink to="auth/login" className="login-link">Login</NavLink>}
 					{user && (
 						<div className="user-info">
-							<img className='' src="../../public/img/logo.png" alt="logo" />
+							<img className='' src="/img/logo.png" alt="logo" />
 							<Link to={`user/${user._id}`}>
 								{user.imgUrl && <img src={user.imgUrl} />}
 							</Link>

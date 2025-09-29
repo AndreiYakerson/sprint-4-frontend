@@ -8,11 +8,11 @@ import { loadBoards, onIsSideBarOpen } from "../store/actions/board.actions.js";
 import { BoardList } from "./Board/BoardList.jsx";
 
 // icons 
-import homeIcon from '../../public/img/icons/home.svg'
-import myWork from '../../public/img/icons/my-work.svg'
-import chevronRight from '../../public/img/icons/chevron-right.svg'
-import chevronLeft from '../../public/img/icons/chevron-left.svg'
-import chevronDown from '../../public/img/icons/chevron-down.svg'
+import homeIcon from '/icons/home.svg'
+import myWork from '/icons/my-work.svg'
+import chevronRight from '/icons/chevron-right.svg'
+import chevronLeft from '/icons/chevron-left.svg'
+import chevronDown from '/icons/chevron-down.svg'
 
 export function SideBar() {
 

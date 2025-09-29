@@ -1,4 +1,4 @@
-import chevronDown from '../../public/img/icons/chevron-down.svg'
+import chevronDown from '/icons/chevron-down.svg'
 
 export function SortFilterCmp() {
 
