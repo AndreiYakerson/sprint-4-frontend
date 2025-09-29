@@ -69,35 +69,68 @@ object {
 }
 
 .hover-show {
-  position: relative;
+    position: relative;
 
-  &::after {
-    content: attr(data-type);
+    &::after {
+        content: attr(data-type);
+        position: absolute;
 
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
+        left: 50%;
+        transform: translate(-50%, -10%) scale(0.7, 0.7);
+        transform-origin: center top;
 
-    padding: 4px 8px;
-    white-space: nowrap;
-    pointer-events: none;
+        padding: 4px 8px;
+        white-space: nowrap;
+        pointer-events: none;
 
-    color: var(--text-color-on-primary);
-    border-radius: 4px;
-    opacity: 0;
-    background-color: #474747;
-    transition: opacity 0.2s ease-in-out;
-  }
+        border-radius: 4px;
+        opacity: 0;
+        color: var(--text-color-on-primary);
+        background-color: #474747;
+        transition:
+            opacity 0.1s ease-in-out 0.2s,
+            transform 0.1s ease-in-out 0.2s;
+    }
 
-  &.up::after {
-    bottom: 150%;
-  }
+    &::before {
+        content: "";
+        position: absolute;
 
-  &.down::after {
-    top: 150%;
-  }
+        left: 50%;
+        transform: translateX(-50%);
 
-  &:hover::after {
-    opacity: 1;
-  }
+        border: 6px solid transparent;
+        opacity: 0;
+        transition: opacity 0.1s ease-in-out 0.2s,
+            transform 0.1s ease-in-out 0.2s;
+    }
+
+    &.up::after {
+        bottom: 150%;
+    }
+
+    &.up::before {
+        bottom: calc(150% - 10px);
+        border-top-color: #474747;
+    }
+
+    &.down::after {
+        top: 150%;
+    }
+
+    &.down::before {
+        top: calc(150% - 10px);
+        border-bottom-color: #474747;
+    }
+
+    &:hover::after {
+        opacity: 1;
+        transform: translateX(-50%) scaleX(1);
+        /* grow smoothly */
+    }
+
+    &:hover::before {
+        opacity: 1;
+        /* arrow just fades in */
+    }
 }
