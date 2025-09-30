@@ -6,7 +6,10 @@ import { useEffect } from "react"
 
 export function TaskList({ tasks, onRemoveTask, onUpdateTask, groupId, onUpdateTasksOrder }) {
 
-
+    const [localTasks, setLocalTasks] = useState(tasks)
+    useEffect(() => {
+        setLocalTasks(tasks)
+    }, [tasks])
 
     //TODO must setTasks()
 
@@ -24,8 +27,8 @@ export function TaskList({ tasks, onRemoveTask, onUpdateTask, groupId, onUpdateT
         const [movedTask] = reorderedTasks.splice(source.index, 1);
         reorderedTasks.splice(destination.index, 0, movedTask);
 
-        // setTasks(reorderedTasks)
 
+        setLocalTasks(reorderedTasks)
         onUpdateTasksOrder(reorderedTasks, groupId)
     }
 
@@ -33,28 +36,27 @@ export function TaskList({ tasks, onRemoveTask, onUpdateTask, groupId, onUpdateT
     return (
         <DragDropContext onDragEnd={handleDragEnd}>
             <Droppable droppableId="task-list">
-                
+
 
                 {(provided) => (
                     <section className="task-list" {...provided.droppableProps} ref={provided.innerRef}>
-                        {tasks.map((task, idx) => {
+                        {localTasks.map((task, idx) => {
 
                             return (
                                 <Draggable key={task.id} draggableId={task.id} index={idx}>
                                     {(provided, snapshot) => (
-
                                         <div className={`table-row ${snapshot.isDragging ? 'tilted' : ''}`} {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef}>
                                             <TaskPreview
-                        task={task}
+                                                task={task}
                                                 onRemoveTask={() => onRemoveTask(task.id)}
                                                 onUpdateTask={() => onUpdateTask(task)}
-                    />
+                                            />
                                         </div>
                                     )}
                                 </Draggable>
                             )
                         })}
-                        {provided.placeholder}
+                        {/* {provided.placeholder} */}
                     </section >
                 )}
             </Droppable>
