@@ -68,7 +68,23 @@ export function GroupList({ groups, onRemoveGroup, onUpdateGroup, onAddTask, onR
                         <div className="task-columns flex">
                             <div className="cell full"></div>
                         </div>
+                    </div>
 
+                    <div className="table-row sum-row">
+                        <div className="sticky-cell-wrapper">
+                            <div className="border-radius-block">
+                                <span></span>
+                            </div>
+                        </div>
+
+                        <div className="task-columns flex">
+                            {demoColumns.map(colName => {
+                                return <div key={colName} className="cell">
+                                    <span></span>
+                                </div>
+                            })}
+                            <div className="cell full"></div>
+                        </div>
                     </div>
 
                 </div>
