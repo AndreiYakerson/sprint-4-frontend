@@ -125,6 +125,7 @@ export function BoardDetails() {
     try {
       const savedBoard = await boardService.removeTask(board?._id, groupId, taskId)
       setBoard(savedBoard)
+      if (task.id === taskId) onCloseTaskDetails()
       showSuccessMsg('task removed successfully')
     } catch (err) {
       console.log(err)
@@ -142,6 +143,7 @@ export function BoardDetails() {
     try {
       const savedBoard = await boardService.updateTask(board?._id, groupId, task)
       setBoard(savedBoard)
+      if (task.id === taskId) setTask(task)
       showSuccessMsg('task updated successfully')
     } catch (err) {
       console.log(err)

@@ -6,7 +6,11 @@ export function TaskList({ tasks, onRemoveTask, onUpdateTask }) {
         <section className="task-list">
             {tasks.map(task => {
                 return <div key={task.id} className="table-row">
-                    <TaskPreview task={task} onRemoveTask={() => onRemoveTask(task.id)} />
+                    <TaskPreview
+                        task={task}
+                        onRemoveTask={() => onRemoveTask(task.id)}
+                        onUpdateTask={() => onUpdateTask(task)}
+                    />
                 </div>
             })}
         </section>
