@@ -1,4 +1,4 @@
-import { IconCmp } from './IconCmp'
+import { HoveredTextCmp } from './HoveredTextCmp'
 import chevronDown from '/icons/chevron-down.svg'
 
 export function SortFilterCmp() {
@@ -10,7 +10,7 @@ export function SortFilterCmp() {
                     New Task
                 </button>
                 {/* <button className="button-arrow-down">
-                <IconCmp
+                <HoveredTextCmp
                                         src={chevronDown}
                                         label="Update Feed"
                                         position=""

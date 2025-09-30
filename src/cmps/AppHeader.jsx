@@ -12,12 +12,14 @@ import { onSetPopUpIsOpen } from '../store/actions/system.actions.js'
 import { LoginSignup } from '../pages/LoginSignup'
 import { FloatingContainerCmp } from './FloatingContainerCmp'
 import { PopUp } from './PopUp'
-import { IconCmp } from './IconCmp'
+import { HoveredTextCmp } from './HoveredTextCmp.jsx'
+
+// images
+import haederLogo from '../../public/img/Logo.png'
 
 // icons
 import notification from '/icons/notification.svg'
 import updateFeed from '/icons/update-feed.svg'
-
 
 export function AppHeader() {
 	const user = useSelector(storeState => storeState.userModule.user)
@@ -38,26 +40,28 @@ export function AppHeader() {
 	return (
 		<header className="app-header full">
 			<Link to="/" className='app-logo'>
-				<img className='logo-img' src="/img/logo.png" alt="logo-img" />
+				<img className='logo-img' src={haederLogo} alt="logo-img" />
 				<div className='app-name'>NodeDay</div>
 			</Link>
 
 			<section className='main-nav'>
 				<div className='icon-container flex'>
-					<IconCmp
-						src={notification}
+
+					<HoveredTextCmp
 						label="Notifications"
 						position="down"
 						onClick={(ev) => setAnchorEl(ev.currentTarget)}
-					/>
+					>
+						<img src={notification} />
+					</HoveredTextCmp>
 
 					{/* <span onClick={() => onSetPopUpIsOpen(true)} className="update-feed-icon"> */}
-					<IconCmp
+					{/* <IconCmp
 						src={updateFeed}
 						label="Update Feed"
 						position="down"
 						onClick={() => onSetPopUpIsOpen(true)}
-					/>
+					/> */}
 					{/* <IconCmp src={updateFeed} label={'Update Feed'} position={'down'} /> */}
 					{/* </span> */}
 				</div>

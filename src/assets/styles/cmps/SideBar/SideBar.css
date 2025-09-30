@@ -49,6 +49,8 @@
         a {
             display: flex;
             padding-inline-start: 8px;
+            align-items: center;
+            
             gap: 12px;
             color: var(--secondary-text-color);
             white-space: nowrap;

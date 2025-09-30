@@ -8,7 +8,7 @@ import { onSetIsSideBarOpen } from "../../store/actions/system.actions.js";
 
 // cmps
 import { BoardList } from "../Board/BoardList.jsx";
-import { IconCmp } from "../IconCmp.jsx";
+
 
 // icons 
 import homeIcon from '/icons/home.svg'
@@ -16,6 +16,7 @@ import myWork from '/icons/my-work.svg'
 import chevronRight from '/icons/chevron-right.svg'
 import chevronLeft from '/icons/chevron-left.svg'
 import chevronDown from '/icons/chevron-down.svg'
+import { HoveredTextCmp } from "../HoveredTextCmp.jsx";
 
 export function SideBar() {
 
@@ -31,25 +32,25 @@ export function SideBar() {
 
     return (
         <div className={`side-bar ${isSideBarOpen}`}>
-            <button className={`icon close-btn ${isSideBarOpen}`}>
-                <IconCmp
-                    src={isSideBarOpen ? chevronLeft : chevronRight}
+            <button className={`icon close-btn ${isSideBarOpen}`} onClick={() => onSetIsSideBarOpen(!isSideBarOpen)}>
+                <HoveredTextCmp
                     label={isSideBarOpen ? 'Close Navigation' : 'Open Navigation'}
                     position={'down'}
-                    onClick={() => onSetIsSideBarOpen(!isSideBarOpen)}
-                />
+                >
+                    <img src={isSideBarOpen ? chevronLeft : chevronRight} alt="" />
+                </HoveredTextCmp>
             </button>
             <div className="side-bar-content">
                 <nav className="side-nav-list">
-                    <NavLink to=""><IconCmp src={homeIcon} />Home</NavLink>
-                    <NavLink to=""><IconCmp src={myWork} />My Work</NavLink>
+                    <NavLink to=""><HoveredTextCmp><img src={homeIcon} /></HoveredTextCmp>Home</NavLink>
+                    <NavLink to=""><HoveredTextCmp><img src={myWork} /></HoveredTextCmp>My Work</NavLink>
                 </nav>
                 {/* <div className="favorites flex">Favorites
                     {
                     isSideBarOpen ?  
-                      <IconCmp src={chevronRight} label="chevron Right" position="" />  
+                      <HoveredTextCmp src={chevronRight} label="chevron Right" position="" />  
                     : 
-                      <IconCmp src={chevronDown} label="chevron Down" position="" />  
+                      <HoveredTextCmp src={chevronDown} label="chevron Down" position="" />  
                     }
                     </div> */}
 
