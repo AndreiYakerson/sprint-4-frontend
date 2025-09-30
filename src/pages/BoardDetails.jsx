@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux'
 // services
 import { boardService } from '../services/board/index.js'
 import { showSuccessMsg, showErrorMsg } from '../services/event-bus.service'
-// import { loadBoard } from '../store/actions/board.actions'
+import { addGroup, addTask, loadBoard, removeGroup, removeTask, updateGroup, updateTasksOrder } from '../store/actions/board.actions.js'
 
 // cmps
 import { GroupList } from '../cmps/GroupList'
@@ -18,14 +18,14 @@ export function BoardDetails() {
 
   const { boardId, taskId } = useParams()
 
-  // const board = useSelector(storeState => storeState.boardModule.board)
+  const board = useSelector(storeState => storeState.boardModule.board)
 
-  const [board, setBoard] = useState(null)
+  // const [board, setBoard] = useState(null)
   const [task, setTask] = useState(null)
 
   useEffect(() => {
     if (!board || board?._id !== boardId) {
-      loadBoard(boardId, taskId)
+      onLoadBoard(boardId, taskId)
     } else if (taskId && taskId !== task?.id) {
       setTaskForDetails(taskId, board)
     } else if (!taskId && task) {
@@ -34,10 +34,10 @@ export function BoardDetails() {
 
   }, [boardId, taskId])
 
-  async function loadBoard(boardId, taskId) {
+  async function onLoadBoard(boardId, taskId) {
     try {
-      const board = await boardService.getById(boardId)
-      setBoard(board)
+
+      await loadBoard(boardId)
 
       if (taskId) setTaskForDetails(taskId, board)
       else if (task) setTask(null)
@@ -69,10 +69,11 @@ export function BoardDetails() {
     navigate(`/board/${boardId}`)
   }
 
+  // Groups
+
   async function onAddGroup() {
     try {
-      const savedBoard = await boardService.addGroup(board?._id)
-      setBoard(savedBoard)
+      await addGroup(board?._id)
       showSuccessMsg('group added to the board')
     } catch (err) {
       console.log(err)
@@ -88,8 +89,7 @@ export function BoardDetails() {
     group.title = title
 
     try {
-      const savedBoard = await boardService.updateGroup(board?._id, group)
-      setBoard(savedBoard)
+      await updateGroup(board?._id, group)
       showSuccessMsg('group updated successfully')
     } catch (err) {
       console.log(err)
@@ -99,8 +99,7 @@ export function BoardDetails() {
 
   async function onRemoveGroup(groupId) {
     try {
-      const savedBoard = await boardService.removeGroup(board?._id, groupId)
-      setBoard(savedBoard)
+      await removeGroup(board?._id, groupId)
       showSuccessMsg('group removed successfully')
     } catch (err) {
       console.log(err)
@@ -112,8 +111,7 @@ export function BoardDetails() {
   // task functions
   async function onAddTask(groupId) {
     try {
-      const savedBoard = await boardService.addTask(board?._id, groupId)
-      setBoard(savedBoard)
+      await addTask(board?._id, groupId)
       showSuccessMsg('task added to the board')
     } catch (err) {
       console.log(err)
@@ -123,9 +121,8 @@ export function BoardDetails() {
 
   async function onRemoveTask(groupId, taskId) {
     try {
-      const savedBoard = await boardService.removeTask(board?._id, groupId, taskId)
-      setBoard(savedBoard)
-      if (task.id === taskId) onCloseTaskDetails()
+      await removeTask(board?._id, groupId, taskId)
+      if (task?.id === taskId) onCloseTaskDetails()
       showSuccessMsg('task removed successfully')
     } catch (err) {
       console.log(err)
@@ -133,7 +130,7 @@ export function BoardDetails() {
     }
   }
 
-  // for now its just for task title
+  // for now its just for task title --  need to remove this
   async function onUpdateTask(groupId, task) {
     const title = prompt('New title?', task.title) || ''
     if (title === '' || title === board.title) return
@@ -153,8 +150,7 @@ export function BoardDetails() {
 
   async function onUpdateTasksOrder(tasks, groupId) {
     try {
-      const savedBoard = await boardService.updateTasksOrder(tasks, board?._id, groupId)
-      setBoard(savedBoard)
+      await updateTasksOrder(tasks, board?._id, groupId)
       showSuccessMsg('tasks order updated successfully')
     } catch (err) {
       console.log(err)
@@ -190,7 +186,7 @@ export function BoardDetails() {
             onRemoveTask={onRemoveTask}
             onUpdateTask={onUpdateTask}
             onUpdateTasksOrder={onUpdateTasksOrder}
-        />}
+          />}
 
       </div>
 

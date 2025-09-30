@@ -93,7 +93,9 @@ async function addGroup(boardId) {
 
         board.groups.push(newGroupToAdd)
 
-        return await save(board)
+        await save(board)
+
+        return newGroupToAdd
 
     } catch (err) {
         throw err
@@ -111,7 +113,9 @@ async function updateGroup(boardId, groupToUpdate) {
 
         board.groups[idx] = { ...board.groups[idx], ...groupToUpdate }
 
-        return await save(board)
+        await save(board)
+
+        return board.groups[idx]
 
     } catch (err) {
         throw err
@@ -143,13 +147,15 @@ async function addTask(boardId, groupId) {
         if (!board) throw new Error(`Board ${boardId} not found`);
 
         const idx = board.groups.findIndex(group => group.id === groupId)
-        if (idx === -1) throw new Error(`Board ${groupId} not found`);
+        if (idx === -1) throw new Error(`group ${groupId} not found`);
 
         const newTaskToAdd = _getEmptyTask()
 
         board.groups[idx].tasks.push(newTaskToAdd)
 
-        return await save(board)
+        await save(board)
+
+        return newTaskToAdd
 
     } catch (err) {
         throw err
@@ -160,16 +166,19 @@ async function updateTask(boardId, groupId, taskToUpdate) {
 
     try {
         const board = await getById(boardId)
-        if (!board) throw new Error(`Board ${boardId} not found`);
+        if (!board) throw new Error(`Board ${boardId} not found`)
 
-        const idx = board.groups.findIndex(group => group.id === groupId)
-        if (idx === -1) throw new Error(`Board ${groupId} not found`);
+        const group = board.groups.find(g => g.id === groupId)
+        if (!group) throw new Error(`Group ${groupId} not found`)
 
-        board.groups[idx].tasks = board.groups[idx].tasks.map(task => {
-            return task.id === taskToUpdate.id ? { ...task, ...taskToUpdate } : task
-        })
+        const taskIdx = group.tasks.findIndex(t => t.id === taskToUpdate.id)
+        if (taskIdx === -1) throw new Error(`Task ${taskToUpdate.id} not found`)
 
-        return await save(board)
+        group.tasks[taskIdx] = { ...group.tasks[taskIdx], ...taskToUpdate }
+
+        await save(board)
+
+        return group.tasks[taskIdx]
 
     } catch (err) {
         throw err

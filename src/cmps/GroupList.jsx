@@ -4,8 +4,8 @@ import { PopUp } from "./PopUp"
 import { TaskList } from "./Task/TaskList"
 
 export function GroupList({ groups, onRemoveGroup, onUpdateGroup, onAddTask, onRemoveTask, onUpdateTask, onUpdateTasksOrder }) {
-    
-    
+
+
 
     const demoColumns = ['Status', 'Priority', 'Members', 'Date']
 

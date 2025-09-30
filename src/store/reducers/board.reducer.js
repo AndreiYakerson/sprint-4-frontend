@@ -1,15 +1,32 @@
+// boards actions
 export const SET_BOARDS = 'SET_BOARDS'
+export const REMOVE_BOARD = 'REMOVE_BOARD'
+export const UPDATE_BOARD = 'UPDATE_BOARD'
+export const ADD_BOARD = 'ADD_BOARD'
+
+// board actions
 export const SET_BOARD = 'SET_BOARD'
+
+export const ADD_GROUP = 'ADD_GROUP'
+export const UPDATE_GROUP = 'UPDATE_GROUP'
+export const REMOVE_GROUP = 'REMOVE_GROUP'
+
+export const SET_TASKS = 'SET_TASKS'
+export const ADD_TASK = 'ADD_TASK'
+export const UPDATE_TASK = 'UPDATE_TASK'
+export const REMOVE_TASK = 'REMOVE_TASK'
+
+
+export const ADD_BOARD_MSG = 'ADD_BOARD_MSG'
+
 export const IS_POPUP_ON = 'IS_POPUP_ON'
 export const SET_SIDE_BAR_OPEN = 'SET_SIDE_BAR_OPEN'
-export const REMOVE_BOARD = 'REMOVE_BOARD'
-export const ADD_BOARD = 'ADD_BOARD'
-export const UPDATE_BOARD = 'UPDATE_BOARD'
-export const ADD_BOARD_MSG = 'ADD_BOARD_MSG'
+
 
 const initialState = {
     boards: [],
     board: null,
+
     isSideBarOpen: true,
     isPopUpOpen: false,
 }
@@ -18,17 +35,9 @@ export function boardReducer(state = initialState, action) {
     var newState = state
     var boards
     switch (action.type) {
+        // boards actions
         case SET_BOARDS:
             newState = { ...state, boards: action.boards }
-            break
-        case SET_BOARD:
-            newState = { ...state, board: action.board }
-            break
-        case IS_POPUP_ON:
-            newState = { ...state, isPopUpOpen: action.value }
-            break
-        case SET_SIDE_BAR_OPEN:
-            newState = { ...state, isSideBarOpen: action.value }
             break
         case REMOVE_BOARD:
             const lastRemovedBoard = state.boards.find(board => board._id === action.boardId)
@@ -41,6 +50,88 @@ export function boardReducer(state = initialState, action) {
         case UPDATE_BOARD:
             boards = state.boards.map(board => (board._id === action.board._id) ? action.board : board)
             newState = { ...state, boards }
+            break
+
+        // board actions
+        case SET_BOARD:
+            newState = { ...state, board: action.board }
+            break
+        // group actions
+        case ADD_GROUP:
+            newState = { ...state, board: { ...state.board, groups: [...state.board.groups, action.group] } }
+            break
+        case UPDATE_GROUP:
+            newState = {
+                ...state, board: {
+                    ...state.board,
+                    groups: state.board.groups.map(g => g.id === action.group ? { ...g, ...action.group } : g)
+                }
+            }
+            break
+        case REMOVE_GROUP:
+            newState = {
+                ...state, board: {
+                    ...state.board,
+                    groups: state.board.groups.filter(g => g.id !== action.groupId)
+                }
+            }
+            break
+
+        // task actions
+        case SET_TASKS:
+            var board = { ...state.board }
+            board.groups = state.board.groups.map(g => {
+                if (g.id !== action.groupId) return g
+                const group = { ...g }
+                group.tasks = action.tasks
+                return group
+            })
+            // board.activities = [...board.activities, action.activity]
+            newState = { ...state, board }
+            break
+
+        case ADD_TASK:
+            var board = { ...state.board }
+            board.groups = state.board.groups.map(g => {
+                if (g.id !== action.groupId) return g
+                const group = { ...g }
+                group.tasks = [...group.tasks, action.task]
+                return group
+            })
+            // board.activities = [...board.activities, action.activity]
+            newState = { ...state, board }
+            break
+
+        case UPDATE_TASK:
+            var board = { ...state.board }
+            board.groups = state.board.groups.map(g => {
+                if (g.id !== action.groupId) return g
+                const group = { ...g }
+                group.tasks = group.tasks.map(t => (t.id !== action.task.id) ? t : action.task)
+                return group
+            })
+            // board.activities = [...board.activities, action.activity]
+            newState = { ...state, board }
+            break
+
+        case REMOVE_TASK:
+            var board = { ...state.board }
+            board.groups = state.board.groups.map(g => {
+                if (g.id !== action.groupId) return g
+                const group = { ...g }
+                group.tasks = group.tasks.filter(t => t.id !== action.taskId)
+                return group
+            })
+            // board.activities = [...board.activities, action.activity]
+            newState = { ...state, board }
+            break
+
+
+        case IS_POPUP_ON:
+            newState = { ...state, isPopUpOpen: action.value }
+            break
+        case SET_SIDE_BAR_OPEN:
+            newState = { ...state, isSideBarOpen: action.value }
             break
         default:
     }

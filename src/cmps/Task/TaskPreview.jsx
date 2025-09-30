@@ -1,6 +1,10 @@
 import { useState } from "react"
 import { useParams, Link, useNavigate } from "react-router-dom"
 
+// services
+import { updateTask } from "../../store/actions/board.actions.js"
+import { showErrorMsg, showSuccessMsg } from "../../services/event-bus.service"
+
 // cmps
 import { DynamicCmp } from "../DynamicCmp"
 import { TitleEditor } from "./TitleEditor"
@@ -8,7 +12,7 @@ import { TitleEditor } from "./TitleEditor"
 // icon
 import updateIcon from "../../../public/icons/update.svg"
 
-export function TaskPreview({ task, onRemoveTask, onUpdateTask }) {
+export function TaskPreview({ task, onRemoveTask, onUpdateTask, groupId }) {
     const navigate = useNavigate()
     const { boardId, taskId } = useParams()
 
@@ -42,15 +46,17 @@ export function TaskPreview({ task, onRemoveTask, onUpdateTask }) {
         updatedCmp.info[cmpInfoPropName] = data
         setCmps(cmps.map(currCmp => (currCmp.info.propName !== cmp.info.propName) ? currCmp : updatedCmp))
 
-        // // Update the task
-        // const updatedTask = structuredClone(task)
-        // updatedTask[taskPropName] = data
-        // try {
-        //     await updateTask(boardId, groupId, updatedTask, activityTitle)
-        //     showSuccessMsg(`Task updated`)
-        // } catch (err) {
-        //     showErrorMsg('Cannot update task')
-        // }
+        // Update the task
+        const updatedTask = structuredClone(task)
+        updatedTask[taskPropName] = data
+
+        try {
+            await updateTask(boardId, groupId, updatedTask, activityTitle)
+            showSuccessMsg(`Task updated`)
+        } catch (err) {
+            console.log('err:', err)
+            showErrorMsg('Cannot update task')
+        }
     }
 
     function onToggleTaskDetails() {
