@@ -17,7 +17,8 @@ export const boardService = {
     //task 
     addTask,
     removeTask,
-    updateTask
+    updateTask,
+    updateTasksOrder
 }
 window.cs = boardService
 
@@ -41,6 +42,23 @@ async function query(filterBy = { txt: '' }) {
 
     boards = boards.map(({ _id, title }) => ({ _id, title }))
     return boards
+}
+
+async function updateTasksOrder(orderedTasks, boardId, groupId) {
+    try {
+        const board = await getById(boardId)
+        if (!board) throw new Error(`Board ${boardId} not found`);
+
+        const idx = board.groups.findIndex(group => group.id === groupId)
+        if (idx === -1) throw new Error(`Board ${groupId} not found`);
+
+        board.groups[idx].tasks = orderedTasks
+
+        return await save(board)
+
+    } catch (err) {
+        throw err
+    }
 }
 
 function getById(boardId) {

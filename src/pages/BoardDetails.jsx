@@ -109,6 +109,18 @@ export function BoardDetails() {
     }
   }
 
+  async function onUpdateTasksOrder(tasks, groupId) {
+    try {
+      const savedBoard = await boardService.updateTasksOrder(tasks, board?._id, groupId)
+      setBoard(savedBoard)
+      showSuccessMsg('tasks order updated successfully')
+    } catch (err) {
+      console.log(err)
+      showErrorMsg('cannot update tasks order')
+    }
+
+  }
+
 
   return (
     <section className="board-details">
@@ -129,6 +141,7 @@ export function BoardDetails() {
           onAddTask={onAddTask}
           onRemoveTask={onRemoveTask}
           onUpdateTask={onUpdateTask}
+          onUpdateTasksOrder={onUpdateTasksOrder}
         />}
 
 

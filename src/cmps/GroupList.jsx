@@ -1,6 +1,8 @@
 import { TaskList } from "./Task/TaskList"
 
-export function GroupList({ groups, onRemoveGroup, onUpdateGroup, onAddTask, onRemoveTask, onUpdateTask }) {
+export function GroupList({ groups, onRemoveGroup, onUpdateGroup, onAddTask, onRemoveTask, onUpdateTask, onUpdateTasksOrder }) {
+    
+    
     return (
         <section className="group-list">
             {groups.map(group => {
@@ -16,6 +18,8 @@ export function GroupList({ groups, onRemoveGroup, onUpdateGroup, onAddTask, onR
                         tasks={group.tasks}
                         onRemoveTask={(taskId) => onRemoveTask(group.id, taskId)}
                         onUpdateTask={(task) => onUpdateTask(group.id, task)}
+                        groupId={group.id}
+                        onUpdateTasksOrder={onUpdateTasksOrder}
                     />
 
                     <button onClick={() => onAddTask(group.id)}>+ Add task</button>
