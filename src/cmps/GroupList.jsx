@@ -8,7 +8,7 @@ export function GroupList({ groups, onRemoveGroup, onUpdateGroup, onAddTask, onR
         <section className="group-list">
             {groups.map(group => {
                 return <div key={group.id} className="group-container"
-                    style={{ '--group-color': group?.color ? group?.color : '#d0d4e4' }}
+                    style={group?.style ? group?.style : { '--group-color': '#d0d4e4' }}
                 >
 
                     <header className="group-haeder">
@@ -74,6 +74,6 @@ export function GroupList({ groups, onRemoveGroup, onUpdateGroup, onAddTask, onR
 
                 </div>
             })}
-        </section>
+        </section >
     )
 }
