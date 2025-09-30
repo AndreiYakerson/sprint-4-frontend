@@ -13,18 +13,17 @@ export function GroupList({ groups, onRemoveGroup, onUpdateGroup, onAddTask, onR
 
                     <header className="group-haeder">
 
-                        <div className="group-title-container">
+                        <div className="group-title-row">
                             <div className="group-menu-wrapper">
                                 <button onClick={() => onRemoveGroup(group.id)}>X</button>
                             </div>
                             <div className="collapse-group"></div>
-                            <div className="group-title">
-                                {group.title}
-                                <button onClick={() => onUpdateGroup(group)}>Update Title</button>
+                            <div className="group-title flex">
+                                <div>{group.title}</div>
+
                             </div>
-
-
-
+                            <button onClick={() => onUpdateGroup(group)}>Update Title</button>
+                            <div className="task-count">{group?.tasks?.length > 0 ? group?.tasks?.length : 'No'} Tasks</div>
                         </div>
 
                         <div className="temporary-white-block"></div>

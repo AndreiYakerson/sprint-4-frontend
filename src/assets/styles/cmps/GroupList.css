@@ -19,17 +19,23 @@
             grid-template-columns: subgrid;
             grid-column: 1/-1;
 
-            .group-title-container {
+            .group-title-row {
                 position: sticky;
                 left: 0;
                 height: 40px;
 
                 display: grid;
-                grid-template-columns: 36px 30px 1fr;
+                grid-template-columns: 36px 30px max-content max-content max-content;
+                align-items: center;
+                gap: 2px;
                 background-color: white;
 
                 &:hover {
                     .group-menu-wrapper>* {
+                        opacity: 1;
+                    }
+
+                    .task-count {
                         opacity: 1;
                     }
                 }
@@ -48,9 +54,15 @@
                 }
 
                 .group-title {
-                    font-size: 18px;
+                    font-size: 1.28571428571em;
                     font-weight: 500;
                     color: var(--group-color);
+                }
+
+                .task-count {
+                    font-weight: 400;
+                    opacity: 0;
+                    transition: 200ms ease-in-out;
                 }
             }
 
