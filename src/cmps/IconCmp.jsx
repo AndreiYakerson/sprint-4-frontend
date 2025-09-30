@@ -5,7 +5,7 @@ export const IconCmp = forwardRef(({ src, label, position, onClick }, ref) => {
     <img
       ref={ref}
       src={src}
-      alt={label || 'icon'}
+      alt={`${label} icon`}
       className={`icon icon-${position || 'default'}`}
       onClick={onClick}
       style={{ cursor: 'pointer' }}

@@ -12,13 +12,14 @@ import { PopUp } from './PopUp'
 import { useState } from 'react'
 import { FloatingContainerCmp } from './FloatingContainerCmp'
 import { LoginSignup } from '../pages/LoginSignup'
-import { onSetIsSideBarOpen, onSetPopUpIsOpen } from '../store/actions/board.actions'
+import { onSetPopUpIsOpen } from '../store/actions/board.actions'
 
 export function AppHeader() {
 	const user = useSelector(storeState => storeState.userModule.user)
+
 	const [anchorEl, setAnchorEl] = useState(null)
+
 	const navigate = useNavigate()
-	const dispatch = useDispatch()
 	async function onLogout() {
 		try {
 			await logout()
@@ -39,10 +40,23 @@ export function AppHeader() {
 			<section className='main-nav'>
 
 				<div className='icon-container flex'>
-					<IconCmp onClick={(el) => setAnchorEl(el)} src={notification} label={'Notifications'} position={'down'} />
-					<span onClick={onSetPopUpIsOpen} className="update-feed-icon">
-						<IconCmp src={updateFeed} label={'Update Feed'} position={'down'} />
-					</span>
+					<IconCmp
+						className='icon'
+						src={notification}
+						label="Notifications"
+						position="down"
+						onClick={(ev) => setAnchorEl(ev.currentTarget)}
+					/>
+
+					{/* <span onClick={() => onSetPopUpIsOpen(true)} className="update-feed-icon"> */}
+						<IconCmp
+						src={updateFeed}
+						label="Update Feed"
+						position="down"
+						onClick={() => onSetPopUpIsOpen(true)}
+					/>
+						{/* <IconCmp src={updateFeed} label={'Update Feed'} position={'down'} /> */}
+					{/* </span> */}
 				</div>
 				{/* //FIXME לעצב את הקו המפריד בין הקונטיינרים */}
 				<span className='middle-line'>!</span>
@@ -58,18 +72,17 @@ export function AppHeader() {
 							<button onClick={onLogout}>logout</button>
 						</div>
 					)}
-					<PopUp
-						
-					>
+					<PopUp>
 						{/* <LoginSignup /> */}
 					</PopUp>
 
-					<FloatingContainerCmp
-						anchorEl={anchorEl}
-						onClose={onSetPopUpIsOpen}
-					>
-						<LoginSignup />
-					</FloatingContainerCmp>
+					{anchorEl &&
+						<FloatingContainerCmp
+							anchorEl={anchorEl}
+							onClose={() => setAnchorEl(null)}
+						>
+							<LoginSignup />
+						</FloatingContainerCmp>}
 				</section>
 			</section>
 		</header>

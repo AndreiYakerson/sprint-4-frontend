@@ -14,20 +14,13 @@ export function PopUp({ children = false, onClose = () => { } }) {
     }, [])
 
     function onKey(ev) {
-        if (ev.key == 'Escape') onSetPopUpIsOpen()
+        console.log('variable')
+        
+        if (ev.key == 'Escape') onSetPopUpIsOpen(false)
     }
-    // useEffect(() => {
-    //     onSetPopUpIsOpen()
-    // }, [isOpen])
-
-    // function onClosePopUp() {
-    //     onSetPopUpIsOpen(false)
-    //     onClose()
-    // }
-
     if (!isPopUpOpen) return null
     return (
-        <div onClick={onSetPopUpIsOpen} className="popup-backdrop">
+        <div onClick={()=>onSetPopUpIsOpen(false)} className="popup-backdrop">
             <div onClick={ev => ev.stopPropagation()} className="popup-container">
                 <div className="popup-main">
                     {children}
