@@ -1,0 +1,7 @@
+.simple-ellipsis {
+    display: flex;
+    overflow: hidden;
+    white-space: nowrap;
+    /* This property automatically reserves space for the '...' */
+    text-overflow: ellipsis;
+}
