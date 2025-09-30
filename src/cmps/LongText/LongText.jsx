@@ -1,4 +1,4 @@
-export function LongTxt({ text, maxWidth='150px', className = '' }) {
+export function LongTxt({ txt, maxWidth='150px', className = '' }) {
   const truncationStyle = {
     maxWidth: maxWidth,
     overflow: 'hidden',
@@ -11,9 +11,9 @@ export function LongTxt({ text, maxWidth='150px', className = '' }) {
     <div 
       className={`long-txt ${className}`} 
       style={truncationStyle} 
-      title={text} // Shows full text on hover
+      title={txt} // Shows full text on hover
     >
-      {text}
+      {txt}
     </div>
   );
 }

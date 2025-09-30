@@ -1,3 +1,4 @@
+import { forwardRef } from "react";
 
 export const HoveredTextCmp = forwardRef(({ children, label, position, onClick, size }, ref) => {
   const hoverShow = label ? 'hover-show' : '';

@@ -1,9 +1,0 @@
-.board-info-items{
-
-}
-.simple-ellipsis {
-    overflow: hidden; 
-    white-space: nowrap; 
-    /* This property automatically reserves space for the '...' */
-    text-overflow: ellipsis; 
-}

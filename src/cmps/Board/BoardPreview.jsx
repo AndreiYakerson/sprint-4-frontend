@@ -7,6 +7,7 @@ import starFull from '/icons/star-full.svg'
 import star from '/icons/star.svg'
 import boardItemLogo from '/img/board-item-img.svg'
 import { useState } from 'react'
+import { LongTxt } from '../LongText/LongText.jsx'
 
 export function BoardPreview({ board }) {
     const [anchorEl, setAnchorEl] = useState(null)
@@ -22,19 +23,22 @@ export function BoardPreview({ board }) {
                     <div className='board-info-items flex'>
                         <HoveredTextCmp
                             size='big'
-                            src={dashboard}
+                         
                             position="down"
                             label="Dash Board"
-                        />
+                        >
+                         <img src={boardIcon} />   
+                        </HoveredTextCmp>
                         <span className='hover-show' data-type="Board Title"><LongTxt txt={board.title}/></span>
                         <span >
                             <HoveredTextCmp
                                 size='big'
-                                src={starFull}
                                 position="down"
                                 label={'logo'}
                             
-                            />
+                            >
+                                 <img src={starFull} />
+                            </HoveredTextCmp>
                         </span>
                     </div>
                 </Link>
