@@ -1,8 +1,12 @@
+import { useParams, Link } from "react-router-dom"
 import { DynamicCmp } from "../DynamicCmp"
 
 export function TaskPreview({ task, onRemoveTask }) {
+    const { boardId, taskId } = useParams()
+
     const cmpsOrder = ['StatusPicker', 'PriorityPicker', 'MemberPicker', 'DatePicker']
     // const cmpsOrder = ['StatusPicker']
+
     return (
         <>
             <div className="sticky-cell-wrapper">
@@ -13,6 +17,8 @@ export function TaskPreview({ task, onRemoveTask }) {
                 <div className="task-select"></div>
                 <div className="task-title">
                     {task.title}
+                    <Link to={taskId ? `/board/${boardId}` : `/board/${boardId}/task/${task.id}`}
+                        className="btn">details</Link>
                 </div>
             </div>
 

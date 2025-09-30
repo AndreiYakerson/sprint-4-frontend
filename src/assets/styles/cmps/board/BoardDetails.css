@@ -1,54 +1,80 @@
 .board-details {
     height: 100%;
-    overflow: auto;
 
-    .board-details-header {
-        position: sticky;
+
+    display: grid;
+    grid-template-columns: 1fr auto;
+
+
+    .task-details-wrapper {
         top: 0;
         left: 0;
+        height: 100%;
+        width: 0;
+        background-color: white;
+        z-index: 500;
+        transition: 200ms;
 
-        background-color: var(--primary-background-color);
-        z-index: 200;
-
-        padding: 18px 30px 0 38px;
-
-        display: grid;
-        grid-template-areas:
-            "title title title"
-            "navigation navigation navigation"
-            "contextualAction contextualAction contextualAction";
-        grid-template-columns: fit-content(800px) 1fr;
-        grid-template-rows: auto;
-        column-gap: 16px;
-        width: 100%;
-
-        .board-title {
-            grid-area: title;
-            font-size: 24px;
-            font-weight: 500;
-            font-family: var(--title-font-family);
-            margin: 0;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
+        &.open {
+            width: 600px;
+            background-color: white;
         }
+    }
 
-        .board-nav {
-            display: flex;
-            align-items: center;
-            grid-area: navigation;
-            border-block-end: 1px solid var(--layout-border-color);
 
-            &>* {
-                min-height: 32px;
-                padding-inline: 20px;
-                place-content: center;
+    .board-details-container {
+        height: 100%;
+        overflow: auto;
+        position: relative;
+
+        .board-details-header {
+            position: sticky;
+            top: 0;
+            left: 0;
+
+            background-color: var(--primary-background-color);
+            z-index: 200;
+
+            padding: 18px 30px 0 38px;
+
+            display: grid;
+            grid-template-areas:
+                "title title title"
+                "navigation navigation navigation"
+                "contextualAction contextualAction contextualAction";
+            grid-template-columns: fit-content(800px) 1fr;
+            grid-template-rows: auto;
+            column-gap: 16px;
+            width: 100%;
+
+            .board-title {
+                grid-area: title;
+                font-size: 24px;
+                font-weight: 500;
+                font-family: var(--title-font-family);
+                margin: 0;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
             }
-        }
 
-        .board-actions {
-            grid-area: contextualAction;
-            padding-block: 16px;
+            .board-nav {
+                display: flex;
+                align-items: center;
+                grid-area: navigation;
+                border-block-end: 1px solid var(--layout-border-color);
+
+                &>* {
+                    min-height: 32px;
+                    padding-inline: 20px;
+                    place-content: center;
+                }
+            }
+
+            .board-actions {
+                grid-area: contextualAction;
+                padding-block: 16px;
+            }
         }
     }
 }

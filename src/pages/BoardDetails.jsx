@@ -1,32 +1,72 @@
 import { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 
+// services
+import { boardService } from '../services/board/index.js'
 import { showSuccessMsg, showErrorMsg } from '../services/event-bus.service'
 // import { loadBoard } from '../store/actions/board.actions'
-import { boardService } from '../services/board/index.js'
+
+// cmps
 import { GroupList } from '../cmps/GroupList'
 import { SortFilterCmp } from '../cmps/SortFilterCmp.jsx'
+import { TaskDetails } from '../cmps/Task/TaskDetails.jsx'
 
 
 export function BoardDetails() {
+  const navigate = useNavigate()
 
-  const { boardId } = useParams()
+  const { boardId, taskId } = useParams()
+
   // const board = useSelector(storeState => storeState.boardModule.board)
+
   const [board, setBoard] = useState(null)
+  const [task, setTask] = useState(null)
 
   useEffect(() => {
-    loadBoard(boardId)
-  }, [boardId])
+    if (!board || board?._id !== boardId) {
+      loadBoard(boardId, taskId)
+    } else if (taskId && taskId !== task?.id) {
+      setTaskForDetails(taskId, board)
+    } else if (!taskId && task) {
+      setTask(null)
+    }
 
-  async function loadBoard(boardId) {
+  }, [boardId, taskId])
+
+  async function loadBoard(boardId, taskId) {
     try {
       const board = await boardService.getById(boardId)
       setBoard(board)
+
+      if (taskId) setTaskForDetails(taskId, board)
+      else if (task) setTask(null)
+
     } catch (err) {
       console.log(err)
       showErrorMsg('faild to laod board')
     }
+  }
+
+  function setTaskForDetails(taskId, board) {
+
+    var foundTask = null
+
+    for (const group of board.groups) {
+      const task = group.tasks.find(task => task.id === taskId)
+      if (task) {
+        foundTask = task
+        break
+      }
+    }
+
+    if (foundTask) {
+      setTask(foundTask)
+    }
+  }
+
+  function onCloseTaskDetails() {
+    navigate(`/board/${boardId}`)
   }
 
   async function onAddGroup() {
@@ -112,30 +152,37 @@ export function BoardDetails() {
 
   return (
     <section className="board-details">
+      <div className="board-details-container" >
 
-      <header className='board-details-header'>
+        <header className='board-details-header'>
 
-        <h2 className='board-title'>{board?.title}</h2>
-        <div className='board-nav'>
-          <div>Main Table</div>
-        </div>
-        <div className='board-actions'>
-          <button onClick={() => onAddGroup(board?._id)} className='blue'>+ Add group</button>
-        </div>
+          <h2 className='board-title'>{board?.title}</h2>
+          <div className='board-nav'>
+            <div>Main Table</div>
+          </div>
+          <div className='board-actions'>
+            <button onClick={() => onAddGroup(board?._id)} className='blue'>+ Add group</button>
+          </div>
 
-        {/* <SortFilterCmp /> */}
-      </header>
+          {/* <SortFilterCmp /> */}
+        </header>
 
-      {board?.groups?.length > 0 &&
-        < GroupList
-          groups={board.groups}
-          onRemoveGroup={onRemoveGroup}
-          onUpdateGroup={onUpdateGroup}
-          onAddTask={onAddTask}
-          onRemoveTask={onRemoveTask}
-          onUpdateTask={onUpdateTask}
-        />}
+        {board?.groups?.length > 0 &&
+          < GroupList
+            groups={board.groups}
+            onRemoveGroup={onRemoveGroup}
+            onUpdateGroup={onUpdateGroup}
+            onAddTask={onAddTask}
+            onRemoveTask={onRemoveTask}
+            onUpdateTask={onUpdateTask}
+          />}
 
+      </div>
+
+
+      <div className={`task-details-wrapper ${task ? "open" : ""}`}>
+        {task && <TaskDetails task={task} onCloseTaskDetails={onCloseTaskDetails} />}
+      </div>
 
     </section>
   )
