@@ -1,7 +1,7 @@
 :root {
   /* site background-color */
-  --surface-color: #edf1fc;
-  --primary-background-color: #ffffff;
+  --surface-color: rgb(237, 241, 252);
+  --primary-background-color: rgb(255, 255, 255);
 
   /* hover background-color  */
   --primary-background-hover-color: rgba(103, 104, 121, 0.1);
@@ -9,17 +9,16 @@
   --primary-selected-color: rgba(194, 213, 255, 0.40);
 
   /* text color -  icon use this colors  */
-  --primary-text-color: #323338;
-  --secondary-text-color: #676879;
-  --text-color-on-primary: #ffffff;
-
+  --primary-text-color: rgb(50, 51, 56);
+  --secondary-text-color: rgb(103, 104, 121);
+  --text-color-on-primary: rgb(255, 255, 255);
 
   /* border */
-  --application-border-color: #e6e9ef;
-  --layout-border-color: #d0d4e4;
+  --application-border-color: rgb(230, 233, 239);
+  --layout-border-color: rgb(208, 212, 228);
 
   /* for btns border */
-  --ui-border-color: #c3c6d4;
+  --ui-border-color: rgb(195, 198, 212);
 
   /*border radius */
   --border-radius-small: 4px;
@@ -30,49 +29,50 @@
   --pulse-background-color-rgb: #f4f5f8;
 
   /* btns */
-  --primary-color: #0073ea;
-  --primary-hover-color: #0060b9;
-  --primary-background-color: #ffffff;
+  --primary-color: rgb(0, 115, 234);
+  --primary-hover-color: rgb(0, 96, 185);
+  --primary-background-color: rgb(255, 255, 255);
   --primary-background-hover-color: rgba(103, 104, 121, 0.1);
 
   /* icon */
-  --star-color: #ffcb00;
+  --star-color: rgb(255, 203, 0);
   --header-icon-size: 20px;
   --aside-menu-icon-size: 16px;
+
   /* group title colors */
-  --group-title-clr1: #17804d;
-  --group-title-clr2: #27c977;
-  --group-title-clr3: #9dd435;
-  --group-title-clr4: #c8b649;
-  --group-title-clr5: #fccb29;
-  --group-title-clr6: #794acf;
-  --group-title-clr7: #9d4edb;
-  --group-title-clr8: #1e7eb3;
-  --group-title-clr9: #5f9bf9;
-  --group-title-clr10: #6fccfd;
-  --group-title-clr11: #b83055;
-  --group-title-clr12: #db2a4d;
-  --group-title-clr13: #fa0080;
-  --group-title-clr14: #fb57c3;
-  --group-title-clr15: #fa6237;
-  --group-title-clr16: #f9aa47;
-  --group-title-clr17: #7d5348;
-  --group-title-clr18: #c4c4c4;
-  --group-title-clr19: #757575;
+  --group-title-clr1: rgb(23, 128, 77);
+  --group-title-clr2: rgb(39, 201, 119);
+  --group-title-clr3: rgb(157, 212, 53);
+  --group-title-clr4: rgb(200, 182, 73);
+  --group-title-clr5: rgb(252, 203, 41);
+  --group-title-clr6: rgb(121, 74, 207);
+  --group-title-clr7: rgb(157, 78, 219);
+  --group-title-clr8: rgb(30, 126, 179);
+  --group-title-clr9: rgb(95, 155, 249);
+  --group-title-clr10: rgb(111, 204, 253);
+  --group-title-clr11: rgb(184, 48, 85);
+  --group-title-clr12: rgb(219, 42, 77);
+  --group-title-clr13: rgb(250, 0, 128);
+  --group-title-clr14: rgb(251, 87, 195);
+  --group-title-clr15: rgb(250, 98, 55);
+  --group-title-clr16: rgb(249, 170, 71);
+  --group-title-clr17: rgb(125, 83, 72);
+  --group-title-clr18: rgb(196, 196, 196);
+  --group-title-clr19: rgb(117, 117, 117);
 
   /* status colors */
-  --working-on-it: #fdab3d;
-  --stuck: #db2a4d;
-  --done: #27c977;
-  --defult-label-color: #c4c4c4;
+  --working-on-it: rgb(253, 171, 61);
+  --stuck: rgb(219, 42, 77);
+  --done: rgb(39, 201, 119);
+  --defult-label-color: rgb(196, 196, 196);
 
   /* success */
-  --positive-color: #00854d;
-  --positive-color-hover: #007038;
+  --positive-color: rgb(0, 133, 77);
+  --positive-color-hover: rgb(0, 112, 56);
 
   /* error */
-  --negative-color: #d83a52;
-  --negative-color-hover: #b63546;
+  --negative-color: rgb(216, 58, 82);
+  --negative-color-hover: rgb(182, 53, 70);
 
 
   /* box-shadow */
