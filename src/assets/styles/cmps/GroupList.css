@@ -28,7 +28,7 @@
                 grid-template-columns: 36px 30px max-content max-content max-content;
                 align-items: center;
                 gap: 2px;
-                background-color: white;
+                background-color: var(--primary-background-color);
 
                 &:hover {
                     .group-menu-wrapper>* {
@@ -70,7 +70,7 @@
         }
 
         .temporary-white-block {
-            background-color: white;
+            background-color: var(--primary-background-color);
         }
 
         .table-row {
@@ -79,7 +79,7 @@
             grid-template-columns: subgrid;
             grid-column: 1/-1;
             height: 36px;
-            background-color: white;
+            background-color: var(--primary-background-color);
             margin-inline-start: 36px;
 
             &:has(.add-task-cell) {
@@ -151,7 +151,7 @@
                     justify-content: end;
                     place-items: center;
 
-                    background-color: white;
+                    background-color: var(--primary-background-color);
                     width: 36px;
                     height: 40px;
 
@@ -196,7 +196,7 @@
                         right: -10px;
                         width: 10px;
                         height: 36px;
-                        background-color: rgb(255, 255, 255);
+                        background-color: var(--primary-background-color);
                         border-block-end: 0;
                         border-inline-end: 0;
                         z-index: 30;

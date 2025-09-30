@@ -11,13 +11,13 @@
         left: 0;
         height: 100%;
         width: 0;
-        background-color: white;
+        background-color: var(--primary-background-color);
         z-index: 500;
         transition: 200ms;
 
         &.open {
             width: 600px;
-            background-color: white;
+            background-color: var(--primary-background-color);
         }
     }
 
