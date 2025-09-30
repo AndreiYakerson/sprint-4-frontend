@@ -1,7 +1,6 @@
 export const SET_BOARDS = 'SET_BOARDS'
 export const SET_BOARD = 'SET_BOARD'
 export const IS_POPUP_ON = 'IS_POPUP_ON'
-export const IS_FCC_ON = 'IS_FCC_ON'
 export const SET_SIDE_BAR_OPEN = 'SET_SIDE_BAR_OPEN'
 export const REMOVE_BOARD = 'REMOVE_BOARD'
 export const ADD_BOARD = 'ADD_BOARD'
@@ -13,7 +12,6 @@ const initialState = {
     board: null,
     isSideBarOpen: true,
     isPopUpOpen: false,
-    isFccOn: false,
 }
 
 export function boardReducer(state = initialState, action) {
@@ -27,14 +25,7 @@ export function boardReducer(state = initialState, action) {
             newState = { ...state, board: action.board }
             break
         case IS_POPUP_ON:
-            console.log("🚀 ~ boardReducer ~ action.value:", action.value)
             newState = { ...state, isPopUpOpen: action.value }
-            break
-        case IS_FCC_ON:
-            console.log("🚀 ~ boardReducer ~ action.value:", action.value)
-            if (state.isPopUpOpen) state.isPopUpOpen = false
-
-            newState = { ...state, isFccOn: action.value }
             break
         case SET_SIDE_BAR_OPEN:
             newState = { ...state, isSideBarOpen: action.value }
