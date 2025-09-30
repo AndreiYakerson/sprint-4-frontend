@@ -87,6 +87,10 @@
                 box-shadow: var(--board-elevation);
             }
 
+            &:has(:focus, .focus) {
+                background-color: var(--primary-selected-color-rgb);
+            }
+
             &.table-header {
                 .sticky-cell-wrapper {
                     &>*:not(.table-border, .task-menu-wrapper) {
@@ -111,7 +115,7 @@
 
 
             &:hover {
-                &:not(.table-header, .sum-row) {
+                &:not(.table-header, .sum-row, :has(:focus, .focus)) {
                     background-color: var(--pulse-background-color-rgb);
                     box-shadow: 4px 3px 6px -3px var(--ui-border-color);
                     z-index: 3;
@@ -140,6 +144,16 @@
                 &:has(.add-task-cell) {
                     .table-border {
                         border-radius: 0 0 0 6px;
+                    }
+                }
+
+                &:has(:focus, .focus) {
+                    &>*:not(.table-border, .task-menu-wrapper) {
+                        border-block: 1px solid var(--primary-color);
+                    }
+
+                    .task-title {
+                        border-inline-end: 1px solid var(--primary-color);
                     }
                 }
 
@@ -181,7 +195,24 @@
                 }
 
                 .task-title {
+                    justify-content: space-between;
                     align-content: center;
+
+
+                    &>:first-child {
+                        margin-inline-start: 36px;
+                    }
+
+                    .task-updates-cell {
+                        display: grid;
+                        place-content: center;
+
+                        height: 100%;
+                        width: 36px;
+
+                        border-inline-start: 1px solid var(--layout-border-color);
+                    }
+
                 }
 
                 .add-task-cell {
@@ -253,4 +284,3 @@
 
 
 }
-

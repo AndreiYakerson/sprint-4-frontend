@@ -1,11 +1,63 @@
-import { useParams, Link } from "react-router-dom"
+import { useState } from "react"
+import { useParams, Link, useNavigate } from "react-router-dom"
+
+// cmps
 import { DynamicCmp } from "../DynamicCmp"
+import { TitleEditor } from "./TitleEditor"
+
+// icon
+import updateIcon from "../../../public/icons/update.svg"
 
 export function TaskPreview({ task, onRemoveTask, onUpdateTask }) {
+    const navigate = useNavigate()
     const { boardId, taskId } = useParams()
 
+    const [cmps, setCmps] = useState(
+        [
+            {
+                type: 'TitleEditor',
+                info: {
+                    label: 'Title:',
+                    propName: 'title',
+                    currTitle: task.title,
+                }
+            },
+        ]
+    )
+
     const cmpsOrder = ['StatusPicker', 'PriorityPicker', 'MemberPicker', 'DatePicker']
+
+
     // const cmpsOrder = ['StatusPicker']
+
+    async function updateCmpInfo(cmp, cmpInfoPropName, data, activityTitle) {
+
+        console.log('data:', data)
+
+        const taskPropName = cmp.info.propName
+        console.log(`Updating: ${taskPropName} to: `, data)
+
+        // Update cmps in local state
+        const updatedCmp = structuredClone(cmp)
+        updatedCmp.info[cmpInfoPropName] = data
+        setCmps(cmps.map(currCmp => (currCmp.info.propName !== cmp.info.propName) ? currCmp : updatedCmp))
+
+        // // Update the task
+        // const updatedTask = structuredClone(task)
+        // updatedTask[taskPropName] = data
+        // try {
+        //     await updateTask(boardId, groupId, updatedTask, activityTitle)
+        //     showSuccessMsg(`Task updated`)
+        // } catch (err) {
+        //     showErrorMsg('Cannot update task')
+        // }
+    }
+
+    function onToggleTaskDetails() {
+        navigate(taskId && taskId === task?.id
+            ? `/board/${boardId}`
+            : `/board/${boardId}/task/${task.id}`)
+    }
 
     return (
         <>
@@ -15,13 +67,23 @@ export function TaskPreview({ task, onRemoveTask, onUpdateTask }) {
                 </div>
                 <div className="table-border"></div>
                 <div className="task-select"></div>
-                <div className="task-title">
-                    {task.title}
+                <div className="task-title flex align-center">
+                    <TitleEditor info={cmps.find(cmp => cmp.type === 'TitleEditor')?.info} onUpdate={(data) => {
+                        updateCmpInfo(cmps.find(cmp => cmp.type === 'TitleEditor'),
+                            'currTitle', data, `Changed title to ${data}`)
+
+                    }} />
+
+                    <div onClick={onToggleTaskDetails} className={`task-updates-cell ${task.id === taskId ? "focus" : ""}`}>
+                        <img src={updateIcon} alt="update" className="icon big" />
+                    </div>
+
+                    {/* {task.title}
                     <Link to={taskId && taskId === task?.id ? `/board/${boardId}` : `/board/${boardId}/task/${task.id}`}
                         className="btn">details</Link>
-                    <button onClick={() => onUpdateTask()}>update</button>
+                    <button onClick={() => onUpdateTask()}>update</button> */}
                 </div>
-            </div>
+            </div >
 
             <div className="task-columns flex">
                 {cmpsOrder.map(colName => {

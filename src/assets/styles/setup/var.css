@@ -27,6 +27,7 @@
 
   /* group table */
   --pulse-background-color-rgb: #f4f5f8;
+  --primary-selected-color-rgb: #cde5fe;
 
   /* btns */
   --primary-color: rgb(0, 115, 234);
