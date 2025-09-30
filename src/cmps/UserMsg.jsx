@@ -2,9 +2,9 @@ import { eventBus, showSuccessMsg } from '../services/event-bus.service'
 import { useState, useEffect, useRef } from 'react'
 import { socketService, SOCKET_EVENT_REVIEW_ABOUT_YOU } from '../services/socket.service'
 
-import xMark from '../../public/icons/x-mark.svg'
-import vMark from '../../public/icons/v-makr.svg'
-import errorIcon from '../../public/icons/error-icon.svg'
+import xMark from '/icons/x-mark.svg'
+import vMark from '/icons/v-makr.svg'
+import errorIcon from '/icons/error-icon.svg'
 
 
 export function UserMsg() {

@@ -23,6 +23,7 @@
 @import "cmps/UserDetails";
 @import "cmps/PopUp.css";
 @import "cmps/FloatingContainerCmp.css";
+@import "cmps/ConfirmCmp.css";
 
 @import "cmps/tasks/TaskList.css";
 @import "cmps/tasks/TaskDetails.css";

@@ -1,6 +1,6 @@
 import { Link, NavLink } from 'react-router-dom'
 import { useNavigate } from 'react-router'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { showErrorMsg, showSuccessMsg } from '../services/event-bus.service'
 import { logout } from '../store/actions/user.actions'
 // images
@@ -12,13 +12,14 @@ import { PopUp } from './PopUp'
 import { useState } from 'react'
 import { FloatingContainerCmp } from './FloatingContainerCmp'
 import { LoginSignup } from '../pages/LoginSignup'
+import { onSetPopUpIsOpen } from '../store/actions/board.actions'
 
 export function AppHeader() {
 	const user = useSelector(storeState => storeState.userModule.user)
-	const [isPopUpOpen, setIsPopUpOpen] = useState(false)
-	const [anchorEl, setAnchorEl] = useState(null)
-	const navigate = useNavigate()
 
+	const [anchorEl, setAnchorEl] = useState(null)
+
+	const navigate = useNavigate()
 	async function onLogout() {
 		try {
 			await logout()
@@ -37,12 +38,23 @@ export function AppHeader() {
 			</Link>
 
 			<section className='main-nav'>
-
 				<div className='icon-container flex'>
-						<IconCmp onClick={(el) => setAnchorEl(el)} src={notification} label={'Notifications'} position={'down'} />
-					<span onClick={() => setIsPopUpOpen(true)} className="update-feed-icon">
-						<IconCmp src={updateFeed} label={'Update Feed'} position={'down'} />
-					</span>
+					<IconCmp
+						src={notification}
+						label="Notifications"
+						position="down"
+						onClick={(ev) => setAnchorEl(ev.currentTarget)}
+					/>
+
+					{/* <span onClick={() => onSetPopUpIsOpen(true)} className="update-feed-icon"> */}
+						<IconCmp
+						src={updateFeed}
+						label="Update Feed"
+						position="down"
+						onClick={() => onSetPopUpIsOpen(true)}
+					/>
+						{/* <IconCmp src={updateFeed} label={'Update Feed'} position={'down'} /> */}
+					{/* </span> */}
 				</div>
 				{/* //FIXME לעצב את הקו המפריד בין הקונטיינרים */}
 				<span className='middle-line'>!</span>
@@ -58,19 +70,17 @@ export function AppHeader() {
 							<button onClick={onLogout}>logout</button>
 						</div>
 					)}
-					<PopUp
-						isOpen={isPopUpOpen}
-						onClose={setIsPopUpOpen}
-					>
+					<PopUp>
 						{/* <LoginSignup /> */}
 					</PopUp>
 
-					<FloatingContainerCmp
-						anchorEl={anchorEl}
-						onClose={() => setAnchorEl(null)}
-					>
-						{/* <LoginSignup /> */}
-					</FloatingContainerCmp>
+					{anchorEl &&
+						<FloatingContainerCmp
+							anchorEl={anchorEl}
+							onClose={() => setAnchorEl(null)}
+						>
+							<LoginSignup />
+						</FloatingContainerCmp>}
 				</section>
 			</section>
 		</header>
