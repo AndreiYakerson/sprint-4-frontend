@@ -45,7 +45,7 @@ export function TaskList({ tasks, onRemoveTask, onUpdateTask, groupId, onUpdateT
                             return (
                                 <Draggable key={task.id} draggableId={task.id} index={idx}>
                                     {(provided, snapshot) => (
-                                        <div className={`table-row ${snapshot.isDragging ? 'tilted' : ''}`} {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef}>
+                                        <div className={`table-row ${snapshot.isDragging ? 'tilted' : ''}`} {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef}> 
                                             <TaskPreview
                                                 task={task}
                                                 onRemoveTask={() => onRemoveTask(task.id)}
@@ -56,7 +56,7 @@ export function TaskList({ tasks, onRemoveTask, onUpdateTask, groupId, onUpdateT
                                 </Draggable>
                             )
                         })}
-                        {/* {provided.placeholder} */}
+                        {provided.placeholder}
                     </section >
                 )}
             </Droppable>
