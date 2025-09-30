@@ -1,8 +1,13 @@
 import { useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { useEffect, useState } from "react";
+
+// services
+import { loadBoards } from "../../store/actions/board.actions.js";
+import { onSetIsSideBarOpen } from "../../store/actions/system.actions.js";
+
+// cmps
 import { BoardList } from "../Board/BoardList.jsx";
-import { loadBoards, onSetIsSideBarOpen } from "../../store/actions/board.actions.js";
 import { IconCmp } from "../IconCmp.jsx";
 
 // icons 
@@ -14,7 +19,7 @@ import chevronDown from '/icons/chevron-down.svg'
 
 export function SideBar() {
 
-    const isSideBarOpen = useSelector(state => state.boardModule.isSideBarOpen)
+    const isSideBarOpen = useSelector(state => state.systemModule.isSideBarOpen)
     const boards = useSelector(storeState => storeState.boardModule.boards)
     const [anchorEl, setAnchorEl] = useState(null)
 
@@ -27,11 +32,11 @@ export function SideBar() {
     return (
         <div className={`side-bar ${isSideBarOpen}`}>
             <button className={`icon close-btn ${isSideBarOpen}`}>
-                <IconCmp 
-                src={isSideBarOpen ? chevronLeft : chevronRight} 
-                label={isSideBarOpen ? 'Close Navigation' :'Open Navigation'} 
-                position={'down'} 
-                onClick={() => onSetIsSideBarOpen(!isSideBarOpen)}
+                <IconCmp
+                    src={isSideBarOpen ? chevronLeft : chevronRight}
+                    label={isSideBarOpen ? 'Close Navigation' : 'Open Navigation'}
+                    position={'down'}
+                    onClick={() => onSetIsSideBarOpen(!isSideBarOpen)}
                 />
             </button>
             <div className="side-bar-content">

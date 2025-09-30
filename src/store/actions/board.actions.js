@@ -17,9 +17,6 @@ import {
     ADD_TASK,
     UPDATE_TASK,
     REMOVE_TASK,
-
-    SET_SIDE_BAR_OPEN,
-    IS_POPUP_ON,
 } from '../reducers/board.reducer'
 
 
@@ -165,29 +162,6 @@ export async function removeTask(boardId, groupId, taskId) {
         throw err
     }
 }
-
-////// 
-
-export async function onSetIsSideBarOpen(value) {
-    try {
-        store.dispatch(setIsSideBarOpen(value))
-        return console.log(`Side Bar is-open set to ${value}`)
-    } catch (err) {
-        console.log('Cannot Close Side Bar', err)
-        throw err
-    }
-}
-
-export async function onSetPopUpIsOpen(value) {
-    try {
-        await store.dispatch(setPopUpIsOpen(value))
-        return console.log(`Side PopUp is-open set to ${value}`)
-    } catch (err) {
-        console.log('Cannot Close PopUp Bar', err)
-        throw err
-    }
-}
-
 
 
 

@@ -19,19 +19,13 @@ export const REMOVE_TASK = 'REMOVE_TASK'
 
 export const ADD_BOARD_MSG = 'ADD_BOARD_MSG'
 
-export const IS_POPUP_ON = 'IS_POPUP_ON'
-export const SET_SIDE_BAR_OPEN = 'SET_SIDE_BAR_OPEN'
-
 
 const initialState = {
     boards: [],
     board: null,
-
-    isSideBarOpen: true,
-    isPopUpOpen: false,
 }
 
-export function boardReducer(state = initialState, action) {
+export function boardReducer(state = initialState, action = {}) {
     var newState = state
     var boards
     switch (action.type) {
@@ -126,13 +120,6 @@ export function boardReducer(state = initialState, action) {
             newState = { ...state, board }
             break
 
-
-        case IS_POPUP_ON:
-            newState = { ...state, isPopUpOpen: action.value }
-            break
-        case SET_SIDE_BAR_OPEN:
-            newState = { ...state, isSideBarOpen: action.value }
-            break
         default:
     }
     return newState

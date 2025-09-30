@@ -1,18 +1,23 @@
 import { Link, NavLink } from 'react-router-dom'
+import { useState } from 'react'
 import { useNavigate } from 'react-router'
 import { useDispatch, useSelector } from 'react-redux'
-import { showErrorMsg, showSuccessMsg } from '../services/event-bus.service'
 import { logout } from '../store/actions/user.actions'
-// images
 
+// services
+import { showErrorMsg, showSuccessMsg } from '../services/event-bus.service'
+import { onSetPopUpIsOpen } from '../store/actions/system.actions.js'
+
+// cmps
+import { LoginSignup } from '../pages/LoginSignup'
+import { FloatingContainerCmp } from './FloatingContainerCmp'
+import { PopUp } from './PopUp'
+import { IconCmp } from './IconCmp'
+
+// icons
 import notification from '/icons/notification.svg'
 import updateFeed from '/icons/update-feed.svg'
-import { IconCmp } from './IconCmp'
-import { PopUp } from './PopUp'
-import { useState } from 'react'
-import { FloatingContainerCmp } from './FloatingContainerCmp'
-import { LoginSignup } from '../pages/LoginSignup'
-import { onSetPopUpIsOpen } from '../store/actions/board.actions'
+
 
 export function AppHeader() {
 	const user = useSelector(storeState => storeState.userModule.user)
@@ -47,13 +52,13 @@ export function AppHeader() {
 					/>
 
 					{/* <span onClick={() => onSetPopUpIsOpen(true)} className="update-feed-icon"> */}
-						<IconCmp
+					<IconCmp
 						src={updateFeed}
 						label="Update Feed"
 						position="down"
 						onClick={() => onSetPopUpIsOpen(true)}
 					/>
-						{/* <IconCmp src={updateFeed} label={'Update Feed'} position={'down'} /> */}
+					{/* <IconCmp src={updateFeed} label={'Update Feed'} position={'down'} /> */}
 					{/* </span> */}
 				</div>
 				{/* //FIXME לעצב את הקו המפריד בין הקונטיינרים */}
