@@ -88,6 +88,8 @@ export function TaskPreview({ task, groupId }) {
 
                     }} />
 
+                    <div className="grab-block"></div>
+
                     <div onClick={onToggleTaskDetails} className={`task-updates-cell ${task.id === taskId ? "focus" : ""}`}>
                         <img src={updateIcon} alt="update" className="icon big" />
                     </div>

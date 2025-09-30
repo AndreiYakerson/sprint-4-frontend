@@ -19,7 +19,7 @@ export function TitleEditor({ info, onUpdate }) {
     }
 
     return (
-        <section>
+        <>
             {isEditing
                 ? <input
                     type="text"
@@ -40,6 +40,6 @@ export function TitleEditor({ info, onUpdate }) {
                     {info?.currTitle}
                 </span>
             }
-        </section>
+        </>
     )
 }

@@ -197,18 +197,40 @@
                 .task-title {
                     justify-content: space-between;
                     align-content: center;
-
+                    gap: 8px;
 
                     &>:first-child {
                         margin-inline-start: 36px;
                     }
 
+                    span {
+                        width: max-content;
+                        max-width: 200px;
+                        white-space: nowrap;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+
+                        &:hover {
+                            outline: 1px solid var(--layout-border-color);
+                            border-radius: 4px;
+                        }
+                    }
+
+                    .grab-block {
+                        cursor: grab;
+                        height: 100%;
+                        width: 36px;
+                        min-width: 10px;
+                        flex: 1 1;
+                    }
+
                     .task-updates-cell {
+                        cursor: pointer;
                         display: grid;
                         place-content: center;
 
                         height: 100%;
-                        width: 36px;
+                        min-width: 36px;
 
                         border-inline-start: 1px solid var(--layout-border-color);
                     }
