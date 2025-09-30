@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { BoardList } from "../Board/BoardList.jsx";
 import { loadBoards, onSetIsSideBarOpen } from "../../store/actions/board.actions.js";
 import { IconCmp } from "../IconCmp.jsx";
@@ -16,6 +16,7 @@ export function SideBar() {
 
     const isSideBarOpen = useSelector(state => state.boardModule.isSideBarOpen)
     const boards = useSelector(storeState => storeState.boardModule.boards)
+    const [anchorEl, setAnchorEl] = useState(null)
 
 
     useEffect(() => {
@@ -25,19 +26,18 @@ export function SideBar() {
 
     return (
         <div className={`side-bar ${isSideBarOpen}`}>
-            <button onClick={() => onSetIsSideBarOpen(!isSideBarOpen)} className={`close-btn ${isSideBarOpen}`}>
-                <IconCmp src={isSideBarOpen ? chevronLeft : chevronRight} label={''} position={'down'} />
+            <button className={`icon close-btn ${isSideBarOpen}`}>
+                <IconCmp 
+                src={isSideBarOpen ? chevronLeft : chevronRight} 
+                label={isSideBarOpen ? 'Close Navigation' :'Open Navigation'} 
+                position={'down'} 
+                onClick={() => onSetIsSideBarOpen(!isSideBarOpen)}
+                />
             </button>
             <div className="side-bar-content">
                 <nav className="side-nav-list">
-                    <NavLink to="">
-                        <IconCmp src={homeIcon} label="Home Page" position="" />
-                        Home
-                    </NavLink>
-                    <NavLink to="">
-                        <IconCmp src={myWork} label=" My Work" position="" />
-                        My Work
-                    </NavLink>
+                    <NavLink to=""><IconCmp src={homeIcon} />Home</NavLink>
+                    <NavLink to=""><IconCmp src={myWork} />My Work</NavLink>
                 </nav>
                 {/* <div className="favorites flex">Favorites
                     {

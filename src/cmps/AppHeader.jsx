@@ -38,10 +38,8 @@ export function AppHeader() {
 			</Link>
 
 			<section className='main-nav'>
-
 				<div className='icon-container flex'>
 					<IconCmp
-						className='icon'
 						src={notification}
 						label="Notifications"
 						position="down"
