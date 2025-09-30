@@ -240,11 +240,12 @@
                 }
             }
 
-            &.tilted {
+            &.dragged {
                 display: grid;
                 grid-template-columns: 434px 1fr;
                 box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-                rotate: -0.5deg
+                filter: contrast(80%) opacity(70%);
+                rotate: 0.5deg
             }
         }
 
@@ -252,3 +253,4 @@
 
 
 }
+
