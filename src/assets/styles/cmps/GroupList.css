@@ -81,6 +81,7 @@
             height: 36px;
             background-color: var(--primary-background-color);
             margin-inline-start: 36px;
+            transition: transform 0.2s ease;
 
             &:has(.add-task-cell) {
                 box-shadow: var(--board-elevation);
@@ -237,6 +238,12 @@
                     flex-grow: 1;
                     border-inline-end: 0;
                 }
+            }
+
+            &.tilted {
+                z-index: 10;
+                box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+                rotate: -1deg
             }
         }
 
