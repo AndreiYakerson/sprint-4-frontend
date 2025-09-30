@@ -1,6 +1,6 @@
 import { Link, NavLink } from 'react-router-dom'
 import { useNavigate } from 'react-router'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { showErrorMsg, showSuccessMsg } from '../services/event-bus.service'
 import { logout } from '../store/actions/user.actions'
 // images
@@ -12,13 +12,13 @@ import { PopUp } from './PopUp'
 import { useState } from 'react'
 import { FloatingContainerCmp } from './FloatingContainerCmp'
 import { LoginSignup } from '../pages/LoginSignup'
+import { onSetIsSideBarOpen, onSetPopUpIsOpen } from '../store/actions/board.actions'
 
 export function AppHeader() {
 	const user = useSelector(storeState => storeState.userModule.user)
-	const [isPopUpOpen, setIsPopUpOpen] = useState(false)
 	const [anchorEl, setAnchorEl] = useState(null)
 	const navigate = useNavigate()
-
+	const dispatch = useDispatch()
 	async function onLogout() {
 		try {
 			await logout()
@@ -39,8 +39,8 @@ export function AppHeader() {
 			<section className='main-nav'>
 
 				<div className='icon-container flex'>
-						<IconCmp onClick={(el) => setAnchorEl(el)} src={notification} label={'Notifications'} position={'down'} />
-					<span onClick={() => setIsPopUpOpen(true)} className="update-feed-icon">
+					<IconCmp onClick={(el) => setAnchorEl(el)} src={notification} label={'Notifications'} position={'down'} />
+					<span onClick={onSetPopUpIsOpen} className="update-feed-icon">
 						<IconCmp src={updateFeed} label={'Update Feed'} position={'down'} />
 					</span>
 				</div>
@@ -59,17 +59,16 @@ export function AppHeader() {
 						</div>
 					)}
 					<PopUp
-						isOpen={isPopUpOpen}
-						onClose={setIsPopUpOpen}
+						
 					>
 						{/* <LoginSignup /> */}
 					</PopUp>
 
 					<FloatingContainerCmp
 						anchorEl={anchorEl}
-						onClose={() => setAnchorEl(null)}
+						onClose={onSetPopUpIsOpen}
 					>
-						{/* <LoginSignup /> */}
+						<LoginSignup />
 					</FloatingContainerCmp>
 				</section>
 			</section>

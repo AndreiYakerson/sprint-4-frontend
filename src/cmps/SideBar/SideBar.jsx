@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 import { useEffect } from "react";
 
 // services
-import { loadBoards, onIsSideBarOpen } from "../../store/actions/board.actions.js";
+import { loadBoards, onSetIsSideBarOpen } from "../../store/actions/board.actions.js";
 // cmps
 import { BoardList } from "../Board/BoardList.jsx";
 
@@ -29,7 +29,7 @@ export function SideBar() {
 
     return (
         <div className={`side-bar ${isSideBarOpen}`}>
-            <button onClick={() => onIsSideBarOpen(!isSideBarOpen)} className={`close-btn ${isSideBarOpen}`}>
+            <button onClick={() => onSetIsSideBarOpen(!isSideBarOpen)} className={`close-btn ${isSideBarOpen}`}>
 
                 <IconCmp src={isSideBarOpen ? chevronLeft : chevronRight} label={''} position={'down'} />
                 {/* <img src= alt="chevron" className="icon" /> */}

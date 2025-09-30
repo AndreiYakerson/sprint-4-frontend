@@ -1,6 +1,6 @@
 import { boardService } from '../../services/board'
 import { store } from '../store'
-import { ADD_BOARD, REMOVE_BOARD, SET_BOARDS, SET_BOARD, UPDATE_BOARD, ADD_BOARD_MSG, SET_SIDE_BAR_OPEN } from '../reducers/board.reducer'
+import { ADD_BOARD, REMOVE_BOARD, SET_BOARDS, SET_BOARD, UPDATE_BOARD, ADD_BOARD_MSG, SET_SIDE_BAR_OPEN, IS_POPUP_ON } from '../reducers/board.reducer'
 
 
 // LIST
@@ -51,12 +51,34 @@ export async function updateBoard(board) {
     }
 }
 
-export async function onIsSideBarOpen(value) {
+export async function onSetIsSideBarOpen(value) {
     try {
         store.dispatch(setIsSideBarOpen(value))
         return console.log(`Side Bar is-open set to ${value}`)
     } catch (err) {
         console.log('Cannot Close Side Bar', err)
+        throw err
+    }
+}
+
+export async function onSetPopUpIsOpen(value) {
+    console.log("🚀 ~ onSetPopUpIsOpen ~ value:", value)
+    try {
+        store.dispatch(setPopUpIsOpen((value)))
+        return console.log(`Side PopUp is-open set to ${value}`)
+    } catch (err) {
+        console.log('Cannot Close PopUp Bar', err)
+        throw err
+    }
+}
+
+export async function onSetFccIsOn(value) {
+    console.log("🚀 ~ onSetPopUpIsOpen ~ value:", value)
+    try {
+        store.dispatch(SetFccIsOn((value)))
+        return console.log(`Fcc is-open set to ${value}`)
+    } catch (err) {
+        console.log('Cannot Close Fcc ', err)
         throw err
     }
 }
@@ -80,6 +102,18 @@ function setIsSideBarOpen(value) {
     return {
         type: SET_SIDE_BAR_OPEN,
         value
+    }
+}
+function setPopUpIsOpen() {
+    return {
+        type: IS_POPUP_ON,
+        value: !value
+    }
+}
+function SetFccIsOn() {
+    return {
+        type: IS_FCC_ON,
+        value: !value
     }
 }
 function getCmdSetBoards(boards) {
