@@ -3,9 +3,8 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 
 // services
-import { boardService } from '../services/board/index.js'
 import { showSuccessMsg, showErrorMsg } from '../services/event-bus.service'
-import { addGroup, addTask, loadBoard, removeGroup, removeTask, updateGroup, updateTasksOrder } from '../store/actions/board.actions.js'
+import { addGroup, loadBoard } from '../store/actions/board.actions.js'
 
 // cmps
 import { GroupList } from '../cmps/GroupList'
@@ -20,7 +19,6 @@ export function BoardDetails() {
 
   const board = useSelector(storeState => storeState.boardModule.board)
 
-  // const [board, setBoard] = useState(null)
   const [task, setTask] = useState(null)
 
   useEffect(() => {
@@ -81,84 +79,6 @@ export function BoardDetails() {
     }
   }
 
-  // for now its just for group title
-  async function onUpdateGroup(group) {
-    const title = prompt('New title?', group.title) || ''
-    if (title === '' || title === board.title) return
-
-    group.title = title
-
-    try {
-      await updateGroup(board?._id, group)
-      showSuccessMsg('group updated successfully')
-    } catch (err) {
-      console.log(err)
-      showErrorMsg('cannot update group')
-    }
-  }
-
-  async function onRemoveGroup(groupId) {
-    try {
-      await removeGroup(board?._id, groupId)
-      showSuccessMsg('group removed successfully')
-    } catch (err) {
-      console.log(err)
-      showErrorMsg('cannot remove group')
-    }
-  }
-
-
-  // task functions
-  async function onAddTask(groupId) {
-    try {
-      await addTask(board?._id, groupId)
-      showSuccessMsg('task added to the board')
-    } catch (err) {
-      console.log(err)
-      showErrorMsg('cannot add task')
-    }
-  }
-
-  async function onRemoveTask(groupId, taskId) {
-    try {
-      await removeTask(board?._id, groupId, taskId)
-      if (task?.id === taskId) onCloseTaskDetails()
-      showSuccessMsg('task removed successfully')
-    } catch (err) {
-      console.log(err)
-      showErrorMsg('cannot remove task')
-    }
-  }
-
-  // for now its just for task title --  need to remove this
-  async function onUpdateTask(groupId, task) {
-    const title = prompt('New title?', task.title) || ''
-    if (title === '' || title === board.title) return
-
-    task.title = title
-
-    try {
-      const savedBoard = await boardService.updateTask(board?._id, groupId, task)
-      setBoard(savedBoard)
-      if (task.id === taskId) setTask(task)
-      showSuccessMsg('task updated successfully')
-    } catch (err) {
-      console.log(err)
-      showErrorMsg('cannot update task')
-    }
-  }
-
-  async function onUpdateTasksOrder(tasks, groupId) {
-    try {
-      await updateTasksOrder(tasks, board?._id, groupId)
-      showSuccessMsg('tasks order updated successfully')
-    } catch (err) {
-      console.log(err)
-      showErrorMsg('cannot update tasks order')
-    }
-
-  }
-
 
   return (
     <section className="board-details">
@@ -178,21 +98,16 @@ export function BoardDetails() {
         </header>
 
         {board?.groups?.length > 0 &&
-          < GroupList
-            groups={board.groups}
-            onRemoveGroup={onRemoveGroup}
-            onUpdateGroup={onUpdateGroup}
-            onAddTask={onAddTask}
-            onRemoveTask={onRemoveTask}
-            onUpdateTask={onUpdateTask}
-            onUpdateTasksOrder={onUpdateTasksOrder}
-          />}
+          < GroupList groups={board.groups} />}
 
       </div>
 
 
       <div className={`task-details-wrapper ${task ? "open" : ""}`}>
-        {task && <TaskDetails task={task} onCloseTaskDetails={onCloseTaskDetails} />}
+        {task && <TaskDetails
+          task={task}
+          onCloseTaskDetails={onCloseTaskDetails}
+        />}
       </div>
 
     </section>

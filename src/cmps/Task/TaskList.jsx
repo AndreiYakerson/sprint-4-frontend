@@ -1,10 +1,17 @@
-import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd"
-import { TaskPreview } from "../Task/TaskPreview"
-import { TaskDetails } from "./TaskDetails"
-import { useState } from "react"
 import { useEffect } from "react"
+import { useState } from "react"
+import { useParams } from "react-router"
+import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd"
 
-export function TaskList({ tasks, onRemoveTask, onUpdateTask, groupId, onUpdateTasksOrder }) {
+// services
+import { updateTasksOrder } from "../../store/actions/board.actions.js"
+import { showErrorMsg, showSuccessMsg } from "../../services/event-bus.service.js"
+
+// cmps
+import { TaskPreview } from "../Task/TaskPreview"
+
+export function TaskList({ tasks, groupId }) {
+    const { boardId } = useParams()
 
     const [localTasks, setLocalTasks] = useState(tasks)
     useEffect(() => {
@@ -32,6 +39,16 @@ export function TaskList({ tasks, onRemoveTask, onUpdateTask, groupId, onUpdateT
         onUpdateTasksOrder(reorderedTasks, groupId)
     }
 
+    async function onUpdateTasksOrder(tasks, groupId) {
+        try {
+            await updateTasksOrder(tasks, boardId, groupId)
+            showSuccessMsg('tasks order updated successfully')
+        } catch (err) {
+            console.log(err)
+            showErrorMsg('cannot update tasks order')
+        }
+
+    }
 
     return (
         <DragDropContext onDragEnd={handleDragEnd}>
@@ -48,8 +65,6 @@ export function TaskList({ tasks, onRemoveTask, onUpdateTask, groupId, onUpdateT
                                         <div className={`table-row ${snapshot.isDragging ? 'dragged' : ''} ${snapshot.isDraggingOver ? 'dragging-over' : ''}`} {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef}>
                                             <TaskPreview
                                                 task={task}
-                                                onRemoveTask={() => onRemoveTask(task.id)}
-                                                onUpdateTask={() => onUpdateTask(task)}
                                                 groupId={groupId}
                                             />
                                         </div>

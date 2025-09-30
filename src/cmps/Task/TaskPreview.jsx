@@ -2,7 +2,7 @@ import { useState } from "react"
 import { useParams, Link, useNavigate } from "react-router-dom"
 
 // services
-import { updateTask } from "../../store/actions/board.actions.js"
+import { removeTask, updateTask } from "../../store/actions/board.actions.js"
 import { showErrorMsg, showSuccessMsg } from "../../services/event-bus.service"
 
 // cmps
@@ -12,7 +12,7 @@ import { TitleEditor } from "./TitleEditor"
 // icon
 import updateIcon from "../../../public/icons/update.svg"
 
-export function TaskPreview({ task, onRemoveTask, onUpdateTask, groupId }) {
+export function TaskPreview({ task, groupId }) {
     const navigate = useNavigate()
     const { boardId, taskId } = useParams()
 
@@ -30,9 +30,6 @@ export function TaskPreview({ task, onRemoveTask, onUpdateTask, groupId }) {
     )
 
     const cmpsOrder = ['StatusPicker', 'PriorityPicker', 'MemberPicker', 'DatePicker']
-
-
-    // const cmpsOrder = ['StatusPicker']
 
     async function updateCmpInfo(cmp, cmpInfoPropName, data, activityTitle) {
 
@@ -58,6 +55,17 @@ export function TaskPreview({ task, onRemoveTask, onUpdateTask, groupId }) {
             showErrorMsg('Cannot update task')
         }
     }
+
+    async function onRemoveTask() {
+        try {
+            await removeTask(boardId, groupId, task.id)
+            showSuccessMsg('task removed successfully')
+        } catch (err) {
+            console.log(err)
+            showErrorMsg('cannot remove task')
+        }
+    }
+
 
     function onToggleTaskDetails() {
         navigate(taskId && taskId === task?.id

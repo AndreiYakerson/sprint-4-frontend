@@ -1,11 +1,52 @@
-import { useState } from "react"
-import { ConfirmCmp } from "./ConfirmCmp"
-import { PopUp } from "./PopUp"
+// import { useState } from "react"
+// import { ConfirmCmp } from "./ConfirmCmp"
+// import { PopUp } from "./PopUp"
+
+import { useParams } from "react-router"
+// services
+import { showErrorMsg, showSuccessMsg } from "../services/event-bus.service"
+
+// cmps
 import { TaskList } from "./Task/TaskList"
+import { addTask, removeGroup, updateGroup } from "../store/actions/board.actions"
 
-export function GroupList({ groups, onRemoveGroup, onUpdateGroup, onAddTask, onRemoveTask, onUpdateTask, onUpdateTasksOrder }) {
+export function GroupList({ groups }) {
+    const { boardId } = useParams()
 
+    async function onUpdateGroup(group) {
+        const title = prompt('New title?', group.title) || ''
+        if (title === '' || title === group.title) return
 
+        group.title = title
+
+        try {
+            await updateGroup(boardId, group)
+            showSuccessMsg('group updated successfully')
+        } catch (err) {
+            console.log(err)
+            showErrorMsg('cannot update group')
+        }
+    }
+
+    async function onRemoveGroup(groupId) {
+        try {
+            await removeGroup(boardId, groupId)
+            showSuccessMsg('group removed successfully')
+        } catch (err) {
+            console.log(err)
+            showErrorMsg('cannot remove group')
+        }
+    }
+
+    async function onAddTask(groupId) {
+        try {
+            await addTask(boardId, groupId)
+            showSuccessMsg('task added to the board')
+        } catch (err) {
+            console.log(err)
+            showErrorMsg('cannot add task')
+        }
+    }
 
     const demoColumns = ['Status', 'Priority', 'Members', 'Date']
 
@@ -56,10 +97,7 @@ export function GroupList({ groups, onRemoveGroup, onUpdateGroup, onAddTask, onR
 
                     <TaskList
                         tasks={group.tasks}
-                        onRemoveTask={(taskId) => onRemoveTask(group.id, taskId)}
-                        onUpdateTask={(task) => onUpdateTask(group.id, task)}
                         groupId={group.id}
-                        onUpdateTasksOrder={onUpdateTasksOrder}
                     />
 
                     <div className="table-row">
