@@ -9,7 +9,14 @@ export function SortFilterCmp() {
                 <button className="add-new-task">
                     New Task
                 </button>
-                <button className="button-arrow-down"><IconCmp src={chevronDown}/></button>
+                {/* <button className="button-arrow-down">
+                <IconCmp
+                                        src={chevronDown}
+                                        label="Update Feed"
+                                        position=""
+                                        onClick={}
+                                    />
+                </button> */}
             </div>
         </div>
     )
