@@ -37,8 +37,8 @@ export function SideBar() {
             </button>
             <div className="side-bar-content">
                 <nav className="side-nav-list">
-                    <NavLink to=""><HoveredTextCmp src={homeIcon} />Home</NavLink>
-                    <NavLink to=""><HoveredTextCmp src={myWork} />My Work</NavLink>
+                    <NavLink to=""><HoveredTextCmp><img src={homeIcon} /></HoveredTextCmp>Home</NavLink>
+                    <NavLink to=""><HoveredTextCmp><img src={myWork} /></HoveredTextCmp>My Work</NavLink>
                 </nav>
                 {/* <div className="favorites flex">Favorites
                     {
