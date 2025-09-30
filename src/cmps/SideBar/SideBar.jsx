@@ -27,12 +27,13 @@ export function SideBar() {
     return (
         <div className={`side-bar ${isSideBarOpen}`}>
             <button className={`icon close-btn ${isSideBarOpen}`}>
-                <HoveredTextCmp 
-                src={isSideBarOpen ? chevronLeft : chevronRight} 
-                label={isSideBarOpen ? 'Close Navigation' :'Open Navigation'} 
-                position={'down'} 
-                onClick={() => onSetIsSideBarOpen(!isSideBarOpen)}
-                />
+                <HoveredTextCmp
+                    label={isSideBarOpen ? 'Close Navigation' : 'Open Navigation'}
+                    position={'down'}
+                    onClick={() => onSetIsSideBarOpen(!isSideBarOpen)}
+                >
+                    <img src={isSideBarOpen ? chevronLeft : chevronRight} alt="" />
+                </HoveredTextCmp>
             </button>
             <div className="side-bar-content">
                 <nav className="side-nav-list">
