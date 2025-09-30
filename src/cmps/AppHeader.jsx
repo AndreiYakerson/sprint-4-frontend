@@ -7,7 +7,7 @@ import { logout } from '../store/actions/user.actions'
 
 import notification from '/icons/notification.svg'
 import updateFeed from '/icons/update-feed.svg'
-import { IconCmp } from './IconCmp'
+import { HoveredTextCmp } from './HoveredTextCmp'
 import { PopUp } from './PopUp'
 import { useState } from 'react'
 import { FloatingContainerCmp } from './FloatingContainerCmp'
@@ -39,7 +39,7 @@ export function AppHeader() {
 
 			<section className='main-nav'>
 				<div className='icon-container flex'>
-					<IconCmp
+					<HoveredTextCmp
 						src={notification}
 						label="Notifications"
 						position="down"
@@ -47,13 +47,13 @@ export function AppHeader() {
 					/>
 
 					{/* <span onClick={() => onSetPopUpIsOpen(true)} className="update-feed-icon"> */}
-						<IconCmp
+						<HoveredTextCmp
 						src={updateFeed}
 						label="Update Feed"
 						position="down"
 						onClick={() => onSetPopUpIsOpen(true)}
 					/>
-						{/* <IconCmp src={updateFeed} label={'Update Feed'} position={'down'} /> */}
+						{/* <HoveredTextCmp src={updateFeed} label={'Update Feed'} position={'down'} /> */}
 					{/* </span> */}
 				</div>
 				{/* //FIXME לעצב את הקו המפריד בין הקונטיינרים */}

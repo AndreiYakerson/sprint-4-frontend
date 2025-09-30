@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { BoardList } from "../Board/BoardList.jsx";
 import { loadBoards, onSetIsSideBarOpen } from "../../store/actions/board.actions.js";
-import { IconCmp } from "../IconCmp.jsx";
+import { HoveredTextCmp } from "../HoveredTextCmp.jsx";
 
 // icons 
 import homeIcon from '/icons/home.svg'
@@ -27,7 +27,7 @@ export function SideBar() {
     return (
         <div className={`side-bar ${isSideBarOpen}`}>
             <button className={`icon close-btn ${isSideBarOpen}`}>
-                <IconCmp 
+                <HoveredTextCmp 
                 src={isSideBarOpen ? chevronLeft : chevronRight} 
                 label={isSideBarOpen ? 'Close Navigation' :'Open Navigation'} 
                 position={'down'} 
@@ -36,15 +36,15 @@ export function SideBar() {
             </button>
             <div className="side-bar-content">
                 <nav className="side-nav-list">
-                    <NavLink to=""><IconCmp src={homeIcon} />Home</NavLink>
-                    <NavLink to=""><IconCmp src={myWork} />My Work</NavLink>
+                    <NavLink to=""><HoveredTextCmp src={homeIcon} />Home</NavLink>
+                    <NavLink to=""><HoveredTextCmp src={myWork} />My Work</NavLink>
                 </nav>
                 {/* <div className="favorites flex">Favorites
                     {
                     isSideBarOpen ?  
-                      <IconCmp src={chevronRight} label="chevron Right" position="" />  
+                      <HoveredTextCmp src={chevronRight} label="chevron Right" position="" />  
                     : 
-                      <IconCmp src={chevronDown} label="chevron Down" position="" />  
+                      <HoveredTextCmp src={chevronDown} label="chevron Down" position="" />  
                     }
                     </div> */}
 
