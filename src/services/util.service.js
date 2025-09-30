@@ -51,3 +51,11 @@ export function loadFromStorage(key) {
     const data = localStorage.getItem(key)
     return (data) ? JSON.parse(data) : undefined
 }
+
+export function getRandomGroupColor() {
+    const colors = ["#17804d", "#27c977", "#9dd435", "#c8b649", "#fccb29", "#794acf", "#9d4edb", "#1e7eb3",
+        "#5f9bf9", "#6fccfd", "#b83055", "#db2a4d", "#fa0080", "#fb57c3", "#fa6237", "#f9aa47", "#7d5348", "#c4c4c4", "#757575"
+    ]
+    const idx = getRandomIntInclusive(0, colors.length - 1)
+    return colors[idx]
+}

@@ -1,6 +1,6 @@
 
 import { storageService } from '../async-storage.service'
-import { makeId } from '../util.service'
+import { getRandomGroupColor, makeId } from '../util.service'
 // import { userService } from '../user'
 
 const STORAGE_KEY = 'board'
@@ -220,6 +220,9 @@ function _setBaordToSave(title = 'New board') {
                         createdAt: Date.now(),
                     },
                 ],
+                style: {
+                    '--group-color': getRandomGroupColor(),
+                },
             },
         ],
     }
@@ -230,7 +233,10 @@ function _getEmptyGroup() {
         id: makeId(),
         title: 'New group',
         createdAt: Date.now(),
-        tasks: []
+        tasks: [],
+        style: {
+            '--group-color': getRandomGroupColor(),
+        },
     }
 }
 

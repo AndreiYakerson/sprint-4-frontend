@@ -33,6 +33,7 @@ export function TaskList({ tasks, onRemoveTask, onUpdateTask, groupId, onUpdateT
     return (
         <DragDropContext onDragEnd={handleDragEnd}>
             <Droppable droppableId="task-list">
+                
 
                 {(provided) => (
                     <section className="task-list" {...provided.droppableProps} ref={provided.innerRef}>
@@ -42,10 +43,12 @@ export function TaskList({ tasks, onRemoveTask, onUpdateTask, groupId, onUpdateT
                                 <Draggable key={task.id} draggableId={task.id} index={idx}>
                                     {(provided, snapshot) => (
 
-                                        <div className={`task-detail flex align-center ${snapshot.isDragging ? 'tilted' : ''}`} {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef}>
-                                            <button onClick={() => onRemoveTask(task.id)}>X</button>
-                                            <TaskPreview task={task} />
-                                            <button onClick={() => onUpdateTask(task)}>Update Title</button>
+                                        <div className={`table-row ${snapshot.isDragging ? 'tilted' : ''}`} {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef}>
+                                            <TaskPreview
+                        task={task}
+                                                onRemoveTask={() => onRemoveTask(task.id)}
+                                                onUpdateTask={() => onUpdateTask(task)}
+                    />
                                         </div>
                                     )}
                                 </Draggable>
