@@ -39,21 +39,25 @@ export function AppHeader() {
 
 			<section className='main-nav'>
 				<div className='icon-container flex'>
+
 					<HoveredTextCmp
-						src={notification}
 						label="Notifications"
 						position="down"
 						onClick={(ev) => setAnchorEl(ev.currentTarget)}
-					/>
+					>
+						<img src={notification} />
+					</HoveredTextCmp>
 
 					{/* <span onClick={() => onSetPopUpIsOpen(true)} className="update-feed-icon"> */}
-						<HoveredTextCmp
+					<HoveredTextCmp
 						src={updateFeed}
 						label="Update Feed"
 						position="down"
 						onClick={() => onSetPopUpIsOpen(true)}
-					/>
-						{/* <HoveredTextCmp src={updateFeed} label={'Update Feed'} position={'down'} /> */}
+					>
+						<img src={updateFeed} />
+					</HoveredTextCmp>
+					{/* <HoveredTextCmp src={updateFeed} label={'Update Feed'} position={'down'} /> */}
 					{/* </span> */}
 				</div>
 				{/* //FIXME לעצב את הקו המפריד בין הקונטיינרים */}
