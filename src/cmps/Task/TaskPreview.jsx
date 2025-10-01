@@ -11,6 +11,7 @@ import { TitleEditor } from "./TitleEditor"
 
 // icon
 import updateIcon from "../../../public/icons/update.svg"
+import { PeopleCmp } from "../TaskCmps/PeopleCmp.jsx"
 
 export function TaskPreview({ task, groupId }) {
     const navigate = useNavigate()
@@ -104,7 +105,8 @@ export function TaskPreview({ task, groupId }) {
             <div className="task-columns flex">
                 {cmpsOrder.map(colName => {
                     return <div key={colName} className="cell">
-                        <span>{colName}</span>
+                        <PeopleCmp/>
+                        {/* <span>{colName}</span> */}
                     </div>
                 })}
                 <div className="cell full"></div>

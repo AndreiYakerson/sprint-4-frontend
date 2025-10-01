@@ -4,11 +4,11 @@
 
 import { useParams } from "react-router"
 // services
-import { showErrorMsg, showSuccessMsg } from "../services/event-bus.service"
+import { showErrorMsg, showSuccessMsg } from "../../services/event-bus.service"
 
 // cmps
-import { TaskList } from "./Task/TaskList"
-import { addTask, removeGroup, updateGroup } from "../store/actions/board.actions"
+import { TaskList } from "../Task/TaskList"
+import { addTask, removeGroup, updateGroup } from "../../store/actions/board.actions"
 
 export function GroupList({ groups }) {
     const { boardId } = useParams()

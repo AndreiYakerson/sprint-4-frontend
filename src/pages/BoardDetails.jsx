@@ -7,7 +7,7 @@ import { showSuccessMsg, showErrorMsg } from '../services/event-bus.service'
 import { addGroup, loadBoard } from '../store/actions/board.actions.js'
 
 // cmps
-import { GroupList } from '../cmps/GroupList'
+import { GroupList } from '../cmps/group/GroupList.jsx'
 import { SortFilterCmp } from '../cmps/SortFilterCmp.jsx'
 import { TaskDetails } from '../cmps/Task/TaskDetails.jsx'
 
