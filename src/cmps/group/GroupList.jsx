@@ -10,11 +10,19 @@ import { showErrorMsg, showSuccessMsg } from "../../services/event-bus.service"
 // cmps
 import { TaskList } from "../Task/TaskList";
 
-import { addTask, removeGroup, updateGroup } from "../../store/actions/board.actions"
+import { addTask, removeGroup, updateGroup, updateGroupsOrder } from "../../store/actions/board.actions"
+import { useState } from "react";
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
 
 export function GroupList({ groups }) {
-
     const { boardId } = useParams()
+
+    const [localGroups, setLocalGroups] = useState(groups)
+    useEffect(() => {
+        setLocalGroups(groups)
+    }, [groups])
+
 
     // Handle drag-and-drop events
     function handleDragEnd(result) {
@@ -32,7 +40,9 @@ export function GroupList({ groups }) {
         reorderedGroups.splice(destination.index, 0, movedGroup);
 
         // Update the state with the reordered groups
-        setGroups(reorderedGroups);
+        setLocalGroups(reorderedGroups);
+        
+        updateGroupsOrder(reorderedGroups, boardId)
     }
 
     async function onUpdateGroup(group) {
@@ -81,14 +91,17 @@ export function GroupList({ groups }) {
                         {...provided.droppableProps}
                         ref={provided.innerRef}
                     >
-                        {groups.map((group, idx) => (
+                        {localGroups.map((group, idx) => (
                             <Draggable key={group.id} draggableId={group.id} index={idx}>
                                 {(provided) => (
                                     <div
                                         className="group-container"
-                                        style={group?.style ? group?.style : { '--group-color': '#d0d4e4' }}
                                         {...provided.draggableProps}
                                         ref={provided.innerRef}
+                                        style={{
+                                            ...provided.draggableProps.style, // Include styles from react-beautiful-dnd
+                                            ...group.style, // Add your custom styles
+                                        }}
                                     >
                                         <header
                                             className="group-haeder"

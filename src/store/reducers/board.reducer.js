@@ -7,6 +7,7 @@ export const ADD_BOARD = 'ADD_BOARD'
 // board actions
 export const SET_BOARD = 'SET_BOARD'
 
+export const SET_GROUPS = 'SET_GROUPS'
 export const ADD_GROUP = 'ADD_GROUP'
 export const UPDATE_GROUP = 'UPDATE_GROUP'
 export const REMOVE_GROUP = 'REMOVE_GROUP'
@@ -70,6 +71,11 @@ export function boardReducer(state = initialState, action = {}) {
                 }
             }
             break
+        case SET_GROUPS:
+            var board = { ...state.board }
+            board.groups = action.groups
+            newState = { ...state, board }
+            break
 
         // task actions
         case SET_TASKS:
@@ -86,6 +92,9 @@ export function boardReducer(state = initialState, action = {}) {
 
         case ADD_TASK:
             var board = { ...state.board }
+            board.groups = action.groups
+
+
             board.groups = state.board.groups.map(g => {
                 if (g.id !== action.groupId) return g
                 const group = { ...g }
