@@ -12,6 +12,9 @@ import { LongTxt } from '../LongText/LongText.jsx'
 export function BoardPreview({ board }) {
     const [anchorEl, setAnchorEl] = useState(null)
 
+    //Demo Pre For Stared Logic
+    const isStarred = false
+
     return (
         <article className="board-preview">
             <img
@@ -23,21 +26,19 @@ export function BoardPreview({ board }) {
                     <div className='board-info-items flex'>
                         <HoveredTextCmp
                             size='big'
-                         
-                            position="down"
+                            position="up"
                             label="Dash Board"
                         >
-                         <img src={boardIcon} />   
+                            <img src={boardIcon} />
                         </HoveredTextCmp>
-                        <span className='hover-show' data-type="Board Title"><LongTxt txt={board.title}/></span>
+                        <span className='hover-show' data-type="Board Title"><LongTxt txt={board.title} /></span>
                         <span >
                             <HoveredTextCmp
                                 size='big'
-                                position="down"
+                                position="up"
                                 label={'logo'}
-                            
                             >
-                                 <img src={starFull} />
+                                <img src={isStarred ?  starFull : star} />
                             </HoveredTextCmp>
                         </span>
                     </div>
