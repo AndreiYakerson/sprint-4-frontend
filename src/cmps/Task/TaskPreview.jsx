@@ -13,7 +13,7 @@ import { TitleEditor } from "./TitleEditor"
 import updateIcon from "../../../public/icons/update.svg"
 import { PeopleCmp } from "../TaskCmps/PeopleCmp.jsx"
 
-export function TaskPreview({ task, groupId }) {
+export function TaskPreview({ task, groupId, dragHandleProps }) {
     const navigate = useNavigate()
     const { boardId, taskId } = useParams()
 
@@ -82,7 +82,7 @@ export function TaskPreview({ task, groupId }) {
                 </div>
                 <div className="table-border"></div>
                 <div className="task-select"></div>
-                <div className="task-title flex align-center">
+                <div className="task-title flex align-center" {...dragHandleProps}>
                     <TitleEditor info={cmps.find(cmp => cmp.type === 'TitleEditor')?.info} onUpdate={(data) => {
                         updateCmpInfo(cmps.find(cmp => cmp.type === 'TitleEditor'),
                             'currTitle', data, `Changed title to ${data}`)
