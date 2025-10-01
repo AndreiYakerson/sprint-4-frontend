@@ -1,4 +1,5 @@
 import { useLayoutEffect, useRef, useState } from 'react'
+import { createPortal } from 'react-dom'
 
 export function FloatingContainerCmp({ anchorEl, children, onClose }) {
     const [style, setStyle] = useState({})
@@ -87,9 +88,10 @@ export function FloatingContainerCmp({ anchorEl, children, onClose }) {
 
     if (!anchorEl) return null
 
-    return (
+return createPortal(
         <div className="fcc-container" style={style} ref={popupRef}>
             {children}
-        </div>
+        </div>,
+        document.getElementById('portal-root') // 👈 Renders the div here
     )
 }

@@ -10,11 +10,15 @@ import { DynamicCmp } from "../DynamicCmp"
 import { TitleEditor } from "./TitleEditor"
 
 // icon
-import updateIcon from "../../../public/icons/update.svg"
-import { PeopleCmp } from "../TaskCmps/PeopleCmp.jsx"
+import updateIcon from "/icons/update.svg"
+import person from "/icons/person.svg"
+import { MembersCmp } from "../TaskCmps/MembersCmp.jsx"
+import { FloatingContainerCmp } from "../FloatingContainerCmp.jsx"
 
 export function TaskPreview({ task, groupId }) {
     const navigate = useNavigate()
+    const [anchorEl, setAnchorEl] = useState(null)
+
     const { boardId, taskId } = useParams()
 
     const [cmps, setCmps] = useState(
@@ -102,10 +106,19 @@ export function TaskPreview({ task, groupId }) {
                 </div>
             </div >
 
+
             <div className="task-columns flex">
                 {cmpsOrder.map(colName => {
                     return <div key={colName} className="cell">
-                        <PeopleCmp/>
+                        <img onMouseLeave={() => setAnchorEl(null)} onMouseOver={(ev) => setAnchorEl(ev.currentTarget)} src={person} className="icon big hover-show" alt="person icon" />
+
+                        {anchorEl && <FloatingContainerCmp
+                            anchorEl={anchorEl}
+                            onClose={() => setAnchorEl(null)}
+                        >
+                            <MembersCmp />
+                        </FloatingContainerCmp>}
+
                         {/* <span>{colName}</span> */}
                     </div>
                 })}
