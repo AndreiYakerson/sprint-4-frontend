@@ -10,8 +10,8 @@ import { useEffectUpdate } from '../../customHooks/useEffectUpdate'
 
 // MembersSelectCmp({boardMembers,task})
 
-export function MembersSelectCmp({updateTask}) {
-    //Demo User
+export function MembersSelectCmp({ updateTask }) {
+    //Demo Data
     const user1 = {
         id: makeId(),
         fullname: 'dan dan',
@@ -39,23 +39,24 @@ export function MembersSelectCmp({updateTask}) {
         profession: '',
         tags: ['member'],
     }
-    
     const DemoBoardMembers = [user1, user2, user3]
-
-    const [taskMembers, setTaskMembers] = useState(task.AddedMembers)
-
     const task = {
-        AddedMembers: [user1,user2],
+        AddedMembers: [user1, user2],
         createdAt: 1759346036021,
         id: "U0gfhz",
         title: "taskascasc",
     }
+    //
 
+    
+    const [taskMembers, setTaskMembers] = useState(task.AddedMembers)
 
-useEffectUpdate(()=>{
-onSetPopUpIsOpen(false)
-updateTask()
-},taskMembers)
+    // useEffectUpdate(() => {
+    //     console.log('onSetPopUpIsOpen from MemberSerlectCmp')
+        
+    //   if onSetPopUpIsOpen(false)
+    //     // updateTask()
+    // }, taskMembers)
 
     return (
         <div className="members-select-cmp">

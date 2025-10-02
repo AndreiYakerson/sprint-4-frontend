@@ -20,7 +20,6 @@ import haederLogo from '../../public/img/Logo.png'
 // icons
 import notification from '/icons/notification.svg'
 import updateFeed from '/icons/update-feed.svg'
-import { MembersSelectCmp } from './TaskCmps/MembersSelectCmp.jsx'
 
 export function AppHeader() {
 	const user = useSelector(storeState => storeState.userModule.user)
@@ -55,9 +54,7 @@ export function AppHeader() {
 					>
 						<img src={notification} />
 					</HoveredTextCmp>
-					<PopUp>
-						<MembersSelectCmp />
-					</PopUp>
+
 					{/* <span onClick={() => onSetPopUpIsOpen(true)} className="update-feed-icon"> */}
 					{/* <IconCmp
 						src={updateFeed}

@@ -20,11 +20,10 @@ import { MembersSelectCmp } from "../TaskCmps/MembersSelectCmp.jsx"
 import { PopUp } from "../PopUp.jsx"
 import { useSelector } from "react-redux"
 
-export function TaskPreview({ task, groupId, dragHandleProps }) {
+export function TaskPreview({ task, groupId }) {
     const navigate = useNavigate()
     const [membersSelectEl, setMembersSelectEl] = useState(null)
     const [memberEl, setMemberEl] = useState(null)
-    // const isPopUpOpen = useSelector(state => state.systemModule.isPopUpOpen)
 
     const { boardId, taskId } = useParams()
 
@@ -60,17 +59,7 @@ export function TaskPreview({ task, groupId, dragHandleProps }) {
         console.log("🚀 ~ updateCmpInfo ~ updatedTask:", updatedTask)
         updatedTask[taskPropName] = data
 
-        onUpdateTask(updatedTask,activityTitle)
-        // try {
-        //     await updateTask(boardId, groupId, updatedTask, activityTitle)
-        //     showSuccessMsg(`Task updated`)
-        // } catch (err) {
-        //     console.log('err:', err)
-        //     showErrorMsg('Cannot update task')
-        // }
-    }
-//FIXME צריך להפוך להיות action  
-    async function onUpdateTask(updatedTask, activityTitle) {
+        // onUpdateTask(updatedTask, activityTitle)
         try {
             await updateTask(boardId, groupId, updatedTask, activityTitle)
             showSuccessMsg(`Task updated`)
@@ -79,6 +68,19 @@ export function TaskPreview({ task, groupId, dragHandleProps }) {
             showErrorMsg('Cannot update task')
         }
     }
+
+    //FIXME צריך להפוך להיות action  
+
+    // async function onUpdateTask(updatedTask, activityTitle) {
+    //     try {
+    //         await updateTask(boardId, groupId, updatedTask, activityTitle)
+    //         showSuccessMsg(`Task updated`)
+    //     } catch (err) {
+    //         console.log('err:', err)
+    //         showErrorMsg('Cannot update task')
+    //     }
+    // }
+
     async function onRemoveTask() {
         try {
             await removeTask(boardId, groupId, task.id)
@@ -104,7 +106,7 @@ export function TaskPreview({ task, groupId, dragHandleProps }) {
                 </div>
                 <div className="table-border"></div>
                 <div className="task-select"></div>
-                <div className="task-title flex align-center" {...dragHandleProps}>
+                <div className="task-title flex align-center">
                     <TitleEditor info={cmps.find(cmp => cmp.type === 'TitleEditor')?.info} onUpdate={(data) => {
                         updateCmpInfo(cmps.find(cmp => cmp.type === 'TitleEditor'),
                             'currTitle', data, `Changed title to ${data}`)
@@ -127,8 +129,7 @@ export function TaskPreview({ task, groupId, dragHandleProps }) {
 
             <div className="task-columns flex">
                 {cmpsOrder.map(colName => {
-                  return <div onClick={() => onSetPopUpIsOpen(true)} key={colName} className="cell">
-                        {/* return <div onClick={(ev) => setMembersSelectEl(prev => prev = ev.currentTarget)} key={colName} className="cell">  */}
+                    return <div onClick={(ev) => setMembersSelectEl(ev.currentTarget)} key={colName} className="cell">
                         <span className="cmp-img">
                             <img src={plus} className="icon big " alt="plus icon" />
                             <img
@@ -141,34 +142,31 @@ export function TaskPreview({ task, groupId, dragHandleProps }) {
                             />
                         </span>
 
-
-                        <PopUp>
+                        {/* <PopUp>
                             <MembersSelectCmp
-                             updateTask={onUpdateTask}
+                            //  updateTask={()=>onUpdateTask()}
                             //  activityTitle={activityTitle}
                               />
-                        </PopUp>
+                        </PopUp> */}
 
-                        {/* {membersSelectEl &&
+                        {membersSelectEl &&
                             < FloatingContainerCmp
                                 anchorEl={membersSelectEl}
                                 onClose={() => setMembersSelectEl(null)}
                             >
                                 <MembersSelectCmp />
                             </FloatingContainerCmp>
-                        } */}
+                        }
 
-                        {/* 
-                        {memberEl && !task.AddedMembers?.length &&
+
+                        {memberEl && !task.AddedMembers?.length && !membersSelectEl &&
                             < FloatingContainerCmp
                                 anchorEl={memberEl}
                                 onClose={() => setMemberEl(null)}
                             >
                                 <MembersCmp />
                             </FloatingContainerCmp>
-                        }  */}
-
-                        {/* <span>{colName}</span> */}
+                        }
                     </div>
                 })}
                 <div className="cell full"></div>
