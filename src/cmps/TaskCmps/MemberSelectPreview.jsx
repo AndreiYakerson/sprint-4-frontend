@@ -51,15 +51,19 @@ export function MemberSelectPreview({ task }) {
             >
                 {!!task.AddedMembers.length ?
                     task.AddedMembers.map(user => {
-                        return <img
+                        return <div
+                        className="img-wrapper"
                             key={user.name}
-                            id={user.name}
                             onMouseLeave={(ev) => onClearHover(ev.currentTarget)}
                             onMouseOver={(ev) => onSetHoveredUser(user, ev.currentTarget)}
-                            src={user.img}
-                            className="user-img"
-                            alt="person icon"
-                        />
+                        >
+                            <img
+                                id={user.name}
+                                src={user.img}
+                                className="user-img"
+                                alt="person icon"
+                            />
+                        </div>
                     })
                     :
                     <span className="user-img">

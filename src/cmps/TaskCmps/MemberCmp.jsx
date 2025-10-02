@@ -5,7 +5,6 @@ import { userService } from "../../services/user"
 
 
 export function MemberCmp({user}) {
-    console.log("🚀 ~ MemberCmp ~ user:", user)
     //Demo User
     // if (!user) {
     //     console.log('!user')
