@@ -4,10 +4,9 @@ import { useSelector } from "react-redux"
 // services
 import { onSetPopUpIsOpen } from "../store/actions/system.actions.js"
 
-export function PopUp({ children = false, onClose = () => { } }) {
+export function PopUp({ children = false}) {
 
     const isPopUpOpen = useSelector(state => state.systemModule.isPopUpOpen)
-    console.log("🚀 ~ PopUp ~ isPopUpOpen:", isPopUpOpen)
 
     useEffect(() => {
         const EscapePress = window.addEventListener("keydown", onKey)
