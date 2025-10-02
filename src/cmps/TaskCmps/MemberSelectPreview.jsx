@@ -1,7 +1,6 @@
 import plus from "/icons/plus.svg"
 import person from "/icons/person.svg"
 import danPic from "/img/danPic.jpg"
-import logo from "/img/logo.png"
 import defaultAvatar from "/img/default-avatar.png"
 import { FloatingContainerCmp } from "../FloatingContainerCmp"
 import { MemberCmp } from "./MemberCmp"

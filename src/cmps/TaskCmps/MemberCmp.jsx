@@ -1,10 +1,9 @@
 import person from '/icons/person.svg'
 import { FloatingContainerCmp } from "../FloatingContainerCmp"
-import logo from '/img/logo.png'
 import { userService } from "../../services/user"
 
 
-export function MemberCmp({user}) {
+export function MemberCmp({ user }) {
     //Demo User
     // if (!user) {
     //     console.log('!user')
