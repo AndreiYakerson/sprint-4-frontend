@@ -1,0 +1,30 @@
+.member-select-preview {
+    display: flex;
+    place-content: center;
+
+    .plus {
+        opacity: 0;
+        margin-inline-start: -8.px
+    }
+
+    &:hover .plus {
+        opacity: 1;
+    }
+
+    .cmp-img {
+        display: flex;
+        margin-inline: 34px;
+    }
+
+    .wrapper {
+        width: 35px;
+        height: 35px;
+        background-color: red;
+    }
+
+    .user-img {
+        display: block;
+        width: 35px;
+        border-radius: var(--border-radius-big);
+    }
+}

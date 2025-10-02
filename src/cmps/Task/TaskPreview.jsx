@@ -14,11 +14,15 @@ import { TitleEditor } from "./TitleEditor"
 import updateIcon from "/icons/update.svg"
 import person from "/icons/person.svg"
 import plus from "/icons/plus.svg"
-import { MembersCmp } from "../TaskCmps/MembersCmp.jsx"
+import danPic from "/img/danPic.jpg"
+
+
+import { MemberCmp } from "../TaskCmps/MemberCmp.jsx"
 import { FloatingContainerCmp } from "../FloatingContainerCmp.jsx"
 import { MembersSelectCmp } from "../TaskCmps/MembersSelectCmp.jsx"
 import { PopUp } from "../PopUp.jsx"
 import { useSelector } from "react-redux"
+import { MemberSelectPreview } from "../TaskCmps/MemberSelectPreview.jsx"
 
 export function TaskPreview({ task, groupId, dragHandleProps }) {
     const navigate = useNavigate()
@@ -56,7 +60,6 @@ export function TaskPreview({ task, groupId, dragHandleProps }) {
 
         // Update the task
         const updatedTask = structuredClone(task)
-        console.log("🚀 ~ updateCmpInfo ~ updatedTask:", updatedTask)
         updatedTask[taskPropName] = data
 
         // onUpdateTask(updatedTask, activityTitle)
@@ -98,6 +101,8 @@ export function TaskPreview({ task, groupId, dragHandleProps }) {
             : `/board/${boardId}/task/${task.id}`)
     }
 
+    
+
     return (
         <>
             <div className="sticky-cell-wrapper">
@@ -130,33 +135,31 @@ export function TaskPreview({ task, groupId, dragHandleProps }) {
             <div className="task-columns flex">
                 {cmpsOrder.map(colName => {
                     return <div onClick={(ev) => setMembersSelectEl(ev.currentTarget)} key={colName} className="cell">
-                        <span className="cmp-img">
+
+                        <MemberSelectPreview 
+                        task={task}
+                        />
+                        {/* <span className="cmp-img">
                             <img src={plus} className="icon big " alt="plus icon" />
                             <img
                                 onMouseLeave={() => setMemberEl(null)}
                                 onMouseOver={(ev) => setMemberEl(ev.currentTarget)}
                                 // src={loggedinUser?  loggedinUser.img : person}
-                                src={person}
+                                src={taskMembersLogo}
                                 className="icon big hover-show"
                                 alt="person icon"
                             />
-                        </span>
+                        </span> */}
 
                         {membersSelectEl &&
                             < FloatingContainerCmp
                                 anchorEl={membersSelectEl}
                                 onClose={() => setMembersSelectEl(null)}
                             >
-                                <MembersSelectCmp />
-                            </FloatingContainerCmp>
-                        }
-
-                        {memberEl && !task.AddedMembers?.length && !membersSelectEl &&
-                            < FloatingContainerCmp
-                                anchorEl={memberEl}
-                                onClose={() => setMemberEl(null)}
-                            >
-                                <MembersCmp />
+                                <MembersSelectCmp
+                                 onClose={() => setMembersSelectEl(null)}
+                                 task={task}
+                                />
                             </FloatingContainerCmp>
                         }
 
