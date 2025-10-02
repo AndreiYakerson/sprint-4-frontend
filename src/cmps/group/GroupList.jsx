@@ -117,10 +117,8 @@ export function GroupList({ groups }) {
                                                 </div>
                                                 <button onClick={() => onUpdateGroup(group)}>Update Title</button>
                                                 <div className="task-count">
-                                                    {group?.tasks?.length > 0
-                                                        ? group?.tasks?.length
-                                                        : "No"}
-                                                    Tasks
+                                                    {group?.tasks?.length > 0 ? `${group?.tasks?.length} Tasks`
+                                                        : 'No Tasks'}
                                                 </div>
                                             </div>
 
