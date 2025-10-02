@@ -1,6 +1,6 @@
 import person from '/icons/person.svg'
 import { FloatingContainerCmp } from "../FloatingContainerCmp"
-import logo from '/img/Logo.png'
+import logo from '/img/logo.png'
 import { userService } from "../../services/user"
 
 

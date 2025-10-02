@@ -15,7 +15,7 @@ import { PopUp } from './PopUp'
 import { HoveredTextCmp } from './HoveredTextCmp.jsx'
 
 // images
-import haederLogo from '../../public/img/Logo.png'
+import headerLogo from '../../public/img/logo.png'
 
 // icons
 import notification from '/icons/notification.svg'
@@ -40,7 +40,7 @@ export function AppHeader() {
 	return (
 		<header className="app-header full">
 			<Link to="/" className='app-logo'>
-				<img className='logo-img' src={haederLogo} alt="logo-img" />
+				<img className='logo-img' src={headerLogo} alt="logo-img" />
 				<div className='app-name'>NodeDay</div>
 			</Link>
 
