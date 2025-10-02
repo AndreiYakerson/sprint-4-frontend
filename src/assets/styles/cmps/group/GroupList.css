@@ -10,7 +10,7 @@
         grid-column: 1/-1;
         margin-block-end: 32px;
 
-        .group-haeder {
+        .group-header {
             position: sticky;
             top: 148px;
             z-index: 50;

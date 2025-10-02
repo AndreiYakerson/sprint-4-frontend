@@ -104,7 +104,7 @@ export function GroupList({ groups }) {
                                         }}
                                     >
                                         <header
-                                            className="group-haeder"
+                                            className="group-header"
                                             {...provided.dragHandleProps} // Make the header the drag handle
                                         >
                                             <div className="group-title-row">

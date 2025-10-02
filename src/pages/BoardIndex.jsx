@@ -56,7 +56,7 @@ export function BoardIndex({ setIsSideBarOpen }) {
 
     return (
         <section className="board-index">
-            <header className='board-index-haeder'>
+            <header className='board-index-header'>
                 <h2> Recently viewed</h2>
                 <button onClick={onAddBoard}>Add a Board</button>
             </header>
