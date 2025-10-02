@@ -14,6 +14,7 @@ export const boardService = {
     addGroup,
     updateGroup,
     removeGroup,
+    updateGroupsOrder,
     //task 
     addTask,
     removeTask,
@@ -53,6 +54,20 @@ async function updateTasksOrder(orderedTasks, boardId, groupId) {
         if (idx === -1) throw new Error(`Board ${groupId} not found`);
 
         board.groups[idx].tasks = orderedTasks
+
+        return await save(board)
+
+    } catch (err) {
+        throw err
+    }
+}
+
+async function updateGroupsOrder(orderedGroups, boardId) {
+    try {
+        const board = await getById(boardId)
+        if (!board) throw new Error(`Board ${boardId} not found`);
+
+        board.groups = orderedGroups
 
         return await save(board)
 

@@ -17,6 +17,7 @@ import {
     ADD_TASK,
     UPDATE_TASK,
     REMOVE_TASK,
+    SET_GROUPS,
 } from '../reducers/board.reducer'
 
 
@@ -89,6 +90,15 @@ export async function loadBoard(boardId) {
 
 // Groups Actions
 
+export async function updateGroupsOrder(groups, boardId) {
+    try {
+        await boardService.updateGroupsOrder(groups, boardId)
+        store.dispatch({ type: SET_GROUPS, groups })
+    } catch (err) {
+        console.log('Cannot add task', err)
+        throw err
+    }
+}
 
 export async function addGroup(boardId) {
     try {

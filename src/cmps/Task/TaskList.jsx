@@ -62,10 +62,11 @@ export function TaskList({ tasks, groupId }) {
                             return (
                                 <Draggable key={task.id} draggableId={task.id} index={idx}>
                                     {(provided, snapshot) => (
-                                        <div className={`table-row ${snapshot.isDragging ? 'dragged' : ''} ${snapshot.isDraggingOver ? 'dragging-over' : ''}`} {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef}>
+                                        <div className={`table-row ${snapshot.isDragging ? 'dragged' : ''} ${snapshot.isDraggingOver ? 'dragging-over' : ''}`} {...provided.draggableProps} ref={provided.innerRef}>
                                             <TaskPreview
                                                 task={task}
                                                 groupId={groupId}
+                                                dragHandleProps={provided.dragHandleProps}
                                             />
                                         </div>
                                     )}
