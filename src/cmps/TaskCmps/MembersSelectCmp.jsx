@@ -7,10 +7,9 @@ import { useEffect, useState } from 'react'
 import { makeId } from '../../services/util.service'
 import { onSetPopUpIsOpen } from "../../store/actions/system.actions"
 import { useEffectUpdate } from '../../customHooks/useEffectUpdate'
+import { updateTask } from '../../store/actions/board.actions'
 
-// MembersSelectCmp({boardMembers,task})
-
-export function MembersSelectCmp({ updateTask }) {
+export function MembersSelectCmp({ task, onClose }) {
     //Demo Data
     const user1 = {
         id: makeId(),
@@ -39,24 +38,30 @@ export function MembersSelectCmp({ updateTask }) {
         profession: '',
         tags: ['member'],
     }
-    const DemoBoardMembers = [user1, user2, user3]
-    const task = {
-        AddedMembers: [user1, user2],
-        createdAt: 1759346036021,
-        id: "U0gfhz",
-        title: "taskascasc",
-    }
-    //
+    var demoBoardMembers = [user1, user2, user3]
 
-    
+    if (!task?.AddedMembers?.length) {
+        task = {
+            AddedMembers: [user1],
+            createdAt: 1759346036021,
+            id: "U0gfhz",
+            title: "taskascasc",
+        }
+    }
+
+    //
     const [taskMembers, setTaskMembers] = useState(task.AddedMembers)
 
-    // useEffectUpdate(() => {
-    //     console.log('onSetPopUpIsOpen from MemberSerlectCmp')
-        
-    //   if onSetPopUpIsOpen(false)
-    //     // updateTask()
-    // }, taskMembers)
+    function onSelectMember(member, idx) {
+        setTaskMembers(prevMembers => [...prevMembers, member])
+        update(member)
+    }
+
+    function update(member) {
+        console.log(`update task member with ${member.fullname} here now`)
+        onClose()
+    }
+
 
     return (
         <div className="members-select-cmp">
@@ -78,16 +83,17 @@ export function MembersSelectCmp({ updateTask }) {
             </div>
             <span className='suggested'>Suggested People</span>
             <section className="user-list">
-                {DemoBoardMembers.map(user => {
+                {demoBoardMembers.map((member, idx) => {
                     return <button
-                        onClick={() => setTaskMembers(prevMembers => [...prevMembers, user])}
-                        key={user.id}
+                        // Pass the actual numeric 'idx' here
+                        onClick={() => onSelectMember(member, idx)}
+                        key={member.id}
                         className="user flex"
                     >
-                        <span className="img-container"><img className=" user-img" src={user.img} alt="User Image" /></span>
-                        {user.fullname}
+                        <span className="img-container"><img className=" user-img" src={member.img} alt="User Image" /></span>
+                        {member.fullname}
                         <span className="user-profession">
-                            ({user.profession})
+                            ({member.profession})
                         </span>
 
                     </button>
