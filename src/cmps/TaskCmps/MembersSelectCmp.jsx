@@ -3,12 +3,14 @@ import searchGalss from '/icons/search-galss.svg'
 import xMark from '/icons/x-mark.svg'
 import inviteMember from '/icons/invite-member.svg'
 import danPic from '/img/danPic.jpg'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { makeId } from '../../services/util.service'
+import { onSetPopUpIsOpen } from "../../store/actions/system.actions"
+import { useEffectUpdate } from '../../customHooks/useEffectUpdate'
 
 // MembersSelectCmp({boardMembers,task})
 
-export function MembersSelectCmp() {
+export function MembersSelectCmp({updateTask}) {
     //Demo User
     const user1 = {
         id: makeId(),
@@ -37,16 +39,23 @@ export function MembersSelectCmp() {
         profession: '',
         tags: ['member'],
     }
+    
     const DemoBoardMembers = [user1, user2, user3]
+
+    const [taskMembers, setTaskMembers] = useState(task.AddedMembers)
+
     const task = {
         AddedMembers: [user1,user2],
         createdAt: 1759346036021,
         id: "U0gfhz",
         title: "taskascasc",
     }
-    const [taskMembers, setTaskMembers] = useState(task.AddedMembers)
-    console.log("🚀 ~ MembersSelectCmp ~ taskMembers:", taskMembers)
 
+
+useEffectUpdate(()=>{
+onSetPopUpIsOpen(false)
+updateTask()
+},taskMembers)
 
     return (
         <div className="members-select-cmp">
