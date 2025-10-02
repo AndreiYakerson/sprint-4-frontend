@@ -10,3 +10,20 @@
     background-color: var(--primary-background-color);
     border-radius: var(--border-radius-big);
 }
+
+.back-drop-clear{
+    display: flex;
+    position: fixed;
+
+    justify-content: center;
+    align-items: center;
+
+    inset: 0;
+    width: 100%;
+    height: 100%;
+
+    z-index: 1000;
+    background-color:transparent;
+
+    
+}

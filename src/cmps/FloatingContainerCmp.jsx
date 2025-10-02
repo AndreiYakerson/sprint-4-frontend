@@ -7,22 +7,31 @@ export function FloatingContainerCmp({ anchorEl, children, onClose }) {
     const popupRef = useRef(null)
 
     // Close on outside click
-    useLayoutEffect(() => {
-        function handleClickOutside(e) {
-            if (
-                popupRef.current &&
-                !popupRef.current.contains(e.target) &&
-                anchorEl &&
-                !anchorEl.contains(e.target)
-            ) {
-                onClose()
-            }
-        }
-        document.addEventListener('mousedown', handleClickOutside)
-        return () => document.removeEventListener('mousedown', handleClickOutside)
-    }, [anchorEl, onClose])
+    // FloatingContainerCmp.jsx
 
-    // Position & animation logic
+    // Close on outside click
+    // useLayoutEffect(() => {
+    //     function handleClickOutside(e) {
+    //         const isClickOutsidePopup = popupRef.current && !popupRef.current.contains(e.target);
+    //         const isClickOnAnchor = anchorEl && anchorEl.contains(e.target);
+
+    //         // Close if the popup is open, AND the click is NOT inside the popup, AND NOT on the anchor.
+    //         if (anchorEl && isClickOutsidePopup && !isClickOnAnchor) {
+    //             console.log('close')
+    //             onClose()
+    //         }
+    //     }
+
+    //     // 1. ADD 'mouseup' listener
+    //     document.addEventListener('mouseup', handleClickOutside)
+
+    //     return () => {
+    //         // 2. REMOVE the SAME 'mouseup' listener
+    //         document.removeEventListener('mouseup', handleClickOutside) 
+    //     }
+    //     // 3. Set dependencies: anchorEl is critical for the logic, onClose is required by React.
+    // }, [anchorEl, onClose])    // Position & animation logic
+    
     useLayoutEffect(() => {
         if (!anchorEl || !popupRef.current) {
             setIsVisible(false)
@@ -88,10 +97,21 @@ export function FloatingContainerCmp({ anchorEl, children, onClose }) {
 
     if (!anchorEl) return null
 
+
     return createPortal(
-        <div  className="fcc-container" style={style} ref={popupRef}>
-            {children}
+        <div className="back-drop-clear" onClick={e => {
+            e.stopPropagation()
+            onClose()
+        }}>
+            <div
+            onClick={e =>  e.stopPropagation()}
+                className="fcc-container"
+                style={style}
+                ref={popupRef}
+            >
+                {children}
+            </div>
         </div>,
-        document.getElementById('portal-root') // 👈 Renders the div here
+        document.getElementById('portal-root')
     )
 }
