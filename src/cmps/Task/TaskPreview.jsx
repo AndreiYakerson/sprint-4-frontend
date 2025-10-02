@@ -20,7 +20,7 @@ import { MembersSelectCmp } from "../TaskCmps/MembersSelectCmp.jsx"
 import { PopUp } from "../PopUp.jsx"
 import { useSelector } from "react-redux"
 
-export function TaskPreview({ task, groupId }) {
+export function TaskPreview({ task, groupId, dragHandleProps }) {
     const navigate = useNavigate()
     const [membersSelectEl, setMembersSelectEl] = useState(null)
     const [memberEl, setMemberEl] = useState(null)
@@ -106,7 +106,7 @@ export function TaskPreview({ task, groupId }) {
                 </div>
                 <div className="table-border"></div>
                 <div className="task-select"></div>
-                <div className="task-title flex align-center">
+                <div className="task-title flex align-center" {...dragHandleProps}>
                     <TitleEditor info={cmps.find(cmp => cmp.type === 'TitleEditor')?.info} onUpdate={(data) => {
                         updateCmpInfo(cmps.find(cmp => cmp.type === 'TitleEditor'),
                             'currTitle', data, `Changed title to ${data}`)
