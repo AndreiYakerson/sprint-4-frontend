@@ -26,6 +26,12 @@ button {
 			background-color: var(--primary-hover-color)
 		}
 	}
+
+	&.add-group {
+		position: sticky;
+		left: 36px;
+		display: grid;
+	}
 }
 
 

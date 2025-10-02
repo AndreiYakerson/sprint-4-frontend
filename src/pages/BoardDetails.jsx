@@ -100,6 +100,11 @@ export function BoardDetails() {
         {board?.groups?.length > 0 &&
           < GroupList groups={board.groups} />}
 
+        <button
+          onClick={() => onAddGroup(board?._id)}
+          className='add-group'>+ Add new group
+        </button>
+
       </div>
 
 
@@ -109,6 +114,7 @@ export function BoardDetails() {
           onCloseTaskDetails={onCloseTaskDetails}
         />}
       </div>
+
 
     </section>
   )

@@ -26,6 +26,7 @@
         height: 100%;
         overflow: auto;
         position: relative;
+        padding-block-end: 2em;
 
         .board-details-header {
             position: sticky;

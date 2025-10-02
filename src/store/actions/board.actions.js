@@ -12,6 +12,7 @@ import {
     ADD_GROUP,
     UPDATE_GROUP,
     REMOVE_GROUP,
+    SET_GROUP_ID_TO_EDIT,
     //Task
     SET_TASKS,
     ADD_TASK,
@@ -104,6 +105,7 @@ export async function addGroup(boardId) {
     try {
         const group = await boardService.addGroup(boardId)
         store.dispatch({ type: ADD_GROUP, group })
+        setNewGroupIdToEdit(group?.id)
     } catch (err) {
         console.log('Cannot add group', err)
         throw err
@@ -128,6 +130,10 @@ export async function removeGroup(boardId, groupId) {
         console.log('Cannot remove group', err)
         throw err
     }
+}
+
+export function setNewGroupIdToEdit(groupId) {
+    store.dispatch({ type: SET_GROUP_ID_TO_EDIT, groupId })
 }
 
 // Tasks

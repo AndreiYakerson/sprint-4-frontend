@@ -1,5 +1,8 @@
 import { useEffect, useRef, useState } from "react"
+import { useSelector } from "react-redux"
+// services
 import { boardService } from "../../services/board/index.js"
+import { setNewGroupIdToEdit } from "../../store/actions/board.actions.js"
 
 export function GroupTitleEditor({ info, onUpdate }) {
 
@@ -7,6 +10,8 @@ export function GroupTitleEditor({ info, onUpdate }) {
     const [isEditing, setIsEditing] = useState(false)
     const [isColorPickerOpen, setIsColorPickerOpen] = useState(false)
     const [colors, setColors] = useState(boardService.getGroupColors())
+
+    const newGroupIdToEdit = useSelector(storeState => storeState.boardModule.newGroupIdToEdit)
 
     const editorRef = useRef()
 
@@ -18,6 +23,14 @@ export function GroupTitleEditor({ info, onUpdate }) {
         })
 
     }, [])
+
+    useEffect(() => {
+        if (newGroupIdToEdit === info?.groupId) {
+            setIsEditing(true)
+            setNewGroupIdToEdit(null)
+        }
+
+    }, [newGroupIdToEdit])
 
     useEffect(() => {
         if (!isEditing && info.title !== titleToEdit.title ||

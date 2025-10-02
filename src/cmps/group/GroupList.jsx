@@ -114,7 +114,12 @@ export function GroupList({ groups }) {
                                                 <div className="collapse-group"></div>
                                                 <div className="group-title flex">
                                                     <GroupTitleEditor
-                                                        info={{ title: group.title, color: group.style['--group-color'], style: group?.style }}
+                                                        info={{
+                                                            groupId: group?.id,
+                                                            title: group.title,
+                                                            color: group.style['--group-color'],
+                                                            style: group?.style
+                                                        }}
                                                         onUpdate={(newVals) => onUpdateGroup(group, newVals)}
                                                     />
                                                 </div>
