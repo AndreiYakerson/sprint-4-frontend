@@ -16,7 +16,6 @@
 
 /* CMPS */
 @import "cmps/SortFilterCmp.css";
-@import "cmps/group/GroupList.css";
 @import "cmps/SideBar/SideBar.css";
 @import "cmps/HomePage";
 @import "cmps/LoginSignup";
@@ -27,6 +26,10 @@
 @import "cmps/ConfirmCmp.css";
 @import "cmps/hover-show.css";
 @import "cmps/LongTxt.css";
+
+@import "cmps/group/GroupList.css";
+@import "cmps/group/GroupTitleEditor.css";
+
 @import "cmps/TaskCmps/MemberCmp.css";
 @import "cmps/TaskCmps/MembersSelectCmp.css";
 @import "cmps/TaskCmps/MemberSelectPreview.css";

@@ -1,4 +1,7 @@
+import { useSelector } from "react-redux";
+import { useState, useEffect } from "react";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+
 // import { useState } from "react"
 // import { ConfirmCmp } from "./ConfirmCmp"
 // import { PopUp } from "./PopUp"
@@ -6,15 +9,13 @@ import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { useParams } from "react-router"
 // services
 import { showErrorMsg, showSuccessMsg } from "../../services/event-bus.service"
+import { addTask, removeGroup, updateGroup, updateGroupsOrder } from "../../store/actions/board.actions"
 
 // cmps
 import { TaskList } from "../Task/TaskList";
-
-import { addTask, removeGroup, updateGroup, updateGroupsOrder } from "../../store/actions/board.actions"
-import { useState } from "react";
-import { useEffect } from "react";
-import { useSelector } from "react-redux";
 import { TitleEditor } from "../Task/TitleEditor";
+import { GroupTitleEditor } from "./GroupTitleEditor";
+
 
 export function GroupList({ groups }) {
     const { boardId } = useParams()
@@ -46,14 +47,11 @@ export function GroupList({ groups }) {
         updateGroupsOrder(reorderedGroups, boardId)
     }
 
-    async function onUpdateGroup(group) {
-        const title = prompt('New title?', group.title) || ''
-        if (title === '' || title === group.title) return
-
-        group.title = title
+    async function onUpdateGroup(group, newVals) {
+        const groupToUpdate = { ...structuredClone(group), ...newVals }
 
         try {
-            await updateGroup(boardId, group)
+            await updateGroup(boardId, groupToUpdate)
             showSuccessMsg('group updated successfully')
         } catch (err) {
             console.log(err)
@@ -115,9 +113,11 @@ export function GroupList({ groups }) {
                                                 </div>
                                                 <div className="collapse-group"></div>
                                                 <div className="group-title flex">
-                                                    <div>{group.title}</div>
+                                                    <GroupTitleEditor
+                                                        info={{ title: group.title, color: group.style['--group-color'], style: group?.style }}
+                                                        onUpdate={(newVals) => onUpdateGroup(group, newVals)}
+                                                    />
                                                 </div>
-                                                <button onClick={() => onUpdateGroup(group)}>Update Title</button>
                                                 <div className="task-count">
                                                     {group?.tasks?.length > 0 ? `${group?.tasks?.length} Tasks`
                                                         : 'No Tasks'}

@@ -29,6 +29,7 @@
         position: sticky;
         left: 0;
         height: 40px;
+        z-index: 50;
 
         display: grid;
         grid-template-columns: 36px 30px max-content max-content max-content;
@@ -60,6 +61,7 @@
         }
 
         .group-title {
+            cursor: text;
             font-size: 1.28571428571em;
             font-weight: 500;
             color: var(--group-color);
@@ -69,6 +71,7 @@
             font-weight: 400;
             opacity: 0;
             transition: 200ms ease-in-out;
+            margin-inline-start: 0.5em;
         }
     }
 }

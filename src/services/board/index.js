@@ -20,8 +20,15 @@ function getDefaultFilter() {
     }
 }
 
+function getGroupColors() {
+    return ["#17804d", "#27c977", "#9dd435", "#c8b649", "#fccb29", "#794acf", "#9d4edb", "#1e7eb3",
+        "#5f9bf9", "#6fccfd", "#b83055", "#db2a4d", "#fa0080", "#fb57c3", "#fa6237", "#f9aa47", "#7d5348", "#c4c4c4", "#757575"
+    ]
+}
+
+
 const service = (VITE_LOCAL === 'true') ? local : remote
-export const boardService = { getEmptyBoard, getDefaultFilter, ...service }
+export const boardService = { getEmptyBoard, getDefaultFilter, getGroupColors, ...service }
 
 // Easy access to this service from the dev tools console
 // when using script - dev / dev:local
