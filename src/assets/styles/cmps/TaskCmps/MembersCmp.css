@@ -6,7 +6,7 @@
     height: 145px;
     padding-top: 8px;
 
-    artical {}
+   
 
     .user-img {
         display: grid;
@@ -64,13 +64,12 @@
     /* img {
        
     } */
+     
     .tag-label {
         padding: 2px 8px;
         border-radius: var(--border-radius-medium);
         background-color: var(--group-title-clr10);
     }
-
-
 
 
 

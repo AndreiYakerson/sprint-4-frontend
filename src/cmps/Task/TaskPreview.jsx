@@ -142,13 +142,6 @@ export function TaskPreview({ task, groupId }) {
                             />
                         </span>
 
-                        {/* <PopUp>
-                            <MembersSelectCmp
-                            //  updateTask={()=>onUpdateTask()}
-                            //  activityTitle={activityTitle}
-                              />
-                        </PopUp> */}
-
                         {membersSelectEl &&
                             < FloatingContainerCmp
                                 anchorEl={membersSelectEl}
@@ -158,7 +151,6 @@ export function TaskPreview({ task, groupId }) {
                             </FloatingContainerCmp>
                         }
 
-
                         {memberEl && !task.AddedMembers?.length && !membersSelectEl &&
                             < FloatingContainerCmp
                                 anchorEl={memberEl}
@@ -167,6 +159,7 @@ export function TaskPreview({ task, groupId }) {
                                 <MembersCmp />
                             </FloatingContainerCmp>
                         }
+
                     </div>
                 })}
                 <div className="cell full"></div>
