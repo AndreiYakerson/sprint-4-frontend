@@ -1,0 +1,183 @@
+   /* A row of each task */
+   .table-row {
+       position: relative;
+       display: grid;
+       grid-template-columns: subgrid;
+       grid-column: 1/-1;
+       height: 36px;
+       background-color: var(--primary-background-color);
+       margin-inline-start: 36px;
+       transition: transform 0.2s ease;
+
+
+       &:has(:focus, .focus) {
+           background-color: var(--primary-selected-color-rgb);
+       }
+
+
+       &:hover {
+           &:not(.table-header, .sum-row, :has(:focus, .focus)) {
+               background-color: var(--pulse-background-color-rgb);
+               box-shadow: 4px 3px 6px -3px var(--ui-border-color);
+               z-index: 3;
+           }
+
+           .sticky-cell-wrapper {
+               .task-menu-wrapper>* {
+                   opacity: 1;
+               }
+           }
+       }
+
+
+       &.dragged {
+           display: grid;
+           grid-template-columns: 434px 1fr;
+           box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+           filter: contrast(80%) opacity(70%);
+           rotate: 0.5deg
+       }
+
+   }
+
+   /* The first column in each row contains the title of the task. */
+
+   .sticky-cell-wrapper {
+       position: sticky;
+       left: 36px;
+       background-color: inherit;
+
+       display: grid;
+       grid-template-columns: 6px 36px 1fr;
+
+       &>*:not(.table-border, .task-menu-wrapper) {
+           border-block-end: 1px solid var(--layout-border-color);
+           border-inline-end: 1px solid var(--layout-border-color);
+       }
+
+
+       &:has(:focus, .focus) {
+           &>*:not(.table-border, .task-menu-wrapper) {
+               border-block: 1px solid var(--primary-color);
+           }
+
+           .task-title {
+               border-inline-end: 1px solid var(--primary-color);
+           }
+       }
+
+
+       /* Currently contains the X to delete a task, later three dots will appear there that will open a menu */
+
+       .task-menu-wrapper {
+           position: absolute;
+           top: 0;
+           left: -36px;
+
+           display: grid;
+           justify-content: end;
+           place-items: center;
+
+           background-color: var(--primary-background-color);
+           width: 36px;
+           height: 40px;
+
+           z-index: 50;
+
+           &:hover {
+
+               &>* {
+                   opacity: 1;
+               }
+           }
+
+           &>* {
+               width: 24px;
+               aspect-ratio: 1/1;
+               padding: 0;
+               margin-inline-end: 4px;
+               margin-block-end: 4px;
+               opacity: 0;
+           }
+       }
+
+       /* The colored part at the beginning of each row */
+
+       .table-border {
+           background-color: var(--group-color);
+       }
+
+
+
+       .task-title {
+           justify-content: space-between;
+           align-content: center;
+           gap: 8px;
+
+           &>:first-child {
+               margin-inline-start: 36px;
+           }
+
+           span {
+               width: max-content;
+               max-width: 200px;
+               white-space: nowrap;
+               overflow: hidden;
+               text-overflow: ellipsis;
+
+               &:hover {
+                   outline: 1px solid var(--layout-border-color);
+                   border-radius: 4px;
+               }
+           }
+
+           .grab-block {
+               cursor: grab;
+               height: 100%;
+               width: 36px;
+               min-width: 10px;
+               flex: 1 1;
+           }
+
+           .task-updates-cell {
+               cursor: pointer;
+               display: grid;
+               place-content: center;
+
+               height: 100%;
+               min-width: 36px;
+
+               border-inline-start: 1px solid var(--layout-border-color);
+           }
+
+       }
+
+   }
+
+
+
+   .column-cell {
+       display: flex;
+
+       min-width: 150px;
+       height: 100%;
+
+       border-block-end: 1px solid var(--layout-border-color);
+       border-inline-end: 1px solid var(--layout-border-color);
+
+       &>* {
+           flex-grow: 1;
+           text-align: center;
+           align-content: center;
+       }
+
+       &.full {
+           flex-grow: 1;
+           border-inline-end: 0;
+       }
+   }
+
+
+   .task-name {
+       cursor: text;
+   }

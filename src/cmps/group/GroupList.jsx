@@ -41,7 +41,7 @@ export function GroupList({ groups }) {
 
         // Update the state with the reordered groups
         setLocalGroups(reorderedGroups);
-        
+
         updateGroupsOrder(reorderedGroups, boardId)
     }
 
@@ -136,12 +136,12 @@ export function GroupList({ groups }) {
                                                 <div className="task-columns flex">
                                                     {demoColumns.map((colName) => {
                                                         return (
-                                                            <div key={colName} className="cell">
+                                                            <div key={colName} className="column-cell">
                                                                 <span>{colName}</span>
                                                             </div>
                                                         );
                                                     })}
-                                                    <div className="cell full"></div>
+                                                    <div className="column-cell full"></div>
                                                 </div>
 
                                             </div>
@@ -160,7 +160,7 @@ export function GroupList({ groups }) {
                                             </div>
 
                                             <div className="task-columns flex">
-                                                <div className="cell full"></div>
+                                                <div className="column-cell full"></div>
                                             </div>
                                         </div>
 
@@ -173,11 +173,11 @@ export function GroupList({ groups }) {
 
                                             <div className="task-columns flex">
                                                 {demoColumns.map(colName => {
-                                                    return <div key={colName} className="cell">
+                                                    return <div key={colName} className="column-cell">
                                                         <span></span>
                                                     </div>
                                                 })}
-                                                <div className="cell full"></div>
+                                                <div className="column-cell full"></div>
                                             </div>
                                         </div>
 

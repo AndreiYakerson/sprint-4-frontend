@@ -101,7 +101,7 @@ export function TaskPreview({ task, groupId, dragHandleProps }) {
             : `/board/${boardId}/task/${task.id}`)
     }
 
-    
+
 
     return (
         <>
@@ -134,10 +134,10 @@ export function TaskPreview({ task, groupId, dragHandleProps }) {
 
             <div className="task-columns flex">
                 {cmpsOrder.map(colName => {
-                    return <div onClick={(ev) => setMembersSelectEl(ev.currentTarget)} key={colName} className="cell">
+                    return <div onClick={(ev) => setMembersSelectEl(ev.currentTarget)} key={colName} className="column-cell">
 
-                        <MemberSelectPreview 
-                        task={task}
+                        <MemberSelectPreview
+                            task={task}
                         />
                         {/* <span className="cmp-img">
                             <img src={plus} className="icon big " alt="plus icon" />
@@ -157,15 +157,15 @@ export function TaskPreview({ task, groupId, dragHandleProps }) {
                                 onClose={() => setMembersSelectEl(null)}
                             >
                                 <MembersSelectCmp
-                                 onClose={() => setMembersSelectEl(null)}
-                                 task={task}
+                                    onClose={() => setMembersSelectEl(null)}
+                                    task={task}
                                 />
                             </FloatingContainerCmp>
                         }
 
                     </div>
                 })}
-                <div className="cell full"></div>
+                <div className="column-cell full"></div>
             </div >
 
         </>

@@ -33,6 +33,7 @@
 
 @import "cmps/tasks/TaskList.css";
 @import "cmps/tasks/TaskDetails.css";
+@import "cmps/tasks/TaskPreview.css";
 
 @import "cmps/AppHeader";
 @import "cmps/AppFooter";
