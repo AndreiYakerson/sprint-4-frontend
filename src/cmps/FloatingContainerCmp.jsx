@@ -88,8 +88,8 @@ export function FloatingContainerCmp({ anchorEl, children, onClose }) {
 
     if (!anchorEl) return null
 
-return createPortal(
-        <div className="fcc-container" style={style} ref={popupRef}>
+    return createPortal(
+        <div  className="fcc-container" style={style} ref={popupRef}>
             {children}
         </div>,
         document.getElementById('portal-root') // 👈 Renders the div here

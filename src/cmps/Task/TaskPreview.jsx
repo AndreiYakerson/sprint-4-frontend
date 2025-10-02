@@ -4,6 +4,7 @@ import { useParams, Link, useNavigate } from "react-router-dom"
 // services
 import { removeTask, updateTask } from "../../store/actions/board.actions.js"
 import { showErrorMsg, showSuccessMsg } from "../../services/event-bus.service"
+import { onSetPopUpIsOpen } from "../../store/actions/system.actions.js"
 
 // cmps
 import { DynamicCmp } from "../DynamicCmp"
@@ -12,12 +13,18 @@ import { TitleEditor } from "./TitleEditor"
 // icon
 import updateIcon from "/icons/update.svg"
 import person from "/icons/person.svg"
+import plus from "/icons/plus.svg"
 import { MembersCmp } from "../TaskCmps/MembersCmp.jsx"
 import { FloatingContainerCmp } from "../FloatingContainerCmp.jsx"
+import { MembersSelectCmp } from "../TaskCmps/MembersSelectCmp.jsx"
+import { PopUp } from "../PopUp.jsx"
+import { useSelector } from "react-redux"
 
 export function TaskPreview({ task, groupId }) {
     const navigate = useNavigate()
-    const [anchorEl, setAnchorEl] = useState(null)
+    const [membersSelectEl, setMembersSelectEl] = useState(null)
+    const [memberEl, setMemberEl] = useState(null)
+    // const isPopUpOpen = useSelector(state => state.systemModule.isPopUpOpen)
 
     const { boardId, taskId } = useParams()
 
@@ -50,8 +57,20 @@ export function TaskPreview({ task, groupId }) {
 
         // Update the task
         const updatedTask = structuredClone(task)
+        console.log("🚀 ~ updateCmpInfo ~ updatedTask:", updatedTask)
         updatedTask[taskPropName] = data
 
+        onUpdateTask(updatedTask,activityTitle)
+        // try {
+        //     await updateTask(boardId, groupId, updatedTask, activityTitle)
+        //     showSuccessMsg(`Task updated`)
+        // } catch (err) {
+        //     console.log('err:', err)
+        //     showErrorMsg('Cannot update task')
+        // }
+    }
+//FIXME צריך להפוך להיות action  
+    async function onUpdateTask(updatedTask, activityTitle) {
         try {
             await updateTask(boardId, groupId, updatedTask, activityTitle)
             showSuccessMsg(`Task updated`)
@@ -60,7 +79,6 @@ export function TaskPreview({ task, groupId }) {
             showErrorMsg('Cannot update task')
         }
     }
-
     async function onRemoveTask() {
         try {
             await removeTask(boardId, groupId, task.id)
@@ -109,21 +127,52 @@ export function TaskPreview({ task, groupId }) {
 
             <div className="task-columns flex">
                 {cmpsOrder.map(colName => {
-                    return <div key={colName} className="cell">
-                        <img onMouseLeave={() => setAnchorEl(null)} onMouseOver={(ev) => setAnchorEl(ev.currentTarget)} src={person} className="icon big hover-show" alt="person icon" />
+                  return <div onClick={() => onSetPopUpIsOpen(true)} key={colName} className="cell">
+                        {/* return <div onClick={(ev) => setMembersSelectEl(prev => prev = ev.currentTarget)} key={colName} className="cell">  */}
+                        <span className="cmp-img">
+                            <img src={plus} className="icon big " alt="plus icon" />
+                            <img
+                                onMouseLeave={() => setMemberEl(null)}
+                                onMouseOver={(ev) => setMemberEl(ev.currentTarget)}
+                                // src={loggedinUser?  loggedinUser.img : person}
+                                src={person}
+                                className="icon big hover-show"
+                                alt="person icon"
+                            />
+                        </span>
 
-                        {anchorEl && <FloatingContainerCmp
-                            anchorEl={anchorEl}
-                            onClose={() => setAnchorEl(null)}
-                        >
-                            <MembersCmp />
-                        </FloatingContainerCmp>}
+
+                        <PopUp>
+                            <MembersSelectCmp
+                             updateTask={onUpdateTask}
+                            //  activityTitle={activityTitle}
+                              />
+                        </PopUp>
+
+                        {/* {membersSelectEl &&
+                            < FloatingContainerCmp
+                                anchorEl={membersSelectEl}
+                                onClose={() => setMembersSelectEl(null)}
+                            >
+                                <MembersSelectCmp />
+                            </FloatingContainerCmp>
+                        } */}
+
+                        {/* 
+                        {memberEl && !task.AddedMembers?.length &&
+                            < FloatingContainerCmp
+                                anchorEl={memberEl}
+                                onClose={() => setMemberEl(null)}
+                            >
+                                <MembersCmp />
+                            </FloatingContainerCmp>
+                        }  */}
 
                         {/* <span>{colName}</span> */}
                     </div>
                 })}
                 <div className="cell full"></div>
-            </div>
+            </div >
 
         </>
     )

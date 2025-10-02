@@ -70,3 +70,4 @@ function saveLoggedinUser(user) {
 	sessionStorage.setItem(STORAGE_KEY_LOGGEDIN_USER, JSON.stringify(user))
 	return user
 }
+

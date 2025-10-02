@@ -1,0 +1,49 @@
+.members-select-cmp {
+    display: flex;
+    flex-direction: column;
+
+    width: 360px;
+
+    gap: 8px;
+    padding: 20px;
+
+
+    .search-bar {
+        display: grid;
+        grid-template-columns: 41px auto 21px;
+        padding: 6px;
+
+        border-radius: var(--border-radius-small);
+        border: 1px solid var(--ui-border-color);
+
+        input {
+            border: none;
+            background-color: transparent;
+        }
+
+        .search {
+            display: flex;
+            place-content: center;
+        }
+
+    }
+
+    .user {
+        width: 100%;
+        padding: 16px;
+        align-items: center;
+        border-radius: var(--border-radius-small);
+        gap: 9px;
+        border-color: transparent;
+
+        .img-container {
+            width: 36px;
+            display: flex;
+            place-content: center;
+
+        }
+    }
+
+
+
+}

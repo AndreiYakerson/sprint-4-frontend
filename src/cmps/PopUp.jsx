@@ -7,6 +7,7 @@ import { onSetPopUpIsOpen } from "../store/actions/system.actions.js"
 export function PopUp({ children = false, onClose = () => { } }) {
 
     const isPopUpOpen = useSelector(state => state.systemModule.isPopUpOpen)
+    console.log("🚀 ~ PopUp ~ isPopUpOpen:", isPopUpOpen)
 
     useEffect(() => {
         const EscapePress = window.addEventListener("keydown", onKey)
