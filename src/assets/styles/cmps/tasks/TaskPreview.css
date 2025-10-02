@@ -52,11 +52,15 @@
 
        &>*:not(.table-border, .task-menu-wrapper) {
            border-block-end: 1px solid var(--layout-border-color);
+       }
+
+       &>*:not(.table-border, .task-menu-wrapper, .add-task-cell) {
            border-inline-end: 1px solid var(--layout-border-color);
        }
 
 
-       &:has(:focus, .focus) {
+       &:has(:focus, .focus):not(:has(.add-task-cell)) {
+
            &>*:not(.table-border, .task-menu-wrapper) {
                border-block: 1px solid var(--primary-color);
            }
@@ -64,6 +68,7 @@
            .task-title {
                border-inline-end: 1px solid var(--primary-color);
            }
+
        }
 
 
@@ -118,7 +123,8 @@
                margin-inline-start: 36px;
            }
 
-           span {
+           .task-name {
+               cursor: text;
                width: max-content;
                max-width: 200px;
                white-space: nowrap;
@@ -175,9 +181,4 @@
            flex-grow: 1;
            border-inline-end: 0;
        }
-   }
-
-
-   .task-name {
-       cursor: text;
    }

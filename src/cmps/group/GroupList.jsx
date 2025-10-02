@@ -14,6 +14,7 @@ import { addTask, removeGroup, updateGroup, updateGroupsOrder } from "../../stor
 import { useState } from "react";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
+import { TitleEditor } from "../Task/TitleEditor";
 
 export function GroupList({ groups }) {
     const { boardId } = useParams()
@@ -70,15 +71,16 @@ export function GroupList({ groups }) {
         }
     }
 
-    async function onAddTask(groupId) {
+    async function onAddTask(groupId, title) {
         try {
-            await addTask(boardId, groupId)
+            await addTask(boardId, groupId, title)
             showSuccessMsg('task added to the board')
         } catch (err) {
             console.log(err)
             showErrorMsg('cannot add task')
         }
     }
+
 
     const demoColumns = ["Status", "Priority", "Members", "Date"];
 
@@ -155,7 +157,8 @@ export function GroupList({ groups }) {
                                                 <div className="table-border"></div>
                                                 <div className="task-select"></div>
                                                 <div className="add-task-cell">
-                                                    <button onClick={() => onAddTask(group.id)}>+ Add task</button>
+                                                    <TitleEditor info={{ label: 'Title:', propName: 'title', placeholder: '+ Add Task' }}
+                                                        onUpdate={(title) => onAddTask(group?.id, title)} />
                                                 </div>
                                             </div>
 

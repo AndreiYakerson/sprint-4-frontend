@@ -142,15 +142,16 @@ export async function updateTasksOrder(tasks, boardId, groupId) {
     }
 }
 
-export async function addTask(boardId, groupId) {
+export async function addTask(boardId, groupId, title) {
     try {
-        const task = await boardService.addTask(boardId, groupId)
+        const task = await boardService.addTask(boardId, groupId, title)
         store.dispatch({ type: ADD_TASK, groupId, task })
     } catch (err) {
         console.log('Cannot add task', err)
         throw err
     }
 }
+
 
 export async function updateTask(boardId, groupId, taskToUpdate) {
     console.log('data:', boardId, groupId, taskToUpdate)

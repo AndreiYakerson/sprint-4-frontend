@@ -155,7 +155,7 @@ async function removeGroup(boardId, groupId) {
 
 //  task functions
 
-async function addTask(boardId, groupId) {
+async function addTask(boardId, groupId, title) {
 
     try {
         const board = await getById(boardId)
@@ -164,7 +164,7 @@ async function addTask(boardId, groupId) {
         const idx = board.groups.findIndex(group => group.id === groupId)
         if (idx === -1) throw new Error(`group ${groupId} not found`);
 
-        const newTaskToAdd = _getEmptyTask()
+        const newTaskToAdd = _getEmptyTask(title)
 
         board.groups[idx].tasks.push(newTaskToAdd)
 
@@ -176,6 +176,7 @@ async function addTask(boardId, groupId) {
         throw err
     }
 }
+
 
 async function updateTask(boardId, groupId, taskToUpdate) {
 
@@ -264,10 +265,10 @@ function _getEmptyGroup() {
     }
 }
 
-function _getEmptyTask() {
+function _getEmptyTask(title = 'New Task') {
     return {
         id: makeId(),
-        title: 'new task',
+        title: title,
         createdAt: Date.now(),
     }
 }

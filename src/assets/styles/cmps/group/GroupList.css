@@ -108,6 +108,15 @@
         }
     }
 
+    &:hover,
+    &:has(:focus, .focus) {
+        &:has(.add-task-cell) {
+            .table-border {
+                background-color: var(--group-color);
+            }
+        }
+    }
+
 
     &:has(.add-task-cell) {
         box-shadow: var(--board-elevation);
@@ -151,10 +160,37 @@
     &:has(.add-task-cell) {
         .table-border {
             border-radius: 0 0 0 6px;
+            background-color: color-mix(in srgb, var(--group-color) 50%, white 50%);
+            /* background-color: var(--group-color); */
         }
     }
 
     .add-task-cell {
+        display: flex;
         border-inline-end: 0;
+
+        &:has(input) {
+            span {
+                padding-inline-start: 0;
+                margin-inline: 0;
+            }
+
+            input {
+                padding-inline-start: 32px;
+            }
+        }
+
+        &>* {
+            align-self: center;
+            width: 100%;
+            padding-inline-start: 32px;
+            margin-inline: 4px;
+
+            &:hover {
+                outline: 1px solid var(--layout-border-color);
+                border-radius: 4px;
+                width: 300%;
+            }
+        }
     }
 }

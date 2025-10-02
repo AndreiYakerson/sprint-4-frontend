@@ -3,17 +3,19 @@ import { showErrorMsg } from "../../services/event-bus.service"
 
 export function TitleEditor({ info, onUpdate }) {
 
-    const [nameToEdit, setNameToEdit] = useState(info?.currTitle)
+    const [nameToEdit, setNameToEdit] = useState(info?.currTitle || '')
     const [isEditing, setIsEditing] = useState(false)
 
 
     function saveChanges() {
         setIsEditing(false)
-        if (nameToEdit && nameToEdit !== info?.currTitle) {
-            onUpdate(nameToEdit)
-            // if (placeholder) setNameToEdit('')
-        } else if (!nameToEdit) {
-            showErrorMsg(`Title can't be empty`)
+        const trimmedName = nameToEdit?.trim()
+
+        if (trimmedName && trimmedName !== info?.currTitle) {
+            onUpdate(trimmedName)
+            if (info?.placeholder) setNameToEdit('')
+        } else if (!trimmedName) {
+            if (!info?.placeholder) showErrorMsg(`Title can't be empty`)
             setNameToEdit(info?.currTitle)
         }
     }
@@ -33,11 +35,10 @@ export function TitleEditor({ info, onUpdate }) {
                     onKeyDown={(e) => {
                         if (e.key === "Enter") saveChanges()
                     }}
-                // placeholder={placeholder ? "+ Add task" : ""}
+                    placeholder={info?.placeholder ? "+ Add Task" : ""}
                 />
                 : <span className="task-name" onClick={() => setIsEditing(true)}>
-                    {/* {placeholder && !nameToEdit ? placeholder : nameToEdit} */}
-                    {info?.currTitle}
+                    {info?.placeholder && !info?.currTitle ? info?.placeholder : info?.currTitle}
                 </span>
             }
         </>
