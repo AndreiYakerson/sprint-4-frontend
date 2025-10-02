@@ -15,7 +15,7 @@ import { PopUp } from './PopUp'
 import { HoveredTextCmp } from './HoveredTextCmp.jsx'
 
 // images
-import headerLogo from '../../public/img/logo.png'
+import headerLogo from '/img/logo.png'
 
 // icons
 import notification from '/icons/notification.svg'
@@ -55,15 +55,6 @@ export function AppHeader() {
 						<img src={notification} />
 					</HoveredTextCmp>
 
-					{/* <span onClick={() => onSetPopUpIsOpen(true)} className="update-feed-icon"> */}
-					{/* <IconCmp
-						src={updateFeed}
-						label="Update Feed"
-						position="down"
-						onClick={() => onSetPopUpIsOpen(true)}
-					/> */}
-					{/* <IconCmp src={updateFeed} label={'Update Feed'} position={'down'} /> */}
-					{/* </span> */}
 				</div>
 				{/* //FIXME לעצב את הקו המפריד בין הקונטיינרים */}
 				<span className='middle-line'>!</span>
@@ -79,10 +70,6 @@ export function AppHeader() {
 							<button onClick={onLogout}>logout</button>
 						</div>
 					)}
-					<PopUp>
-						{/* <LoginSignup /> */}
-					</PopUp>
-
 					{anchorEl &&
 						<FloatingContainerCmp
 							anchorEl={anchorEl}
