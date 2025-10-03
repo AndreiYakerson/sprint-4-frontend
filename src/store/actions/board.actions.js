@@ -19,6 +19,7 @@ import {
     UPDATE_TASK,
     REMOVE_TASK,
     SET_GROUPS,
+    SET_TASK_ID_TO_EDIT,
 } from '../reducers/board.reducer'
 
 
@@ -148,10 +149,11 @@ export async function updateTasksOrder(tasks, boardId, groupId) {
     }
 }
 
-export async function addTask(boardId, groupId, title) {
+export async function addTask(boardId, groupId, title, method = '') {
     try {
-        const task = await boardService.addTask(boardId, groupId, title)
-        store.dispatch({ type: ADD_TASK, groupId, task })
+        const task = await boardService.addTask(boardId, groupId, title, method)
+        store.dispatch({ type: ADD_TASK, groupId, task, method })
+        if (method === 'unshift') setNewTaskIdToEdit(task?.id)
     } catch (err) {
         console.log('Cannot add task', err)
         throw err
@@ -160,7 +162,6 @@ export async function addTask(boardId, groupId, title) {
 
 
 export async function updateTask(boardId, groupId, taskToUpdate) {
-    console.log('data:', boardId, groupId, taskToUpdate)
     try {
         const savedTask = await boardService.updateTask(boardId, groupId, taskToUpdate)
         store.dispatch({ type: UPDATE_TASK, groupId, task: savedTask })
@@ -180,6 +181,9 @@ export async function removeTask(boardId, groupId, taskId) {
     }
 }
 
+export function setNewTaskIdToEdit(taskId) {
+    store.dispatch({ type: SET_TASK_ID_TO_EDIT, taskId })
+}
 
 
 // // Command Creators:

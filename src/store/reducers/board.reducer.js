@@ -17,7 +17,7 @@ export const SET_TASKS = 'SET_TASKS'
 export const ADD_TASK = 'ADD_TASK'
 export const UPDATE_TASK = 'UPDATE_TASK'
 export const REMOVE_TASK = 'REMOVE_TASK'
-
+export const SET_TASK_ID_TO_EDIT = 'SET_TASK_ID_TO_EDIT'
 
 export const ADD_BOARD_MSG = 'ADD_BOARD_MSG'
 
@@ -26,7 +26,8 @@ export const ADD_BOARD_MSG = 'ADD_BOARD_MSG'
 const initialState = {
     boards: [],
     board: null,
-    newGroupIdToEdit: null
+    newGroupIdToEdit: null,
+    newTaskIdToEdit: null
 }
 
 export function boardReducer(state = initialState, action = {}) {
@@ -105,7 +106,11 @@ export function boardReducer(state = initialState, action = {}) {
             board.groups = state.board.groups.map(g => {
                 if (g.id !== action.groupId) return g
                 const group = { ...g }
-                group.tasks = [...group.tasks, action.task]
+                if (action.method === 'unshift') {
+                    group.tasks = [action.task, ...group.tasks]
+                } else {
+                    group.tasks = [...group.tasks, action.task]
+                }
                 return group
             })
             // board.activities = [...board.activities, action.activity]
@@ -134,6 +139,10 @@ export function boardReducer(state = initialState, action = {}) {
             })
             // board.activities = [...board.activities, action.activity]
             newState = { ...state, board }
+            break
+
+        case SET_TASK_ID_TO_EDIT:
+            newState = { ...state, newTaskIdToEdit: action.taskId }
             break
 
         default:

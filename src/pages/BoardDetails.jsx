@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux'
 
 // services
 import { showSuccessMsg, showErrorMsg } from '../services/event-bus.service'
-import { addGroup, loadBoard } from '../store/actions/board.actions.js'
+import { addGroup, addTask, loadBoard } from '../store/actions/board.actions.js'
 
 // cmps
 import { GroupList } from '../cmps/group/GroupList.jsx'
@@ -79,6 +79,19 @@ export function BoardDetails() {
     }
   }
 
+  // task
+
+
+  async function onAddTask(groupId, title, method) {
+    try {
+      await addTask(boardId, groupId, title, method)
+      showSuccessMsg('task added to the board')
+    } catch (err) {
+      console.log(err)
+      showErrorMsg('cannot add task')
+    }
+  }
+
 
   return (
     <section className="board-details">
@@ -91,7 +104,10 @@ export function BoardDetails() {
             <div>Main Table</div>
           </div>
           <div className='board-actions'>
-            <button onClick={() => onAddGroup(board?._id)} className='blue'>+ Add group</button>
+            <button
+              onClick={() => onAddTask(board?.groups[0]?.id, 'New task', 'unshift')}
+              className='blue'>
+              New item</button>
           </div>
 
           {/* <SortFilterCmp /> */}

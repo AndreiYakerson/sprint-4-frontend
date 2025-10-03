@@ -36,9 +36,10 @@ export function TaskPreview({ task, groupId, dragHandleProps }) {
             {
                 type: 'TitleEditor',
                 info: {
+                    taskId: task?.id,
                     label: 'Title:',
                     propName: 'title',
-                    currTitle: task.title,
+                    currTitle: task?.title,
                 }
             },
         ]

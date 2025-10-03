@@ -155,7 +155,7 @@ async function removeGroup(boardId, groupId) {
 
 //  task functions
 
-async function addTask(boardId, groupId, title) {
+async function addTask(boardId, groupId, title, method) {
 
     try {
         const board = await getById(boardId)
@@ -166,7 +166,11 @@ async function addTask(boardId, groupId, title) {
 
         const newTaskToAdd = _getEmptyTask(title)
 
-        board.groups[idx].tasks.push(newTaskToAdd)
+        if (method === 'unshift') {
+            board.groups[idx].tasks.unshift(newTaskToAdd)
+        } else {
+            board.groups[idx].tasks.push(newTaskToAdd)
+        }
 
         await save(board)
 
