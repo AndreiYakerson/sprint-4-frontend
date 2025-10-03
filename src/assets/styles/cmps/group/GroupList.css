@@ -9,12 +9,17 @@
         grid-template-columns: subgrid;
         grid-column: 1/-1;
         margin-block-end: 32px;
+
+    }
+
+    &.collapsed {
+        grid-template-columns: 1fr;
     }
 
 }
 
 
-/* haeder of ther group */
+/* header of ther group */
 
 .group-header {
     position: sticky;
@@ -199,4 +204,29 @@
             }
         }
     }
+}
+
+.group-collapsed {
+    height: 50px;
+    margin-bottom: 10px;
+    overflow: hidden;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+
+
+
+.group-list div.placeholder {
+    height: 50px !important;
+    /* Match the height of collapsed groups */
+    margin-bottom: 10px;
+    /* Add consistent spacing */
+    background-color: #f0f0f0;
+    /* Optional: Add a background color */
+    border: 1px dashed #ccc;
+    /* Optional: Add a dashed border */
+    border-radius: 4px;
+    /* Optional: Match the border radius of your groups */
 }

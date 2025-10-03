@@ -1,5 +1,5 @@
 
-export function GroupPreview({ provided, group, GroupTitleEditor, managingType, TaskList, TitleEditor, onUpdateGroup, onRemoveGroup }) {
+export function GroupPreview({ provided, group, GroupTitleEditor, managingType, TaskList, TitleEditor, onUpdateGroup, onRemoveGroup, onAddTask }) {
 
     const demoColumns = ["Status", "Priority", "Members", "Date"];
 
