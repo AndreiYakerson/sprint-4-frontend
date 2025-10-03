@@ -1,0 +1,102 @@
+
+export function GroupPreview({ provided, group, GroupTitleEditor, managingType, TaskList, TitleEditor, onUpdateGroup, onRemoveGroup }) {
+
+    const demoColumns = ["Status", "Priority", "Members", "Date"];
+
+    return <div
+        className="group-container"
+        {...provided.draggableProps}
+        ref={provided.innerRef}
+        style={{
+            ...provided.draggableProps.style, // Include styles from react-beautiful-dnd
+            ...group.style, // Add your custom styles
+        }}
+    >
+        <header
+            className="group-header"
+            {...provided.dragHandleProps} // Make the header the drag handle
+        >
+            <div className="group-title-row">
+                <div className="group-menu-wrapper">
+                    <button onClick={() => onRemoveGroup(group.id)}>X</button>
+                </div>
+                <div className="collapse-group"></div>
+                <div className="group-title flex">
+                    <GroupTitleEditor
+                        info={{
+                            groupId: group?.id,
+                            title: group.title,
+                            color: group.style['--group-color'],
+                            style: group?.style
+                        }}
+                        onUpdate={(newVals) => onUpdateGroup(group, newVals)}
+                    />
+                </div>
+                <div className="task-count">
+                    {group?.tasks?.length > 0 ? `${group?.tasks?.length} Tasks`
+                        : 'No Tasks'}
+                </div>
+            </div>
+
+
+            <div className="temporary-white-block"></div>
+
+            <div className="table-row table-header">
+                <div className="sticky-cell-wrapper">
+                    <div className="task-menu-wrapper"></div>
+                    <div className="table-border"></div>
+                    <div className="task-select"></div>
+                    <div className="task-title">{managingType}</div>
+                </div>
+
+                <div className="task-columns flex">
+                    {demoColumns.map((colName) => {
+                        return (
+                            <div key={colName} className="column-cell">
+                                <span>{colName}</span>
+                            </div>
+                        );
+                    })}
+                    <div className="column-cell full"></div>
+                </div>
+
+            </div>
+        </header>
+
+        <TaskList tasks={group.tasks} groupId={group.id} />
+
+        <div className="table-row">
+            <div className="sticky-cell-wrapper">
+                <div className="task-menu-wrapper"></div>
+                <div className="table-border"></div>
+                <div className="task-select"></div>
+                <div className="add-task-cell">
+                    <TitleEditor info={{ label: 'Title:', propName: 'title', placeholder: `+ Add ${managingType}` }}
+                        onUpdate={(title) => onAddTask(group?.id, title)} />
+                </div>
+            </div>
+
+            <div className="task-columns flex">
+                <div className="column-cell full"></div>
+            </div>
+        </div>
+
+        <div className="table-row sum-row">
+            <div className="sticky-cell-wrapper">
+                <div className="border-radius-block">
+                    <span></span>
+                </div>
+            </div>
+
+            <div className="task-columns flex">
+                {demoColumns.map(colName => {
+                    return <div key={colName} className="column-cell">
+                        <span></span>
+                    </div>
+                })}
+                <div className="column-cell full"></div>
+            </div>
+        </div>
+
+    </div>
+}
