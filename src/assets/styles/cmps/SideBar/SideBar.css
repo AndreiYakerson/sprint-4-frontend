@@ -14,10 +14,6 @@
     width: 255px;
     height: 100%;
 
-    .icon {
-        width: 16px;
-    }
-
     & .close-btn {
         display: grid;
         place-items: center;
@@ -50,7 +46,7 @@
             display: flex;
             padding-inline-start: 8px;
             align-items: center;
-            
+
             gap: 12px;
             color: var(--secondary-text-color);
             white-space: nowrap;
@@ -58,6 +54,10 @@
             &:hover {
                 background-color: var(--primary-background-hover-color);
                 color: var(--primary-text-color);
+
+                .svg-icon {
+                    color: var(--primary-text-color);
+                }
             }
 
             &.active {

@@ -32,6 +32,7 @@
             border: 0;
             width: 100%;
             flex-shrink: 1;
+            color: var(--secondary-text-color);
 
             .board-actions,
             .board-img {
@@ -42,17 +43,31 @@
                 box-shadow: none;
                 background-color: var(--primary-background-hover-color);
                 color: var(--primary-text-color);
+
+                .svg-icon {
+                    color: var(--primary-text-color);
+                }
             }
 
             &.active {
                 background-color: var(--primary-selected-color);
                 color: var(--primary-text-color);
+
+                .svg-icon {
+                    color: var(--primary-text-color);
+                }
             }
+
+
 
             .board-title {
                 gap: 12px;
                 font-weight: 300;
                 font-size: 1em;
+
+                .board-info-items {
+                    padding: 0;
+                }
             }
         }
 

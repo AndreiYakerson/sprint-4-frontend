@@ -21,7 +21,7 @@ export function BoardList({ boards, onRemoveBoard, onUpdateBoard, isSideBarDispa
         <ul className={`board-list ${isSideBarDispaly ? "side-bar-dispaly" : ""}`}>
             {boards.map(board => {
                 return <li key={board._id} className={`board-item ${location.pathname.includes(board._id) ? "active" : ""}`}>
-                    <BoardPreview board={board} />
+                    <BoardPreview board={board} isSideBarDispaly={isSideBarDispaly} />
                     <div className='board-actions flex '>
                         <button onClick={() => onRemoveBoard(board._id)}>Remove</button>
                         <button onClick={() => onUpdateBoard(board)}>Update</button>

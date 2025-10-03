@@ -8,8 +8,9 @@ import star from '/icons/star.svg'
 import boardItemLogo from '/img/board-item-img.svg'
 import { useState } from 'react'
 import { LongTxt } from '../LongText/LongText.jsx'
+import { SvgIcon } from '../SvgIcon.jsx'
 
-export function BoardPreview({ board }) {
+export function BoardPreview({ board, isSideBarDispaly }) {
     const [anchorEl, setAnchorEl] = useState(null)
 
     //Demo Pre For Stared Logic
@@ -20,7 +21,6 @@ export function BoardPreview({ board }) {
             <img
                 src={boardItemLogo}
                 alt="Board Image" className='board-img' />
-
             <header>
                 <Link to={`/board/${board._id}`} className='board-title'>
                     <div className='board-info-items flex'>
@@ -29,7 +29,7 @@ export function BoardPreview({ board }) {
                             position="up"
                             label="Dash Board"
                         >
-                            <img src={boardIcon} />
+                            <SvgIcon iconName="board" size={isSideBarDispaly ? 16 : 22} colorName={isSideBarDispaly ? "currentColor" : ''} />
                         </HoveredTextCmp>
                         <span className='hover-show' data-type="Board Title"><LongTxt txt={board.title} /></span>
                         <span >
@@ -38,7 +38,7 @@ export function BoardPreview({ board }) {
                                 position="up"
                                 label={'logo'}
                             >
-                                <img src={isStarred ?  starFull : star} />
+                                <SvgIcon iconName="star" size={isSideBarDispaly ? 16 : 22} colorName={isSideBarDispaly ? "currentColor" : ''} />
                             </HoveredTextCmp>
                         </span>
                     </div>

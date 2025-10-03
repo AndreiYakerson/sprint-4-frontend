@@ -8,7 +8,8 @@ import { onSetIsSideBarOpen } from "../../store/actions/system.actions.js";
 
 // cmps
 import { BoardList } from "../Board/BoardList.jsx";
-
+import { HoveredTextCmp } from "../HoveredTextCmp.jsx";
+import { SvgIcon } from "../SvgIcon.jsx";
 
 // icons 
 import homeIcon from '/icons/home.svg'
@@ -16,7 +17,7 @@ import myWork from '/icons/my-work.svg'
 import chevronRight from '/icons/chevron-right.svg'
 import chevronLeft from '/icons/chevron-left.svg'
 import chevronDown from '/icons/chevron-down.svg'
-import { HoveredTextCmp } from "../HoveredTextCmp.jsx";
+
 
 export function SideBar() {
 
@@ -37,13 +38,14 @@ export function SideBar() {
                     label={isSideBarOpen ? 'Close Navigation' : 'Open Navigation'}
                     position={'down'}
                 >
-                    <img src={isSideBarOpen ? chevronLeft : chevronRight} alt="" />
+                    {/* <img src={isSideBarOpen ? chevronLeft : chevronRight} alt="" /> */}
+                    <SvgIcon iconName={isSideBarOpen ? 'chevronLeft' : 'chevronRight'} size={16} />
                 </HoveredTextCmp>
             </button>
             <div className="side-bar-content">
                 <nav className="side-nav-list">
-                    <NavLink to=""><HoveredTextCmp><img src={homeIcon} /></HoveredTextCmp>Home</NavLink>
-                    <NavLink to=""><HoveredTextCmp><img src={myWork} /></HoveredTextCmp>My Work</NavLink>
+                    <NavLink to=""><HoveredTextCmp><SvgIcon iconName="home" size={16} colorName="currentColor" /></HoveredTextCmp>Home</NavLink>
+                    <NavLink to=""><HoveredTextCmp><SvgIcon iconName="myWork" size={16} colorName="currentColor" /></HoveredTextCmp>My Work</NavLink>
                 </nav>
                 {/* <div className="favorites flex">Favorites
                     {
