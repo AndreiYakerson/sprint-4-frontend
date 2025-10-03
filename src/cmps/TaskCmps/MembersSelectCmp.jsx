@@ -5,7 +5,6 @@ import inviteMember from '/icons/invite-member.svg'
 import danPic from '/img/danPic.jpg'
 import { useEffect, useState } from 'react'
 import { makeId } from '../../services/util.service'
-import { onSetPopUpIsOpen } from "../../store/actions/system.actions"
 import { useEffectUpdate } from '../../customHooks/useEffectUpdate'
 import { updateTask } from '../../store/actions/board.actions'
 

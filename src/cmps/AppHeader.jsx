@@ -6,7 +6,6 @@ import { logout } from '../store/actions/user.actions'
 
 // services
 import { showErrorMsg, showSuccessMsg } from '../services/event-bus.service'
-import { onSetPopUpIsOpen } from '../store/actions/system.actions.js'
 
 // cmps
 import { LoginSignup } from '../pages/LoginSignup'

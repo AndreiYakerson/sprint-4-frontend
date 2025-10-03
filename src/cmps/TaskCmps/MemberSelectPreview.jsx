@@ -22,12 +22,12 @@ export function MemberSelectPreview({ task }) {
 
     //Demo Data Inserted To Task Hard Code
     task.AddedMembers = [
-        {
-            name: 'dan',
-            profession: 'super chef',
-            img: danPic,
-            tags: ['admin', 'member'],
-        },
+        // {
+        //     name: 'dan',
+        //     profession: 'super chef',
+        //     img: danPic,
+        //     tags: ['admin', 'member'],
+        // },
         // {
         //     name: 'adi',
         //     profession: 'super love',
@@ -41,6 +41,7 @@ export function MemberSelectPreview({ task }) {
         //     tags: ['member'],
         // }
     ]
+//FIXME STYLE למרכז בדיוק את האייקון 
 
     return (
         <article className="member-select-preview">
@@ -73,7 +74,6 @@ export function MemberSelectPreview({ task }) {
                         />
                     </span>
                 }
-
                 < FloatingContainerCmp
                     anchorEl={memberEl}
                     onClose={() => setMemberEl(null)}

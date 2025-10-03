@@ -24,7 +24,7 @@ import {
 
 
 
-// BOARDS ACTIONS
+// BOARDS ACTIONS  ///////////////////////////////////////////////////////////////
 
 // LIST
 
@@ -90,7 +90,7 @@ export async function loadBoard(boardId) {
     }
 }
 
-// Groups Actions
+// Groups Actions ///////////////////////////////////////////////////////////////
 
 export async function updateGroupsOrder(groups, boardId) {
     try {
@@ -137,7 +137,7 @@ export function setNewGroupIdToEdit(groupId) {
     store.dispatch({ type: SET_GROUP_ID_TO_EDIT, groupId })
 }
 
-// Tasks
+// Tasks  ///////////////////////////////////////////////////////////////
 
 export async function updateTasksOrder(tasks, boardId, groupId) {
     try {
