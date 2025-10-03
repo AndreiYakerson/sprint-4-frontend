@@ -102,6 +102,7 @@ export function GroupList({ groups, managingType }) {
                                         managingType={managingType}
                                         TaskList={TaskList}
                                         TitleEditor={TitleEditor}
+                                        onAddTask={onAddTask}
                                         onUpdateGroup={onUpdateGroup}
                                         onRemoveGroup={onRemoveGroup}
                                     />
