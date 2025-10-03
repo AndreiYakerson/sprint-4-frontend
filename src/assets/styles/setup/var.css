@@ -2,6 +2,8 @@
   /* site background-color */
   --surface-color: rgb(237, 241, 252);
   --primary-background-color: rgb(255, 255, 255);
+  /* popup backdrop */
+  --react-modal-background: rgba(41, 47, 76, 0.7);
 
   /* hover background-color  */
   --primary-background-hover-color: rgba(103, 104, 121, 0.1);
@@ -12,6 +14,7 @@
   --primary-text-color: rgb(50, 51, 56);
   --secondary-text-color: rgb(103, 104, 121);
   --text-color-on-primary: rgb(255, 255, 255);
+
 
   /* border */
   --application-border-color: rgb(230, 233, 239);

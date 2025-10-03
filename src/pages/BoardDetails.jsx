@@ -105,16 +105,18 @@ export function BoardDetails() {
           </div>
           <div className='board-actions'>
             <button
-              onClick={() => onAddTask(board?.groups[0]?.id, 'New task', 'unshift')}
-              className='blue'>
-              New item</button>
+              onClick={() => onAddTask(board?.groups[0]?.id, `New ${board?.managingType}`, 'unshift')}
+              className='blue'> New {board?.managingType}</button>
           </div>
 
           {/* <SortFilterCmp /> */}
         </header>
 
         {board?.groups?.length > 0 &&
-          < GroupList groups={board.groups} />}
+          < GroupList
+            groups={board.groups}
+            managingType={board?.managingType}
+          />}
 
         <button
           onClick={() => onAddGroup(board?._id)}

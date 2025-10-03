@@ -90,7 +90,7 @@ async function save(board) {
     if (board._id) {
         return storageService.put(STORAGE_KEY, board)
     } else {
-        const boardToSave = _setBaordToSave(board.title)
+        const boardToSave = _setBaordToSave(board)
         return storageService.post(STORAGE_KEY, boardToSave)
     }
 
@@ -227,10 +227,12 @@ async function removeTask(boardId, groupId, taskId) {
 
 
 
-function _setBaordToSave(title = 'New board') {
+function _setBaordToSave({ title = 'New board', managingType = 'items', privacy = 'main' }) {
     return {
         _id: makeId(),
-        title: title,
+        title,
+        privacy,
+        managingType,
         createdAt: Date.now(),
         groups: [
             {
@@ -240,12 +242,12 @@ function _setBaordToSave(title = 'New board') {
                 tasks: [
                     {
                         id: makeId(),
-                        title: 'task 1',
+                        title: 'Item 1',
                         createdAt: Date.now(),
                     },
                     {
                         id: makeId(),
-                        title: 'task 2',
+                        title: 'Item 2',
                         createdAt: Date.now(),
                     },
                 ],

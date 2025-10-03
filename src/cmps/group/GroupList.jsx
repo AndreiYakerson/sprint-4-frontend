@@ -17,7 +17,7 @@ import { TitleEditor } from "../Task/TitleEditor";
 import { GroupTitleEditor } from "./GroupTitleEditor";
 
 
-export function GroupList({ groups }) {
+export function GroupList({ groups, managingType }) {
     const { boardId } = useParams()
 
     const [localGroups, setLocalGroups] = useState(groups)
@@ -137,7 +137,7 @@ export function GroupList({ groups }) {
                                                     <div className="task-menu-wrapper"></div>
                                                     <div className="table-border"></div>
                                                     <div className="task-select"></div>
-                                                    <div className="task-title">Task</div>
+                                                    <div className="task-title">{managingType}</div>
                                                 </div>
 
                                                 <div className="task-columns flex">
@@ -162,7 +162,7 @@ export function GroupList({ groups }) {
                                                 <div className="table-border"></div>
                                                 <div className="task-select"></div>
                                                 <div className="add-task-cell">
-                                                    <TitleEditor info={{ label: 'Title:', propName: 'title', placeholder: '+ Add Task' }}
+                                                    <TitleEditor info={{ label: 'Title:', propName: 'title', placeholder: `+ Add ${managingType}` }}
                                                         onUpdate={(title) => onAddTask(group?.id, title)} />
                                                 </div>
                                             </div>

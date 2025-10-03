@@ -7,6 +7,9 @@ import { showSuccessMsg, showErrorMsg } from '../services/event-bus.service'
 import { boardService } from '../services/board'
 
 import { BoardList } from '../cmps/Board/BoardList'
+import { PopUp } from '../cmps/PopUp'
+import { BoardEdit } from '../cmps/Board/BaordEdit'
+import { onSetPopUpIsOpen } from '../store/actions/system.actions'
 
 
 export function BoardIndex({ setIsSideBarOpen }) {
@@ -58,7 +61,8 @@ export function BoardIndex({ setIsSideBarOpen }) {
         <section className="board-index">
             <header className='board-index-header'>
                 <h2> Recently viewed</h2>
-                <button onClick={onAddBoard}>Add a Board</button>
+                {/* <button onClick={onAddBoard}>Add a Board</button> */}
+                <button onClick={() => onSetPopUpIsOpen(true)}>Add a Board</button>
             </header>
             {/* <BoardFilter filterBy={filterBy} setFilterBy={setFilterBy} /> */}
             <BoardList
@@ -66,6 +70,10 @@ export function BoardIndex({ setIsSideBarOpen }) {
                 onRemoveBoard={onRemoveBoard}
                 onUpdateBoard={onUpdateBoard}
             />
+
+            <PopUp showCloseBtn={true}>
+                <BoardEdit />
+            </PopUp>
 
         </section>
     )

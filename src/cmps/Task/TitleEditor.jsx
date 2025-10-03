@@ -46,7 +46,7 @@ export function TitleEditor({ info, onUpdate }) {
                     onKeyDown={(e) => {
                         if (e.key === "Enter") saveChanges()
                     }}
-                    placeholder={info?.placeholder ? "+ Add Task" : ""}
+                    placeholder={info?.placeholder ? info?.placeholder : "+ Add Item"}
                 />
                 : <span className="task-name" onClick={() => setIsEditing(true)}>
                     {info?.placeholder && !info?.currTitle ? info?.placeholder : info?.currTitle}

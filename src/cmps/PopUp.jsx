@@ -4,7 +4,7 @@ import { useSelector } from "react-redux"
 // services
 import { onSetPopUpIsOpen } from "../store/actions/system.actions.js"
 
-export function PopUp({ children = false}) {
+export function PopUp({ children = false, showCloseBtn = false }) {
 
     const isPopUpOpen = useSelector(state => state.systemModule.isPopUpOpen)
 
@@ -24,6 +24,10 @@ export function PopUp({ children = false}) {
     return (
         <div onClick={() => onSetPopUpIsOpen(false)} className="popup-backdrop">
             <div onClick={ev => ev.stopPropagation()} className="popup-container">
+
+                {showCloseBtn && <button onClick={() => onSetPopUpIsOpen(false)}
+                    className="popup-close-btn white">X</button>}
+
                 <div className="popup-main">
                     {children}
                 </div>

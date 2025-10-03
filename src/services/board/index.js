@@ -26,9 +26,32 @@ function getGroupColors() {
     ]
 }
 
+function getBoardComposeData() {
+    return {
+        emptyBoard: {
+            title: 'New Board',
+            privacy: 'main',
+            managingType: 'item',
+        },
+        privacyTypes: ['main', 'private', 'shareable'],
+        managingTypes: {
+            items: "item",
+            budgets: "budget",
+            employees: "employee",
+            campaigns: "campaign",
+            leads: "lead",
+            projects: "project",
+            creatives: "creative",
+            clients: "client",
+            tasks: "task"
+        }
+    }
+}
+
+
 
 const service = (VITE_LOCAL === 'true') ? local : remote
-export const boardService = { getEmptyBoard, getDefaultFilter, getGroupColors, ...service }
+export const boardService = { getEmptyBoard, getDefaultFilter, getGroupColors, getBoardComposeData, ...service }
 
 // Easy access to this service from the dev tools console
 // when using script - dev / dev:local

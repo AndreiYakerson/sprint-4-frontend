@@ -4,14 +4,21 @@ button {
 	border: 0;
 	/* margin: .5em; */
 	cursor: pointer;
+	line-height: 1.71428571429;
 
 	border: 1px solid;
 	background-color: var(--primary-background-color);
 	border-color: var(--ui-border-color);
 	border-radius: 4px;
 
+	transition: 0.3s ease-in-out;
+
+	&.white {
+		border: 0;
+		transition: 0ms
+	}
+
 	&:hover {
-		transition: 0.3s;
 		background-color: var(--primary-background-hover-color)
 	}
 
@@ -20,9 +27,9 @@ button {
 		border: 0;
 		background-color: var(--primary-color);
 		color: var(--text-color-on-primary);
+		transition: 0ms;
 
 		&:hover {
-			transition: 0.3s;
 			background-color: var(--primary-hover-color)
 		}
 	}
@@ -44,10 +51,6 @@ input {
 
 	border: 1px solid var(--layout-border-color);
 
-	&:focus {
-		border: 1px solid var(--primary-color);
-	}
-
 	border-radius: 4px;
 	padding-block: 4px;
 	padding-inline: 1px;
@@ -56,4 +59,13 @@ input {
 	font-size: inherit;
 	font-weight: inherit;
 	color: inherit;
+
+	&.gray {
+		border-color: var(--ui-border-color);
+	}
+
+	&:focus {
+		border: 1px solid var(--primary-color);
+	}
+
 }

@@ -47,5 +47,6 @@
 @import "cmps/board/BoardFilter";
 @import "cmps/board/BoardDetails";
 @import "cmps/board/BoardPreview.css";
+@import "cmps/board/BoardEdit.css";
 
 @import "cmps/StatusAnimation.css";

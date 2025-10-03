@@ -90,7 +90,10 @@
     /* Refers to columns in the group header */
 
     &.table-header {
+
         .sticky-cell-wrapper {
+            text-transform: capitalize;
+
             &>*:not(.table-border, .task-menu-wrapper) {
                 border-block-start: 1px solid var(--layout-border-color);
             }
