@@ -4,7 +4,6 @@ import { useParams, Link, useNavigate } from "react-router-dom"
 // services
 import { removeTask, updateTask } from "../../store/actions/board.actions.js"
 import { showErrorMsg, showSuccessMsg } from "../../services/event-bus.service"
-import { onSetPopUpIsOpen } from "../../store/actions/system.actions.js"
 
 // cmps
 import { DynamicCmp } from "../DynamicCmp"
@@ -63,7 +62,6 @@ export function TaskPreview({ task, groupId, dragHandleProps }) {
         const updatedTask = structuredClone(task)
         updatedTask[taskPropName] = data
 
-        // onUpdateTask(updatedTask, activityTitle)
         try {
             await updateTask(boardId, groupId, updatedTask, activityTitle)
             showSuccessMsg(`Task updated`)
@@ -73,17 +71,6 @@ export function TaskPreview({ task, groupId, dragHandleProps }) {
         }
     }
 
-    //FIXME צריך להפוך להיות action  
-
-    // async function onUpdateTask(updatedTask, activityTitle) {
-    //     try {
-    //         await updateTask(boardId, groupId, updatedTask, activityTitle)
-    //         showSuccessMsg(`Task updated`)
-    //     } catch (err) {
-    //         console.log('err:', err)
-    //         showErrorMsg('Cannot update task')
-    //     }
-    // }
 
     async function onRemoveTask() {
         try {
@@ -140,18 +127,7 @@ export function TaskPreview({ task, groupId, dragHandleProps }) {
                         <MemberSelectPreview
                             task={task}
                         />
-                        {/* <span className="cmp-img">
-                            <img src={plus} className="icon big " alt="plus icon" />
-                            <img
-                                onMouseLeave={() => setMemberEl(null)}
-                                onMouseOver={(ev) => setMemberEl(ev.currentTarget)}
-                                // src={loggedinUser?  loggedinUser.img : person}
-                                src={taskMembersLogo}
-                                className="icon big hover-show"
-                                alt="person icon"
-                            />
-                        </span> */}
-
+                       
                         {membersSelectEl &&
                             < FloatingContainerCmp
                                 anchorEl={membersSelectEl}

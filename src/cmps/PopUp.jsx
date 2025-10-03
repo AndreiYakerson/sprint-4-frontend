@@ -1,37 +1,50 @@
-import { useEffect, useState } from "react"
+import { useEffect, useRef } from "react"
 import { useSelector } from "react-redux"
-
-// services
 import { onSetPopUpIsOpen } from "../store/actions/system.actions.js"
+import { createPortal } from "react-dom"
 
 export function PopUp({ children = false, showCloseBtn = false }) {
+  const isPopUpOpen = useSelector(state => state.systemModule.isPopUpOpen)
+  const popupRef = useRef(null)
 
-    const isPopUpOpen = useSelector(state => state.systemModule.isPopUpOpen)
+  function handleClickOutside(e) {
+    const popupEl = popupRef.current
+    if (!popupEl) return
+    const clickedInside = e.target.closest('.popup-container')
+    if (!clickedInside) onSetPopUpIsOpen(false)
+  }
 
-    useEffect(() => {
-        const EscapePress = window.addEventListener("keydown", onKey)
-
-        return () => window.removeEventListener("keydown", onKey)
-
-    }, [])
-
-    function onKey(ev) {
-        console.log('variable')
-
-        if (ev.key == 'Escape') onSetPopUpIsOpen(false)
+  useEffect(() => {
+    if (!isPopUpOpen) return
+    const id = setTimeout(() => {
+      document.addEventListener("mousedown", handleClickOutside)
+    }, 0)
+    return () => {
+      clearTimeout(id)
+      document.removeEventListener("mousedown", handleClickOutside)
     }
-    if (!isPopUpOpen) return null
-    return (
-        <div onClick={() => onSetPopUpIsOpen(false)} className="popup-backdrop">
-            <div onClick={ev => ev.stopPropagation()} className="popup-container">
+  }, [isPopUpOpen])
 
-                {showCloseBtn && <button onClick={() => onSetPopUpIsOpen(false)}
-                    className="popup-close-btn white">X</button>}
+  useEffect(() => {
+    const onKey = ev => {
+      if (ev.key === "Escape") onSetPopUpIsOpen(false)
+    }
+    window.addEventListener("keydown", onKey)
+    return () => window.removeEventListener("keydown", onKey)
+  }, [])
 
-                <div className="popup-main">
-                    {children}
-                </div>
-            </div>
-        </div>
-    )
+  if (!isPopUpOpen) return null
+
+  return createPortal(
+    <div className="popup-backdrop">
+      <div
+        ref={popupRef}
+        onClick={e => e.stopPropagation()}
+        className="popup-container"
+      >
+          {children}
+      </div>
+    </div>,
+    document.getElementById("modal-root")
+  )
 }

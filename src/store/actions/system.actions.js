@@ -16,7 +16,7 @@ export async function onSetIsSideBarOpen(value) {
 export async function onSetPopUpIsOpen(value) {
     try {
         store.dispatch({ type: IS_POPUP_ON, value })
-        return console.log(`Side PopUp is-open set to ${value}`)
+        return console.log(` PopUp is-open set to ${value}`)
     } catch (err) {
         console.log('Cannot Close PopUp Bar', err)
         throw err
