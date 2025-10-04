@@ -1,5 +1,6 @@
+import { loginDemoUsers } from '../../store/actions/user.actions'
 import { storageService } from '../async-storage.service'
-
+import { getRandomIntInclusive, makeId } from '../util.service'
 const STORAGE_KEY_LOGGEDIN_USER = 'loggedinUser'
 
 export const userService = {
@@ -12,6 +13,7 @@ export const userService = {
     update,
     getLoggedinUser,
     saveLoggedinUser,
+    createDemoUsers
 }
 
 async function getUsers() {
@@ -35,7 +37,7 @@ async function update({ _id, score }) {
     user.score = score
     await storageService.put('user', user)
 
-	// When admin updates other user's details, do not update loggedinUser
+    // When admin updates other user's details, do not update loggedinUser
     const loggedinUser = getLoggedinUser()
     if (loggedinUser._id === user._id) saveLoggedinUser(user)
 
@@ -57,6 +59,37 @@ async function signup(userCred) {
     return saveLoggedinUser(user)
 }
 
+function createDemoUsers(num) {
+    var professions = [
+        'Head Chef',
+        'Junior Developer',
+        'Data Scientist',
+        'UX Designer',
+        'Registered Nurse (RN)',
+        'Financial Analyst',
+        'Solar Panel Installer',
+        'Technical Writer',
+        'Elementary School Teacher',
+        'Urban Planner']
+
+    var users = []
+    for (let i = 0; i < num; i++) {
+        const user = {
+            id: makeId(),
+            fullname: `user ${i + 1}`,
+            password: `user ${i + 1}`,
+            profession:  professions.splice(getRandomIntInclusive(0, professions.length), 1)[0],
+            score: 10000,
+            tags:['member']
+        }
+        user.imgUrl = `https://api.dicebear.com/8.x/adventurer/svg?seed=${user.id}`,
+            users.push(user)
+    }
+    return users
+    // const user = await storageService.post('user', userCred)
+    // return saveLoggedinUser(user)
+}
+
 async function logout() {
     sessionStorage.removeItem(STORAGE_KEY_LOGGEDIN_USER)
 }
@@ -66,15 +99,15 @@ function getLoggedinUser() {
 }
 
 function saveLoggedinUser(user) {
-	user = { 
-        _id: user._id, 
-        fullname: user.fullname, 
-        imgUrl: user.imgUrl, 
-        score: user.score, 
-        isAdmin: user.isAdmin 
+    user = {
+        _id: user._id,
+        fullname: user.fullname,
+        imgUrl: user.imgUrl,
+        score: user.score,
+        isAdmin: user.isAdmin
     }
-	sessionStorage.setItem(STORAGE_KEY_LOGGEDIN_USER, JSON.stringify(user))
-	return user
+    sessionStorage.setItem(STORAGE_KEY_LOGGEDIN_USER, JSON.stringify(user))
+    return user
 }
 
 // To quickly create an admin user, uncomment the next line
