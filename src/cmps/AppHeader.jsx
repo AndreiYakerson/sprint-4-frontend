@@ -14,7 +14,7 @@ import { PopUp } from './PopUp'
 import { HoveredTextCmp } from './HoveredTextCmp.jsx'
 
 // images
-import headerLogo from '../../public/img/Logo.png'
+import headerLogo from '/img/logo.png'
 
 // icons
 import notification from '/icons/notification.svg'
