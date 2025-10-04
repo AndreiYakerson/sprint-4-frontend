@@ -5,7 +5,7 @@ import { updateTask } from '../../../store/actions/board.actions'
 import { useSelector } from 'react-redux'
 import { showSuccessMsg } from '../../../services/event-bus.service'
 
-export function SelectMemberToTask({ task, boardId, groupId, onClose }) {
+export function MemberTaskSelect({ task, boardId, groupId, onClose }) {
 
     const users = useSelector(state => state.userModule.users)
 
@@ -22,7 +22,7 @@ export function SelectMemberToTask({ task, boardId, groupId, onClose }) {
     const usersToShow = users.filter(user => !fittedIds.has(user.id));
 
     return (
-        <div className="select-member-to-task">
+        <div className="member-task-select">
             <div className="search-bar">
                 <span className='search'>
                     <img src={searchGalss}

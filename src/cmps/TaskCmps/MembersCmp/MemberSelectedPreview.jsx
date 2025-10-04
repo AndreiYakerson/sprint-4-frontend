@@ -1,11 +1,11 @@
 import plus from "/icons/plus.svg"
 import person from "/icons/person.svg"
 import { FloatingContainerCmp } from "../../FloatingContainerCmp"
-import { UserInfo } from "../MembersCmp/UserInfo"
+import { MemberInfo } from "./MemberInfo"
 import { useState } from "react"
 import { useSelector } from "react-redux"
 
-export function SelectedMemberPreview({ task }) {
+export function MemberSelectedPreview({ task }) {
     const [memberEl, setMemberEl] = useState(null)
     const [hoveredUser, setHoveredUser] = useState(null)
     const isFloatingOpen = useSelector(state => state.systemModule.isFloatingOpen)
@@ -24,7 +24,7 @@ export function SelectedMemberPreview({ task }) {
     }
 
     return (
-        <article className="selected-member-preview">
+        <article className="member-selected-preview">
             {!task.addedMembers?.length && <img src={plus} className="icon big plus" alt="plus icon" />}
 
             <div className="cmp-img"
@@ -59,7 +59,7 @@ export function SelectedMemberPreview({ task }) {
                     anchorEl={memberEl}
                     onClose={() => onClearHover(null)}
                 >
-                    <UserInfo
+                    <MemberInfo
                         user={hoveredUser}
                     />
                 </FloatingContainerCmp>}

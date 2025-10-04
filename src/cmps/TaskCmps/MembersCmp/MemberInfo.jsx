@@ -2,14 +2,14 @@ import person from '/icons/person.svg'
 import { useSelector } from 'react-redux'
 
 
-export function UserInfo({ user }) {
+export function MemberInfo({ user }) {
     const isFloatingOpen = useSelector(state => state.systemModule.isFloatingOpen)
     const isPopUpOpen = useSelector(state => state.systemModule.isPopUpOpen)
     const timeNow = new Date().toLocaleTimeString()
     const curLocation = ' pardes-hana'
 
     return (
-        <div className="user-info">
+        <div className="member-Info">
             <article >
                 <span className="user-img"><img src={user.imgUrl} alt="Logo Icon" /></span>
                 <div className="info-list">

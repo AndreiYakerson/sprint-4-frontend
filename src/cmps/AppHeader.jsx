@@ -68,7 +68,7 @@ export function AppHeader() {
 					{/* {user?.isAdmin && <NavLink to="/admin">Admin</NavLink>} */}
 					{!user && <NavLink to="auth/login" className="login-link">Login</NavLink>}
 					{user && (
-						<div className="user-info">
+						<div className="member-Info">
 							<img className='' src="/img/logo.png" alt="logo" />
 							<Link to={`user/${user._id}`}>
 								{user.imgUrl && <img src={user.imgUrl} />}

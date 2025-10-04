@@ -17,10 +17,10 @@ import danPic from "/img/danPic.jpg"
 
 
 import { FloatingContainerCmp } from "../FloatingContainerCmp.jsx"
-import { SelectMemberToTask } from "../TaskCmps/MembersCmp/SelectMemberToTask.jsx"
+import { MemberTaskSelect } from "../TaskCmps/MembersCmp/MemberTaskSelect.jsx"
 import { PopUp } from "../PopUp.jsx"
 import { useSelector } from "react-redux"
-import { SelectedMemberPreview } from "../TaskCmps/MembersCmp/SelectedMemberPreview.jsx"
+import { MemberSelectedPreview } from "../TaskCmps/MembersCmp/MemberSelectedPreview.jsx"
 
 export function TaskPreview({ task, groupId, dragHandleProps }) {
     const navigate = useNavigate()
@@ -126,14 +126,14 @@ export function TaskPreview({ task, groupId, dragHandleProps }) {
                     if (colName === 'MemberPicker') {
 
                         return <div onClick={(ev) => setMembersSelectEl(ev.currentTarget)} style={{ cursor: 'pointer' }} key={colName} className="column-cell">
-                            <SelectedMemberPreview task={task} />
+                            <MemberSelectedPreview task={task} />
 
                             {membersSelectEl &&
                                 < FloatingContainerCmp
                                     anchorEl={membersSelectEl}
                                     onClose={() => setMembersSelectEl(null)}
                                 >
-                                    <SelectMemberToTask
+                                    <MemberTaskSelect
                                         boardId={boardId}
                                         groupId={groupId}
                                         task={task}
