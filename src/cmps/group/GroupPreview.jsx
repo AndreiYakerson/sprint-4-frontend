@@ -1,15 +1,21 @@
 
-export function GroupPreview({ provided, group, GroupTitleEditor, managingType, TaskList, TitleEditor, onUpdateGroup, onRemoveGroup, onAddTask }) {
+
+
+
+export function GroupPreview({ provided, group, GroupTitleEditor, managingType, TaskList, TitleEditor, onUpdateGroup, onRemoveGroup, onAddTask, isDragging }) {
 
     const demoColumns = ["Status", "Priority", "Members", "Date"];
+
 
     return <div
         className="group-container"
         {...provided.draggableProps}
         ref={provided.innerRef}
         style={{
-            ...provided.draggableProps.style, // Include styles from react-beautiful-dnd
-            ...group.style, // Add your custom styles
+            ...provided.draggableProps.style,
+            ...group.style,
+            height: isDragging ? '50px' : 'auto', // Change height when dragging
+            transition: 'height 0.2s ease', // Smooth transition
         }}
     >
         <header

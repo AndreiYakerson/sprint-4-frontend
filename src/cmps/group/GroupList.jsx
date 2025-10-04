@@ -93,26 +93,6 @@ export function GroupList({ groups, managingType }) {
     return (
         <DragDropContext
             onDragEnd={handleDragEnd}
-            onDragUpdate={(update) => {
-                if (!update.destination) {
-                    console.log('No valid destination, placeholder not rendered');
-                    return;
-                }
-            
-                const elList = document.querySelector('.group-list');
-                console.log('elList',elList);
-                
-
-                const placeholder = document.querySelector('.group-list  div.placeholder');
-                if (placeholder) {
-                    placeholder.style.height = '50px'; // Match the height of collapsed groups
-                    placeholder.style.marginBottom = '10px'; // Add consistent spacing
-                    console.log('Placeholder!!!',placeholder);
-                    
-                } else {
-                    console.log('Placeholder not found');
-                }
-            }}
         >
             <Droppable droppableId="group-list">
                 {(provided) => (
@@ -125,26 +105,31 @@ export function GroupList({ groups, managingType }) {
                         {localGroups.map((group, idx) => (
                             <Draggable key={group.id} draggableId={group.id} index={idx}>
                                 {(provided, snapshot) => {
-                                    if (snapshot.isDragging) setIsDragging(true)
+                                    useEffect(() => {
+                                        if (snapshot.isDragging) {
+                                            setIsDragging(true);
+                                        } else {
+                                            setIsDragging(false);
+                                        }
+                                    }, [snapshot.isDragging]);
 
-
-                                    return !isDragging ? <GroupPreview
-                                        group={group}
-                                        provided={provided}
-                                        GroupTitleEditor={GroupTitleEditor}
-                                        managingType={managingType}
-                                        TaskList={TaskList}
-                                        TitleEditor={TitleEditor}
-                                        onUpdateGroup={onUpdateGroup}
-                                        onRemoveGroup={onRemoveGroup}
-                                        onAddTask={onAddTask}
-                                        isDragging={isDragging}
-                                    /> : <GroupCollapsed
-                                        group={group}
-                                        provided={provided}
-                                        snapshot={snapshot}
-                                        isDragging={isDragging}
-                                    />
+                                        return !isDragging ? <GroupPreview
+                                            group={group}
+                                            provided={provided}
+                                            GroupTitleEditor={GroupTitleEditor}
+                                            managingType={managingType}
+                                            TaskList={TaskList}
+                                            TitleEditor={TitleEditor}
+                                            onUpdateGroup={onUpdateGroup}
+                                            onRemoveGroup={onRemoveGroup}
+                                            onAddTask={onAddTask}
+                                            isDragging={snapshot.isDragging}
+                                        /> : <GroupCollapsed
+                                            group={group}
+                                            provided={provided}
+                                            snapshot={snapshot}
+                                            isDragging={snapshot.isDragging}
+                                        />
                                 }
 
                                 }
