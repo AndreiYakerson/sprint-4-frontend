@@ -1,31 +1,38 @@
 import { Link, NavLink } from 'react-router-dom'
 import { useState } from 'react'
 import { useNavigate } from 'react-router'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { logout } from '../store/actions/user.actions'
 
 // services
 import { showErrorMsg, showSuccessMsg } from '../services/event-bus.service'
 
 // cmps
-import { LoginSignup } from '../pages/LoginSignup'
-import { FloatingContainerCmp } from './FloatingContainerCmp'
-import { PopUp } from './PopUp'
 import { HoveredTextCmp } from './HoveredTextCmp.jsx'
 
 // images
-import headerLogo from '../../public/img/Logo.png'
+import headerLogo from '/img/logo.png'
 
 // icons
 import notification from '/icons/notification.svg'
-import updateFeed from '/icons/update-feed.svg'
+import { useDispatch } from 'react-redux'
+import { userService } from '../services/user/user.service.local.js'
+import { SET_USERS } from '../store/reducers/user.reducer.js'
 
 export function AppHeader() {
 	const user = useSelector(storeState => storeState.userModule.user)
-
+	const users = useSelector(storeState => storeState.userModule.users)
 	const [anchorEl, setAnchorEl] = useState(null)
-
+	const dispatch = useDispatch()
 	const navigate = useNavigate()
+
+	// Demo User creation 
+	if (!users.length) {
+		console.log('loading new DemoUsers!')
+		let users = userService.createDemoUsers(5)
+		dispatch({ type: SET_USERS, users })
+	}
+
 	async function onLogout() {
 		try {
 			await logout()
@@ -58,10 +65,10 @@ export function AppHeader() {
 				{/* //FIXME לעצב את הקו המפריד בין הקונטיינרים */}
 				<span className='middle-line'>!</span>
 				<section className="main-mini-user">
-					{user?.isAdmin && <NavLink to="/admin">Admin</NavLink>}
+					{/* {user?.isAdmin && <NavLink to="/admin">Admin</NavLink>} */}
 					{!user && <NavLink to="auth/login" className="login-link">Login</NavLink>}
 					{user && (
-						<div className="user-info">
+						<div className="member-Info">
 							<img className='' src="/img/logo.png" alt="logo" />
 							<Link to={`user/${user._id}`}>
 								{user.imgUrl && <img src={user.imgUrl} />}
@@ -69,13 +76,7 @@ export function AppHeader() {
 							<button onClick={onLogout}>logout</button>
 						</div>
 					)}
-					{anchorEl &&
-						<FloatingContainerCmp
-							anchorEl={anchorEl}
-							onClose={() => setAnchorEl(null)}
-						>
-							<LoginSignup />
-						</FloatingContainerCmp>}
+				
 				</section>
 			</section>
 		</header>

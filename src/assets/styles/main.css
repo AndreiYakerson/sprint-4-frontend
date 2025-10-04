@@ -30,9 +30,14 @@
 @import "cmps/group/GroupList.css";
 @import "cmps/group/GroupTitleEditor.css";
 
-@import "cmps/TaskCmps/MemberCmp.css";
-@import "cmps/TaskCmps/MembersSelectCmp.css";
-@import "cmps/TaskCmps/MemberSelectPreview.css";
+/* Task-Cmps */
+/* Members */
+@import "cmps/TaskCmps/MembersCmp/MemberInfo.css";
+@import "cmps/TaskCmps/MembersCmp/MemberSelectedPreview.css";
+@import "cmps/TaskCmps/MembersCmp/MemberTaskSelect.css";
+
+/* Priority */
+
 
 @import "cmps/tasks/TaskList.css";
 @import "cmps/tasks/TaskDetails.css";

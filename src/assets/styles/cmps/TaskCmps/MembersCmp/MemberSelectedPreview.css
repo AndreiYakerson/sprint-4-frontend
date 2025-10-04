@@ -1,4 +1,4 @@
-.member-select-preview {
+.member-selected-preview {
     display: flex;
     place-content: center;
 
@@ -17,7 +17,7 @@
     }
 
     .img-wrapper {
-display: block;
+        display: block;
     }
 
     .user-img {

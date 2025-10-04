@@ -1,17 +1,26 @@
-import { useLayoutEffect, useRef, useState } from 'react'
+import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
+import { onSetFloatingIsOpen } from '../store/actions/system.actions'
+import { useSelector } from 'react-redux'
 
 export function FloatingContainerCmp({ anchorEl, children, onClose }) {
+    const isPopUpOpen = useSelector(state => state.systemModule.isPopUpOpen)
+    
     const [style, setStyle] = useState({})
     const [isVisible, setIsVisible] = useState(false)
     const popupRef = useRef(null)
 
-    // Close on outside click
-    // FloatingContainerCmp.jsx
+
+
+    useEffect(() => {
+        if (isPopUpOpen) return null
+        onSetFloatingIsOpen(true)
+        return () => onSetFloatingIsOpen(false)
+    }, [])
+
 
     // Close on outside click
     function handleClickOutside(e) {
-
         setTimeout(() => {
             if (!popupRef.current || !anchorEl) return
             const clickedInside = e.target.closest('.fcc-container')
@@ -22,7 +31,9 @@ export function FloatingContainerCmp({ anchorEl, children, onClose }) {
 
     useLayoutEffect(() => {
         document.addEventListener('mousedown', handleClickOutside)
-        return () => document.removeEventListener('mousedown', handleClickOutside)
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside)
+        }
     }, [anchorEl])
 
     useLayoutEffect(() => {
@@ -96,7 +107,7 @@ export function FloatingContainerCmp({ anchorEl, children, onClose }) {
             className="fcc-container"
             ref={popupRef}
             style={style}
-            onClick={e => e.stopPropagation()}   // ← stays here
+            onClick={e => e.stopPropagation()} 
         >
             {children}
         </div>,

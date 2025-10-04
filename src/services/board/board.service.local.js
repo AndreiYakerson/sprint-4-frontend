@@ -240,15 +240,18 @@ function _setBaordToSave({ title = 'New board', managingType = 'items', privacy 
                 title: 'Group 1',
                 createdAt: Date.now(),
                 tasks: [
+                  
                     {
                         id: makeId(),
                         title: 'Item 1',
                         createdAt: Date.now(),
+                        addedMembers: []
                     },
                     {
                         id: makeId(),
                         title: 'Item 2',
                         createdAt: Date.now(),
+                        addedMembers: []
                     },
                 ],
                 style: {
@@ -276,5 +279,6 @@ function _getEmptyTask(title = 'New Task') {
         id: makeId(),
         title: title,
         createdAt: Date.now(),
+        addedMembers: []
     }
 }

@@ -80,3 +80,15 @@ export async function loadUser(userId) {
         console.log('Cannot load user', err)
     }
 }
+
+export async function loginDemoUsers(users) {
+    try {
+        store.dispatch({ type: LOADING_START })
+        store.dispatch({ type: SET_USERS, users })
+        return console.log('Demo Users Set To Go')
+    } catch (err) {
+        console.log('UserActions: err in loadUsers', err)
+    } finally {
+        store.dispatch({ type: LOADING_DONE })
+    }
+}

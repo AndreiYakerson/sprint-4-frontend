@@ -1,8 +1,8 @@
-.members-select-cmp {
+.member-task-select {
     display: flex;
     flex-direction: column;
 
-    width: 360px;
+    width: 100%;
 
     gap: 8px;
     padding: 20px;
