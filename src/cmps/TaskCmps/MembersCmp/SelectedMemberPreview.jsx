@@ -24,7 +24,7 @@ export function SelectedMemberPreview({ task }) {
     }
 
     return (
-        <article className="member-select-preview">
+        <article className="selected-member-preview">
             {!task.addedMembers?.length && <img src={plus} className="icon big plus" alt="plus icon" />}
 
             <div className="cmp-img"

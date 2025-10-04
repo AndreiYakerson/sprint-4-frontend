@@ -5,22 +5,11 @@ import { useSelector } from 'react-redux'
 export function UserInfo({ user }) {
     const isFloatingOpen = useSelector(state => state.systemModule.isFloatingOpen)
     const isPopUpOpen = useSelector(state => state.systemModule.isPopUpOpen)
-
-    //Demo User
-    // if (!user) {
-    //     console.log('!user')
-
-    //     user = {
-    //         fullname: 'dan dan',
-    //         profession: 'super chef',
-    //         tags: ['admin', 'member'],
-    //     }
-    // }
     const timeNow = new Date().toLocaleTimeString()
     const curLocation = ' pardes-hana'
 
     return (
-        <div className="member-cmp">
+        <div className="user-info">
             <article >
                 <span className="user-img"><img src={user.imgUrl} alt="Logo Icon" /></span>
                 <div className="info-list">

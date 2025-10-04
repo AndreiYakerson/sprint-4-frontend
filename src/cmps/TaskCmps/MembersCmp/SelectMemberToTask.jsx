@@ -22,7 +22,7 @@ export function SelectMemberToTask({ task, boardId, groupId, onClose }) {
     const usersToShow = users.filter(user => !fittedIds.has(user.id));
 
     return (
-        <div className="members-select-cmp">
+        <div className="select-member-to-task">
             <div className="search-bar">
                 <span className='search'>
                     <img src={searchGalss}
