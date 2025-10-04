@@ -1,66 +1,25 @@
-import star from '/icons/star.svg'
 import searchGalss from '/icons/search-galss.svg'
 import xMark from '/icons/x-mark.svg'
 import inviteMember from '/icons/invite-member.svg'
-import danPic from '/img/danPic.jpg'
-import { useEffect, useState } from 'react'
-import { makeId } from '../../services/util.service'
-import { useEffectUpdate } from '../../customHooks/useEffectUpdate'
 import { updateTask } from '../../store/actions/board.actions'
+import { useSelector } from 'react-redux'
+import { showSuccessMsg } from '../../services/event-bus.service'
 
-export function MembersSelectCmp({ task, onClose }) {
-    //Demo Data
-    const user1 = {
-        id: makeId(),
-        fullname: 'dan dan',
-        img: danPic,
-        profession: 'super chef',
-        tags: ['admin', 'member'],
-    }
-    const user2 = {
-        id: makeId(),
-        fullname: 'adi my love',
-        img: star,
-        profession: 'super wife',
-        tags: ['member'],
-    }
-    const user3 = {
-        id: makeId(),
-        fullname: ' anat nadav',
-        img: star,
-        profession: 'computer',
-        tags: ['member'],
-    }
-    const emptyUser = {
-        fullname: '',
-        img: star,
-        profession: '',
-        tags: ['member'],
-    }
-    var demoBoardMembers = [user1, user2, user3]
+export function MembersSelectCmp({ task, boardId, groupId, onClose }) {
 
-    if (!task?.AddedMembers?.length) {
-        task = {
-            AddedMembers: [user1],
-            createdAt: 1759346036021,
-            id: "U0gfhz",
-            title: "taskascasc",
-        }
-    }
+    const users = useSelector(state => state.userModule.users)
 
-    //
-    const [taskMembers, setTaskMembers] = useState(task.AddedMembers)
-
-    function onSelectMember(member, idx) {
-        setTaskMembers(prevMembers => [...prevMembers, member])
-        update(member)
-    }
-
-    function update(member) {
-        console.log(`update task member with ${member.fullname} here now`)
+    function onSelectMember(member) {
+        const updatedTask = structuredClone(task)
+        updatedTask.addedMembers.push(member)
+        updateTask(boardId, groupId, updatedTask)
+        showSuccessMsg(`Task updated`)
         onClose()
     }
-
+    // 1. Create a Set of IDs from the "fitted" list (the members)
+    const fittedIds = new Set(task?.addedMembers.map(member => member.id));
+    // 2. Filter the "to-be-shown" list (the users) to exclude those already fitted
+    const usersToShow = users.filter(user => !fittedIds.has(user.id));
 
     return (
         <div className="members-select-cmp">
@@ -82,14 +41,14 @@ export function MembersSelectCmp({ task, onClose }) {
             </div>
             <span className='suggested'>Suggested People</span>
             <section className="user-list">
-                {demoBoardMembers.map((member, idx) => {
+                {usersToShow.map((member, idx) => {
                     return <button
                         // Pass the actual numeric 'idx' here
                         onClick={() => onSelectMember(member, idx)}
                         key={member.id}
                         className="user flex"
                     >
-                        <span className="img-container"><img className=" user-img" src={member.img} alt="User Image" /></span>
+                        <span className="img-container"><img className=" user-img" src={member.imgUrl} alt="User Image" /></span>
                         {member.fullname}
                         <span className="user-profession">
                             ({member.profession})

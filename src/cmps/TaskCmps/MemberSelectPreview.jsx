@@ -1,65 +1,45 @@
 import plus from "/icons/plus.svg"
 import person from "/icons/person.svg"
-import danPic from "/img/danPic.jpg"
-import defaultAvatar from "/img/default-avatar.png"
 import { FloatingContainerCmp } from "../FloatingContainerCmp"
 import { MemberCmp } from "./MemberCmp"
 import { useState } from "react"
+import { useSelector } from "react-redux"
 
 export function MemberSelectPreview({ task }) {
     const [memberEl, setMemberEl] = useState(null)
     const [hoveredUser, setHoveredUser] = useState(null)
+    const isFloatingOpen = useSelector(state => state.systemModule.isFloatingOpen)
 
     function onSetHoveredUser(user, target) {
-        setHoveredUser(user);
-        setMemberEl(target)
+        if (!isFloatingOpen || memberEl) {
+            setHoveredUser(user);
+            setMemberEl(target)
+        }
+        else return
     }
 
-    function onClearHover(target) {
+    function onClearHover() {
         setMemberEl(null)
         setHoveredUser(null);
     }
 
-    //Demo Data Inserted To Task Hard Code
-    task.AddedMembers = [
-        // {
-        //     name: 'dan',
-        //     profession: 'super chef',
-        //     img: danPic,
-        //     tags: ['admin', 'member'],
-        // },
-        // {
-        //     name: 'adi',
-        //     profession: 'super love',
-        //     img: logo,
-        //     tags: ['member'],
-        // },
-        // {
-        //     profession: 'super mom',
-        //     name: 'anat',
-        //     img: defaultAvatar,
-        //     tags: ['member'],
-        // }
-    ]
-//FIXME STYLE למרכז בדיוק את האייקון 
-
     return (
         <article className="member-select-preview">
-            {!task.AddedMembers?.length && <img src={plus} className="icon big plus" alt="plus icon" />}
+            {!task.addedMembers?.length && <img src={plus} className="icon big plus" alt="plus icon" />}
 
             <div className="cmp-img"
             >
-                {!!task.AddedMembers.length ?
-                    task.AddedMembers.map(user => {
+                {!!task.addedMembers.length ?
+                    task.addedMembers.map(user => {
                         return <div
-                        className="img-wrapper"
-                            key={user.name}
-                            onMouseLeave={(ev) => onClearHover(ev.currentTarget)}
+                            className="img-wrapper"
+                            key={user.fullname}
+                            onMouseLeave={(ev) => onClearHover()}
                             onMouseOver={(ev) => onSetHoveredUser(user, ev.currentTarget)}
                         >
                             <img
-                                id={user.name}
-                                src={user.img}
+                                id={user.fullname}
+                                src={user.imgUrl}
                                 className="user-img"
                                 alt="person icon"
                             />
@@ -74,14 +54,15 @@ export function MemberSelectPreview({ task }) {
                         />
                     </span>
                 }
-                < FloatingContainerCmp
+
+                {memberEl && < FloatingContainerCmp
                     anchorEl={memberEl}
-                    onClose={() => setMemberEl(null)}
+                    onClose={() => onClearHover(null)}
                 >
                     <MemberCmp
                         user={hoveredUser}
                     />
-                </FloatingContainerCmp>
+                </FloatingContainerCmp>}
 
             </div>
 
