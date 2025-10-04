@@ -1,11 +1,11 @@
 import searchGalss from '/icons/search-galss.svg'
 import xMark from '/icons/x-mark.svg'
 import inviteMember from '/icons/invite-member.svg'
-import { updateTask } from '../../store/actions/board.actions'
+import { updateTask } from '../../../store/actions/board.actions'
 import { useSelector } from 'react-redux'
-import { showSuccessMsg } from '../../services/event-bus.service'
+import { showSuccessMsg } from '../../../services/event-bus.service'
 
-export function MembersSelectCmp({ task, boardId, groupId, onClose }) {
+export function SelectMemberToTask({ task, boardId, groupId, onClose }) {
 
     const users = useSelector(state => state.userModule.users)
 

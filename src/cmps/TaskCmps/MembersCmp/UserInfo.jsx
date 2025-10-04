@@ -2,7 +2,7 @@ import person from '/icons/person.svg'
 import { useSelector } from 'react-redux'
 
 
-export function MemberCmp({ user }) {
+export function UserInfo({ user }) {
     const isFloatingOpen = useSelector(state => state.systemModule.isFloatingOpen)
     const isPopUpOpen = useSelector(state => state.systemModule.isPopUpOpen)
 

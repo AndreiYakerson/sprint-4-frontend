@@ -1,11 +1,11 @@
 import plus from "/icons/plus.svg"
 import person from "/icons/person.svg"
-import { FloatingContainerCmp } from "../FloatingContainerCmp"
-import { MemberCmp } from "./MemberCmp"
+import { FloatingContainerCmp } from "../../FloatingContainerCmp"
+import { UserInfo } from "../MembersCmp/UserInfo"
 import { useState } from "react"
 import { useSelector } from "react-redux"
 
-export function MemberSelectPreview({ task }) {
+export function SelectedMemberPreview({ task }) {
     const [memberEl, setMemberEl] = useState(null)
     const [hoveredUser, setHoveredUser] = useState(null)
     const isFloatingOpen = useSelector(state => state.systemModule.isFloatingOpen)
@@ -33,7 +33,7 @@ export function MemberSelectPreview({ task }) {
                     task.addedMembers.map(user => {
                         return <div
                             className="img-wrapper"
-                            key={user.fullname}
+                            key={user.id}
                             onMouseLeave={(ev) => onClearHover()}
                             onMouseOver={(ev) => onSetHoveredUser(user, ev.currentTarget)}
                         >
@@ -59,7 +59,7 @@ export function MemberSelectPreview({ task }) {
                     anchorEl={memberEl}
                     onClose={() => onClearHover(null)}
                 >
-                    <MemberCmp
+                    <UserInfo
                         user={hoveredUser}
                     />
                 </FloatingContainerCmp>}
