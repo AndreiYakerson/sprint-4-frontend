@@ -1,6 +1,7 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { onSetFloatingIsOpen } from '../store/actions/system.actions'
+import { useSelector } from 'react-redux'
 
 export function FloatingContainerCmp({ anchorEl, children, onClose }) {
     const isPopUpOpen = useSelector(state => state.systemModule.isPopUpOpen)
