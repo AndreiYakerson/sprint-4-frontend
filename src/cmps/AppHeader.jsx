@@ -8,9 +8,6 @@ import { logout } from '../store/actions/user.actions'
 import { showErrorMsg, showSuccessMsg } from '../services/event-bus.service'
 
 // cmps
-import { LoginSignup } from '../pages/LoginSignup'
-import { FloatingContainerCmp } from './FloatingContainerCmp'
-import { PopUp } from './PopUp'
 import { HoveredTextCmp } from './HoveredTextCmp.jsx'
 
 // images
@@ -18,7 +15,6 @@ import headerLogo from '/img/logo.png'
 
 // icons
 import notification from '/icons/notification.svg'
-import updateFeed from '/icons/update-feed.svg'
 import { useDispatch } from 'react-redux'
 import { userService } from '../services/user/user.service.local.js'
 import { SET_USERS } from '../store/reducers/user.reducer.js'
@@ -30,10 +26,9 @@ export function AppHeader() {
 	const dispatch = useDispatch()
 	const navigate = useNavigate()
 
-	// Demo User Loading
+	// Demo User creation 
 	if (!users.length) {
 		console.log('loading new DemoUsers!')
-		
 		let users = userService.createDemoUsers(5)
 		dispatch({ type: SET_USERS, users })
 	}
@@ -70,7 +65,7 @@ export function AppHeader() {
 				{/* //FIXME לעצב את הקו המפריד בין הקונטיינרים */}
 				<span className='middle-line'>!</span>
 				<section className="main-mini-user">
-					{user?.isAdmin && <NavLink to="/admin">Admin</NavLink>}
+					{/* {user?.isAdmin && <NavLink to="/admin">Admin</NavLink>} */}
 					{!user && <NavLink to="auth/login" className="login-link">Login</NavLink>}
 					{user && (
 						<div className="user-info">
@@ -81,13 +76,7 @@ export function AppHeader() {
 							<button onClick={onLogout}>logout</button>
 						</div>
 					)}
-					{anchorEl &&
-						<FloatingContainerCmp
-							anchorEl={anchorEl}
-							onClose={() => setAnchorEl(null)}
-						>
-							<LoginSignup />
-						</FloatingContainerCmp>}
+				
 				</section>
 			</section>
 		</header>
