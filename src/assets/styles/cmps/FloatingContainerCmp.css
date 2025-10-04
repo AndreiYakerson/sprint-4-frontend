@@ -11,7 +11,7 @@
     border-radius: var(--border-radius-big);
 }
 
-.back-drop-clear{
+/* .back-drop-clear{
     display: flex;
     position: fixed;
 
@@ -26,4 +26,4 @@
     background-color:transparent;
 
     
-}
+} */
