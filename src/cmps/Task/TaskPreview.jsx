@@ -16,7 +16,6 @@ import plus from "/icons/plus.svg"
 import danPic from "/img/danPic.jpg"
 
 
-import { MemberCmp } from "../TaskCmps/MemberCmp.jsx"
 import { FloatingContainerCmp } from "../FloatingContainerCmp.jsx"
 import { MembersSelectCmp } from "../TaskCmps/MembersSelectCmp.jsx"
 import { PopUp } from "../PopUp.jsx"
@@ -25,6 +24,8 @@ import { MemberSelectPreview } from "../TaskCmps/MemberSelectPreview.jsx"
 
 export function TaskPreview({ task, groupId, dragHandleProps }) {
     const navigate = useNavigate()
+    const isFloatingOpen = useSelector(state => state.systemModule.isFloatingOpen)
+
     const [membersSelectEl, setMembersSelectEl] = useState(null)
     const [memberEl, setMemberEl] = useState(null)
 
@@ -122,29 +123,29 @@ export function TaskPreview({ task, groupId, dragHandleProps }) {
 
             <div className="task-columns flex">
                 {cmpsOrder.map(colName => {
-                    return <div onClick={(ev) => setMembersSelectEl(ev.currentTarget)} key={colName} className="column-cell">
+                    if (colName === 'MemberPicker') {
 
-                        <MemberSelectPreview
-                            task={task}
-                        />
-                       
-                        {membersSelectEl &&
-                            < FloatingContainerCmp
-                                anchorEl={membersSelectEl}
-                                onClose={() => setMembersSelectEl(null)}
-                            >
-                                <MembersSelectCmp
+                        return <div onClick={(ev) => setMembersSelectEl(ev.currentTarget)} style={{ cursor: 'pointer' }} key={colName} className="column-cell">
+                            <MemberSelectPreview task={task} />
+
+                            {membersSelectEl &&
+                                < FloatingContainerCmp
+                                    anchorEl={membersSelectEl}
                                     onClose={() => setMembersSelectEl(null)}
-                                    task={task}
-                                />
-                            </FloatingContainerCmp>
-                        }
-
-                    </div>
+                                >
+                                    <MembersSelectCmp
+                                        boardId={boardId}
+                                        groupId={groupId}
+                                        task={task}
+                                        onClose={() => setMembersSelectEl(null)}
+                                    />
+                                </FloatingContainerCmp>
+                            }
+                        </div>
+                    }
                 })}
                 <div className="column-cell full"></div>
             </div >
-
         </>
     )
 }
