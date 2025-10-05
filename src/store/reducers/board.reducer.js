@@ -1,3 +1,5 @@
+import { makeId } from "../../services/util.service"
+
 // boards actions
 export const SET_BOARDS = 'SET_BOARDS'
 export const REMOVE_BOARD = 'REMOVE_BOARD'
@@ -47,6 +49,7 @@ export function boardReducer(state = initialState, action = {}) {
             newState = { ...state, boards: [...state.boards, action.board] }
             break
         case UPDATE_BOARD:
+            // state.board = action.board 
             boards = state.boards.map(board => (board._id === action.board._id) ? action.board : board)
             newState = { ...state, boards }
             break
@@ -176,4 +179,5 @@ function unitTestReducer() {
     state = boardReducer(state, { type: ADD_BOARD_MSG, boardId: board1._id, msg })
     console.log('After ADD_BOARD_MSG:', state)
 }
+// PriorityLabelsTest()
 

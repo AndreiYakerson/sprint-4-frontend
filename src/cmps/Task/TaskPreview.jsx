@@ -22,6 +22,7 @@ import { PopUp } from "../PopUp.jsx"
 import { useSelector } from "react-redux"
 import { MemberSelectedPreview } from "../TaskCmps/MembersCmp/MemberSelectedPreview.jsx"
 import { DatePicker } from "../TaskCmps/DateCmp/DatePicker.jsx"
+import { PriorityPreview } from "../TaskCmps/PriorityCmp/PriorityPreview.jsx"
 
 export function TaskPreview({ task, groupId, dragHandleProps }) {
     const navigate = useNavigate()
@@ -134,8 +135,7 @@ export function TaskPreview({ task, groupId, dragHandleProps }) {
                 {cmpsOrder.map((colName, idx) => {
 
                     if (colName === 'MemberPicker') {
-
-                        return <div onClick={(ev) => setMembersSelectEl(ev.currentTarget)} style={{ cursor: 'pointer' }} key={colName} className="column-cell">
+                        return <div onClick={(ev) => setMembersSelectEl(ev.currentTarget)} style={{ cursor: 'pointer' }} key={colName} className={`column-cell ${colName}`}>
                             <MemberSelectedPreview task={task} />
 
                             {membersSelectEl &&
