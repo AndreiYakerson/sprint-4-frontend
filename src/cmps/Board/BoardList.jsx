@@ -1,12 +1,13 @@
 // import { userService } from '../services/user'
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 
 // cmps
 import { BoardPreview } from './BoardPreview'
 
 export function BoardList({ boards, onRemoveBoard, onUpdateBoard, isSideBarDispaly = false }) {
-    const location = useLocation()
+    const navigate = useNavigate()
 
+    const location = useLocation()
     // function shouldShowActionBtns(board) {
     //     const user = userService.getLoggedinUser()
 
@@ -16,20 +17,25 @@ export function BoardList({ boards, onRemoveBoard, onUpdateBoard, isSideBarDispa
     // }
 
 
+    function onNavigateToBoard(boardId) {
+        navigate(`/board/${boardId}`)
+    }
 
-    return <section>
-        <ul className={`board-list ${isSideBarDispaly ? "side-bar-dispaly" : ""}`}>
-            {boards.map(board => {
-                return <li key={board._id} className={`board-item ${location.pathname.includes(board._id) ? "active" : ""}`}>
-                    <BoardPreview board={board} isSideBarDispaly={isSideBarDispaly} />
-                    <div className='board-actions flex '>
-                        <button onClick={() => onRemoveBoard(board._id)}>Remove</button>
-                        <button onClick={() => onUpdateBoard(board)}>Update</button>
-                        <Link to={`/board/${board._id}`} className='btn'>Details</Link>
-                    </div>
-                </li>
-            })
-            }
-        </ul>
-    </section>
+
+    return <ul className={`board-list ${isSideBarDispaly ? "side-bar-dispaly" : ""}`}>
+        {boards.map(board => {
+            return <li key={board._id}
+                className={`board-item ${location.pathname.includes(board._id) ? "active" : ""}`}
+                onClick={() => onNavigateToBoard(board?._id)}
+            >
+                <BoardPreview board={board} isSideBarDispaly={isSideBarDispaly} />
+                <div className='board-actions flex' onClick={(ev) => ev.stopPropagation()}>
+                    <button onClick={() => onRemoveBoard(board._id)}>Remove</button>
+                    <button onClick={() => onUpdateBoard(board)}>Update</button>
+                    <Link to={`/board/${board._id}`} className='btn'>Details</Link>
+                </div>
+            </li>
+        })
+        }
+    </ul>
 }

@@ -1,11 +1,19 @@
 .board-index {
+    display: flex;
+    flex-direction: column;
+    margin-block-end: 1em;
+
     .board-index-header {
         display: flex;
         align-items: center;
         justify-content: space-between;
 
+        min-height: 75px;
+
         padding-inline: 20px;
         padding-block-start: 20px;
+        box-shadow: 0px 3px 12px var(--application-border-color);
+        margin-block-end: 16px;
     }
 
     & h2 {
@@ -15,5 +23,18 @@
 
     & button {
         margin-inline-end: 0;
+    }
+
+    .board-list-title {
+        font-size: 18px;
+        font-weight: 700;
+    }
+
+    .board-list-container {
+        margin-inline: 20px;
+        padding: 24px;
+        background-color: var(--primary-background-color);
+        border-radius: 8px;
+        box-shadow: 0px 3px 12px var(--application-border-color);
     }
 }

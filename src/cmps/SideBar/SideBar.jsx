@@ -11,13 +11,6 @@ import { BoardList } from "../Board/BoardList.jsx";
 import { HoveredTextCmp } from "../HoveredTextCmp.jsx";
 import { SvgIcon } from "../SvgIcon.jsx";
 
-// icons 
-import homeIcon from '/icons/home.svg'
-import myWork from '/icons/my-work.svg'
-import chevronRight from '/icons/chevron-right.svg'
-import chevronLeft from '/icons/chevron-left.svg'
-import chevronDown from '/icons/chevron-down.svg'
-
 
 export function SideBar() {
 
@@ -44,8 +37,8 @@ export function SideBar() {
             </button>
             <div className="side-bar-content">
                 <nav className="side-nav-list">
-                    <NavLink to=""><HoveredTextCmp><SvgIcon iconName="home" size={16} colorName="currentColor" /></HoveredTextCmp>Home</NavLink>
-                    <NavLink to=""><HoveredTextCmp><SvgIcon iconName="myWork" size={16} colorName="currentColor" /></HoveredTextCmp>My Work</NavLink>
+                    <NavLink to="/board" end><HoveredTextCmp><SvgIcon iconName="home" size={16} colorName="currentColor" /></HoveredTextCmp>Home</NavLink>
+                    {/* <NavLink to=""><HoveredTextCmp><SvgIcon iconName="myWork" size={16} colorName="currentColor" /></HoveredTextCmp>My Work</NavLink> */}
                 </nav>
                 {/* <div className="favorites flex">Favorites
                     {

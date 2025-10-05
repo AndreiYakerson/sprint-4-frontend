@@ -18,32 +18,38 @@ export function BoardPreview({ board, isSideBarDispaly }) {
 
     return (
         <article className="board-preview">
-            <img
-                src={boardItemLogo}
-                alt="Board Image" className='board-img' />
-            <header>
-                <Link to={`/board/${board._id}`} className='board-title'>
-                    <div className='board-info-items flex'>
-                        <HoveredTextCmp
-                            size='big'
-                            position="up"
-                            label="Dash Board"
-                        >
-                            <SvgIcon iconName="board" size={isSideBarDispaly ? 16 : 22} colorName={isSideBarDispaly ? "currentColor" : ''} />
-                        </HoveredTextCmp>
-                        <span className='hover-show' data-type="Board Title"><LongTxt txt={board.title} /></span>
-                        <span >
-                            <HoveredTextCmp
-                                size='big'
-                                position="up"
-                                label={'logo'}
-                            >
-                                <SvgIcon iconName="star" size={isSideBarDispaly ? 16 : 22} colorName={isSideBarDispaly ? "currentColor" : ''} />
-                            </HoveredTextCmp>
-                        </span>
-                    </div>
-                </Link>
-            </header>
+            <div className='board-img-wrapper'>
+                <img
+                    src={boardItemLogo}
+                    alt="Board Image" className='board-img' />
+            </div>
+
+            <div className='board-info-items'>
+                <HoveredTextCmp
+                    size='big'
+                    position="up"
+                    label="Dash Board"
+                >
+                    <SvgIcon iconName="board" size={isSideBarDispaly ? 16 : 22} colorName={isSideBarDispaly ? "currentColor" : ''} />
+                </HoveredTextCmp>
+
+                {/* <span className='hover-show' data-type="Board Title"> </span> */}
+
+                {/* <LongTxt txt={board.title} className='board-title' /> */}
+
+                <div className='board-title'>{board.title}</div>
+
+                <span >
+                    <HoveredTextCmp
+                        size='big'
+                        position="up"
+                        label={'logo'}
+                    >
+                        <SvgIcon iconName="starFull" size={isSideBarDispaly ? 16 : 22} colorName={isSideBarDispaly ? "starColor" : 'starColor'} />
+                    </HoveredTextCmp>
+                </span>
+            </div>
+
         </article>)
 }
 
