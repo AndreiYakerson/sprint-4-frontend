@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { Fragment, useState } from "react"
 import { useParams, Link, useNavigate } from "react-router-dom"
 
 // services
@@ -23,13 +23,29 @@ import { useSelector } from "react-redux"
 import { MemberSelectedPreview } from "../TaskCmps/MembersCmp/MemberSelectedPreview.jsx"
 import { DatePicker } from "../TaskCmps/DateCmp/DatePicker.jsx"
 import { PriorityPreview } from "../TaskCmps/PriorityCmp/PriorityPreview.jsx"
+import { useSortable } from "@dnd-kit/sortable"
+import { CSS } from "@dnd-kit/utilities"
+import { DragOverlay } from "@dnd-kit/core"
 
-export function TaskPreview({ task, groupId }) {
+
+
+
+
+export function TaskPreview({ task, groupId, activeId }) {
     const navigate = useNavigate()
     const isFloatingOpen = useSelector(state => state.systemModule.isFloatingOpen)
 
     const [membersSelectEl, setMembersSelectEl] = useState(null)
     const [memberEl, setMemberEl] = useState(null)
+
+    const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id: task.id })
+
+    const style = {
+        transition: transition,
+        transform: CSS.Transform.toString(transform),
+        zIndex: isDragging ? 10 : 1, // Higher z-index for the dragged item
+    }
+    console.log('Transform:', transform);
 
     const { boardId, taskId } = useParams()
 
@@ -103,8 +119,8 @@ export function TaskPreview({ task, groupId }) {
 
 
     return (
-        <>
-            <div className="sticky-cell-wrapper">
+        <div className={`task-preview ${isDragging ? 'dragged' : ''}`} ref={setNodeRef} style={style} {...attributes}>
+            <div className="sticky-cell-wrapper" >
                 <div className="task-menu-wrapper">
                     <button onClick={onRemoveTask}>X</button>
                 </div>
@@ -117,7 +133,7 @@ export function TaskPreview({ task, groupId }) {
 
                     }} />
 
-                    <div className="grab-block"></div>
+                    <div className="grab-block" {...listeners}></div>
 
                     <div onClick={onToggleTaskDetails} className={`task-updates-cell ${task.id === taskId ? "focus" : ""}`}>
                         <img src={updateIcon} alt="update" className="icon big" />
@@ -129,6 +145,7 @@ export function TaskPreview({ task, groupId }) {
                     <button onClick={() => onUpdateTask()}>update</button> */}
                 </div>
             </div >
+
 
 
             <div className="task-columns flex">
@@ -171,7 +188,7 @@ export function TaskPreview({ task, groupId }) {
                 }
                 <div className="column-cell full"></div>
             </div >
-        </>
+        </div>
     )
 }
 
