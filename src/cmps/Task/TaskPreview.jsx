@@ -6,7 +6,7 @@ import { removeTask, updateTask } from "../../store/actions/board.actions.js"
 import { showErrorMsg, showSuccessMsg } from "../../services/event-bus.service"
 
 // cmps
-import { DynamicCmp } from "../DynamicCmp"
+// import { DynamicCmp } from "../DynamicCmp"
 import { TitleEditor } from "./TitleEditor"
 
 // icon
@@ -21,6 +21,7 @@ import { MemberTaskSelect } from "../TaskCmps/MembersCmp/MemberTaskSelect.jsx"
 import { PopUp } from "../PopUp.jsx"
 import { useSelector } from "react-redux"
 import { MemberSelectedPreview } from "../TaskCmps/MembersCmp/MemberSelectedPreview.jsx"
+import { DatePicker } from "../TaskCmps/DateCmp/DatePicker.jsx"
 
 export function TaskPreview({ task, groupId, dragHandleProps }) {
     const navigate = useNavigate()
@@ -130,7 +131,8 @@ export function TaskPreview({ task, groupId, dragHandleProps }) {
 
 
             <div className="task-columns flex">
-                {cmpsOrder.map(colName => {
+                {cmpsOrder.map((colName, idx) => {
+
                     if (colName === 'MemberPicker') {
 
                         return <div onClick={(ev) => setMembersSelectEl(ev.currentTarget)} style={{ cursor: 'pointer' }} key={colName} className="column-cell">
@@ -150,8 +152,17 @@ export function TaskPreview({ task, groupId, dragHandleProps }) {
                                 </FloatingContainerCmp>
                             }
                         </div>
+                    } else if (colName === 'DatePicker') {
+                        var cmp = cmps.find(cmp => cmp?.type === 'DatePicker')
+                        return <div className="column-cell" key={colName}>
+                            {DynamicCmp({ cmp, updateCmpInfo })}
+                        </div>
                     }
-                })}
+                    else {
+                        return <div className="column-cell" key={idx}></div>
+                    }
+                })
+                }
                 <div className="column-cell full"></div>
             </div >
         </>
@@ -160,19 +171,22 @@ export function TaskPreview({ task, groupId, dragHandleProps }) {
 
 
 
+function DynamicCmp({ cmp, updateCmpInfo }) {
+    switch (cmp?.type) {
+        // case 'StatusPicker':
+        //     return <StatusPicker info={cmp.info} onUpdate={(data) => {
+        //         updateCmpInfo(cmp, 'selectedStatus', data, `Changed Status to ${data}`)
+        //     }} />
+        case 'DatePicker':
+            return <DatePicker info={cmp?.info} onUpdate={(data) => {
+                updateCmpInfo(cmp, 'selectedDate', data, `Changed due date to ${data}`)
+            }} />
+        // case 'MemberPicker':
+        //     return <MemberPicker info={cmp.info} onUpdate={(data) => {
+        //         updateCmpInfo(cmp, 'selectedMemberIds', data, `Changed members`)
+        //     }} />
+        default:
+            return <p>{cmp?.type}</p>
+    }
+}
 
-{/* {cmpsOrder.map((cmp, idx) => {
-                return (
-
-
-                    // <DynamicCmp
-                    //     cmp={cmp}
-                    //     key={idx}
-                    //     onUpdate={data => {
-                    //         console.log('Updating: ', cmp, 'with data:', data)
-                    //         // make a copy, update the task, create an action
-                    //         // Call action: updateTask(task, action)
-                    //     }}
-                    // />
-                )
-            })} */}

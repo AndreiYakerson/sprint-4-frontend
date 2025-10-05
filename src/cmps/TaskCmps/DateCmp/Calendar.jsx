@@ -93,7 +93,7 @@ export function Calendar({ dateInfo, onUpDate, onSetIsEditing, position }) {
     }
 
     return (
-        <section className={`calendar-container ${position}`}>
+        <section className={`calendar-container ${position} focus`}>
             <div className="btns-actions flex justify-between">
                 <button onClick={onToday}>Today</button>
                 <button onClick={toggleIsTimeShow} className={`white icon-svg ${isTimeShow ? "active" : ""}`}>
@@ -127,7 +127,7 @@ export function Calendar({ dateInfo, onUpDate, onSetIsEditing, position }) {
             </div>
 
 
-            <div className="calendar-table-header flex justify-between">
+            <div className="calendar-table-date-select flex justify-between">
 
                 <div className="flex">
                     <select value={firstDayOfMonth.month - 1} name="month-select" onChange={onSelectMonth}>
@@ -143,7 +143,6 @@ export function Calendar({ dateInfo, onUpDate, onSetIsEditing, position }) {
                     </select>
                 </div>
 
-
                 <div>
                     <button onClick={onPrevMonth} className="white icon-svg">
                         <SvgIcon iconName="chevronLeft" size={20} /></button>
@@ -152,7 +151,6 @@ export function Calendar({ dateInfo, onUpDate, onSetIsEditing, position }) {
                 </div>
 
             </div>
-
 
 
             <div className="calendar-table">

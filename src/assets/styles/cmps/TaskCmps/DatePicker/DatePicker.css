@@ -1,41 +1,58 @@
 .date-picker {
-    position: relative;
 
-    background-color: white;
-    outline: 1px solid black;
-    width: 200px;
-    height: 2em;
-    margin: 20px;
-
+    background-color: inherit;
     cursor: pointer;
 
+    &:has(.calendar-container) {
+        position: relative;
+    }
+
     .select {
+        margin-inline: 8px;
         opacity: 0;
+        align-items: center;
     }
 
     &:hover {
-        background-color: rgb(193, 193, 193);
-
         .select {
+            display: flex;
+            justify-content: center;
+            outline: solid 1px var(--ui-border-color);
+            border-radius: 4px;
+
             opacity: 1;
+            transition: 200ms ease-in-out;
+
+            .plus-icon {
+                background-color: var(--primary-color);
+                border-radius: 50%;
+            }
         }
 
         .date-to-edit {
-            button {
+            outline: solid 1px var(--ui-border-color);
+            border-radius: 4px;
+            color: var(--link-color);
+        }
+    }
+
+    .date-to-edit {
+        margin-inline: 8px;
+        position: relative;
+
+        &:hover {
+            .remove-date {
                 opacity: 1;
             }
         }
 
-
-    }
-
-    .date-to-edit {
-        position: relative;
-
-        button {
+        .remove-date {
             position: absolute;
-            right: 0;
+            top: 50%;
+            translate: 0 -50%;
+            right: 6px;
             opacity: 0;
         }
     }
+
 }

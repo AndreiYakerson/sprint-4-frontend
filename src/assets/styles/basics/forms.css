@@ -50,6 +50,17 @@ button {
 		}
 	}
 
+	&.remove-date {
+		transition: 100ms ease-in-out;
+		padding: 0;
+		border: 0;
+		background-color: var(--primary-background-hover-color);
+
+		&:hover {
+			background-color: var(--primary-selected-color);
+		}
+	}
+
 	&.add-group {
 		position: sticky;
 		left: 36px;

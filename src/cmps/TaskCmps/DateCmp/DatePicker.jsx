@@ -1,12 +1,20 @@
 import { useEffect, useRef, useState, useLayoutEffect } from "react"
 import { Calendar } from "./Calendar"
+import { SvgIcon } from "../../SvgIcon"
 
 export function DatePicker({ info, onUpdate }) {
-
-    const [dateToEdit, setDateToEdit] = useState(info?.dueDate)
+    const [dateToEdit, setDateToEdit] = useState(info?.selectedDate)
     const [isEditing, setIsEditing] = useState(false)
     const [position, setPosition] = useState("down")
     const datePickerRef = useRef()
+
+
+    function onSaveDate(dateInfo) {
+        onUpdate(dateInfo)
+        setDateToEdit(dateInfo)
+        setIsEditing(false)
+    }
+
 
     function onSetIsEditing(isEditing) {
         setIsEditing(isEditing)
@@ -66,16 +74,23 @@ export function DatePicker({ info, onUpdate }) {
                 onClick={() => setIsEditing(true)} >
                 {setDate(dateToEdit?.date)}
                 {dateToEdit?.isTimeShow && `, ${setTime(dateToEdit?.date)}`}
-                <button onClick={(ev) => { setDateToEdit({ date: '', isTimeShow: false }), ev.stopPropagation() }}>x</button>
+                <button
+                    className="remove-date"
+                    onClick={(ev) => { onSaveDate({ date: '', isTimeShow: false }), ev.stopPropagation() }}>
+                    <SvgIcon iconName="xMark" size={16} />
+                </button>
             </div>}
 
             {!isEditing && !dateToEdit?.date &&
-                <div className="select" onClick={() => onSetIsEditing(true)}>Select Date</div>
+                <div className="select" onClick={() => onSetIsEditing(true)}>
+                    <SvgIcon iconName="plus" size={14} className='plus-icon' colorName='whiteText' />
+                    <SvgIcon iconName="calendar" size={18} />
+                </div>
             }
 
             {isEditing && <Calendar
                 dateInfo={dateToEdit}
-                onUpDate={(data) => { setDateToEdit(data) }}
+                onUpDate={onSaveDate}
                 onSetIsEditing={onSetIsEditing}
                 position={position}
             />}

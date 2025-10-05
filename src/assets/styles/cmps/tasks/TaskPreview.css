@@ -177,6 +177,10 @@
            align-content: center;
        }
 
+       &:has(:focus, .focus) {
+           border: 1px solid var(--primary-color);
+       }
+
        &.full {
            flex-grow: 1;
            border-inline-end: 0;
