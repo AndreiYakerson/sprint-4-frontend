@@ -133,7 +133,13 @@ export function TaskPreview({ task, groupId, dragHandleProps }) {
 
             <div className="task-columns flex">
                 {cmpsOrder.map((colName, idx) => {
-
+                    
+                        if (colName === 'PriorityPicker') {
+                            return <div style={{ cursor: 'pointer' }} key={colName} className={`column-cell ${colName}`}>
+                                <PriorityPreview />
+                            </div>
+                        }
+                    
                     if (colName === 'MemberPicker') {
                         return <div onClick={(ev) => setMembersSelectEl(ev.currentTarget)} style={{ cursor: 'pointer' }} key={colName} className={`column-cell ${colName}`}>
                             <MemberSelectedPreview task={task} />
