@@ -1,0 +1,136 @@
+.calendar-container {
+    cursor: auto;
+    position: absolute;
+    left: 0;
+
+
+    /* translate: -50%; */
+
+    &.down {
+        top: 100%;
+    }
+
+    &.up {
+        bottom: 100%;
+    }
+
+
+    border-radius: 4px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, .17);
+    border: 1px solid;
+    border-color: var(--layout-border-color);
+    outline: 1px solid transparent;
+
+    width: 264px;
+    padding: var(--spacing-small);
+
+    background-color: var(--secondary-background-color);
+
+    font-size: 14px;
+    font-weight: 400;
+    font-family: inherit;
+
+    button {
+        line-height: normal;
+    }
+
+    .btns-actions {
+        margin: var(--spacing-small) 0;
+    }
+
+    .date-time-input {
+
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        align-items: center;
+        grid-gap: 1px;
+        height: 32px;
+        background-color: rgba(0, 0, 0, 0);
+        border: 1px solid;
+        border-color: #e6e9ef;
+        border-color: var(--ui-border-color);
+        border-radius: 4px;
+        margin-block-end: 8px;
+
+        &:has(:focus) {
+            border: 1px solid var(--primary-color);
+        }
+
+        input {
+            border: none;
+            outline: none;
+            padding: 0 var(--spacing-small);
+
+            &.time-input {
+                justify-items: end;
+                border-inline-start: 1px solid #c5c7d0;
+                border-radius: 0;
+            }
+        }
+
+    }
+
+    /* .calendar-table-header {
+        
+    } */
+
+    .calendar-table {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        gap: 0;
+        text-align: center;
+
+        ul {
+            display: grid;
+            grid-template-columns: subgrid;
+            grid-column: 1/-1;
+            margin-block-end: 4px;
+
+            &.date-num-list {
+
+                li {
+                    place-items: center;
+
+                    .day-num {
+                        cursor: pointer;
+                        display: block;
+                        align-content: center;
+                        width: 30px;
+                        height: 30px;
+                        aspect-ratio: 1/1;
+                        border-radius: 4px;
+                        margin-block-end: 4px;
+
+                        &:hover {
+                            background-color: var(--primary-background-hover-color);
+                        }
+
+                        &.today {
+                            text-decoration: underline;
+                            text-decoration-color: var(--primary-color);
+                            text-decoration-thickness: 2px;
+
+                            &.active {
+                                text-decoration-color: var(--text-color-on-primary);
+                            }
+                        }
+
+                        &.inactive {
+                            color: var(--disabled-text-color);
+                        }
+
+                        &.active {
+                            color: var(--text-color-on-primary);
+                            background-color: var(--primary-color);
+                        }
+
+                    }
+                }
+
+
+
+            }
+        }
+    }
+
+}

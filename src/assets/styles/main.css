@@ -36,6 +36,9 @@
 @import "cmps/TaskCmps/MembersCmp/MemberSelectedPreview.css";
 @import "cmps/TaskCmps/MembersCmp/MemberTaskSelect.css";
 
+@import "cmps/TaskCmps/DatePicker/DatePicker.css";
+@import "cmps/TaskCmps/DatePicker/Calendar.css";
+
 /* Priority */
 
 

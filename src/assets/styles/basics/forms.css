@@ -18,8 +18,24 @@ button {
 		transition: 0ms
 	}
 
+	&.icon-svg {
+		padding: 0.5em;
+	}
+
+	&.active {
+		background-color: var(--primary-selected-color)
+	}
+
 	&:hover {
-		background-color: var(--primary-background-hover-color)
+		background-color: var(--primary-background-hover-color);
+
+		&.active {
+			background-color: var(--primary-selected-color)
+		}
+	}
+
+	&:active {
+		animation: btn-click 100ms ease-in-out;
 	}
 
 
@@ -68,4 +84,42 @@ input {
 		border: 1px solid var(--primary-color);
 	}
 
+}
+
+@keyframes btn-click {
+	0% {
+		scale: 1;
+	}
+
+	50% {
+		scale: 0.8;
+	}
+
+	100% {
+		scale: 1;
+	}
+}
+
+
+select {
+	outline: none;
+	border: 0;
+	font-family: inherit;
+	font-size: inherit;
+	padding: var(--spacing-xs) var(--spacing-small);
+	height: 32px;
+	line-height: 24px;
+	border-radius: 4px;
+
+	&:hover {
+		background-color: var(--primary-background-hover-color);
+	}
+
+	&:focus {
+		background-color: var(--primary-selected-color);
+	}
+
+	option {
+		background-color: var(--primary-background-color);
+	}
 }

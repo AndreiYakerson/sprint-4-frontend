@@ -10,6 +10,7 @@ import { BoardList } from '../cmps/Board/BoardList'
 import { PopUp } from '../cmps/PopUp'
 import { BoardEdit } from '../cmps/Board/BaordEdit'
 import { onSetPopUpIsOpen } from '../store/actions/system.actions'
+import { DatePicker } from '../cmps/TaskCmps/DateCmp/DatePicker'
 
 
 export function BoardIndex({ setIsSideBarOpen }) {
@@ -65,11 +66,14 @@ export function BoardIndex({ setIsSideBarOpen }) {
                 <button onClick={() => onSetPopUpIsOpen(true)}>Add a Board</button>
             </header>
             {/* <BoardFilter filterBy={filterBy} setFilterBy={setFilterBy} /> */}
-            <BoardList
+
+            {/* <BoardList
                 boards={boards}
                 onRemoveBoard={onRemoveBoard}
                 onUpdateBoard={onUpdateBoard}
-            />
+            /> */}
+
+            <DatePicker />
 
             <PopUp showCloseBtn={true}>
                 <BoardEdit />

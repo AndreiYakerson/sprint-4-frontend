@@ -42,6 +42,14 @@ export function TaskPreview({ task, groupId, dragHandleProps }) {
                     currTitle: task?.title,
                 }
             },
+            {
+                type: 'DatePicker',
+                info: {
+                    label: 'Due date:',
+                    propName: 'dueDate',
+                    selectedDate: task?.dueDate,
+                }
+            },
         ]
     )
 

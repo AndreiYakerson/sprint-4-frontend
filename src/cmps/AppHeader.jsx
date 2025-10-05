@@ -11,7 +11,7 @@ import { showErrorMsg, showSuccessMsg } from '../services/event-bus.service'
 import { HoveredTextCmp } from './HoveredTextCmp.jsx'
 
 // images
-import headerLogo from '/img/logo.png'
+import headerLogo from '../../public/img/Logo.png'
 
 // icons
 import notification from '/icons/notification.svg'
@@ -76,7 +76,7 @@ export function AppHeader() {
 							<button onClick={onLogout}>logout</button>
 						</div>
 					)}
-				
+
 				</section>
 			</section>
 		</header>

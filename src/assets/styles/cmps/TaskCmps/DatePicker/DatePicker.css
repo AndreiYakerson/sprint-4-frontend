@@ -1,0 +1,41 @@
+.date-picker {
+    position: relative;
+
+    background-color: white;
+    outline: 1px solid black;
+    width: 200px;
+    height: 2em;
+    margin: 20px;
+
+    cursor: pointer;
+
+    .select {
+        opacity: 0;
+    }
+
+    &:hover {
+        background-color: rgb(193, 193, 193);
+
+        .select {
+            opacity: 1;
+        }
+
+        .date-to-edit {
+            button {
+                opacity: 1;
+            }
+        }
+
+
+    }
+
+    .date-to-edit {
+        position: relative;
+
+        button {
+            position: absolute;
+            right: 0;
+            opacity: 0;
+        }
+    }
+}
