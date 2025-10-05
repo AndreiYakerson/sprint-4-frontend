@@ -21,6 +21,7 @@ import { MemberTaskSelect } from "../TaskCmps/MembersCmp/MemberTaskSelect.jsx"
 import { PopUp } from "../PopUp.jsx"
 import { useSelector } from "react-redux"
 import { MemberSelectedPreview } from "../TaskCmps/MembersCmp/MemberSelectedPreview.jsx"
+import { PriorityPreview } from "../TaskCmps/PriorityCmp/PriorityPreview.jsx"
 
 export function TaskPreview({ task, groupId, dragHandleProps }) {
     const navigate = useNavigate()
@@ -124,8 +125,7 @@ export function TaskPreview({ task, groupId, dragHandleProps }) {
             <div className="task-columns flex">
                 {cmpsOrder.map(colName => {
                     if (colName === 'MemberPicker') {
-
-                        return <div onClick={(ev) => setMembersSelectEl(ev.currentTarget)} style={{ cursor: 'pointer' }} key={colName} className="column-cell">
+                        return <div onClick={(ev) => setMembersSelectEl(ev.currentTarget)} style={{ cursor: 'pointer' }} key={colName} className={`column-cell ${colName}`}>
                             <MemberSelectedPreview task={task} />
 
                             {membersSelectEl &&
@@ -141,6 +141,12 @@ export function TaskPreview({ task, groupId, dragHandleProps }) {
                                     />
                                 </FloatingContainerCmp>
                             }
+                        </div>
+                    }
+
+                    if (colName === 'PriorityPicker') {
+                        return <div style={{ cursor: 'pointer' }} key={colName} className={`column-cell ${colName}`}>
+                            <PriorityPreview />
                         </div>
                     }
                 })}
