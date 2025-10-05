@@ -21,6 +21,13 @@ export function BoardList({ boards, onRemoveBoard, onUpdateBoard, isSideBarDispa
         navigate(`/board/${boardId}`)
     }
 
+    function onUpdateTitle(board) {
+        const title = prompt('New title?', board.title).trim() || ''
+        if (title === '' || title === board.title) return
+
+        onUpdateBoard(board, { title: title })
+    }
+
 
     return <ul className={`board-list ${isSideBarDispaly ? "side-bar-dispaly" : ""}`}>
         {boards.map(board => {
@@ -28,10 +35,10 @@ export function BoardList({ boards, onRemoveBoard, onUpdateBoard, isSideBarDispa
                 className={`board-item ${location.pathname.includes(board._id) ? "active" : ""}`}
                 onClick={() => onNavigateToBoard(board?._id)}
             >
-                <BoardPreview board={board} isSideBarDispaly={isSideBarDispaly} />
+                <BoardPreview board={board} isSideBarDispaly={isSideBarDispaly} onUpdateBoard={onUpdateBoard} />
                 <div className='board-actions flex' onClick={(ev) => ev.stopPropagation()}>
                     <button onClick={() => onRemoveBoard(board._id)}>Remove</button>
-                    <button onClick={() => onUpdateBoard(board)}>Update</button>
+                    <button onClick={() => onUpdateTitle(board)}>Update</button>
                     <Link to={`/board/${board._id}`} className='btn'>Details</Link>
                 </div>
             </li>

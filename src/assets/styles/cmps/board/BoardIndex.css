@@ -30,6 +30,10 @@
         font-weight: 700;
     }
 
+    .board-list-collapse-toggle {
+        cursor: pointer;
+    }
+
     .board-list-container {
         margin-inline: 20px;
         padding: 24px;

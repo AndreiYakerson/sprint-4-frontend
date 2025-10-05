@@ -61,6 +61,10 @@ button {
 		}
 	}
 
+	&.square {
+		padding: 0.5em;
+	}
+
 	&.add-group {
 		position: sticky;
 		left: 36px;

@@ -1,23 +1,34 @@
-import { Link } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+// cmps
 import { HoveredTextCmp } from '../HoveredTextCmp.jsx'
-// images
-import boardIcon from '/icons/board.svg'
-import dashboard from '/icons/dashboard.svg'
-import starFull from '/icons/star-full.svg'
-import star from '/icons/star.svg'
-import boardItemLogo from '/img/board-item-img.svg'
-import { useState } from 'react'
-import { LongTxt } from '../LongText/LongText.jsx'
 import { SvgIcon } from '../SvgIcon.jsx'
 
-export function BoardPreview({ board, isSideBarDispaly }) {
-    const [anchorEl, setAnchorEl] = useState(null)
+// images
+import boardItemLogo from '/img/board-item-img.svg'
 
-    //Demo Pre For Stared Logic
-    const isStarred = false
+export function BoardPreview({ board, isSideBarDispaly, onUpdateBoard }) {
+    // const [anchorEl, setAnchorEl] = useState(null)
+
+    const [isStarred, setIsStarred] = useState(board?.isStarred)
+
+
+
+    async function toggleIsStarred(isStarred) {
+        setIsStarred(isStarred)
+
+        try {
+            await onUpdateBoard(board, { isStarred: isStarred })
+        } catch (err) {
+            setIsStarred(board?.isStarred)
+        }
+
+    }
+
+
 
     return (
         <article className="board-preview">
+
             <div className='board-img-wrapper'>
                 <img
                     src={boardItemLogo}
@@ -33,21 +44,42 @@ export function BoardPreview({ board, isSideBarDispaly }) {
                     <SvgIcon iconName="board" size={isSideBarDispaly ? 16 : 22} colorName={isSideBarDispaly ? "currentColor" : ''} />
                 </HoveredTextCmp>
 
-                {/* <span className='hover-show' data-type="Board Title"> </span> */}
-
-                {/* <LongTxt txt={board.title} className='board-title' /> */}
-
                 <div className='board-title'>{board.title}</div>
 
-                <span >
-                    <HoveredTextCmp
-                        size='big'
-                        position="up"
-                        label={'logo'}
-                    >
-                        <SvgIcon iconName="starFull" size={isSideBarDispaly ? 16 : 22} colorName={isSideBarDispaly ? "starColor" : 'starColor'} />
-                    </HoveredTextCmp>
-                </span>
+                {isSideBarDispaly
+                    ? <button>
+
+                    </button>
+
+                    : <button className='white square' onClick={(ev) => { ev.stopPropagation(), toggleIsStarred(!isStarred) }}>
+                        <SvgIcon iconName={isStarred ? 'starFull' : 'star'}
+                            size={22}
+                            colorName={isStarred ? "starColor" : 'secondaryText'}
+                        />
+                    </button>
+                }
+
+
+
+                {/* <button className='white board-title-action' onClick={(ev) => { ev.stopPropagation(), toggleIsStarred() }} >
+
+                    {isSideBarDispaly
+                        ? <SvgIcon iconName="star" size={isSideBarDispaly ? 16 : 22} colorName={isSideBarDispaly ? "currentColor" : ''} />
+                        : <HoveredTextCmp
+                            size='big'
+                            position="up"
+                            label={isStarred ? 'logo' : ''}
+                        >
+
+                            <SvgIcon iconName={isStarred ? 'starFull' : 'star'}
+                                size={22}
+                                colorName={isStarred ? "starColor" : 'secondaryText'}
+                            />
+                        </HoveredTextCmp>
+                    }
+
+                </button> */}
+
             </div>
 
         </article>)

@@ -34,18 +34,16 @@ export function BoardIndex({ setIsSideBarOpen }) {
         }
     }
 
-    async function onUpdateBoard(board) {
-        const title = prompt('New title?', board.title) || ''
-        if (title === '' || title === board.title) return
+    async function onUpdateBoard(board, valsToUpdate) {
 
-        const boardToSave = structuredClone(board)
-        boardToSave.title = title
+        const boardToSave = { ...structuredClone(board), ...valsToUpdate }
 
         try {
             const savedBoard = await updateBoard(boardToSave)
-            showSuccessMsg(`Board updated, new speed: ${savedBoard.title}`)
+            showSuccessMsg(`Board ${savedBoard.title} updated`)
         } catch (err) {
             showErrorMsg('Cannot update board')
+            throw err;
         }
     }
 
