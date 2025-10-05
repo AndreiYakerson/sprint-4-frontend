@@ -23,7 +23,7 @@ export function MemberTaskSelect({ task, boardId, groupId, onClose }) {
 
     return (
         <div className="member-task-select">
-            <div className="search-bar">
+            {/* <div className="search-bar">
                 <span className='search'>
                     <img src={searchGalss}
                         className='icon big search'
@@ -38,7 +38,7 @@ export function MemberTaskSelect({ task, boardId, groupId, onClose }) {
                         alt="Info Icon"
                     />
                 </span>
-            </div>
+            </div> */}
             <span className='suggested'>Suggested People</span>
             <section className="user-list">
                 {usersToShow.map((member, idx) => {
@@ -57,10 +57,10 @@ export function MemberTaskSelect({ task, boardId, groupId, onClose }) {
                     </button>
                 })}
 
-                <button className="user flex">
+                {/* <button className="user flex">
                     <span className="img-container"> <img className="icon invite-member" src={inviteMember} alt="User Image" /></span>
                     {' Invite a new member by email'}
-                </button>
+                </button> */}
             </section>
 
         </div>
