@@ -1,7 +1,7 @@
 import { useEffect } from "react"
 import { useState } from "react"
 import { useParams } from "react-router"
-import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd"
+
 
 // services
 import { updateTasksOrder } from "../../store/actions/board.actions.js"
