@@ -24,7 +24,6 @@ export function GroupList({ groups, managingType }) {
 
     const [localGroups, setLocalGroups] = useState(groups)
     const [isDragging, setIsDragging] = useState(false)
-    console.log('isDragging', isDragging)
 
 
     useEffect(() => {

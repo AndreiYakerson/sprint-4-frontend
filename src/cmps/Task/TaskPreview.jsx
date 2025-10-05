@@ -24,7 +24,7 @@ import { MemberSelectedPreview } from "../TaskCmps/MembersCmp/MemberSelectedPrev
 import { DatePicker } from "../TaskCmps/DateCmp/DatePicker.jsx"
 import { PriorityPreview } from "../TaskCmps/PriorityCmp/PriorityPreview.jsx"
 
-export function TaskPreview({ task, groupId, dragHandleProps }) {
+export function TaskPreview({ task, groupId }) {
     const navigate = useNavigate()
     const isFloatingOpen = useSelector(state => state.systemModule.isFloatingOpen)
 
@@ -110,7 +110,7 @@ export function TaskPreview({ task, groupId, dragHandleProps }) {
                 </div>
                 <div className="table-border"></div>
                 <div className="task-select"></div>
-                <div className="task-title flex align-center" {...dragHandleProps}>
+                <div className="task-title flex align-center">
                     <TitleEditor info={cmps.find(cmp => cmp.type === 'TitleEditor')?.info} onUpdate={(data) => {
                         updateCmpInfo(cmps.find(cmp => cmp.type === 'TitleEditor'),
                             'currTitle', data, `Changed title to ${data}`)
@@ -133,13 +133,13 @@ export function TaskPreview({ task, groupId, dragHandleProps }) {
 
             <div className="task-columns flex">
                 {cmpsOrder.map((colName, idx) => {
-                    
-                        if (colName === 'PriorityPicker') {
-                            return <div style={{ cursor: 'pointer' }} key={colName} className={`column-cell ${colName}`}>
-                                <PriorityPreview />
-                            </div>
-                        }
-                    
+
+                    if (colName === 'PriorityPicker') {
+                        return <div style={{ cursor: 'pointer' }} key={colName} className={`column-cell ${colName}`}>
+                            <PriorityPreview />
+                        </div>
+                    }
+
                     if (colName === 'MemberPicker') {
                         return <div onClick={(ev) => setMembersSelectEl(ev.currentTarget)} style={{ cursor: 'pointer' }} key={colName} className={`column-cell ${colName}`}>
                             <MemberSelectedPreview task={task} />

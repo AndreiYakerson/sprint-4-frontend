@@ -20,24 +20,6 @@ export function TaskList({ tasks, groupId }) {
 
     //TODO must setTasks()
 
-    function handleDragEnd(result) {
-        const { destination, source } = result;
-
-        // If dropped outside a valid destination, do nothing
-        if (!destination) return;
-
-        // If the position hasn't changed, do nothing
-        if (destination.index === source.index) return;
-
-        // Reorder the tasks array
-        const reorderedTasks = Array.from(tasks);
-        const [movedTask] = reorderedTasks.splice(source.index, 1);
-        reorderedTasks.splice(destination.index, 0, movedTask);
-
-
-        setLocalTasks(reorderedTasks)
-        onUpdateTasksOrder(reorderedTasks, groupId)
-    }
 
     async function onUpdateTasksOrder(tasks, groupId) {
         try {
@@ -51,32 +33,20 @@ export function TaskList({ tasks, groupId }) {
     }
 
     return (
-        <DragDropContext onDragEnd={handleDragEnd}>
-            <Droppable droppableId="task-list">
 
+        <section className="task-list">
+            {localTasks.map((task, idx) => {
 
-                {(provided) => (
-                    <section className="task-list" {...provided.droppableProps} ref={provided.innerRef}>
-                        {localTasks.map((task, idx) => {
-
-                            return (
-                                <Draggable key={task.id} draggableId={task.id} index={idx}>
-                                    {(provided, snapshot) => (
-                                        <div className={`table-row ${snapshot.isDragging ? 'dragged' : ''} ${snapshot.isDraggingOver ? 'dragging-over' : ''}`} {...provided.draggableProps} ref={provided.innerRef}>
-                                            <TaskPreview
-                                                task={task}
-                                                groupId={groupId}
-                                                dragHandleProps={provided.dragHandleProps}
-                                            />
-                                        </div>
-                                    )}
-                                </Draggable>
-                            )
-                        })}
-                        {provided.placeholder}
-                    </section >
-                )}
-            </Droppable>
-        </DragDropContext>
+                return (
+                    <div className="table-row" key={task.id} >
+                        <TaskPreview
+                            task={task}
+                            groupId={groupId}
+                        />
+                    </div>
+                )
+            }
+            )}
+        </section >
     )
 }
