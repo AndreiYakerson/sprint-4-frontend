@@ -36,12 +36,15 @@ export function BoardPreview({ board, isSideBarDispaly, onUpdateBoard }) {
             </div>
 
             <div className='board-info-items'>
-                <HoveredTextCmp
+                {/* <HoveredTextCmp
                     position="up"
                     label="Dash Board"
                 >
                     <SvgIcon iconName="board" size={isSideBarDispaly ? 16 : 22} colorName={isSideBarDispaly ? "currentColor" : ''} />
-                </HoveredTextCmp>
+                </HoveredTextCmp> */}
+
+                <SvgIcon iconName="board" size={isSideBarDispaly ? 16 : 22} colorName={isSideBarDispaly ? "currentColor" : ''} />
+
 
                 <div className='board-title'>{board.title}</div>
 

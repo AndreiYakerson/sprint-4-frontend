@@ -6,7 +6,7 @@
 
     padding-top: 6px;
 
-    margin-left: var(--space-12);
+    margin-inline-start: var(--space-12);
     background-color: var(--primary-background-color);
     background: linear-gradient(135deg, var(--primary-background-color)5%, var(--surface-color)100%);
     box-shadow: inset -5px -20px 20px 0 var(--surface-color);
@@ -131,12 +131,12 @@
         position: sticky;
         top: 0;
         background: linear-gradient(135deg, var(--primary-background-color)5%, var(--surface-color)200%);
-        /* Not good, but there's a problem with the SVG right now, that's what it is. */
-        z-index: 10000;
         height: 38px;
 
         font-size: 12px;
         font-weight: 700;
+
+        z-index: 10;
 
         .favorites-tab {
             height: 30px;
@@ -160,7 +160,6 @@
         grid-template-rows: 0fr;
         overflow: hidden;
         transition: 200ms ease-in-out;
-        margin-block-end: 0.5em;
 
         &.open {
             grid-template-rows: 1fr;
@@ -203,10 +202,9 @@
     .boards-title-tab {
         position: sticky;
         top: 38px;
-        z-index: 10000;
         margin-block-end: 4px;
         gap: 4px;
-
+        z-index: 10;
         background: linear-gradient(135deg, var(--primary-background-color)5%, var(--surface-color)200%);
 
         .boards-title {
