@@ -11,7 +11,7 @@ import { showErrorMsg, showSuccessMsg } from '../services/event-bus.service'
 import { HoveredTextCmp } from './HoveredTextCmp.jsx'
 
 // images
-import headerLogo from '../../public/img/Logo.png'
+import headerLogo from '/img/logo.png'
 
 // icons
 import notification from '/icons/notification.svg'

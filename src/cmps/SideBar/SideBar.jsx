@@ -12,7 +12,7 @@ import { HoveredTextCmp } from "../HoveredTextCmp.jsx";
 import { SvgIcon } from "../SvgIcon.jsx";
 
 //images
-import favStarIcon from '../../../public/img/fav-star-icon.svg'
+import favStarIcon from '/img/fav-star-icon.svg'
 
 export function SideBar() {
 
