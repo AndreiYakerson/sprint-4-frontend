@@ -37,7 +37,6 @@ export function BoardPreview({ board, isSideBarDispaly, onUpdateBoard }) {
 
             <div className='board-info-items'>
                 <HoveredTextCmp
-                    size='big'
                     position="up"
                     label="Dash Board"
                 >
@@ -47,7 +46,8 @@ export function BoardPreview({ board, isSideBarDispaly, onUpdateBoard }) {
                 <div className='board-title'>{board.title}</div>
 
                 {isSideBarDispaly
-                    ? <button>
+                    ? <button className='dost-btn transparent' onClick={(ev) => ev.stopPropagation()}>
+                        <SvgIcon iconName="dots" size={16} colorName="currentColor" />
 
                     </button>
 
@@ -59,26 +59,6 @@ export function BoardPreview({ board, isSideBarDispaly, onUpdateBoard }) {
                     </button>
                 }
 
-
-
-                {/* <button className='white board-title-action' onClick={(ev) => { ev.stopPropagation(), toggleIsStarred() }} >
-
-                    {isSideBarDispaly
-                        ? <SvgIcon iconName="star" size={isSideBarDispaly ? 16 : 22} colorName={isSideBarDispaly ? "currentColor" : ''} />
-                        : <HoveredTextCmp
-                            size='big'
-                            position="up"
-                            label={isStarred ? 'logo' : ''}
-                        >
-
-                            <SvgIcon iconName={isStarred ? 'starFull' : 'star'}
-                                size={22}
-                                colorName={isStarred ? "starColor" : 'secondaryText'}
-                            />
-                        </HoveredTextCmp>
-                    }
-
-                </button> */}
 
             </div>
 

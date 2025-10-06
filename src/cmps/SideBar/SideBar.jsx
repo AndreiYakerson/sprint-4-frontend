@@ -11,46 +11,84 @@ import { BoardList } from "../Board/BoardList.jsx";
 import { HoveredTextCmp } from "../HoveredTextCmp.jsx";
 import { SvgIcon } from "../SvgIcon.jsx";
 
+//images
+import favStarIcon from '../../../public/img/fav-star-icon.svg'
 
 export function SideBar() {
 
     const isSideBarOpen = useSelector(state => state.systemModule.isSideBarOpen)
     const boards = useSelector(storeState => storeState.boardModule.boards)
+    const [isFavoritesTabOpen, setIsFavoritesTabOpen] = useState(false)
     const [anchorEl, setAnchorEl] = useState(null)
-
 
     useEffect(() => {
         loadBoards()
     }, [])
 
+    function toggleIsFavoritesTabOpen() {
+        setIsFavoritesTabOpen(!isFavoritesTabOpen)
+    }
+
+
+    const favoritesBoards = boards.filter(b => b.isStarred)
 
     return (
-        <div className={`side-bar ${isSideBarOpen}`}>
+        <div className={`side-bar ${isSideBarOpen ? "is-open" : "close"}`}
+            onClick={() => { !isSideBarOpen ? onSetIsSideBarOpen(true) : '' }}
+        >
+
             <button className={`icon close-btn ${isSideBarOpen}`} onClick={() => onSetIsSideBarOpen(!isSideBarOpen)}>
                 <HoveredTextCmp
                     label={isSideBarOpen ? 'Close Navigation' : 'Open Navigation'}
                     position={'down'}
                 >
-                    {/* <img src={isSideBarOpen ? chevronLeft : chevronRight} alt="" /> */}
                     <SvgIcon iconName={isSideBarOpen ? 'chevronLeft' : 'chevronRight'} size={16} />
                 </HoveredTextCmp>
             </button>
+
             <div className="side-bar-content">
+
                 <nav className="side-nav-list">
                     <NavLink to="/board" end><HoveredTextCmp><SvgIcon iconName="home" size={16} colorName="currentColor" /></HoveredTextCmp>Home</NavLink>
-                    {/* <NavLink to=""><HoveredTextCmp><SvgIcon iconName="myWork" size={16} colorName="currentColor" /></HoveredTextCmp>My Work</NavLink> */}
                 </nav>
-                {/* <div className="favorites flex">Favorites
-                    {
-                    isSideBarOpen ?  
-                      <HoveredTextCmp src={chevronRight} label="chevron Right" position="" />  
-                    : 
-                      <HoveredTextCmp src={chevronDown} label="chevron Down" position="" />  
-                    }
-                    </div> */}
 
-                <div>Boards</div>
-                <BoardList boards={boards} isSideBarDispaly={true} />
+                <div className="scrollable-content">
+
+                    <div className="favorites-tab-container">
+                        <div className="favorites-tab flex align-center"
+                            onClick={toggleIsFavoritesTabOpen}>
+                            <span>Favorites</span>
+                            <SvgIcon
+                                iconName={isFavoritesTabOpen ? 'chevronDown' : 'chevronRight'}
+                                size={12}
+                                colorName={'currentColor'}
+                            />
+                        </div>
+                    </div>
+                    <div className={`favorites-boards ${isFavoritesTabOpen ? "open" : ''}`}>
+                        {favoritesBoards?.length > 0
+                            ? <BoardList boards={favoritesBoards} isSideBarDispaly={true} />
+
+                            : <div>
+                                <div className="no-fav-board-msg">
+                                    <img src={favStarIcon} alt="fav star" className="fave-star-icon" />
+                                    <span className="m-t">No favorites yet</span>
+                                    <span className="m-p">Add your boards, docs, or dashboards for a quick access.</span>
+                                </div>
+                            </div>
+                        }
+                    </div>
+
+
+                    <div className="boards-title-tab flex align-center ">
+                        <span className="boards-title">Boards</span>
+                        <button className="blue square">
+                            <SvgIcon iconName="plus" size={20} colorName="whiteText" />
+                        </button>
+                    </div>
+
+                    <BoardList boards={boards} isSideBarDispaly={true} />
+                </div>
             </div>
         </div>
     )
