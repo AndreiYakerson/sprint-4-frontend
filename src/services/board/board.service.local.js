@@ -41,7 +41,7 @@ async function query(filterBy = { txt: '' }) {
     }
 
 
-    boards = boards.map(({ _id, title }) => ({ _id, title }))
+    boards = boards.map(({ _id, title, isStarred }) => ({ _id, title, isStarred }))
     return boards
 }
 
@@ -93,7 +93,6 @@ async function save(board) {
         const boardToSave = _setBaordToSave(board)
         return storageService.post(STORAGE_KEY, boardToSave)
     }
-
 }
 
 // group functions 
@@ -233,6 +232,7 @@ function _setBaordToSave({ title = 'New board', managingType = 'items', privacy 
         title,
         privacy,
         managingType,
+        isStarred: false,
         createdAt: Date.now(),
         groups: [
             {
@@ -240,7 +240,7 @@ function _setBaordToSave({ title = 'New board', managingType = 'items', privacy 
                 title: 'Group 1',
                 createdAt: Date.now(),
                 tasks: [
-                  
+
                     {
                         id: makeId(),
                         title: 'Item 1',

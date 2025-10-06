@@ -1,49 +1,70 @@
-import { Link } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+// cmps
 import { HoveredTextCmp } from '../HoveredTextCmp.jsx'
-// images
-import boardIcon from '/icons/board.svg'
-import dashboard from '/icons/dashboard.svg'
-import starFull from '/icons/star-full.svg'
-import star from '/icons/star.svg'
-import boardItemLogo from '/img/board-item-img.svg'
-import { useState } from 'react'
-import { LongTxt } from '../LongText/LongText.jsx'
 import { SvgIcon } from '../SvgIcon.jsx'
 
-export function BoardPreview({ board, isSideBarDispaly }) {
-    const [anchorEl, setAnchorEl] = useState(null)
+// images
+import boardItemLogo from '/img/board-item-img.svg'
 
-    //Demo Pre For Stared Logic
-    const isStarred = false
+export function BoardPreview({ board, isSideBarDispaly, onUpdateBoard }) {
+    // const [anchorEl, setAnchorEl] = useState(null)
+
+    const [isStarred, setIsStarred] = useState(board?.isStarred)
+
+
+
+    async function toggleIsStarred(isStarred) {
+        setIsStarred(isStarred)
+
+        try {
+            await onUpdateBoard(board, { isStarred: isStarred })
+        } catch (err) {
+            setIsStarred(board?.isStarred)
+        }
+
+    }
+
+
 
     return (
         <article className="board-preview">
-            <img
-                src={boardItemLogo}
-                alt="Board Image" className='board-img' />
-            <header>
-                <Link to={`/board/${board._id}`} className='board-title'>
-                    <div className='board-info-items flex'>
-                        <HoveredTextCmp
-                            size='big'
-                            position="up"
-                            label="Dash Board"
-                        >
-                            <SvgIcon iconName="board" size={isSideBarDispaly ? 16 : 22} colorName={isSideBarDispaly ? "currentColor" : ''} />
-                        </HoveredTextCmp>
-                        <span className='hover-show' data-type="Board Title"><LongTxt txt={board.title} /></span>
-                        <span >
-                            <HoveredTextCmp
-                                size='big'
-                                position="up"
-                                label={'logo'}
-                            >
-                                <SvgIcon iconName="star" size={isSideBarDispaly ? 16 : 22} colorName={isSideBarDispaly ? "currentColor" : ''} />
-                            </HoveredTextCmp>
-                        </span>
-                    </div>
-                </Link>
-            </header>
+
+            <div className='board-img-wrapper'>
+                <img
+                    src={boardItemLogo}
+                    alt="Board Image" className='board-img' />
+            </div>
+
+            <div className='board-info-items'>
+                {/* <HoveredTextCmp
+                    position="up"
+                    label="Dash Board"
+                >
+                    <SvgIcon iconName="board" size={isSideBarDispaly ? 16 : 22} colorName={isSideBarDispaly ? "currentColor" : ''} />
+                </HoveredTextCmp> */}
+
+                <SvgIcon iconName="board" size={isSideBarDispaly ? 16 : 22} colorName={isSideBarDispaly ? "currentColor" : ''} />
+
+
+                <div className='board-title'>{board.title}</div>
+
+                {isSideBarDispaly
+                    ? <button className='dost-btn transparent' onClick={(ev) => ev.stopPropagation()}>
+                        <SvgIcon iconName="dots" size={16} colorName="currentColor" />
+
+                    </button>
+
+                    : <button className='white square' onClick={(ev) => { ev.stopPropagation(), toggleIsStarred(!isStarred) }}>
+                        <SvgIcon iconName={isStarred ? 'starFull' : 'star'}
+                            size={22}
+                            colorName={isStarred ? "starColor" : 'secondaryText'}
+                        />
+                    </button>
+                }
+
+
+            </div>
+
         </article>)
 }
 

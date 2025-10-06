@@ -13,6 +13,20 @@ button {
 
 	transition: 0.3s ease-in-out;
 
+
+
+	&.square {
+		padding: 0.5em;
+	}
+
+	&.transparent {
+		background-color: transparent;
+		border: 0;
+		padding: 0.3em;
+		border-radius: 4px;
+		transition: none;
+	}
+
 	&.white {
 		border: 0;
 		transition: 0ms
@@ -60,6 +74,7 @@ button {
 			background-color: var(--primary-selected-color);
 		}
 	}
+
 
 	&.add-group {
 		position: sticky;

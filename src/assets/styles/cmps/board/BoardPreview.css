@@ -1,32 +1,61 @@
-.board-preview {
-    display: grid;
+.board-item {
+    position: relative;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 4px;
 
-    .board-info-items {
-        width: 100%;
-        display: grid;
-        grid-auto-flow: column;
-        grid-template-columns: auto 1fr 90px;
-        grid-template-areas:
-            "dashBoard txt star";
-        align-items: center;
-        padding: 16px 13px 9px 8px;
+    display: flex;
+    flex-direction: column;
+
+    padding: 8px;
+    margin-bottom: 10px;
+
+    border: 1px solid;
+    border-color: var(--layout-border-color);
+
+    height: max-content;
+
+    &:hover {
+        background-color: transparent;
+        box-shadow: var(--box-shadow-medium);
+        border-color: transparent;
     }
-}
+
+    .board-preview {
+
+        .board-img-wrapper {
+            display: flex;
+            margin-bottom: 8px;
+            background-color: #cbddff;
+            border-radius: 4px;
+            justify-content: center;
+            min-height: 102px;
+            overflow: hidden;
+            width: 100%;
+        }
+
+        .board-info-items {
+            font-weight: 700;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+
+            .svg-icon {
+                color: var(--secondary-text-color);
+            }
+
+            .board-title {
+                flex: 1;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                margin-inline-start: 4px;
+            }
 
 
-.board-preview .board-info-items>*:nth-child(1) {
-    grid-area: dashBoard;
-}
+        }
 
-.board-preview .board-info-items .long-txt {
-    grid-area: txt;
-    text-align: justify;
-    margin-inline: 6px;
-}
 
-.board-preview .board-info-items>*:nth-child(3) {
-    grid-area: star;
-    justify-self: end;
-    align-self: center;
-    margin: 0;
+    }
 }
