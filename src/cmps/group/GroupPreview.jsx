@@ -2,25 +2,17 @@
 
 
 
-export function GroupPreview({ provided, group, GroupTitleEditor, managingType, TaskList, TitleEditor, onUpdateGroup, onRemoveGroup, onAddTask, isDragging }) {
+export function GroupPreview({ group, GroupTitleEditor, managingType, TaskList, TitleEditor, onUpdateGroup, onRemoveGroup, onAddTask }) {
 
     const demoColumns = ["Status", "Priority", "Members", "Date"];
 
 
     return <div
         className="group-container"
-        {...provided.draggableProps}
-        ref={provided.innerRef}
-        style={{
-            ...provided.draggableProps.style,
-            ...group.style,
-            height: isDragging ? '50px' : 'auto', // Change height when dragging
-            transition: 'height 0.2s ease', // Smooth transition
-        }}
+        style={group.style}
     >
         <header
             className="group-header"
-            {...provided.dragHandleProps} // Make the header the drag handle
         >
             <div className="group-title-row">
                 <div className="group-menu-wrapper">

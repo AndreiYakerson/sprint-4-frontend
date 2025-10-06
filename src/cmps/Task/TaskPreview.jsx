@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { Fragment, useState } from "react"
 import { useParams, Link, useNavigate } from "react-router-dom"
 
 // services
@@ -23,14 +23,26 @@ import { useSelector } from "react-redux"
 import { MemberSelectedPreview } from "../TaskCmps/MembersCmp/MemberSelectedPreview.jsx"
 import { DatePicker } from "../TaskCmps/DateCmp/DatePicker.jsx"
 import { PriorityPreview } from "../TaskCmps/PriorityCmp/PriorityPreview.jsx"
-import { SvgIcon } from "../SvgIcon.jsx"
+import { useSortable } from "@dnd-kit/sortable"
+import { CSS } from "@dnd-kit/utilities"
+import { DragOverlay } from "@dnd-kit/core"
 
-export function TaskPreview({ task, groupId, dragHandleProps }) {
+
+
+
+export function TaskPreview({ task, groupId }) {
     const navigate = useNavigate()
     const isFloatingOpen = useSelector(state => state.systemModule.isFloatingOpen)
 
     const [membersSelectEl, setMembersSelectEl] = useState(null)
     const [memberEl, setMemberEl] = useState(null)
+
+    const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id: task.id })
+
+    const style = {
+        transition: transition,
+        transform: CSS.Transform.toString(transform),
+    }
 
     const { boardId, taskId } = useParams()
 
@@ -104,42 +116,39 @@ export function TaskPreview({ task, groupId, dragHandleProps }) {
 
 
     return (
-        <>
-            <div className="sticky-cell-wrapper">
-                <div className="task-menu-wrapper">
-                    <button onClick={onRemoveTask}>
-                        <SvgIcon
-                            iconName="trash"
-                            size={20}
-                            colorName={'primaryText'}
-                        />
-                    </button>
-                </div>
-                <div className="table-border"></div>
-                <div className="task-select"></div>
-                <div className="task-title flex align-center" {...dragHandleProps}>
-                    <TitleEditor info={cmps.find(cmp => cmp.type === 'TitleEditor')?.info} onUpdate={(data) => {
-                        updateCmpInfo(cmps.find(cmp => cmp.type === 'TitleEditor'),
-                            'currTitle', data, `Changed title to ${data}`)
+        <div className={`task-preview ${isDragging ? 'dragged' : ''}`} ref={setNodeRef} style={style} {...attributes}>
 
-                    }} />
+            {isDragging ? <div className="dragged"></div> :
 
-                    <div className="grab-block"></div>
-
-                    <div onClick={onToggleTaskDetails} className={`task-updates-cell ${task.id === taskId ? "focus" : ""}`}>
-                        <SvgIcon
-                            iconName="bubblePlus"
-                            size={20}
-                            colorName={'primaryText'}
-                        />
+                <div className="sticky-cell-wrapper" >
+                    <div className="task-menu-wrapper">
+                        <button onClick={onRemoveTask}>X</button>
                     </div>
 
-                    {/* {task.title}
+                    <div className="table-border"></div>
+                    <div className="task-select"></div>
+                    <div className="task-title flex align-center">
+                        <TitleEditor info={cmps.find(cmp => cmp.type === 'TitleEditor')?.info} onUpdate={(data) => {
+                            updateCmpInfo(cmps.find(cmp => cmp.type === 'TitleEditor'),
+                                'currTitle', data, `Changed title to ${data}`)
+
+                        }} />
+
+                        <div className="grab-block" {...listeners}></div>
+
+                        <div onClick={onToggleTaskDetails} className={`task-updates-cell ${task.id === taskId ? "focus" : ""}`}>
+                            <img src={updateIcon} alt="update" className="icon big" />
+                        </div>
+
+                        {/* {task.title}
                     <Link to={taskId && taskId === task?.id ? `/board/${boardId}` : `/board/${boardId}/task/${task.id}`}
-                        className="btn">details</Link>
+                    className="btn">details</Link>
                     <button onClick={() => onUpdateTask()}>update</button> */}
-                </div>
-            </div >
+                    </div>
+
+                </div >
+            }
+
 
 
             <div className="task-columns flex">
@@ -182,7 +191,7 @@ export function TaskPreview({ task, groupId, dragHandleProps }) {
                 }
                 <div className="column-cell full"></div>
             </div >
-        </>
+        </div>
     )
 }
 

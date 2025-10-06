@@ -1,7 +1,6 @@
-import { useEffect } from "react"
+import { useEffect, useRef } from "react"
 import { useState } from "react"
 import { useParams } from "react-router"
-import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd"
 
 // services
 import { updateTasksOrder } from "../../store/actions/board.actions.js"
@@ -10,33 +9,66 @@ import { showErrorMsg, showSuccessMsg } from "../../services/event-bus.service.j
 // cmps
 import { TaskPreview } from "../Task/TaskPreview"
 
+// dnd
+import { closestCorners, DndContext, DragOverlay } from "@dnd-kit/core"
+import { arrayMove, SortableContext, verticalListSortingStrategy } from "@dnd-kit/sortable"
+
+
+
+
 export function TaskList({ tasks, groupId }) {
     const { boardId } = useParams()
 
     const [localTasks, setLocalTasks] = useState(tasks)
+    const [placeholderIndex, setPlaceholderIndex] = useState(null);
+    const [activeId, setActiveId] = useState(null);
+
+
     useEffect(() => {
         setLocalTasks(tasks)
     }, [tasks])
 
-    //TODO must setTasks()
 
-    function handleDragEnd(result) {
-        const { destination, source } = result;
-
-        // If dropped outside a valid destination, do nothing
-        if (!destination) return;
-
-        // If the position hasn't changed, do nothing
-        if (destination.index === source.index) return;
-
-        // Reorder the tasks array
-        const reorderedTasks = Array.from(tasks);
-        const [movedTask] = reorderedTasks.splice(source.index, 1);
-        reorderedTasks.splice(destination.index, 0, movedTask);
+    const previousOverId = useRef(null);
 
 
-        setLocalTasks(reorderedTasks)
+    function onDragOver(event) {
+        const { active, over } = event;
+
+        if (!over) {
+            setPlaceholderIndex(null);
+            return;
+        }
+
+        const overIndex = localTasks.findIndex((task) => task.id === over.id);
+
+        if (overIndex !== placeholderIndex) {
+            setPlaceholderIndex(overIndex);
+        }
+    }
+
+
+    function onDragStart(event) {
+        const { active } = event;
+        setActiveId(active.id);
+    }
+
+
+    function onDragEnd(event) {
+        const { active, over } = event;
+
+        if (!over || active.id === over.id) {
+            setPlaceholderIndex(null);
+            return;
+        }
+
+        const oldIndex = localTasks.findIndex((task) => task.id === active.id);
+        const newIndex = localTasks.findIndex((task) => task.id === over.id);
+
+        const reorderedTasks = arrayMove(localTasks, oldIndex, newIndex);
+        setLocalTasks(reorderedTasks);
         onUpdateTasksOrder(reorderedTasks, groupId)
+        setPlaceholderIndex(null); // 
     }
 
     async function onUpdateTasksOrder(tasks, groupId) {
@@ -51,32 +83,50 @@ export function TaskList({ tasks, groupId }) {
     }
 
     return (
-        <DragDropContext onDragEnd={handleDragEnd}>
-            <Droppable droppableId="task-list">
+
+        <DndContext
+            collisionDetection={closestCorners}
+            onDragStart={onDragStart}
+            onDragOver={onDragOver}
+            onDragEnd={onDragEnd}
+        >
 
 
-                {(provided) => (
-                    <section className="task-list" {...provided.droppableProps} ref={provided.innerRef}>
-                        {localTasks.map((task, idx) => {
+            <section className="task-list">
 
-                            return (
-                                <Draggable key={task.id} draggableId={task.id} index={idx}>
-                                    {(provided, snapshot) => (
-                                        <div className={`table-row ${snapshot.isDragging ? 'dragged' : ''} ${snapshot.isDraggingOver ? 'dragging-over' : ''}`} {...provided.draggableProps} ref={provided.innerRef}>
-                                            <TaskPreview
-                                                task={task}
-                                                groupId={groupId}
-                                                dragHandleProps={provided.dragHandleProps}
-                                            />
-                                        </div>
-                                    )}
-                                </Draggable>
-                            )
-                        })}
-                        {provided.placeholder}
-                    </section >
-                )}
-            </Droppable>
-        </DragDropContext>
+                <SortableContext items={localTasks} strategy={verticalListSortingStrategy} >
+                    {localTasks.map((task, idx) => {
+
+                        return (
+
+
+                            <div
+                                className="table-row"
+                                key={task.id}
+                            >
+
+                                <TaskPreview
+                                    task={task}
+                                    groupId={groupId}
+                                />
+                            </div>
+
+
+                        )
+                    })}
+
+                </SortableContext>
+
+            </section >
+
+            <DragOverlay>
+                {activeId ? (
+                    <div className="drag-overlay">
+                        <TaskPreview task={localTasks.find((task) => task.id === activeId)} groupId={groupId} />
+                    </div>
+                ) : null}
+            </DragOverlay>
+
+        </DndContext >
     )
 }

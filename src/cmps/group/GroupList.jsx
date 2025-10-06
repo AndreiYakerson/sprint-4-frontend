@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
 import { useState, useEffect } from "react";
-import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+
 
 // import { useState } from "react"
 // import { ConfirmCmp } from "./ConfirmCmp"
@@ -17,6 +17,8 @@ import { TitleEditor } from "../Task/TitleEditor";
 import { GroupTitleEditor } from "./GroupTitleEditor";
 import { GroupPreview } from "./GroupPreview";
 import { GroupCollapsed } from "./GroupCollapsed";
+import { DndContext } from "@dnd-kit/core";
+import { SortableContext, verticalListSortingStrategy } from "@dnd-kit/sortable";
 
 
 export function GroupList({ groups, managingType }) {
@@ -24,36 +26,12 @@ export function GroupList({ groups, managingType }) {
 
     const [localGroups, setLocalGroups] = useState(groups)
     const [isDragging, setIsDragging] = useState(false)
-    console.log('isDragging', isDragging)
 
 
     useEffect(() => {
         setLocalGroups(groups)
     }, [groups])
 
-
-    // Handle drag-and-drop events
-    function handleDragEnd(result) {
-        const { destination, source } = result;
-
-        setIsDragging(false)
-
-        // If dropped outside a valid destination, do nothing
-        if (!destination) return;
-
-        // If the position hasn't changed, do nothing
-        if (destination.index === source.index) return;
-
-        // Reorder the groups array
-        const reorderedGroups = Array.from(groups);
-        const [movedGroup] = reorderedGroups.splice(source.index, 1);
-        reorderedGroups.splice(destination.index, 0, movedGroup);
-
-        // Update the state with the reordered groups
-        setLocalGroups(reorderedGroups);
-
-        updateGroupsOrder(reorderedGroups, boardId)
-    }
 
     async function onUpdateGroup(group, newVals) {
         const groupToUpdate = { ...structuredClone(group), ...newVals }
@@ -91,54 +69,33 @@ export function GroupList({ groups, managingType }) {
 
 
     return (
-        <DragDropContext
-            onDragEnd={handleDragEnd}
-        >
-            <Droppable droppableId="group-list">
-                {(provided) => (
-                    <section
-                        className={`group-list ${isDragging ? 'collapsed' : ''}`}
-                        {...provided.droppableProps}
-                        ref={provided.innerRef}
 
-                    >
-                        {localGroups.map((group, idx) => (
-                            <Draggable key={group.id} draggableId={group.id} index={idx}>
-                                {(provided, snapshot) => {
-                                    useEffect(() => {
-                                        if (snapshot.isDragging) {
-                                            setIsDragging(true);
-                                        } else {
-                                            setIsDragging(false);
-                                        }
-                                    }, [snapshot.isDragging]);
+        <DndContext>
 
-                                        return !isDragging ? <GroupPreview
-                                            group={group}
-                                            provided={provided}
-                                            GroupTitleEditor={GroupTitleEditor}
-                                            managingType={managingType}
-                                            TaskList={TaskList}
-                                            TitleEditor={TitleEditor}
-                                            onUpdateGroup={onUpdateGroup}
-                                            onRemoveGroup={onRemoveGroup}
-                                            onAddTask={onAddTask}
-                                            isDragging={snapshot.isDragging}
-                                        /> : <GroupCollapsed
-                                            group={group}
-                                            provided={provided}
-                                            snapshot={snapshot}
-                                            isDragging={snapshot.isDragging}
-                                        />
-                                }
+            <section
+                className="group-list"
+            >
 
-                                }
-                            </Draggable>
-                        ))}
-                        {provided.placeholder}
-                    </section>
-                )}
-            </Droppable>
-        </DragDropContext>
-    );
+                <SortableContext items={localGroups} strategy={verticalListSortingStrategy} >
+                    {localGroups.map((group, idx) => (
+
+                        <GroupPreview
+                            key={group.id}
+                            group={group}
+                            GroupTitleEditor={GroupTitleEditor}
+                            managingType={managingType}
+                            TaskList={TaskList}
+                            TitleEditor={TitleEditor}
+                            onUpdateGroup={onUpdateGroup}
+                            onRemoveGroup={onRemoveGroup}
+                            onAddTask={onAddTask}
+                        />
+
+                    ))}
+                </SortableContext>
+            </section>
+
+        </DndContext>
+    )
 }
+
