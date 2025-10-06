@@ -11,7 +11,7 @@
     background: linear-gradient(135deg, var(--primary-background-color)5%, var(--surface-color)100%);
     box-shadow: inset -5px -20px 20px 0 var(--surface-color);
 
-    width: 277px;
+    width: 255px;
     height: 100%;
 
     border-radius: 10px 0 0 0;
