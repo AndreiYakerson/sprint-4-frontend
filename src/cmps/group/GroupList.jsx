@@ -17,6 +17,8 @@ import { TitleEditor } from "../Task/TitleEditor";
 import { GroupTitleEditor } from "./GroupTitleEditor";
 import { GroupPreview } from "./GroupPreview";
 import { GroupCollapsed } from "./GroupCollapsed";
+import { DndContext } from "@dnd-kit/core";
+import { SortableContext, verticalListSortingStrategy } from "@dnd-kit/sortable";
 
 
 export function GroupList({ groups, managingType }) {
@@ -68,27 +70,32 @@ export function GroupList({ groups, managingType }) {
 
     return (
 
+        <DndContext>
 
+            <section
+                className="group-list"
+            >
 
-        <section
-            className="group-list"
-        >
-            {localGroups.map((group, idx) => (
+                <SortableContext items={localGroups} strategy={verticalListSortingStrategy} >
+                    {localGroups.map((group, idx) => (
 
-                <GroupPreview
-                key={group.id}
-                    group={group}
-                    GroupTitleEditor={GroupTitleEditor}
-                    managingType={managingType}
-                    TaskList={TaskList}
-                    TitleEditor={TitleEditor}
-                    onUpdateGroup={onUpdateGroup}
-                    onRemoveGroup={onRemoveGroup}
-                    onAddTask={onAddTask}
-                />
+                        <GroupPreview
+                            key={group.id}
+                            group={group}
+                            GroupTitleEditor={GroupTitleEditor}
+                            managingType={managingType}
+                            TaskList={TaskList}
+                            TitleEditor={TitleEditor}
+                            onUpdateGroup={onUpdateGroup}
+                            onRemoveGroup={onRemoveGroup}
+                            onAddTask={onAddTask}
+                        />
 
-            ))}
-        </section>
+                    ))}
+                </SortableContext>
+            </section>
+
+        </DndContext>
     )
 }
 

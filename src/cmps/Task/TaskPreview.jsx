@@ -31,7 +31,7 @@ import { DragOverlay } from "@dnd-kit/core"
 
 
 
-export function TaskPreview({ task, groupId, activeId }) {
+export function TaskPreview({ task, groupId }) {
     const navigate = useNavigate()
     const isFloatingOpen = useSelector(state => state.systemModule.isFloatingOpen)
 
@@ -43,9 +43,7 @@ export function TaskPreview({ task, groupId, activeId }) {
     const style = {
         transition: transition,
         transform: CSS.Transform.toString(transform),
-        zIndex: isDragging ? 10 : 1, // Higher z-index for the dragged item
     }
-    console.log('Transform:', transform);
 
     const { boardId, taskId } = useParams()
 
@@ -120,31 +118,37 @@ export function TaskPreview({ task, groupId, activeId }) {
 
     return (
         <div className={`task-preview ${isDragging ? 'dragged' : ''}`} ref={setNodeRef} style={style} {...attributes}>
-            <div className="sticky-cell-wrapper" >
-                <div className="task-menu-wrapper">
-                    <button onClick={onRemoveTask}>X</button>
-                </div>
-                <div className="table-border"></div>
-                <div className="task-select"></div>
-                <div className="task-title flex align-center">
-                    <TitleEditor info={cmps.find(cmp => cmp.type === 'TitleEditor')?.info} onUpdate={(data) => {
-                        updateCmpInfo(cmps.find(cmp => cmp.type === 'TitleEditor'),
-                            'currTitle', data, `Changed title to ${data}`)
 
-                    }} />
+            {isDragging ? <div className="dragged"></div> :
 
-                    <div className="grab-block" {...listeners}></div>
-
-                    <div onClick={onToggleTaskDetails} className={`task-updates-cell ${task.id === taskId ? "focus" : ""}`}>
-                        <img src={updateIcon} alt="update" className="icon big" />
+                <div className="sticky-cell-wrapper" >
+                    <div className="task-menu-wrapper">
+                        <button onClick={onRemoveTask}>X</button>
                     </div>
 
-                    {/* {task.title}
+                    <div className="table-border"></div>
+                    <div className="task-select"></div>
+                    <div className="task-title flex align-center">
+                        <TitleEditor info={cmps.find(cmp => cmp.type === 'TitleEditor')?.info} onUpdate={(data) => {
+                            updateCmpInfo(cmps.find(cmp => cmp.type === 'TitleEditor'),
+                                'currTitle', data, `Changed title to ${data}`)
+
+                        }} />
+
+                        <div className="grab-block" {...listeners}></div>
+
+                        <div onClick={onToggleTaskDetails} className={`task-updates-cell ${task.id === taskId ? "focus" : ""}`}>
+                            <img src={updateIcon} alt="update" className="icon big" />
+                        </div>
+
+                        {/* {task.title}
                     <Link to={taskId && taskId === task?.id ? `/board/${boardId}` : `/board/${boardId}/task/${task.id}`}
-                        className="btn">details</Link>
+                    className="btn">details</Link>
                     <button onClick={() => onUpdateTask()}>update</button> */}
-                </div>
-            </div >
+                    </div>
+
+                </div >
+            }
 
 
 
