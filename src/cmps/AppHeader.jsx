@@ -9,6 +9,7 @@ import { showErrorMsg, showSuccessMsg } from '../services/event-bus.service'
 
 // cmps
 import { HoveredTextCmp } from './HoveredTextCmp.jsx'
+import { SvgIcon } from './SvgIcon.jsx'
 
 // images
 import headerLogo from '/img/logo.png'
@@ -18,6 +19,8 @@ import notification from '/icons/notification.svg'
 import { useDispatch } from 'react-redux'
 import { userService } from '../services/user/user.service.local.js'
 import { SET_USERS } from '../store/reducers/user.reducer.js'
+
+
 
 export function AppHeader() {
 	const user = useSelector(storeState => storeState.userModule.user)
@@ -58,7 +61,11 @@ export function AppHeader() {
 						position="down"
 						onClick={(ev) => setAnchorEl(ev.currentTarget)}
 					>
-						<img src={notification} />
+						<SvgIcon
+							iconName="bell"
+							size={20}
+							colorName={'primaryText'}
+						/>
 					</HoveredTextCmp>
 
 				</div>

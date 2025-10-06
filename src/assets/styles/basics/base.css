@@ -80,3 +80,14 @@ object {
 .test {
     background-color: yellow;
 }
+
+
+.svg-icon {
+
+    &.plus-blue {
+        place-self: center;
+        background-color: var(--primary-color);
+        border-radius: 50%;
+        stroke-width: 10;
+    }
+}

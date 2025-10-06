@@ -23,6 +23,7 @@ import { useSelector } from "react-redux"
 import { MemberSelectedPreview } from "../TaskCmps/MembersCmp/MemberSelectedPreview.jsx"
 import { DatePicker } from "../TaskCmps/DateCmp/DatePicker.jsx"
 import { PriorityPreview } from "../TaskCmps/PriorityCmp/PriorityPreview.jsx"
+import { SvgIcon } from "../SvgIcon.jsx"
 
 export function TaskPreview({ task, groupId, dragHandleProps }) {
     const navigate = useNavigate()
@@ -106,7 +107,13 @@ export function TaskPreview({ task, groupId, dragHandleProps }) {
         <>
             <div className="sticky-cell-wrapper">
                 <div className="task-menu-wrapper">
-                    <button onClick={onRemoveTask}>X</button>
+                    <button onClick={onRemoveTask}>
+                        <SvgIcon
+                            iconName="trash"
+                            size={20}
+                            colorName={'primaryText'}
+                        />
+                    </button>
                 </div>
                 <div className="table-border"></div>
                 <div className="task-select"></div>
@@ -120,7 +127,11 @@ export function TaskPreview({ task, groupId, dragHandleProps }) {
                     <div className="grab-block"></div>
 
                     <div onClick={onToggleTaskDetails} className={`task-updates-cell ${task.id === taskId ? "focus" : ""}`}>
-                        <img src={updateIcon} alt="update" className="icon big" />
+                        <SvgIcon
+                            iconName="bubblePlus"
+                            size={20}
+                            colorName={'primaryText'}
+                        />
                     </div>
 
                     {/* {task.title}
@@ -133,13 +144,13 @@ export function TaskPreview({ task, groupId, dragHandleProps }) {
 
             <div className="task-columns flex">
                 {cmpsOrder.map((colName, idx) => {
-                    
-                        if (colName === 'PriorityPicker') {
-                            return <div style={{ cursor: 'pointer' }} key={colName} className={`column-cell ${colName}`}>
-                                <PriorityPreview />
-                            </div>
-                        }
-                    
+
+                    if (colName === 'PriorityPicker') {
+                        return <div style={{ cursor: 'pointer' }} key={colName} className={`column-cell ${colName}`}>
+                            <PriorityPreview />
+                        </div>
+                    }
+
                     if (colName === 'MemberPicker') {
                         return <div onClick={(ev) => setMembersSelectEl(ev.currentTarget)} style={{ cursor: 'pointer' }} key={colName} className={`column-cell ${colName}`}>
                             <MemberSelectedPreview task={task} />

@@ -2,12 +2,12 @@
     display: flex;
     place-content: center;
 
-    .plus {
+    .plus-blue {
         opacity: 0;
         margin-inline-start: -8.px
     }
 
-    &:hover .plus {
+    &:hover .plus-blue {
         opacity: 1;
     }
 
@@ -22,7 +22,8 @@
 
     .user-img {
         display: block;
-        width: 35px;
+        width: 27px;
+        aspect-ratio: 1/1;
         border-radius: var(--border-radius-big);
     }
 }

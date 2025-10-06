@@ -1,9 +1,11 @@
-import plus from "/icons/plus.svg"
-import person from "/icons/person.svg"
+
+import personGray from "../../../../public/img/gray-avatar.svg"
+
 import { FloatingContainerCmp } from "../../FloatingContainerCmp"
 import { MemberInfo } from "./MemberInfo"
 import { useState } from "react"
 import { useSelector } from "react-redux"
+import { SvgIcon } from "../../SvgIcon"
 
 export function MemberSelectedPreview({ task }) {
     const [memberEl, setMemberEl] = useState(null)
@@ -25,7 +27,15 @@ export function MemberSelectedPreview({ task }) {
 
     return (
         <article className="member-selected-preview">
-            {!task.addedMembers?.length && <img src={plus} className="icon big plus" alt="plus icon" />}
+            {!task.addedMembers?.length &&
+
+                <SvgIcon
+                    iconName="plus"
+                    className='plus-blue'
+                    size={15}
+                    colorName={'whiteText'}
+                />
+            }
 
             <div className="cmp-img"
             >
@@ -45,14 +55,12 @@ export function MemberSelectedPreview({ task }) {
                             />
                         </div>
                     })
-                    :
-                    <span className="user-img">
-                        <img
-                            src={person}
-                            className="user-img "
-                            alt="person icon"
-                        />
-                    </span>
+                    : <img
+                        src={personGray}
+                        className="user-img"
+                        alt="person icon"
+                    />
+
                 }
 
                 {memberEl && < FloatingContainerCmp
