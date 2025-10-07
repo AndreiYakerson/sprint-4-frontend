@@ -1,27 +1,30 @@
+import { useSortable } from "@dnd-kit/sortable"
+import { CSS } from "@dnd-kit/utilities"
 
-export function GroupCollapsed({ provided, group, snapshot, isDragging }) {
+export function GroupCollapsed({ group, groupsLength }) {
+
+    const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id: group.id, disabled: groupsLength < 2 })
+
+    const style = {
+        transition: transition,
+        transform: CSS.Transform.toString(transform),
+    }
 
     return <div
         className="group-collapsed"
-        {...provided.draggableProps}
-        ref={provided.innerRef}
+        ref={setNodeRef}
+        {...attributes}
         style={{
-            ...provided.draggableProps.style,
+            ...style,
             ...group.style,
-            height: '70px',
-            // marginBottom: '10px', 
-            overflow: 'hidden',
-            backgroundColor: snapshot.isDragging ? '#e0e0e0' : '#f9f9f9', // Optional: Change background color while dragging
-            border: '1px solid #ddd',
-            borderRadius: '4px',
-
+            opacity: isDragging ? 0.5 : 1,
+            zIndex: isDragging ? 10 : 'auto',
         }}
     >
-        <header
-            className="group-header"
-            {...provided.dragHandleProps}
-        >
-            <h1>{group.title}</h1>
-        </header>
+        <div className="group-collapsed-content">
+            {/* <div className="fold-icon">{'>'}</div> */}
+            <div className="group-title">{group.title}</div>
+            <div>{!group.tasks.length ? 'No' : group.tasks.length} Tasks</div>
+        </div>
     </div>
 }
