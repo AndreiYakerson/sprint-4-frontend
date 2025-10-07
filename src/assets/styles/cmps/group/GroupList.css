@@ -20,7 +20,8 @@
     &.collapsed {
         grid-template-columns: 1fr;
         gap: 20px;
-        margin-inline-end: 20px;
+        margin-inline-start: 36px;
+        margin-block-end: 25px;
     }
 
 

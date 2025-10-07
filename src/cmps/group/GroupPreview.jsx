@@ -24,7 +24,7 @@ export function GroupPreview({ group, groupsLength, GroupTitleEditor, managingTy
             ...style,
             ...group.style,
             opacity: isDragging ? 0.5 : 1,
-            zIndex: isDragging ? 10 : 'auto',
+            // zIndex: isDragging ? 10 : 'auto',
         }}
     >
         <header

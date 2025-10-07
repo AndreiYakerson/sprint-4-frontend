@@ -10,15 +10,9 @@
     grid-column: 1/-1;
 
 
-    &.dragged {
-        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-        border: dashed rgb(180, 163, 163) 1px;
-        border-radius: .5em;
-        z-index: 10;
-    }
 }
 
-.drag-overlay {
+/* .drag-overlay {
 
     display: grid;
     grid-template-columns: 434px 1fr;
@@ -31,4 +25,4 @@
     opacity: .5;
     background-color: rgba(173, 216, 230, 0.699);
     
-}
+} */

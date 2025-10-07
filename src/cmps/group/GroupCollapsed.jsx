@@ -17,8 +17,9 @@ export function GroupCollapsed({ group, groupsLength }) {
         style={{
             ...style,
             ...group.style,
-            opacity: isDragging ? 0.5 : 1,
+            opacity: isDragging ? 0.7 : 1,
             zIndex: isDragging ? 10 : 'auto',
+            translate: '20px'
         }}
     >
         <div className="group-collapsed-content">

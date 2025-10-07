@@ -42,12 +42,7 @@ export function TaskPreview({ task, groupId, tasksLength }) {
     const [membersSelectEl, setMembersSelectEl] = useState(null)
     const [memberEl, setMemberEl] = useState(null)
 
-    const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id: task.id, disabled: tasksLength < 2 })
 
-    const style = {
-        transition: transition,
-        transform: CSS.Transform.toString(transform),
-    }
     const { boardId, taskId } = useParams()
 
     const [cmps, setCmps] = useState(
@@ -199,42 +194,41 @@ export function TaskPreview({ task, groupId, tasksLength }) {
 
 
     return (
-        <div className={`task-preview ${isDragging ? 'dragged' : ''}`} ref={setNodeRef} style={style} {...attributes}>
+        <div className="task-preview">
 
-            {isDragging ? <div className="dragged"></div> :
 
-                <div className="sticky-cell-wrapper" >
-                    <div className="task-menu-wrapper">
-                        <button onClick={onRemoveTask} className="white">
-                            <SvgIcon
-                                iconName="trash"
-                                size={20}
-                                colorName={'primaryText'}
-                            /></button>
+            <div className="sticky-cell-wrapper" >
+                <div className="task-menu-wrapper">
+                    <button onClick={onRemoveTask} className="white">
+                        <SvgIcon
+                            iconName="trash"
+                            size={20}
+                            colorName={'primaryText'}
+                        /></button>
+                </div>
+
+                <div className="table-border"></div>
+                <div className="task-select"></div>
+                <div className="task-title flex align-center">
+                    <TitleEditor info={cmps.find(cmp => cmp.type === 'TitleEditor')?.info} onUpdate={(data) => {
+                        updateCmpInfo(cmps.find(cmp => cmp.type === 'TitleEditor'),
+                            'currTitle', data, `Changed title to ${data}`)
+
+                    }} />
+
+                    <div className="grab-block"></div>
+
+                    <div onClick={onToggleTaskDetails} className={`task-updates-cell ${task.id === taskId ? "focus" : ""}`}>
+                        <SvgIcon
+                            iconName="bubblePlus"
+                            size={20}
+                            colorName={'primaryText'}
+                        />
                     </div>
+                </div>
 
-                    <div className="table-border"></div>
-                    <div className="task-select"></div>
-                    <div className="task-title flex align-center">
-                        <TitleEditor info={cmps.find(cmp => cmp.type === 'TitleEditor')?.info} onUpdate={(data) => {
-                            updateCmpInfo(cmps.find(cmp => cmp.type === 'TitleEditor'),
-                                'currTitle', data, `Changed title to ${data}`)
+            </div >
 
-                        }} />
-
-                        <div className="grab-block" {...listeners}></div>
-
-                        <div onClick={onToggleTaskDetails} className={`task-updates-cell ${task.id === taskId ? "focus" : ""}`}>
-                            <SvgIcon
-                                iconName="bubblePlus"
-                                size={20}
-                                colorName={'primaryText'}
-                            />
-                        </div>
-                    </div>
-
-                </div >
-            }
 
 
             <div className="task-columns flex">
