@@ -247,6 +247,29 @@ const DefaultPriorities = [
     },
 ]
 
+const DefaultStatuses = [
+    {
+        id: makeId(),
+        txt: 'Done'
+        , cssVar: '--group-title-clr4'
+    },
+    {
+        id: makeId(),
+        txt: 'Working on it'
+        , cssVar: '--group-title-clr1'
+    },
+    {
+        id: makeId(),
+        txt: 'Stuck'
+        , cssVar: '--group-title-clr3'
+    },
+    {
+        id: 'default',
+        txt: 'Not Started'
+        , cssVar: '--group-title-clr2'
+    },
+]
+
 
 
 function _setBaordToSave({ title = 'New board', managingType = 'items', privacy = 'main' }) {
@@ -258,6 +281,7 @@ function _setBaordToSave({ title = 'New board', managingType = 'items', privacy 
         isStarred: false,
         createdAt: Date.now(),
         priorities: DefaultPriorities,
+        statuses: DefaultStatuses,
         // Demo Members
         members: userService.createDemoUsers(5),
         groups: [
@@ -272,7 +296,8 @@ function _setBaordToSave({ title = 'New board', managingType = 'items', privacy 
                         title: 'Item 1',
                         createdAt: Date.now(),
                         memberIds: [],
-                        priority: { txt: 'Default Label', cssVar: '--group-title-clr18', id: makeId() }
+                        priority: { txt: 'Default Label', cssVar: '--group-title-clr18', id: makeId() },
+                        
                     },
                     {
                         id: makeId(),

@@ -17,6 +17,7 @@ import { TitleEditor } from "./TitleEditor"
 // icon
 import updateIcon from "/icons/update.svg"
 import { MemberPicker } from "../TaskCmps/MembersCmp/MemberPicker.jsx"
+import { StatusPicker } from "../TaskCmps/StatusPicker.jsx"
 
 
 
@@ -43,20 +44,12 @@ export function TaskPreview({ task, groupId, tasksLength }) {
     const [cmps, setCmps] = useState(
         [
             {
-                type: 'TitleEditor',
+                type: 'StatusPicker',
                 info: {
-                    taskId: task?.id,
-                    label: 'Title:',
-                    propName: 'title',
-                    currTitle: task?.title,
-                }
-            },
-            {
-                type: 'DatePicker',
-                info: {
-                    label: 'Due date:',
-                    propName: 'dueDate',
-                    selectedDate: task?.dueDate,
+                    label: 'Status:',
+                    propName: 'status',
+                    selectedStatus: task.status,
+                    statuses: board.statuses,
                 }
             },
             {
@@ -68,15 +61,6 @@ export function TaskPreview({ task, groupId, tasksLength }) {
                     members: board.members,
                 }
             },
-            // {
-            //     type: 'StatusPicker',
-            //     info: {
-            //         label: 'Status:',
-            //         propName: 'status',
-            //         selectedMemberIds: task.status,
-            //         statuses: _getStatuses(),
-            //     }
-            // },
             {
                 type: 'PriorityPicker',
                 info: {
@@ -86,27 +70,39 @@ export function TaskPreview({ task, groupId, tasksLength }) {
                     boardPriorities: board.priorities,
                     boardId: board._id
                 }
+            },
+            {
+                type: 'DatePicker',
+                info: {
+                    label: 'Due date:',
+                    propName: 'dueDate',
+                    selectedDate: task?.dueDate,
+                }
+            },
+            {
+                type: 'TitleEditor',
+                info: {
+                    taskId: task?.id,
+                    label: 'Title:',
+                    propName: 'title',
+                    currTitle: task?.title,
+                }
+
             },
         ]
     )
     //QUESTION  Updates the view on change to task and board
+    // אני חושש שזה גורם לרינדור מיותר 
     useEffect(() => {
         setCmps([
+
             {
-                type: 'TitleEditor',
+                type: 'StatusPicker',
                 info: {
-                    taskId: task?.id,
-                    label: 'Title:',
-                    propName: 'title',
-                    currTitle: task?.title,
-                }
-            },
-            {
-                type: 'DatePicker',
-                info: {
-                    label: 'Due date:',
-                    propName: 'dueDate',
-                    selectedDate: task?.dueDate,
+                    label: 'Status:',
+                    propName: 'status',
+                    selectedStatus: task.status,
+                    statuses: board.statuses,
                 }
             },
             {
@@ -118,15 +114,6 @@ export function TaskPreview({ task, groupId, tasksLength }) {
                     members: board.members,
                 }
             },
-            // {
-            //     type: 'StatusPicker',
-            //     info: {
-            //         label: 'Status:',
-            //         propName: 'status',
-            //         selectedMemberIds: task.status,
-            //         statuses: _getStatuses(),
-            //     }
-            // },
             {
                 type: 'PriorityPicker',
                 info: {
@@ -135,12 +122,29 @@ export function TaskPreview({ task, groupId, tasksLength }) {
                     taskPriority: task.priority,
                     boardPriorities: board.priorities,
                     boardId: board._id
+                }
+            },
+            {
+                type: 'DatePicker',
+                info: {
+                    label: 'Due date:',
+                    propName: 'dueDate',
+                    selectedDate: task?.dueDate,
+                }
+            },
+            {
+                type: 'TitleEditor',
+                info: {
+                    taskId: task?.id,
+                    label: 'Title:',
+                    propName: 'title',
+                    currTitle: task?.title,
                 }
             },
         ])
     }, [task, board])
 
-    const cmpsOrder = ['StatusPicker', 'PriorityPicker', 'MemberPicker', 'DatePicker']
+    // const cmpsOrder = ['StatusPicker', 'PriorityPicker', 'MemberPicker', 'DatePicker']
 
     async function updateCmpInfo(cmp, cmpInfoPropName, data, activityTitle) {
 
@@ -221,37 +225,17 @@ export function TaskPreview({ task, groupId, tasksLength }) {
 
 
 
+
             <div className="task-columns flex">
-                {cmpsOrder.map((colName, idx) => {
-                    if (colName === 'MemberPicker') {
-                        var cmp = cmps.find(cmp => cmp?.type === 'MemberPicker')
-                        return <div className="column-cell"
-                            key={colName}
-                        >
-                            {DynamicCmp({ cmp, updateCmpInfo })}
+                {cmps.map(cmp => {
+                    // if (cmp.type = )
+                    return (
+                        <div className="column-cell" key={cmp.type}>
+                            <DynamicCmp cmp={cmp} updateCmpInfo={updateCmpInfo} />
                         </div>
-                    }
-                    if (colName === 'DatePicker') {
-                        var cmp = cmps.find(cmp => cmp?.type === 'DatePicker')
-                        return <div className="column-cell"
-                            key={colName}
-                        >
-                            {DynamicCmp({ cmp, updateCmpInfo })}
-                        </div>
-                    }
-                    if (colName === 'PriorityPicker') {
-                        var cmp = cmps.find(cmp => cmp?.type === 'PriorityPicker')
-                        return <div className="column-cell"
-                            key={colName}
-                        >
-                            {DynamicCmp({ cmp, updateCmpInfo })}
-                        </div>
-                    }
-                    else {
-                        return <div className="column-cell" key={idx}></div>
-                    }
-                })
-                }
+                    );
+                })}
+
                 <div className="column-cell full"></div>
             </div >
         </div>
@@ -262,10 +246,10 @@ export function TaskPreview({ task, groupId, tasksLength }) {
 
 function DynamicCmp({ cmp, updateCmpInfo }) {
     switch (cmp?.type) {
-        // case 'StatusPicker':
-        //     return <StatusPicker info={cmp.info} onUpdate={(data) => {
-        //         updateCmpInfo(cmp, 'selectedStatus', data, `Changed Status to ${data}`)
-        //     }} />
+        case 'StatusPicker':
+            return <StatusPicker info={cmp.info} onUpdate={(data) => {
+                updateCmpInfo(cmp, 'selectedStatus', data, `Changed Status to ${data}`)
+            }} />
         case 'DatePicker':
             return <DatePicker info={cmp?.info} onUpdate={(data) => {
                 updateCmpInfo(cmp, 'selectedDate', data, `Changed due date to ${data}`)
