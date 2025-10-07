@@ -1,25 +1,21 @@
-import { useEffectUpdate } from '../../../customHooks/useEffectUpdate'
-
-import { useMemo, useState } from 'react'
-import { FloatingContainerCmp } from '../../FloatingContainerCmp'
+//Services
+import { useState } from 'react'
 import { showSuccessMsg } from '../../../services/event-bus.service'
 import { boardService } from '../../../services/board'
-import { debounce } from '../../../services/util.service'
+//Cmp
+
+import { FloatingContainerCmp } from '../../FloatingContainerCmp'
+//Icons
 
 import editPen from '/icons/edit-pen.svg'
 import plus from '/icons/plus.svg'
 import xMark from '/icons/x-mark.svg'
 import moreIcon from '/icons/more.svg'
 
-export function PriorityListEdit({ labels, onSave, onUpdate, onClose }) {
+export function PriorityListEdit({ labels, onUpdate, onClose }) {
     const [anchorEl, setAnchorEl] = useState()
     const [labelsToUpdate, setLabelsToUpdate] = useState(labels)
 
-    const debounceUpdate = useMemo(() => {
-        return debounce(updateLabel, 500)
-    }, [onSave])
-
-    useEffectUpdate(() => debounceUpdate(labelsToUpdate), [labelsToUpdate])
 
     function handelChange(ev, id) {
         const value = ev.target.value
@@ -28,26 +24,24 @@ export function PriorityListEdit({ labels, onSave, onUpdate, onClose }) {
         })
     }
 
-    function updateLabel(value) {
-        onUpdate(value)
-    }
-
     function onRemoveLabel(id) {
-        const NewLabels = labelsToUpdate.filter(label => label.id !== id)
-        setLabelsToUpdate(NewLabels)
-        onUpdate(NewLabels)
+        setLabelsToUpdate(prev => {
+            const labels = prev.filter(label => label.id !== id)
+            onUpdate(labels)
+            return labels
+        })
         showSuccessMsg(' Priority label removed')
         setAnchorEl(null)
     }
 
     function addNewLabel() {
         const newLabel = boardService.getEmptyPriorityLabel()
-        const updatedLabels = structuredClone(labels)
-        updatedLabels.push(newLabel)
-        setLabelsToUpdate(updatedLabels)
-        onUpdate(updatedLabels)
+        setLabelsToUpdate(prev => {
+            const labels = [...prev, newLabel]
+            onUpdate(labels)
+            return labels
+        })
         showSuccessMsg('new Priority label added')
-
     }
 
     return (
@@ -66,8 +60,8 @@ export function PriorityListEdit({ labels, onSave, onUpdate, onClose }) {
                             <input name='title'
                                 type="text"
                                 value={label.txt}
-                                onBlur={() => onSave(labelsToUpdate)}
-                                onKeyDown={e => e.key === 'Enter' && updateLabel(labelsToUpdate)}
+                                onBlur={() => onUpdate(labelsToUpdate)}
+                                onKeyDown={ev => ev.key === 'Enter' && handelChange(ev, label.id)}
                                 onChange={(ev) => handelChange(ev, label.id)}
                             />
                         </section>
@@ -110,8 +104,8 @@ export function PriorityListEdit({ labels, onSave, onUpdate, onClose }) {
                 </li>
             </ul>
             <button onClick={() => {
-                onClose()
                 onUpdate(labelsToUpdate)
+                onClose()
             }}
                 className='edit-labels edit'> Apply </button>
         </>

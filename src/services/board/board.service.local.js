@@ -1,5 +1,6 @@
 
 import { storageService } from '../async-storage.service'
+import { userService } from '../user'
 import { getRandomGroupColor, makeId } from '../util.service'
 // import { userService } from '../user'
 
@@ -223,6 +224,28 @@ async function removeTask(boardId, groupId, taskId) {
         throw err
     }
 }
+    const DefaultPriorities = [
+        {
+            id: makeId(),
+            txt: 'Critical'
+            , cssVar: '--group-title-clr3'
+        },
+        {
+            id: makeId(),
+            txt: 'High'
+            , cssVar: '--group-title-clr1'
+        },
+        {
+            id: makeId(),
+            txt: 'medium'
+            , cssVar: '--group-title-clr4'
+        },
+        {
+            id: makeId(),
+            txt: 'Low'
+            , cssVar: '--group-title-clr2'
+        },
+    ]
 
 
 
@@ -234,6 +257,9 @@ function _setBaordToSave({ title = 'New board', managingType = 'items', privacy 
         managingType,
         isStarred: false,
         createdAt: Date.now(),
+        priorities:DefaultPriorities,
+        // Demo Members
+        members:userService.createDemoUsers(5),
         groups: [
             {
                 id: makeId(),
