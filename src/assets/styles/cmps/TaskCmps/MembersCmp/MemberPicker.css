@@ -1,9 +1,11 @@
 .member-picker {
     position: relative;
     display: flex;
-cursor: pointer;
+    cursor: pointer;
+        place-content: center;
+
     .plus {
-        position: relative;
+        position: absolute;
         right: 14px;
         opacity: 0;
     }
@@ -14,7 +16,7 @@ cursor: pointer;
 
     .cmp-img {
         display: flex;
-        margin-inline: 34px;
+        /* margin-inline: 34px; */
     }
 
     .img-wrapper {

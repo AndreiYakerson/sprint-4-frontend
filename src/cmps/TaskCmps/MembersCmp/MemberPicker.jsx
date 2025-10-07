@@ -33,6 +33,11 @@ export function MemberPicker({ info, onUpdate }) {
         setHoveredUser(null);
     }
 
+    function onRemoveMember(memberId) {
+        const memberIds = [...selectedMemberIds.filter(id => id !== memberId)]
+        updateTaskMembers(memberIds)
+    }
+
     function updateTaskMembers(memberIds) {
         onUpdate(memberIds)
         setMembersSelectEl(null)
@@ -42,7 +47,7 @@ export function MemberPicker({ info, onUpdate }) {
     const usersToShow = selectedMemberIds.map(memberId => {
         return members.find(user => user.id === memberId)
     }).filter(Boolean)
-    
+
 
 
     return (
@@ -51,17 +56,19 @@ export function MemberPicker({ info, onUpdate }) {
             <div className="cmp-img"
             >
                 {!!usersToShow.length ?
-                    usersToShow.map(user => {
+                    usersToShow.map(member => {
 
                         return <div
                             className="img-wrapper"
-                            key={user.id}
+                            key={member.id}
                             onMouseLeave={onClearHover}
-                            onMouseOver={(ev) => onSetHoveredUser(user, ev.currentTarget)}
+                            onMouseOver={(ev) => onSetHoveredUser(member, ev.currentTarget)}
+                            onClick={() => onRemoveMember(member.id)
+                            }
                         >
                             <img
-                                id={user.fullname}
-                                src={user.imgUrl}
+                                id={member.fullname}
+                                src={member.imgUrl}
                                 className="user-img"
                                 alt="person icon"
                             />
