@@ -228,9 +228,13 @@ export function TaskPreview({ task, groupId, tasksLength }) {
 
             <div className="task-columns flex">
                 {cmps.map(cmp => {
-                    // if (cmp.type = )
+
+                    // 🛑 Skip the TitleEditor, as it's handled in the sticky header.
+                    if (cmp.type === 'TitleEditor') return null;
+
                     return (
                         <div className="column-cell" key={cmp.type}>
+                            {/* DynamicCmp handles mapping the cmp.type to the correct component (e.g., StatusPicker) */}
                             <DynamicCmp cmp={cmp} updateCmpInfo={updateCmpInfo} />
                         </div>
                     );
