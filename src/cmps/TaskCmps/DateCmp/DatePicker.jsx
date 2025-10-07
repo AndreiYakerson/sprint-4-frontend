@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState, useLayoutEffect } from "react"
 import { Calendar } from "./Calendar"
 import { SvgIcon } from "../../SvgIcon"
+import { functions, functionsIn } from "lodash"
 
 export function DatePicker({ info, onUpdate }) {
     const [dateToEdit, setDateToEdit] = useState(info?.selectedDate)
@@ -27,11 +28,18 @@ export function DatePicker({ info, onUpdate }) {
     useEffect(() => {
         if (isEditing) {
             window.addEventListener('mousedown', handleClickOutside)
+            window.addEventListener('keydown', handleEsc)
+
         }
         return () => {
             window.removeEventListener('mousedown', handleClickOutside)
+            window.removeEventListener('keydown', handleEsc)
         }
     }, [isEditing])
+
+    function handleEsc(ev) {
+        if (ev.key === "Escape") setIsEditing(false)
+    }
 
 
     function handleClickOutside({ target }) {

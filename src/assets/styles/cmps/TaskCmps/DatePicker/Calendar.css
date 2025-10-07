@@ -39,7 +39,6 @@
     }
 
     .date-time-input {
-
         display: grid;
         grid-template-columns: 1fr 1fr;
         align-items: center;
@@ -51,6 +50,10 @@
         border-color: var(--ui-border-color);
         border-radius: 4px;
         margin-block-end: 8px;
+
+        &:hover {
+            border: 1px solid var(--primary-text-color);
+        }
 
         &:has(:focus) {
             border: 1px solid var(--primary-color);

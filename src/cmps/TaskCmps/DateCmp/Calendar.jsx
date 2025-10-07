@@ -8,6 +8,7 @@ export function Calendar({ dateInfo, onUpDate, onSetIsEditing, position }) {
     const today = DateTime.local().setLocale("en")
     const weekDays = Info.weekdays("short", { locale: "en" })
     const months = Info.months("long", { locale: "en" })
+    const monthsShort = Info.months("short", { locale: "en" })
     const years = Array.from({ length: 50 }, (_, i) => today.year - 25 + i)
 
 
@@ -131,7 +132,7 @@ export function Calendar({ dateInfo, onUpDate, onSetIsEditing, position }) {
 
                 <div className="flex">
                     <select value={firstDayOfMonth.month - 1} name="month-select" onChange={onSelectMonth}>
-                        {months.map((month, idx) => (
+                        {monthsShort.map((month, idx) => (
                             <option key={idx} value={idx}>{month}</option>
                         ))}
                     </select>
