@@ -45,7 +45,7 @@
    .sticky-cell-wrapper {
        position: sticky;
        left: 36px;
-       background-color: inherit;
+       background-color: white;
 
        display: grid;
        grid-template-columns: 6px 36px 1fr;
