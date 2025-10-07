@@ -55,6 +55,7 @@
 @import "cmps/AppFooter";
 @import "cmps/UserMsg";
 @import "cmps/AppLoader";
+@import "cmps/ActionsMenu.css";
 
 @import "cmps/board/BoardIndex";
 @import "cmps/board/BoardList";
@@ -63,6 +64,6 @@
 @import "cmps/board/BoardPreview.css";
 @import "cmps/board/BoardEdit.css";
 @import "cmps/board/BoardRemovdMsg.css";
-@import "cmps/board/BoardMneu.css";
+
 
 @import "cmps/StatusAnimation.css";

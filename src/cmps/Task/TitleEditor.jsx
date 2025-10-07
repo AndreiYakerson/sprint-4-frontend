@@ -59,6 +59,7 @@ export function TitleEditor({ info, onUpdate, onSetRenameBoard }) {
                         if (e.key === "Enter") saveChanges()
                     }}
                     placeholder={info?.placeholder ? info?.placeholder : "+ Add Item"}
+                    onClick={(ev) => ev.stopPropagation()}
                 />
                 : <span className="task-name" onClick={() => setIsEditing(true)}>
                     {info?.placeholder && !info?.currTitle ? info?.placeholder : info?.currTitle}
