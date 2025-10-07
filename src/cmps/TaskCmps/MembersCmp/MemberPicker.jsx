@@ -43,7 +43,6 @@ export function MemberPicker({ info, onUpdate }) {
         return members.find(user => user.id === memberId)
     }).filter(Boolean)
     
-    console.log("🚀 ~ MemberPicker ~ usersToShow:", usersToShow)
 
 
     return (
