@@ -7,6 +7,7 @@ import { useSelector } from "react-redux";
 import { LabelsListEdit } from "./PriorityCmp/LabelsListEdit.jsx";
 import { LabelsList } from "./PriorityCmp//LabelsList";
 import { FloatingContainerCmp } from "../FloatingContainerCmp.jsx";
+import { StatusAnimation } from "../StatusAnimation.jsx";
 
 export function StatusPicker({ info, onUpdate }) {
     const { selectedStatus, statuses } = info
@@ -30,15 +31,18 @@ export function StatusPicker({ info, onUpdate }) {
 
     const editMode = !isEditOpen ? 'apply' : ''
 
-    const status = selectedStatus ?  selectedStatus : statuses.find(status => status.id === 'default')
+    const status = selectedStatus ? selectedStatus : statuses.find(status => status.id === 'default')
 
+    
 
 
     const [anchorEl, setAnchorEl] = useState()
     return (
         <div className="priority-picker"
             style={{ background: `var(${status.cssVar})` }}
-            onClick={(ev) => setAnchorEl(ev.currentTarget)}>
+            onClick={(ev) => setAnchorEl(ev.currentTarget)}
+        >
+            {/* <StatusAnimation color={`var(${status.cssVar})`} /> */}
             {status.txt}
             {anchorEl &&
                 <FloatingContainerCmp
