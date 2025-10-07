@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 // services
-import { loadBoards } from "../../store/actions/board.actions.js";
+import { loadBoards, setIsBoardEditorOpen } from "../../store/actions/board.actions.js";
 import { onSetIsSideBarOpen } from "../../store/actions/system.actions.js";
 
 // cmps
@@ -82,7 +82,7 @@ export function SideBar() {
 
                     <div className="boards-title-tab flex align-center ">
                         <span className="boards-title">Boards</span>
-                        <button className="blue square">
+                        <button className="blue square" onClick={() => setIsBoardEditorOpen(true)}>
                             <SvgIcon iconName="plus" size={20} colorName="whiteText" />
                         </button>
                     </div>

@@ -20,7 +20,9 @@ import {
     REMOVE_TASK,
     SET_GROUPS,
     SET_TASK_ID_TO_EDIT,
+    SET_IS_BOARD_EDITOR_OPEN,
 } from '../reducers/board.reducer'
+import { SET_SIDE_BAR_OPEN } from '../reducers/system.reducer'
 
 
 
@@ -184,6 +186,10 @@ export async function removeTask(boardId, groupId, taskId) {
 
 export function setNewTaskIdToEdit(taskId) {
     store.dispatch({ type: SET_TASK_ID_TO_EDIT, taskId })
+}
+
+export function setIsBoardEditorOpen(isOpen) {
+    store.dispatch({ type: SET_IS_BOARD_EDITOR_OPEN, isOpen })
 }
 
 

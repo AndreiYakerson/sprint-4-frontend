@@ -2,9 +2,13 @@ import { useEffect, useRef } from "react"
 import { useSelector } from "react-redux"
 import { onSetPopUpIsOpen } from "../store/actions/system.actions.js"
 import { createPortal } from "react-dom"
+import { setIsBoardEditorOpen } from "../store/actions/board.actions.js"
 
 export function PopUp({ children = false, showCloseBtn = false }) {
   const isPopUpOpen = useSelector(state => state.systemModule.isPopUpOpen)
+  // Specific to the case of adding a board
+  const isBoardEditorOpen = useSelector(state => state.boardModule.isBoardEditorOpen)
+
   const popupRef = useRef(null)
 
   function handleClickOutside(e) {
@@ -12,10 +16,11 @@ export function PopUp({ children = false, showCloseBtn = false }) {
     if (!popupEl) return
     const clickedInside = e.target.closest('.popup-container')
     if (!clickedInside) onSetPopUpIsOpen(false)
+    if (isBoardEditorOpen && !clickedInside) setIsBoardEditorOpen(false)
   }
 
   useEffect(() => {
-    if (!isPopUpOpen) return
+    if (!isPopUpOpen && !isBoardEditorOpen) return
     const id = setTimeout(() => {
       document.addEventListener("mousedown", handleClickOutside)
     }, 0)
@@ -23,17 +28,21 @@ export function PopUp({ children = false, showCloseBtn = false }) {
       clearTimeout(id)
       document.removeEventListener("mousedown", handleClickOutside)
     }
-  }, [isPopUpOpen])
+  }, [isPopUpOpen, isBoardEditorOpen])
+
 
   useEffect(() => {
+    if (!isPopUpOpen && !isBoardEditorOpen) return
     const onKey = ev => {
-      if (ev.key === "Escape") onSetPopUpIsOpen(false)
+      if (ev.key === "Escape")
+        if (isBoardEditorOpen) setIsBoardEditorOpen(false)
+        else onSetPopUpIsOpen(false)
     }
     window.addEventListener("keydown", onKey)
     return () => window.removeEventListener("keydown", onKey)
-  }, [])
+  }, [isPopUpOpen, isBoardEditorOpen])
 
-  if (!isPopUpOpen) return null
+  if (!isPopUpOpen && !isBoardEditorOpen) return null
 
   return createPortal(
     <div className="popup-backdrop">
@@ -42,7 +51,7 @@ export function PopUp({ children = false, showCloseBtn = false }) {
         onClick={e => e.stopPropagation()}
         className="popup-container"
       >
-          {children}
+        {children}
       </div>
     </div>,
     document.getElementById("modal-root")

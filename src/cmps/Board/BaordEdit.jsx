@@ -1,8 +1,9 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { boardService } from "../../services/board/index.js"
-import { addBoard } from "../../store/actions/board.actions.js"
-import { onSetPopUpIsOpen } from "../../store/actions/system.actions.js"
+import { addBoard, setIsBoardEditorOpen } from "../../store/actions/board.actions.js"
+import { SvgIcon } from "../SvgIcon.jsx"
+
 
 export function BoardEdit(props) {
 
@@ -26,7 +27,7 @@ export function BoardEdit(props) {
 
         try {
             const board = await addBoard(boardToEdit)
-            onSetPopUpIsOpen(false)
+            setIsBoardEditorOpen(false)
             navigate(`/board/${board?._id}`)
         } catch (err) {
             console.log('err:', err)
@@ -76,7 +77,16 @@ export function BoardEdit(props) {
                                 value={val} checked={boardToEdit.privacy === val}
                                 onChange={handleChange}
                             />
-                            <label htmlFor={val}>{val}</label>
+                            <label htmlFor={val} className="privacy-label flex">
+                                {(val === 'private' || val === 'shareable') && (
+                                    <SvgIcon
+                                        iconName={val === 'private' ? 'lock' : 'share'}
+                                        size={20}
+                                        colorName="currentColor"
+                                    />
+                                )}
+                                {val}
+                            </label>
                         </li>
                     })}
                 </ul>
@@ -127,7 +137,7 @@ export function BoardEdit(props) {
                 <div className="actions flex">
                     <button type="button"
                         className="white"
-                        onClick={() => onSetPopUpIsOpen(false)}>Cancel</button>
+                        onClick={() => setIsBoardEditorOpen(false)}>Cancel</button>
                     <button type="submit" className="blue">Create Board</button>
                 </div>
             </form>

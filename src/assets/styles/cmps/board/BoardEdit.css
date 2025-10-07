@@ -42,11 +42,15 @@
             text-transform: capitalize;
             cursor: pointer;
             display: grid;
-            grid-template-columns: 1.5em auto;
+            grid-template-columns: 18px auto;
             grid-gap: 0.5em;
 
             &>* {
                 cursor: pointer;
+            }
+
+            .privacy-label {
+                gap: 0.2em;
             }
         }
     }

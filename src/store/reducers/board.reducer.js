@@ -23,13 +23,16 @@ export const SET_TASK_ID_TO_EDIT = 'SET_TASK_ID_TO_EDIT'
 
 export const ADD_BOARD_MSG = 'ADD_BOARD_MSG'
 
+export const SET_IS_BOARD_EDITOR_OPEN = 'SET_IS_BOARD_EDITOR_OPEN'
+
 
 
 const initialState = {
     boards: [],
     board: null,
     newGroupIdToEdit: null,
-    newTaskIdToEdit: null
+    newTaskIdToEdit: null,
+    isBoardEditorOpen: false
 }
 
 export function boardReducer(state = initialState, action = {}) {
@@ -146,6 +149,10 @@ export function boardReducer(state = initialState, action = {}) {
 
         case SET_TASK_ID_TO_EDIT:
             newState = { ...state, newTaskIdToEdit: action.taskId }
+            break
+
+        case SET_IS_BOARD_EDITOR_OPEN:
+            newState = { ...state, isBoardEditorOpen: action.isOpen }
             break
 
         default:
