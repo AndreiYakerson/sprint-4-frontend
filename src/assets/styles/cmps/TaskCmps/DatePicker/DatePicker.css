@@ -8,36 +8,34 @@
     }
 
     .select {
-        margin-inline: 8px;
         opacity: 0;
+        display: flex;
         align-items: center;
+        justify-content: center;
+
+        outline: solid 1px var(--ui-border-color);
+        border-radius: 4px;
+        height: 80%;
+        margin: 4px;
     }
 
     &:hover {
         .select {
-            display: flex;
-            justify-content: center;
-            outline: solid 1px var(--ui-border-color);
-            border-radius: 4px;
-
             opacity: 1;
             transition: 200ms ease-in-out;
-
-            .plus-icon {
-                background-color: var(--primary-color);
-                border-radius: 50%;
-            }
         }
 
         .date-to-edit {
             outline: solid 1px var(--ui-border-color);
             border-radius: 4px;
+            height: 80%;
+            margin: 4px;
             color: var(--link-color);
+            align-content: center;
         }
     }
 
     .date-to-edit {
-        margin-inline: 8px;
         position: relative;
 
         &:hover {

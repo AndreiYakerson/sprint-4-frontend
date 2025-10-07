@@ -10,6 +10,7 @@ import { addGroup, addTask, loadBoard } from '../store/actions/board.actions.js'
 import { GroupList } from '../cmps/group/GroupList.jsx'
 import { SortFilterCmp } from '../cmps/SortFilterCmp.jsx'
 import { TaskDetails } from '../cmps/Task/TaskDetails.jsx'
+import { SvgIcon } from '../cmps/SvgIcon.jsx'
 
 
 export function BoardDetails() {
@@ -120,7 +121,7 @@ export function BoardDetails() {
 
         <button
           onClick={() => onAddGroup(board?._id)}
-          className='add-group'>+ Add new group
+          className='add-group flex'> <SvgIcon iconName="plus" size={20} /> <span>Add new group</span>
         </button>
 
       </div>

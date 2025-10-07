@@ -1,32 +1,28 @@
 import { Fragment, useState } from "react"
 import { useParams, Link, useNavigate } from "react-router-dom"
+import { useSelector } from "react-redux"
 
 // services
 import { removeTask, updateTask } from "../../store/actions/board.actions.js"
 import { showErrorMsg, showSuccessMsg } from "../../services/event-bus.service"
 
-// cmps
-// import { DynamicCmp } from "../DynamicCmp"
-import { TitleEditor } from "./TitleEditor"
-
-// icon
-import updateIcon from "/icons/update.svg"
-import person from "/icons/person.svg"
-import plus from "/icons/plus.svg"
-import danPic from "/img/danPic.jpg"
-
-
-import { FloatingContainerCmp } from "../FloatingContainerCmp.jsx"
-import { MemberTaskSelect } from "../TaskCmps/MembersCmp/MemberTaskSelect.jsx"
-import { PopUp } from "../PopUp.jsx"
-import { useSelector } from "react-redux"
-import { MemberSelectedPreview } from "../TaskCmps/MembersCmp/MemberSelectedPreview.jsx"
-import { DatePicker } from "../TaskCmps/DateCmp/DatePicker.jsx"
-import { PriorityPreview } from "../TaskCmps/PriorityCmp/PriorityPreview.jsx"
+// dnd kit
 import { useSortable } from "@dnd-kit/sortable"
 import { CSS } from "@dnd-kit/utilities"
 import { DragOverlay } from "@dnd-kit/core"
 
+// cmps
+// import { DynamicCmp } from "../DynamicCmp"
+import { TitleEditor } from "./TitleEditor"
+import { FloatingContainerCmp } from "../FloatingContainerCmp.jsx"
+import { MemberTaskSelect } from "../TaskCmps/MembersCmp/MemberTaskSelect.jsx"
+import { PopUp } from "../PopUp.jsx"
+import { MemberSelectedPreview } from "../TaskCmps/MembersCmp/MemberSelectedPreview.jsx"
+import { DatePicker } from "../TaskCmps/DateCmp/DatePicker.jsx"
+import { PriorityPreview } from "../TaskCmps/PriorityCmp/PriorityPreview.jsx"
+
+
+import { SvgIcon } from "../SvgIcon.jsx"
 
 
 
@@ -122,7 +118,12 @@ export function TaskPreview({ task, groupId }) {
 
                 <div className="sticky-cell-wrapper" >
                     <div className="task-menu-wrapper">
-                        <button onClick={onRemoveTask}>X</button>
+                        <button onClick={onRemoveTask} className="white">
+                            <SvgIcon
+                                iconName="trash"
+                                size={20}
+                                colorName={'primaryText'}
+                            /></button>
                     </div>
 
                     <div className="table-border"></div>
@@ -137,13 +138,12 @@ export function TaskPreview({ task, groupId }) {
                         <div className="grab-block" {...listeners}></div>
 
                         <div onClick={onToggleTaskDetails} className={`task-updates-cell ${task.id === taskId ? "focus" : ""}`}>
-                            <img src={updateIcon} alt="update" className="icon big" />
+                            <SvgIcon
+                                iconName="bubblePlus"
+                                size={20}
+                                colorName={'primaryText'}
+                            />
                         </div>
-
-                        {/* {task.title}
-                    <Link to={taskId && taskId === task?.id ? `/board/${boardId}` : `/board/${boardId}/task/${task.id}`}
-                    className="btn">details</Link>
-                    <button onClick={() => onUpdateTask()}>update</button> */}
                     </div>
 
                 </div >

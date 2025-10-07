@@ -1,8 +1,7 @@
 .btn,
 button {
-	padding: .5em .8em;
+	padding: 4px 8px;
 	border: 0;
-	/* margin: .5em; */
 	cursor: pointer;
 	line-height: 1.71428571429;
 
@@ -13,7 +12,9 @@ button {
 
 	transition: 0.3s ease-in-out;
 
-
+	&:has(.svg-icon) {
+		justify-items: center;
+	}
 
 	&.square {
 		padding: 0.5em;
@@ -79,7 +80,9 @@ button {
 	&.add-group {
 		position: sticky;
 		left: 36px;
-		display: grid;
+		align-items: center;
+
+		gap: 4px;
 	}
 }
 

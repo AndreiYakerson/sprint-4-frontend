@@ -20,6 +20,10 @@ export function DatePicker({ info, onUpdate }) {
         setIsEditing(isEditing)
     }
 
+    function toggleIsEditing() {
+        setIsEditing(!isEditing)
+    }
+
     useEffect(() => {
         if (isEditing) {
             window.addEventListener('mousedown', handleClickOutside)
@@ -68,7 +72,7 @@ export function DatePicker({ info, onUpdate }) {
     }
 
     return (
-        <section className="date-picker" ref={datePickerRef}>
+        <section className="date-picker" ref={datePickerRef} onClick={toggleIsEditing}>
             {dateToEdit?.date && <div
                 className="date-to-edit"
                 onClick={() => setIsEditing(true)} >
@@ -82,9 +86,9 @@ export function DatePicker({ info, onUpdate }) {
             </div>}
 
             {!isEditing && !dateToEdit?.date &&
-                <div className="select" onClick={() => onSetIsEditing(true)}>
-                    <SvgIcon iconName="plus" size={14} className='plus-icon' colorName='whiteText' />
-                    <SvgIcon iconName="calendar" size={18} />
+                <div className="select">
+                    <SvgIcon iconName="plus" size={15} className='plus-blue' colorName='whiteText' />
+                    <SvgIcon iconName="calendar" size={20} />
                 </div>
             }
 

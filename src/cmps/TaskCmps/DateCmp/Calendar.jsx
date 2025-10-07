@@ -93,7 +93,7 @@ export function Calendar({ dateInfo, onUpDate, onSetIsEditing, position }) {
     }
 
     return (
-        <section className={`calendar-container ${position} focus`}>
+        <section className={`calendar-container ${position} focus`} onClick={(ev) => ev.stopPropagation()}>
             <div className="btns-actions flex justify-between">
                 <button onClick={onToday}>Today</button>
                 <button onClick={toggleIsTimeShow} className={`white icon-svg ${isTimeShow ? "active" : ""}`}>

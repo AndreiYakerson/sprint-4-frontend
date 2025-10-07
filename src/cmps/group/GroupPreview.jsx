@@ -1,3 +1,4 @@
+import { SvgIcon } from "../SvgIcon";
 
 
 
@@ -16,7 +17,13 @@ export function GroupPreview({ group, GroupTitleEditor, managingType, TaskList, 
         >
             <div className="group-title-row">
                 <div className="group-menu-wrapper">
-                    <button onClick={() => onRemoveGroup(group.id)}>X</button>
+                    <button onClick={() => onRemoveGroup(group.id)} className="white">
+                        <SvgIcon
+                            iconName="trash"
+                            size={20}
+                            colorName={'primaryText'}
+                        />
+                    </button>
                 </div>
                 <div className="collapse-group"></div>
                 <div className="group-title flex">
