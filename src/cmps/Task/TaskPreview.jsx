@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react"
-import { useParams, useNavigate } from "react-router-dom"
 
 // services
+import { useEffect, useState } from "react"
+import { useParams, useNavigate } from "react-router-dom"
 import { removeTask, updateTask } from "../../store/actions/board.actions.js"
 import { showErrorMsg, showSuccessMsg } from "../../services/event-bus.service"
 import { useSelector } from "react-redux"
@@ -227,31 +227,6 @@ export function TaskPreview({ task, groupId, tasksLength }) {
             <div className="task-columns flex">
                 {cmpsOrder.map((colName, idx) => {
 
-                    // if (colName === 'PriorityPicker') {
-                    //     return <div style={{ cursor: 'pointer' }} key={colName} className={`column-cell ${colName}`}>
-                    //         <PriorityPreview />
-                    //     </div>
-                    // }
-
-                    // if (colName === 'MemberPicker') {
-                    //     return <div onClick={(ev) => setMembersSelectEl(ev.currentTarget)} style={{ cursor: 'pointer' }} key={colName} className={`column-cell ${colName}`}>
-                    //         <MemberSelectedPreview task={task} />
-
-                    //         {membersSelectEl &&
-                    //             < FloatingContainerCmp
-                    //                 anchorEl={membersSelectEl}
-                    //                 onClose={() => setMembersSelectEl(null)}
-                    //             >
-                    //                 <MemberTaskSelect
-                    //                     boardId={boardId}
-                    //                     groupId={groupId}
-                    //                     task={task}
-                    //                     onClose={() => setMembersSelectEl(null)}
-                    //                 />
-                    //             </FloatingContainerCmp>
-                    //         }
-                    //     </div>
-                    // } else 
                     if (colName === 'StatusPicker') {
                         var cmp = cmps.find(cmp => cmp?.type === 'StatusPicker')
                         return <div className="column-cell" key={colName}>

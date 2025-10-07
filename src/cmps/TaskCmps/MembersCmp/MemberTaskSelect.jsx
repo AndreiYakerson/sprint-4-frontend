@@ -13,7 +13,6 @@ import inviteMember from '/icons/invite-member.svg'
 
 
 export function MemberTaskSelect({ selectedMemberIds, boardId, groupId, onClose, info, onUpdate }) {
-console.log("🚀 ~ MemberTaskSelect ~ selectedMemberIds:", selectedMemberIds)
 
 
     const users = useSelector(state => state.userModule.users)
@@ -29,11 +28,10 @@ console.log("🚀 ~ MemberTaskSelect ~ selectedMemberIds:", selectedMemberIds)
     // const fittedIds = new Set(selectedMemberIds?.map(member => member.id));
     // 2. Filter the "to-be-shown" list (the users) to exclude those already fitted
     const usersToShow = users.filter(user => !selectedMemberIds.includes(user.id));
-    console.log("🚀 ~ MemberTaskSelect ~ usersToShow:", usersToShow)
 
     return (
         <div className="member-task-select">
-            {/* <div className="search-bar">
+            <div className="search-bar">
                 <span className='search'>
                     <img src={searchGalss}
                         className='icon big search'
@@ -48,7 +46,7 @@ console.log("🚀 ~ MemberTaskSelect ~ selectedMemberIds:", selectedMemberIds)
                         alt="Info Icon"
                     />
                 </span>
-            </div> */}
+            </div>
             <span className='suggested'>Suggested People</span>
             <section className="user-list">
                 {usersToShow.map((member, idx) => {
@@ -67,10 +65,10 @@ console.log("🚀 ~ MemberTaskSelect ~ selectedMemberIds:", selectedMemberIds)
                     </button>
                 })}
 
-                {/* <button className="user flex">
+                 <button className="user flex">
                     <span className="img-container"> <img className="icon invite-member" src={inviteMember} alt="User Image" /></span>
                     {' Invite a new member by email'}
-                </button> */}
+                </button>
             </section>
 
         </div>

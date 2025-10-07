@@ -12,7 +12,7 @@ import plus from '/icons/plus.svg'
 import xMark from '/icons/x-mark.svg'
 import moreIcon from '/icons/more.svg'
 
-export function PriorityListEdit({ labels, onUpdateLabel, onClose }) {
+export function LabelsListEdit({ labels, onUpdateLabels, onClose }) {
     const [anchorEl, setAnchorEl] = useState()
     const [labelsToUpdate, setLabelsToUpdate] = useState(labels)
 
@@ -27,7 +27,7 @@ export function PriorityListEdit({ labels, onUpdateLabel, onClose }) {
     function onRemoveLabel(id) {
         setLabelsToUpdate(prev => {
             const labels = prev.filter(label => label.id !== id)
-            onUpdateLabel(labels)
+            onUpdateLabels(labels)
             return labels
         })
         showSuccessMsg(' Priority label removed')
@@ -38,7 +38,7 @@ export function PriorityListEdit({ labels, onUpdateLabel, onClose }) {
         const newLabel = boardService.getEmptyPriorityLabel()
         setLabelsToUpdate(prev => {
             const labels = [...prev, newLabel]
-            onUpdateLabel(labels)
+            onUpdateLabels(labels)
             return labels
         })
         showSuccessMsg('new Priority label added')
@@ -60,7 +60,7 @@ export function PriorityListEdit({ labels, onUpdateLabel, onClose }) {
                             <input name='title'
                                 type="text"
                                 value={label.txt}
-                                onBlur={() => onUpdateLabel(labelsToUpdate)}
+                                onBlur={() => onUpdateLabels(labelsToUpdate)}
                                 onKeyDown={ev => ev.key === 'Enter' && handelChange(ev, label.id)}
                                 onChange={(ev) => handelChange(ev, label.id)}
                             />
@@ -86,7 +86,7 @@ export function PriorityListEdit({ labels, onUpdateLabel, onClose }) {
                 })}
                 <li className='default label edit'>
                     <span className="color-icon-container"
-                        style={{ backgroundColor: '#c4c4c4' }}>
+                        style={{ backgroundColor: 'var(--group-title-clr18)' }}>
                         <img className='icon ' src={editPen} alt="icon color" />
                     </span>
                     Default Label
@@ -104,7 +104,7 @@ export function PriorityListEdit({ labels, onUpdateLabel, onClose }) {
                 </li>
             </ul>
             <button onClick={() => {
-                onUpdateLabel(labelsToUpdate)
+                onUpdateLabels(labelsToUpdate)
                 onClose()
             }}
                 className='edit-labels edit'> Apply </button>

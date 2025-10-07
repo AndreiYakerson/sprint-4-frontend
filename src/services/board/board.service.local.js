@@ -228,22 +228,22 @@ const DefaultPriorities = [
     {
         id: makeId(),
         txt: 'Critical'
-        , cssVar: '--group-title-clr3'
+        , cssVar: '--primary-text-color'
     },
     {
         id: makeId(),
         txt: 'High'
-        , cssVar: '--group-title-clr1'
+        , cssVar: '--group-title-clr7'
     },
     {
         id: makeId(),
         txt: 'medium'
-        , cssVar: '--group-title-clr4'
+        , cssVar: '--group-title-clr8'
     },
     {
         id: makeId(),
         txt: 'Low'
-        , cssVar: '--group-title-clr2'
+        , cssVar: '--group-title-clr9'
     },
 ]
 
@@ -251,22 +251,22 @@ const DefaultStatuses = [
     {
         id: makeId(),
         txt: 'Done'
-        , cssVar: '--group-title-clr4'
+        , cssVar: '--group-title-clr2'
     },
     {
         id: makeId(),
         txt: 'Working on it'
-        , cssVar: '--group-title-clr1'
+        , cssVar: '--group-title-clr15'
     },
     {
         id: makeId(),
         txt: 'Stuck'
-        , cssVar: '--group-title-clr3'
+        , cssVar: '--group-title-clr11'
     },
     {
         id: 'default',
         txt: 'Not Started'
-        , cssVar: '--group-title-clr2'
+        , cssVar: '--group-title-clr18'
     },
 ]
 

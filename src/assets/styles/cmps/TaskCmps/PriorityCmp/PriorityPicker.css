@@ -1,7 +1,9 @@
-.priorit-picker {
+.priority-picker {
     display: flex;
     place-content: center;
     align-items: center;
+
+
     width: 144px;
     color: var(--primary-background-color);
     cursor: pointer;
@@ -11,9 +13,12 @@
     display: grid;
     min-height: fit-content;
     gap: 8px;
+
 }
 
 .priority-select {
+    display: grid;
+    gap: 9px;
 
     .label-list-edit-container {
         display: flex;
@@ -55,7 +60,7 @@
         line-height: 32px;
         text-align: center;
 
-        color:var(--primary-background-color);
+        color: var(--primary-background-color);
         border-radius: var(--border-radius-small);
         border: 1px solid var(--ui-border-color);
 
