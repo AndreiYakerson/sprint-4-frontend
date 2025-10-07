@@ -157,6 +157,8 @@ export function TaskPreview({ task, groupId, tasksLength }) {
 
     async function updateCmpInfo(cmp, cmpInfoPropName, data, activityTitle) {
 
+        console.log('Here:', cmp)
+
         const taskPropName = cmp.info.propName
         console.log(`Updating: ${taskPropName} to: `, data)
 

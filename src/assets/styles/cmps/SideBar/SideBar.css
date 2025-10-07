@@ -19,6 +19,12 @@
     font-size: 14px;
     font-weight: 400;
 
+    &.app-loading {
+        .side-bar-content {
+            display: none;
+        }
+    }
+
     .close-btn {
         display: grid;
         place-items: center;

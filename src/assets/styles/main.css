@@ -54,6 +54,7 @@
 @import "cmps/AppHeader";
 @import "cmps/AppFooter";
 @import "cmps/UserMsg";
+@import "cmps/AppLoader";
 
 @import "cmps/board/BoardIndex";
 @import "cmps/board/BoardList";

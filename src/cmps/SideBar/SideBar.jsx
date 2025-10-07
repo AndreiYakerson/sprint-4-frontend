@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 
 // services
 import { loadBoards, setIsBoardEditorOpen } from "../../store/actions/board.actions.js";
-import { onSetIsSideBarOpen } from "../../store/actions/system.actions.js";
+import { onSetIsApploading, onSetIsSideBarOpen } from "../../store/actions/system.actions.js";
 
 // cmps
 import { BoardList } from "../Board/BoardList.jsx";
@@ -20,13 +20,30 @@ import favStarIcon from '/img/fav-star-icon.svg'
 export function SideBar() {
 
     const isSideBarOpen = useSelector(state => state.systemModule.isSideBarOpen)
+    const isAppLoading = useSelector(state => state.systemModule.isAppLoading)
     const boards = useSelector(storeState => storeState.boardModule.boards)
+
     const [isFavoritesTabOpen, setIsFavoritesTabOpen] = useState(false)
     const [anchorEl, setAnchorEl] = useState(null)
 
     useEffect(() => {
-        loadBoards()
+        onLoadBoards()
     }, [])
+
+    async function onLoadBoards() {
+        if (!boards?.length) {
+            onSetIsApploading(true)
+        }
+        try {
+            await loadBoards()
+        } catch (err) {
+            console.log('err:', err)
+        } finally {
+            setTimeout(() =>
+                onSetIsApploading(false)
+                , 1000)
+        }
+    }
 
     function toggleIsFavoritesTabOpen() {
         setIsFavoritesTabOpen(!isFavoritesTabOpen)
@@ -36,7 +53,7 @@ export function SideBar() {
     const favoritesBoards = boards.filter(b => b.isStarred)
 
     return (
-        <div className={`side-bar ${isSideBarOpen ? "is-open" : "close"}`}
+        <div className={`side-bar ${isSideBarOpen ? "is-open" : "close"} ${isAppLoading ? "app-loading" : ""}`}
             onClick={() => { !isSideBarOpen ? onSetIsSideBarOpen(true) : '' }}
         >
 
