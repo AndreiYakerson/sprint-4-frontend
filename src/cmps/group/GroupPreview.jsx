@@ -41,7 +41,7 @@ export function GroupPreview({ group, groupsLength, GroupTitleEditor, managingTy
                     </button>
                 </div>
                 <div className="collapse-group"></div>
-                <div className="group-title flex">
+                <div className="group-title flex" >
                     <GroupTitleEditor
                         info={{
                             groupId: group?.id,
@@ -56,10 +56,12 @@ export function GroupPreview({ group, groupsLength, GroupTitleEditor, managingTy
                     {group?.tasks?.length > 0 ? `${group?.tasks?.length} Tasks`
                         : 'No Tasks'}
                 </div>
+                <div className="temporary-white-block" {...listeners}></div>
             </div>
-
-
             <div className="temporary-white-block" {...listeners}></div>
+
+
+
 
             <div className="table-row table-header">
                 <div className="sticky-cell-wrapper">
