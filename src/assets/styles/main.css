@@ -33,7 +33,7 @@
 /* Task-Cmps */
 /* Members */
 @import "cmps/TaskCmps/MembersCmp/MemberInfo.css";
-@import "cmps/TaskCmps/MembersCmp/MemberSelectedPreview.css";
+@import "cmps/TaskCmps/MembersCmp/MemberPicker.css";
 @import "cmps/TaskCmps/MembersCmp/MemberTaskSelect.css";
 
 @import "cmps/TaskCmps/DatePicker/DatePicker.css";

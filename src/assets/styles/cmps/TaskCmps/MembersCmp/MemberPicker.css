@@ -1,10 +1,11 @@
-.member-selected-preview {
+.member-picker {
+    position: relative;
     display: flex;
-    place-content: center;
-
+cursor: pointer;
     .plus {
+        position: relative;
+        right: 14px;
         opacity: 0;
-        margin-inline-start: -8.px
     }
 
     &:hover .plus {
@@ -21,7 +22,7 @@
     }
 
     .user-img {
-        display: block;
+        display: flex;
         width: 35px;
         border-radius: var(--border-radius-big);
     }

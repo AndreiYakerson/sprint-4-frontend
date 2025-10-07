@@ -4,6 +4,7 @@
     align-items: center;
     width: 144px;
     color: var(--primary-background-color);
+    cursor: pointer;
 }
 
 .priority-container {
