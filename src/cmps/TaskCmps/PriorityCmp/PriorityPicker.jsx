@@ -1,12 +1,15 @@
+
+// SERVICES
 import { useState } from "react";
-import { FloatingContainerCmp } from "../../FloatingContainerCmp";
+import { updateBoard } from "../../../store/actions/board.actions";
+import { useSelector } from "react-redux";
+// COMPONENTS
 import { PriorityListEdit } from "./PriorityListEdit";
 import { PriorityList } from "./PriorityList";
-import { useSelector } from "react-redux";
-import { updateBoard } from "../../../store/actions/board.actions";
+import { FloatingContainerCmp } from "../../FloatingContainerCmp";
 
 export function PriorityPicker({ info, onUpdate }) {
-    const {boardPriorities, taskPriority } = info
+    const { boardPriorities, taskPriority } = info
     const [isEditOpen, setIsEditOpen] = useState(false)
     const board = useSelector(state => state.boardModule.board)
 

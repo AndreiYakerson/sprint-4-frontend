@@ -1,16 +1,19 @@
-import plus from "/icons/plus.svg"
-import person from "/icons/person.svg"
-import { FloatingContainerCmp } from "../../FloatingContainerCmp"
-import { MemberInfo } from "./MemberInfo"
+
+// SERVICES
 import { useState } from "react"
 import { useSelector } from "react-redux"
-import { MemberTaskSelect } from "./MemberTaskSelect"
 
+// COMPONENTS
+import { FloatingContainerCmp } from "../../FloatingContainerCmp"
+import { MemberInfo } from "./MemberInfo"
+import { MemberTaskSelect } from "./MemberTaskSelect"
+// ICONS
+import person from "/icons/person.svg"
+import plus from "/icons/plus.svg"
 export function MemberPicker({ task, info, onUpdate }) {
     const { label, members, propName, selectedMemberIds } = info
 
     const users = useSelector(state => state.userModule.users)
-    const isFloatingOpen = useSelector(state => state.systemModule.isFloatingOpen)
 
     const [memberEl, setMemberEl] = useState(null)
     const [membersSelectEl, setMembersSelectEl] = useState(null)
