@@ -10,7 +10,7 @@ button {
 	border-color: var(--ui-border-color);
 	border-radius: 4px;
 
-	transition: 0.3s ease-in-out;
+	transition: 100ms ease-in-out;
 
 	&:has(.svg-icon) {
 		justify-items: center;
@@ -50,7 +50,7 @@ button {
 	}
 
 	&:active {
-		animation: btn-click 100ms ease-in-out;
+		scale: 0.8;
 	}
 
 
@@ -115,7 +115,7 @@ input {
 
 }
 
-@keyframes btn-click {
+/* @keyframes btn-click {
 	0% {
 		scale: 1;
 	}
@@ -127,7 +127,7 @@ input {
 	100% {
 		scale: 1;
 	}
-}
+} */
 
 
 select {
