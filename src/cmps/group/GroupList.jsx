@@ -17,7 +17,7 @@ import { TitleEditor } from "../Task/TitleEditor";
 import { GroupTitleEditor } from "./GroupTitleEditor";
 import { GroupPreview } from "./GroupPreview";
 import { GroupCollapsed } from "./GroupCollapsed";
-import { DndContext } from "@dnd-kit/core";
+import { DndContext, DragOverlay } from "@dnd-kit/core";
 import { arrayMove, SortableContext, verticalListSortingStrategy } from "@dnd-kit/sortable";
 
 
@@ -25,6 +25,8 @@ export function GroupList({ groups, managingType }) {
     const { boardId } = useParams()
 
     const [localGroups, setLocalGroups] = useState(groups)
+    const [isDragging, setIsDragging] = useState(false)
+    const [activeId, setActiveId] = useState(null);
 
 
     useEffect(() => {
@@ -64,8 +66,14 @@ export function GroupList({ groups, managingType }) {
         }
     }
 
+    function onDragStart(event) {
+        setIsDragging(true)
+    }
+
     function onDragEnd(event) {
         const { active, over } = event;
+
+        setIsDragging(false)
 
         if (!over || active.id === over.id) {
             return;
@@ -94,32 +102,45 @@ export function GroupList({ groups, managingType }) {
     return (
 
         <DndContext
+            onDragStart={onDragStart}
             onDragEnd={onDragEnd}
         >
 
             <section
-                className="group-list"
+                className={`group-list ${isDragging ? 'collapsed' : ''}`}
             >
 
                 <SortableContext items={localGroups} strategy={verticalListSortingStrategy} >
-                    {localGroups.map((group, idx) => (
+                    {localGroups.map((group, idx) => {
 
-                        <GroupPreview
-                            key={group.id}
-                            group={group}
-                            GroupTitleEditor={GroupTitleEditor}
-                            managingType={managingType}
-                            TaskList={TaskList}
-                            TitleEditor={TitleEditor}
-                            onUpdateGroup={onUpdateGroup}
-                            onRemoveGroup={onRemoveGroup}
-                            onAddTask={onAddTask}
-                            groupsLength={localGroups.length}
-                        />
+                        return isDragging ?
+                            <GroupCollapsed
+                                key={group.id}
+                                group={group}
+                                groupsLength={localGroups.length}
+                            />
+                            :
 
-                    ))}
+                            <GroupPreview
+                                key={group.id}
+                                group={group}
+                                GroupTitleEditor={GroupTitleEditor}
+                                managingType={managingType}
+                                TaskList={TaskList}
+                                TitleEditor={TitleEditor}
+                                onUpdateGroup={onUpdateGroup}
+                                onRemoveGroup={onRemoveGroup}
+                                onAddTask={onAddTask}
+                                groupsLength={localGroups.length}
+                            />
+
+                    })}
+
+
                 </SortableContext>
+        
             </section>
+
 
         </DndContext>
     )
