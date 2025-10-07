@@ -8,6 +8,7 @@ import { useSelector } from "react-redux"
 import { SvgIcon } from "../../SvgIcon"
 
 export function MemberSelectedPreview({ task }) {
+    console.log("🚀 ~ MemberSelectedPreview ~ task:", task)
     const [memberEl, setMemberEl] = useState(null)
     const [hoveredUser, setHoveredUser] = useState(null)
     const isFloatingOpen = useSelector(state => state.systemModule.isFloatingOpen)

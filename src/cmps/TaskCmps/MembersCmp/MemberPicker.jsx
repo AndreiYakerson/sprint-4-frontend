@@ -1,7 +1,6 @@
 
 // SERVICES
 import { useState } from "react"
-import { useSelector } from "react-redux"
 
 // COMPONENTS
 import { FloatingContainerCmp } from "../../FloatingContainerCmp"
@@ -10,10 +9,8 @@ import { MemberTaskSelect } from "./MemberTaskSelect"
 // ICONS
 import person from "/icons/person.svg"
 import plus from "/icons/plus.svg"
-export function MemberPicker({ task, info, onUpdate }) {
+export function MemberPicker({ info, onUpdate }) {
     const { label, members, propName, selectedMemberIds } = info
-
-    const users = useSelector(state => state.userModule.users)
 
     const [memberEl, setMemberEl] = useState(null)
     const [membersSelectEl, setMembersSelectEl] = useState(null)
@@ -43,8 +40,10 @@ export function MemberPicker({ task, info, onUpdate }) {
     }
 
     const usersToShow = selectedMemberIds.map(memberId => {
-        return users.find(user => user.id === memberId)
+        return members.find(user => user.id === memberId)
     }).filter(Boolean)
+    
+    console.log("🚀 ~ MemberPicker ~ usersToShow:", usersToShow)
 
 
     return (
@@ -96,7 +95,7 @@ export function MemberPicker({ task, info, onUpdate }) {
                 >
                     <MemberTaskSelect
                         selectedMemberIds={selectedMemberIds}
-                        // onUpdate={addUser}
+                        members={members}
                         // groupId={ }
                         onClose={updateTaskMembers}
                     />

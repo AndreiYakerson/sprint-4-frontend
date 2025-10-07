@@ -1,9 +1,3 @@
-
-// SERVICES
-import { updateTask } from '../../../store/actions/board.actions'
-import { useSelector } from 'react-redux'
-import { showSuccessMsg } from '../../../services/event-bus.service'
-
 // ICONS
 import searchGalss from '/icons/search-galss.svg'
 import xMark from '/icons/x-mark.svg'
@@ -12,22 +6,14 @@ import inviteMember from '/icons/invite-member.svg'
 // COMPONENTS
 
 
-export function MemberTaskSelect({ selectedMemberIds, boardId, groupId, onClose, info, onUpdate }) {
+export function MemberTaskSelect({ selectedMemberIds, onClose, members }) {
 
 
-    const users = useSelector(state => state.userModule.users)
     function onSelectMember(member) {
         const taskMembersIds = [...selectedMemberIds, member.id ] 
-        // const updatedTask = structuredClone(task)
-        // updatedTask.memberIds.push(member)
-        // updateTask(boardId, groupId, updatedTask)
-        // showSuccessMsg(`Task updated`)
         onClose(taskMembersIds)
     }
-    // 1. Create a Set of IDs from the "fitted" list (the members)
-    // const fittedIds = new Set(selectedMemberIds?.map(member => member.id));
-    // 2. Filter the "to-be-shown" list (the users) to exclude those already fitted
-    const usersToShow = users.filter(user => !selectedMemberIds.includes(user.id));
+    const usersToShow = members.filter(user => !selectedMemberIds.includes(user.id));
 
     return (
         <div className="member-task-select">

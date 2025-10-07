@@ -1,16 +1,10 @@
 .member-picker {
     position: relative;
     display: flex;
-<<<<<<< HEAD:src/assets/styles/cmps/TaskCmps/MembersCmp/MemberSelectedPreview.css
-    place-content: center;
-
-    .plus-blue {
-=======
 cursor: pointer;
     .plus {
         position: relative;
         right: 14px;
->>>>>>> new11:src/assets/styles/cmps/TaskCmps/MembersCmp/MemberPicker.css
         opacity: 0;
     }
 
@@ -28,16 +22,8 @@ cursor: pointer;
     }
 
     .user-img {
-<<<<<<< HEAD:src/assets/styles/cmps/TaskCmps/MembersCmp/MemberSelectedPreview.css
-        display: block;
-        width: 30px;
-        height: 30px;
-        border-radius: 50%;
-        border: 2px solid var(--primary-background-color);
-=======
         display: flex;
         width: 35px;
->>>>>>> new11:src/assets/styles/cmps/TaskCmps/MembersCmp/MemberPicker.css
         border-radius: var(--border-radius-big);
         align-self: center;
     }

@@ -1,39 +1,33 @@
-import { Fragment, useState } from "react"
-import { useParams, Link, useNavigate } from "react-router-dom"
-import { useSelector } from "react-redux"
 
 // services
+import { useParams, Link, useNavigate } from "react-router-dom"
 import { useEffect, useState } from "react"
-import { useParams, useNavigate } from "react-router-dom"
 import { removeTask, updateTask } from "../../store/actions/board.actions.js"
 import { showErrorMsg, showSuccessMsg } from "../../services/event-bus.service"
 import { useSelector } from "react-redux"
 import { DatePicker } from "../TaskCmps/DateCmp/DatePicker.jsx"
 import { PriorityPicker } from "../TaskCmps/PriorityCmp/PriorityPicker.jsx"
-import { useSortable } from "@dnd-kit/sortable"
-import { CSS } from "@dnd-kit/utilities"
 
 // dnd kit
 import { useSortable } from "@dnd-kit/sortable"
 import { CSS } from "@dnd-kit/utilities"
-import { DragOverlay } from "@dnd-kit/core"
+// import { DragOverlay } from "@dnd-kit/core"
 
 // cmps
 // import { DynamicCmp } from "../DynamicCmp"
 import { TitleEditor } from "./TitleEditor"
 
 // icon
-import updateIcon from "/icons/update.svg"
+// import updateIcon from "/icons/update.svg"
 import { MemberPicker } from "../TaskCmps/MembersCmp/MemberPicker.jsx"
 import { StatusPicker } from "../TaskCmps/StatusPicker.jsx"
 
 
-import { FloatingContainerCmp } from "../FloatingContainerCmp.jsx"
-import { MemberTaskSelect } from "../TaskCmps/MembersCmp/MemberTaskSelect.jsx"
-import { PopUp } from "../PopUp.jsx"
-import { MemberSelectedPreview } from "../TaskCmps/MembersCmp/MemberSelectedPreview.jsx"
-import { DatePicker } from "../TaskCmps/DateCmp/DatePicker.jsx"
-import { PriorityPreview } from "../TaskCmps/PriorityCmp/PriorityPreview.jsx"
+// import { FloatingContainerCmp } from "../FloatingContainerCmp.jsx"
+// import { MemberTaskSelect } from "../TaskCmps/MembersCmp/MemberTaskSelect.jsx"
+// import { PopUp } from "../PopUp.jsx"
+// import { MemberSelectedPreview } from "../TaskCmps/MembersCmp/MemberSelectedPreview.jsx"
+// import { PriorityPreview } from "../TaskCmps/PriorityCmp/PriorityPreview.jsx"
 
 
 import { SvgIcon } from "../SvgIcon.jsx"
