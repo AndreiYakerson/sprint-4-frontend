@@ -11,6 +11,9 @@ import { BoardList } from "../Board/BoardList.jsx";
 import { HoveredTextCmp } from "../HoveredTextCmp.jsx";
 import { SvgIcon } from "../SvgIcon.jsx";
 
+import { PopUp } from "../PopUp.jsx";
+import { BoardEdit } from "../Board/BaordEdit.jsx";
+
 //images
 import favStarIcon from '/img/fav-star-icon.svg'
 
@@ -90,6 +93,10 @@ export function SideBar() {
                     <BoardList boards={boards} isSideBarDispaly={true} />
                 </div>
             </div>
+
+            <PopUp showCloseBtn={true}>
+                <BoardEdit />
+            </PopUp>
         </div>
     )
 }

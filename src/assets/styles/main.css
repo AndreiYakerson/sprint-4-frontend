@@ -57,5 +57,7 @@
 @import "cmps/board/BoardDetails";
 @import "cmps/board/BoardPreview.css";
 @import "cmps/board/BoardEdit.css";
+@import "cmps/board/BoardRemovdMsg.css";
+@import "cmps/board/BoardMneu.css";
 
 @import "cmps/StatusAnimation.css";

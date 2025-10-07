@@ -21,6 +21,7 @@ import {
     SET_GROUPS,
     SET_TASK_ID_TO_EDIT,
     SET_IS_BOARD_EDITOR_OPEN,
+    SET_BOARD_REMOVED_MSG,
 } from '../reducers/board.reducer'
 import { SET_SIDE_BAR_OPEN } from '../reducers/system.reducer'
 
@@ -191,6 +192,15 @@ export function setNewTaskIdToEdit(taskId) {
 export function setIsBoardEditorOpen(isOpen) {
     store.dispatch({ type: SET_IS_BOARD_EDITOR_OPEN, isOpen })
 }
+
+export function setBoard(board) {
+    store.dispatch({ type: SET_BOARD, board })
+}
+
+export function setBoardRemovedMsg(msg) {
+    store.dispatch({ type: SET_BOARD_REMOVED_MSG, msg })
+}
+
 
 
 // // Command Creators:

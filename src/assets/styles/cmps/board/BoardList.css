@@ -36,7 +36,11 @@
                 display: none;
             }
 
-
+            &:has(.menu-open) {
+                &:not(.active) {
+                    background-color: var(--primary-background-hover-color);
+                }
+            }
 
             &:hover {
                 box-shadow: none;
@@ -49,7 +53,7 @@
 
                 .board-info-items {
 
-                    .dost-btn {
+                    .board-menu-btn {
                         opacity: 1;
                     }
                 }
@@ -87,9 +91,18 @@
                     margin-inline-end: 8px;
                 }
 
-                .dost-btn {
+                .board-menu-btn {
+                    position: relative;
                     opacity: 0;
+
+                    &.menu-open {
+                        opacity: 1;
+                        background-color: var(--primary-selected-color);
+                    }
                 }
+
+
+
             }
         }
 

@@ -8,8 +8,6 @@ import { boardService } from '../services/board'
 
 // cmps
 import { BoardList } from '../cmps/Board/BoardList'
-import { PopUp } from '../cmps/PopUp'
-import { BoardEdit } from '../cmps/Board/BaordEdit'
 import { SvgIcon } from '../cmps/SvgIcon'
 
 
@@ -81,10 +79,6 @@ export function BoardIndex({ setIsSideBarOpen }) {
                 />}
             </div>
 
-
-            <PopUp showCloseBtn={true}>
-                <BoardEdit />
-            </PopUp>
 
         </section>
     )

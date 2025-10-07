@@ -4,13 +4,14 @@ import { useSelector } from 'react-redux'
 
 // services
 import { showSuccessMsg, showErrorMsg } from '../services/event-bus.service'
-import { addGroup, addTask, loadBoard } from '../store/actions/board.actions.js'
+import { addGroup, addTask, loadBoard, setBoardRemovedMsg } from '../store/actions/board.actions.js'
 
 // cmps
 import { GroupList } from '../cmps/group/GroupList.jsx'
 import { SortFilterCmp } from '../cmps/SortFilterCmp.jsx'
 import { TaskDetails } from '../cmps/Task/TaskDetails.jsx'
 import { SvgIcon } from '../cmps/SvgIcon.jsx'
+import { BoardRemovdMsg } from '../cmps/Board/BoardRemovdMsg.jsx'
 
 
 export function BoardDetails() {
@@ -19,6 +20,7 @@ export function BoardDetails() {
   const { boardId, taskId } = useParams()
 
   const board = useSelector(storeState => storeState.boardModule.board)
+  const boardRemovedMsg = useSelector(storeState => storeState.boardModule.boardRemovedMsg)
 
   const [task, setTask] = useState(null)
 
@@ -35,6 +37,7 @@ export function BoardDetails() {
 
   async function onLoadBoard(boardId, taskId) {
     try {
+      if (boardRemovedMsg) setBoardRemovedMsg('')
 
       await loadBoard(boardId)
 
@@ -93,6 +96,8 @@ export function BoardDetails() {
     }
   }
 
+
+  if (boardRemovedMsg && !board) return <BoardRemovdMsg removedMsg={boardRemovedMsg} />
 
   return (
     <section className="board-details">

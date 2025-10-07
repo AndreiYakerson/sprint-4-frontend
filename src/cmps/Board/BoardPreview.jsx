@@ -1,29 +1,108 @@
-import { useEffect, useState } from 'react'
+
+import { useLocation } from 'react-router'
+import { useState, useRef, useEffect } from 'react'
+
+// service
+import { showErrorMsg, showSuccessMsg } from '../../services/event-bus.service.js'
+import { removeBoard, setBoard, setBoardRemovedMsg, updateBoard } from '../../store/actions/board.actions.js'
+
 // cmps
 import { HoveredTextCmp } from '../HoveredTextCmp.jsx'
 import { SvgIcon } from '../SvgIcon.jsx'
+import { BoardMenu } from './BoardMenu.jsx'
 
 // images
 import boardItemLogo from '/img/board-item-img.svg'
+import { FloatingContainerCmp } from '../FloatingContainerCmp.jsx'
+import { TitleEditor } from '../Task/TitleEditor.jsx'
 
-export function BoardPreview({ board, isSideBarDispaly, onUpdateBoard }) {
-    // const [anchorEl, setAnchorEl] = useState(null)
+
+export function BoardPreview({ board, isSideBarDispaly }) {
+    const location = useLocation()
 
     const [isStarred, setIsStarred] = useState(board?.isStarred)
+    const [toRenameBoard, setToRenameBoard] = useState(false)
+    const [boardTitleToEdit, setoardTitleToEdit] = useState(board?.title)
+    const [isMenuOpen, setIsMenuOpen] = useState(false)
 
+    const btnRef = useRef(null)
+    const menuRef = useRef(null)
+
+    function toggleIsMenuOpen(ev) {
+        ev.stopPropagation()
+        setIsMenuOpen(!isMenuOpen)
+    }
+
+    function onCloseMenu() {
+        setIsMenuOpen(false)
+    }
+
+    function onSetRenameBoard(toRenameBoard) {
+        setToRenameBoard(toRenameBoard)
+    }
+
+    /// crudl fnc
+
+    function onOpenInNewTab() {
+        const url = window.location.origin + `/board/${board?._id}`
+        window.open(url, '_blank')
+    }
+
+
+    useEffect(() => {
+        if (board?.isStarred !== isStarred) {
+            setIsStarred(board?.isStarred)
+        }
+    }, [board])
 
 
     async function toggleIsStarred(isStarred) {
-        setIsStarred(isStarred)
 
+        setIsStarred(isStarred)
         try {
             await onUpdateBoard(board, { isStarred: isStarred })
         } catch (err) {
             setIsStarred(board?.isStarred)
         }
-
     }
 
+    async function onSetBoardTitleToRename(newTitle) {
+        setoardTitleToEdit(newTitle)
+        setToRenameBoard(false)
+        try {
+            await onUpdateBoard(board, { title: newTitle })
+        } catch (err) {
+            setoardTitleToEdit(board?.title)
+        }
+    }
+
+
+    async function onRemoveBoard(board) {
+        try {
+            await removeBoard(board?._id)
+            showSuccessMsg('Board removed')
+            if (location.pathname.includes(board?._id)) {
+                setBoard(null)
+                setBoardRemovedMsg(`“${board?.title}” board has been deleted`)
+            }
+        } catch (err) {
+            showErrorMsg('Cannot remove board')
+        }
+    }
+
+
+    async function onUpdateBoard(board, valsToUpdate) {
+
+        const boardToSave = { ...structuredClone(board), ...valsToUpdate }
+
+        try {
+            const savedBoard = await updateBoard(boardToSave)
+            showSuccessMsg(`Board ${savedBoard.title} updated`)
+        } catch (err) {
+            showErrorMsg('Cannot update board')
+            throw err;
+        }
+    }
 
 
     return (
@@ -36,23 +115,48 @@ export function BoardPreview({ board, isSideBarDispaly, onUpdateBoard }) {
             </div>
 
             <div className='board-info-items'>
-                {/* <HoveredTextCmp
-                    position="up"
-                    label="Dash Board"
-                >
-                    <SvgIcon iconName="board" size={isSideBarDispaly ? 16 : 22} colorName={isSideBarDispaly ? "currentColor" : ''} />
-                </HoveredTextCmp> */}
-
-                <SvgIcon iconName="board" size={isSideBarDispaly ? 16 : 22} colorName={isSideBarDispaly ? "currentColor" : ''} />
-
-
-                <div className='board-title'>{board.title}</div>
+                <SvgIcon
+                    iconName="board"
+                    size={isSideBarDispaly ? 16 : 22}
+                    colorName={isSideBarDispaly ? "currentColor" : ''}
+                />
 
                 {isSideBarDispaly
-                    ? <button className='dost-btn transparent' onClick={(ev) => ev.stopPropagation()}>
-                        <SvgIcon iconName="dots" size={16} colorName="currentColor" />
+                    ? <div className='board-title'>
+                        {toRenameBoard ? <TitleEditor
+                            info={{ currTitle: boardTitleToEdit, toRenameBoard: toRenameBoard }}
+                            onUpdate={onSetBoardTitleToRename}
+                            onSetRenameBoard={onSetRenameBoard}
+                        />
+                            : <span>{boardTitleToEdit}</span>
+                        }
+                    </div>
+                    : <div className='board-title'>{board.title}</div>
+                }
 
-                    </button>
+
+                {isSideBarDispaly
+                    ? <>
+                        <button
+                            className={`transparent board-menu-btn ${isMenuOpen ? "menu-open" : ""}`}
+                            onClick={toggleIsMenuOpen}
+                            ref={btnRef}
+                        >
+                            <SvgIcon iconName="dots" size={16} colorName="currentColor" />
+                        </button>
+
+                        {isMenuOpen && <FloatingContainerCmp anchorEl={btnRef.current} onClose={onCloseMenu}>
+                            <BoardMenu
+                                menuRef={menuRef}
+                                onCloseMenu={onCloseMenu}
+                                onOpenInNewTab={onOpenInNewTab}
+                                toggleIsStarred={() => toggleIsStarred(!isStarred)}
+                                onRemoveBoard={() => onRemoveBoard(board)}
+                                isStarred={isStarred}
+                                onRenameBoard={onSetRenameBoard}
+                            />
+                        </FloatingContainerCmp>}
+                    </>
 
                     : <button className='white square' onClick={(ev) => { ev.stopPropagation(), toggleIsStarred(!isStarred) }}>
                         <SvgIcon iconName={isStarred ? 'starFull' : 'star'}
@@ -65,6 +169,6 @@ export function BoardPreview({ board, isSideBarDispaly, onUpdateBoard }) {
 
             </div>
 
-        </article>)
+        </article >)
 }
 

@@ -4,7 +4,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom'
 // cmps
 import { BoardPreview } from './BoardPreview'
 
-export function BoardList({ boards, onRemoveBoard, onUpdateBoard, isSideBarDispaly = false }) {
+export function BoardList({ boards, isSideBarDispaly = false }) {
     const navigate = useNavigate()
 
     const location = useLocation()
@@ -21,13 +21,6 @@ export function BoardList({ boards, onRemoveBoard, onUpdateBoard, isSideBarDispa
         navigate(`/board/${boardId}`)
     }
 
-    function onUpdateTitle(board) {
-        const title = prompt('New title?', board.title).trim() || ''
-        if (title === '' || title === board.title) return
-
-        onUpdateBoard(board, { title: title })
-    }
-
 
     return <ul className={`board-list ${isSideBarDispaly ? "side-bar-dispaly" : ""}`}>
         {boards.map(board => {
@@ -35,12 +28,7 @@ export function BoardList({ boards, onRemoveBoard, onUpdateBoard, isSideBarDispa
                 className={`board-item ${location.pathname.includes(board._id) ? "active" : ""}`}
                 onClick={() => onNavigateToBoard(board?._id)}
             >
-                <BoardPreview board={board} isSideBarDispaly={isSideBarDispaly} onUpdateBoard={onUpdateBoard} />
-                <div className='board-actions flex' onClick={(ev) => ev.stopPropagation()}>
-                    <button onClick={() => onRemoveBoard(board._id)}>Remove</button>
-                    <button onClick={() => onUpdateTitle(board)}>Update</button>
-                    <Link to={`/board/${board._id}`} className='btn'>Details</Link>
-                </div>
+                <BoardPreview board={board} isSideBarDispaly={isSideBarDispaly} />
             </li>
         })
         }

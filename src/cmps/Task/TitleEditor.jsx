@@ -3,7 +3,7 @@ import { showErrorMsg } from "../../services/event-bus.service"
 import { useSelector } from "react-redux"
 import { setNewTaskIdToEdit } from "../../store/actions/board.actions"
 
-export function TitleEditor({ info, onUpdate }) {
+export function TitleEditor({ info, onUpdate, onSetRenameBoard }) {
 
     const [nameToEdit, setNameToEdit] = useState(info?.currTitle || '')
     const [isEditing, setIsEditing] = useState(false)
@@ -18,6 +18,12 @@ export function TitleEditor({ info, onUpdate }) {
 
     }, [newTaskIdToEdit])
 
+    useState(() => {
+        if (info?.toRenameBoard) {
+            setIsEditing(true)
+        }
+    }, [info])
+
     function saveChanges() {
         setIsEditing(false)
         const trimmedName = nameToEdit?.trim()
@@ -26,8 +32,14 @@ export function TitleEditor({ info, onUpdate }) {
             onUpdate(trimmedName)
             if (info?.placeholder) setNameToEdit('')
         } else if (!trimmedName) {
+            if (info?.toRenameBoard) {
+                setNameToEdit(info?.currTitle)
+                return onSetRenameBoard(false)
+            }
             if (!info?.placeholder) showErrorMsg(`Title can't be empty`)
             setNameToEdit(info?.currTitle)
+        } else if (info?.toRenameBoard) {
+            onSetRenameBoard(false)
         }
     }
 
