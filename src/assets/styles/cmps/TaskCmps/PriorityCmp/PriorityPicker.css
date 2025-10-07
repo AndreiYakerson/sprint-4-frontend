@@ -1,7 +1,9 @@
-.priority-preview {
+.priorit-picker {
     display: flex;
     place-content: center;
     align-items: center;
+    width: 144px;
+    color: var(--primary-background-color);
 }
 
 .priority-container {
@@ -22,7 +24,6 @@
             transition: opacity .5s ease;
         }
 
-
     }
 
 
@@ -30,7 +31,7 @@
         display: flex;
         flex-direction: column;
         flex-wrap: wrap;
-align-items: center;
+        align-items: center;
         max-height: 255px;
 
         gap: 8px;
@@ -53,7 +54,7 @@ align-items: center;
         line-height: 32px;
         text-align: center;
 
-        color: #fff;
+        color:var(--primary-background-color);
         border-radius: var(--border-radius-small);
         border: 1px solid var(--ui-border-color);
 

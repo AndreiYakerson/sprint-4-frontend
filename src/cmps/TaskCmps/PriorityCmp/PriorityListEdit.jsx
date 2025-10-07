@@ -12,7 +12,7 @@ import plus from '/icons/plus.svg'
 import xMark from '/icons/x-mark.svg'
 import moreIcon from '/icons/more.svg'
 
-export function PriorityListEdit({ labels, onUpdate, onClose }) {
+export function PriorityListEdit({ labels, onUpdateLabel, onClose }) {
     const [anchorEl, setAnchorEl] = useState()
     const [labelsToUpdate, setLabelsToUpdate] = useState(labels)
 
@@ -27,7 +27,7 @@ export function PriorityListEdit({ labels, onUpdate, onClose }) {
     function onRemoveLabel(id) {
         setLabelsToUpdate(prev => {
             const labels = prev.filter(label => label.id !== id)
-            onUpdate(labels)
+            onUpdateLabel(labels)
             return labels
         })
         showSuccessMsg(' Priority label removed')
@@ -38,7 +38,7 @@ export function PriorityListEdit({ labels, onUpdate, onClose }) {
         const newLabel = boardService.getEmptyPriorityLabel()
         setLabelsToUpdate(prev => {
             const labels = [...prev, newLabel]
-            onUpdate(labels)
+            onUpdateLabel(labels)
             return labels
         })
         showSuccessMsg('new Priority label added')
@@ -60,7 +60,7 @@ export function PriorityListEdit({ labels, onUpdate, onClose }) {
                             <input name='title'
                                 type="text"
                                 value={label.txt}
-                                onBlur={() => onUpdate(labelsToUpdate)}
+                                onBlur={() => onUpdateLabel(labelsToUpdate)}
                                 onKeyDown={ev => ev.key === 'Enter' && handelChange(ev, label.id)}
                                 onChange={(ev) => handelChange(ev, label.id)}
                             />
@@ -104,7 +104,7 @@ export function PriorityListEdit({ labels, onUpdate, onClose }) {
                 </li>
             </ul>
             <button onClick={() => {
-                onUpdate(labelsToUpdate)
+                onUpdateLabel(labelsToUpdate)
                 onClose()
             }}
                 className='edit-labels edit'> Apply </button>

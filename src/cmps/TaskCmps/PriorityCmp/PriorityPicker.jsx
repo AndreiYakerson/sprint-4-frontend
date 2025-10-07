@@ -5,25 +5,22 @@ import { PriorityList } from "./PriorityList";
 import { useSelector } from "react-redux";
 import { updateBoard } from "../../../store/actions/board.actions";
 
-export function PriorityPreview() {
+export function PriorityPicker({ info, onUpdate }) {
+    const {boardPriorities, taskPriority } = info
     const [isEditOpen, setIsEditOpen] = useState(false)
     const board = useSelector(state => state.boardModule.board)
 
-    function onSave(labels) {
-        const newBoard = { ...board, priorities: labels }
-        updateBoard(newBoard)
-        showSuccessMsg(' Priority label saved')
+    function onSaveTaskLabel(label) {
+        onUpdate(label)
         onClose()
     }
 
-    function onUpdate(labels) {
+    function UpdateBoardLabels(labels) {
         const newBoard = { ...board, priorities: labels }
         updateBoard(newBoard)
     }
 
     function onClose() {
-            console.log("🚀 ~ PriorityPreview ~ isEditOpen:", isEditOpen)
-
         setIsEditOpen(false)
         setAnchorEl(null)
     }
@@ -33,8 +30,10 @@ export function PriorityPreview() {
 
     const [anchorEl, setAnchorEl] = useState()
     return (
-        <div className="priority-preview"
+        <div className="priorit-picker"
+            style={{ background: `var(${taskPriority.cssVar})` }}
             onClick={(ev) => setAnchorEl(ev.currentTarget)}>
+            {taskPriority.txt}
             {anchorEl &&
                 <FloatingContainerCmp
                     anchorEl={anchorEl}
@@ -42,9 +41,9 @@ export function PriorityPreview() {
                     <div className={`priority-container ${isEditOpen}`}>
                         <div className={`priority-select ${isEditOpen}`}>
                             {!isEditOpen ?
-                                <PriorityList labels={board.priorities} switchEditMode={() => setIsEditOpen(prev => prev = !prev)} />
+                                <PriorityList labels={boardPriorities} onUpdateTask={onSaveTaskLabel} switchEditMode={() => setIsEditOpen(prev => prev = !prev)} />
                                 :
-                                <PriorityListEdit labels={board.priorities} onSave={onSave} onUpdate={onUpdate} onClose={onClose} />
+                                <PriorityListEdit labels={boardPriorities} onUpdateLabel={UpdateBoardLabels} onClose={onClose} />
                             }
 
                         </div>

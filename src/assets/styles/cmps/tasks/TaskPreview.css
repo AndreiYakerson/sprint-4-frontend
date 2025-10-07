@@ -171,9 +171,10 @@
        border-block-end: 1px solid var(--layout-border-color);
        border-inline-end: 1px solid var(--layout-border-color);
 
+
        &>* {
-           flex-grow: 1;
            text-align: center;
+           flex-grow: 1;
            align-content: center;
        }
 

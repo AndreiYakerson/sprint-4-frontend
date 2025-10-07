@@ -1,4 +1,4 @@
-import { Fragment, useState } from "react"
+import { Fragment, useEffect, useState } from "react"
 import { useParams, Link, useNavigate } from "react-router-dom"
 
 // services
@@ -22,18 +22,21 @@ import { PopUp } from "../PopUp.jsx"
 import { useSelector } from "react-redux"
 import { MemberSelectedPreview } from "../TaskCmps/MembersCmp/MemberSelectedPreview.jsx"
 import { DatePicker } from "../TaskCmps/DateCmp/DatePicker.jsx"
-import { PriorityPreview } from "../TaskCmps/PriorityCmp/PriorityPreview.jsx"
+import { PriorityPicker } from "../TaskCmps/PriorityCmp/PriorityPicker.jsx"
 import { useSortable } from "@dnd-kit/sortable"
 import { CSS } from "@dnd-kit/utilities"
 import { DragOverlay } from "@dnd-kit/core"
+import { useEffectUpdate } from "../../customHooks/useEffectUpdate.js"
 
 
 
 
 
 export function TaskPreview({ task, groupId, tasksLength }) {
+    console.log("🚀 ~ TaskPreview ~ task:", task)
     const navigate = useNavigate()
     const isFloatingOpen = useSelector(state => state.systemModule.isFloatingOpen)
+    const board = useSelector(state => state.boardModule.board)
 
     const [membersSelectEl, setMembersSelectEl] = useState(null)
     const [memberEl, setMemberEl] = useState(null)
@@ -44,7 +47,6 @@ export function TaskPreview({ task, groupId, tasksLength }) {
         transition: transition,
         transform: CSS.Transform.toString(transform),
     }
-
     const { boardId, taskId } = useParams()
 
     const [cmps, setCmps] = useState(
@@ -66,14 +68,91 @@ export function TaskPreview({ task, groupId, tasksLength }) {
                     selectedDate: task?.dueDate,
                 }
             },
+            // {
+            //     type: 'MemberPicker',
+            //     info: {
+            //         label: 'Members:',
+            //         propName: 'memberIds',
+            //         selectedMemberIds: task.memberIds || [],
+            //         members: board.members,
+            //     }
+            // },
+            // {
+            //     type: 'StatusPicker',
+            //     info: {
+            //         label: 'Status:',
+            //         propName: 'status',
+            //         selectedMemberIds: task.status,
+            //         statuses: _getStatuses(),
+            //     }
+            // },
+            {
+                type: 'PriorityPicker',
+                info: {
+                    label: 'priority:',
+                    propName: 'priority',
+                    taskPriority: task.priority,
+                    boardPriorities: board.priorities,
+                    boardId: board._id
+                }
+            },
         ]
     )
+
+
+    useEffect(() => {
+        setCmps ([
+            {
+                type: 'TitleEditor',
+                info: {
+                    taskId: task?.id,
+                    label: 'Title:',
+                    propName: 'title',
+                    currTitle: task?.title,
+                }
+            },
+            {
+                type: 'DatePicker',
+                info: {
+                    label: 'Due date:',
+                    propName: 'dueDate',
+                    selectedDate: task?.dueDate,
+                }
+            },
+            // {
+            //     type: 'MemberPicker',
+            //     info: {
+            //         label: 'Members:',
+            //         propName: 'memberIds',
+            //         selectedMemberIds: task.memberIds || [],
+            //         members: board.members,
+            //     }
+            // },
+            // {
+            //     type: 'StatusPicker',
+            //     info: {
+            //         label: 'Status:',
+            //         propName: 'status',
+            //         selectedMemberIds: task.status,
+            //         statuses: _getStatuses(),
+            //     }
+            // },
+            {
+                type: 'PriorityPicker',
+                info: {
+                    label: 'priority:',
+                    propName: 'priority',
+                    taskPriority: task.priority,
+                    boardPriorities: board.priorities,
+                    boardId: board._id
+                }
+            },
+        ])
+    }, [task, board])
 
     const cmpsOrder = ['StatusPicker', 'PriorityPicker', 'MemberPicker', 'DatePicker']
 
     async function updateCmpInfo(cmp, cmpInfoPropName, data, activityTitle) {
-
-        console.log('data:', data)
 
         const taskPropName = cmp.info.propName
         console.log(`Updating: ${taskPropName} to: `, data)
@@ -155,33 +234,36 @@ export function TaskPreview({ task, groupId, tasksLength }) {
             <div className="task-columns flex">
                 {cmpsOrder.map((colName, idx) => {
 
+                    // if (colName === 'PriorityPicker') {
+                    //     return <div style={{ cursor: 'pointer' }} key={colName} className={`column-cell ${colName}`}>
+                    //         <PriorityPicker />
+                    //     </div>
+                    // }
+
+                    // if (colName === 'MemberPicker') {
+                    //     return <div onClick={(ev) => setMembersSelectEl(ev.currentTarget)} style={{ cursor: 'pointer' }} key={colName} className={`column-cell ${colName}`}>
+                    //         <MemberSelectedPreview task={task} />
+
+                    //         {membersSelectEl &&
+                    //             < FloatingContainerCmp
+                    //                 anchorEl={membersSelectEl}
+                    //                 onClose={() => setMembersSelectEl(null)}
+                    //             >
+                    //                 <MemberTaskSelect
+                    //                     boardId={boardId}
+                    //                     groupId={groupId}
+                    //                     task={task}
+                    //                     onClose={() => setMembersSelectEl(null)}
+                    //                 />
+                    //             </FloatingContainerCmp>
+                    //         }
+                    //     </div>
+                    // } else
                     if (colName === 'PriorityPicker') {
-                        return <div style={{ cursor: 'pointer' }} key={colName} className={`column-cell ${colName}`}>
-                            <PriorityPreview />
-                        </div>
-                    }
-
-                    if (colName === 'MemberPicker') {
-                        return <div onClick={(ev) => setMembersSelectEl(ev.currentTarget)} style={{ cursor: 'pointer' }} key={colName} className={`column-cell ${colName}`}>
-                            <MemberSelectedPreview task={task} />
-
-                            {membersSelectEl &&
-                                < FloatingContainerCmp
-                                    anchorEl={membersSelectEl}
-                                    onClose={() => setMembersSelectEl(null)}
-                                >
-                                    <MemberTaskSelect
-                                        boardId={boardId}
-                                        groupId={groupId}
-                                        task={task}
-                                        onClose={() => setMembersSelectEl(null)}
-                                    />
-                                </FloatingContainerCmp>
-                            }
-                        </div>
-                    } else if (colName === 'DatePicker') {
-                        var cmp = cmps.find(cmp => cmp?.type === 'DatePicker')
-                        return <div className="column-cell" key={colName}>
+                        var cmp = cmps.find(cmp => cmp?.type === 'PriorityPicker')
+                        return <div className="column-cell"
+                            key={colName}
+                        >
                             {DynamicCmp({ cmp, updateCmpInfo })}
                         </div>
                     }
@@ -207,6 +289,10 @@ function DynamicCmp({ cmp, updateCmpInfo }) {
         case 'DatePicker':
             return <DatePicker info={cmp?.info} onUpdate={(data) => {
                 updateCmpInfo(cmp, 'selectedDate', data, `Changed due date to ${data}`)
+            }} />
+        case 'PriorityPicker':
+            return <PriorityPicker info={cmp?.info} onUpdate={(data) => {
+                updateCmpInfo(cmp, 'selectedPriority', data, `Changed due priority to ${data}`)
             }} />
         // case 'MemberPicker':
         //     return <MemberPicker info={cmp.info} onUpdate={(data) => {

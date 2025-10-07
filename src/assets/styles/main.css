@@ -40,7 +40,7 @@
 @import "cmps/TaskCmps/DatePicker/Calendar.css";
 
 /* Priority */
-@import "cmps/TaskCmps/PriorityCmp/PriorityPreview.css";
+@import "cmps/TaskCmps/PriorityCmp/PriorityPicker.css";
 
 
 @import "cmps/tasks/TaskList.css";
