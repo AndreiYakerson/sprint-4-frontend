@@ -2,15 +2,14 @@ import { eventBus, showSuccessMsg } from '../services/event-bus.service'
 import { useState, useEffect, useRef } from 'react'
 import { socketService, SOCKET_EVENT_REVIEW_ABOUT_YOU } from '../services/socket.service'
 
-import xMark from '/icons/x-mark.svg'
-import vMark from '/icons/v-makr.svg'
-import errorIcon from '/icons/error-icon.svg'
+import { SvgIcon } from './SvgIcon'
 
 
 export function UserMsg() {
 	const [msg, setMsg] = useState(null)
 	const [isVisible, setIsVisible] = useState(false)
 	const timeoutIdRef = useRef()
+	const closeMsgTimeOutRef = useRef()
 
 	useEffect(() => {
 		const unsubscribe = eventBus.on('show-msg', msg => {
@@ -18,8 +17,13 @@ export function UserMsg() {
 			setIsVisible(true)
 
 			if (timeoutIdRef.current) {
-				timeoutIdRef.current = null
 				clearTimeout(timeoutIdRef.current)
+				timeoutIdRef.current = null
+			}
+
+			if (closeMsgTimeOutRef.current) {
+				clearTimeout(closeMsgTimeOutRef.current)
+				closeMsgTimeOutRef.current = null
 			}
 
 			timeoutIdRef.current = setTimeout(closeMsg, 3000)
@@ -38,17 +42,17 @@ export function UserMsg() {
 	function closeMsg() {
 		setIsVisible(false)
 
-		setTimeout(() => {
+		closeMsgTimeOutRef.current = setTimeout(() => {
 			setMsg(null)
 		}, 300)
 	}
 
 	return (
 		<section className={`user-msg ${msg?.type} ${isVisible ? "visible" : ""}`}>
-			<img src={msg?.type === 'success' ? vMark : errorIcon} alt={msg?.type} className='icon big white' />
+			<SvgIcon iconName={msg?.type === 'success' ? 'vMark' : 'errorIcon'} size={22} colorName={'whiteText'} />
 			<span>{msg?.txt}</span>
 			<button onClick={closeMsg}>
-				<img src={xMark} alt="close btn" className='icon big white' />
+				<SvgIcon iconName='xMark' size={22} colorName={'whiteText'} />
 			</button>
 		</section>
 	)
