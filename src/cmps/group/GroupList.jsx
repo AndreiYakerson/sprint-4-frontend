@@ -18,14 +18,13 @@ import { GroupTitleEditor } from "./GroupTitleEditor";
 import { GroupPreview } from "./GroupPreview";
 import { GroupCollapsed } from "./GroupCollapsed";
 import { DndContext } from "@dnd-kit/core";
-import { SortableContext, verticalListSortingStrategy } from "@dnd-kit/sortable";
+import { arrayMove, SortableContext, verticalListSortingStrategy } from "@dnd-kit/sortable";
 
 
 export function GroupList({ groups, managingType }) {
     const { boardId } = useParams()
 
     const [localGroups, setLocalGroups] = useState(groups)
-    const [isDragging, setIsDragging] = useState(false)
 
 
     useEffect(() => {
@@ -65,12 +64,38 @@ export function GroupList({ groups, managingType }) {
         }
     }
 
+    function onDragEnd(event) {
+        const { active, over } = event;
 
+        if (!over || active.id === over.id) {
+            return;
+        }
+
+        const oldIndex = localGroups.findIndex((group) => group.id === active.id);
+        const newIndex = localGroups.findIndex((group) => group.id === over.id);
+
+        const reorderedGroups = arrayMove(localGroups, oldIndex, newIndex);
+        setLocalGroups(reorderedGroups);
+        onUpdateGroupsOrder(reorderedGroups, boardId)
+    }
+
+    async function onUpdateGroupsOrder(groups, boardId) {
+        try {
+            await updateGroupsOrder(groups, boardId)
+            showSuccessMsg('groups order updated successfully')
+        } catch (err) {
+            console.log(err)
+            showErrorMsg('cannot update groups order')
+        }
+
+    }
 
 
     return (
 
-        <DndContext>
+        <DndContext
+            onDragEnd={onDragEnd}
+        >
 
             <section
                 className="group-list"
@@ -89,6 +114,7 @@ export function GroupList({ groups, managingType }) {
                             onUpdateGroup={onUpdateGroup}
                             onRemoveGroup={onRemoveGroup}
                             onAddTask={onAddTask}
+                            groupsLength={localGroups.length}
                         />
 
                     ))}

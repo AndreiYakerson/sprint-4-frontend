@@ -44,6 +44,7 @@
 
             .task-count {
                 opacity: 1;
+                cursor: grab;
             }
         }
 
@@ -81,6 +82,9 @@
 
 .temporary-white-block {
     background-color: var(--primary-background-color);
+    &:hover {
+        cursor: grab;
+    }
 }
 
 

@@ -29,7 +29,6 @@ export function TaskList({ tasks, groupId }) {
     }, [tasks])
 
 
-    const previousOverId = useRef(null);
 
 
     function onDragOver(event) {
@@ -66,9 +65,9 @@ export function TaskList({ tasks, groupId }) {
         const newIndex = localTasks.findIndex((task) => task.id === over.id);
 
         const reorderedTasks = arrayMove(localTasks, oldIndex, newIndex);
-        setLocalTasks(reorderedTasks);
+        setLocalTasks(reorderedTasks)
         onUpdateTasksOrder(reorderedTasks, groupId)
-        setPlaceholderIndex(null); // 
+        setPlaceholderIndex(null)
     }
 
     async function onUpdateTasksOrder(tasks, groupId) {
@@ -108,6 +107,7 @@ export function TaskList({ tasks, groupId }) {
                                 <TaskPreview
                                     task={task}
                                     groupId={groupId}
+                                    tasksLength={localTasks.length}
                                 />
                             </div>
 

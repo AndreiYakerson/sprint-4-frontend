@@ -1,16 +1,31 @@
+import { useSortable } from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
 import { SvgIcon } from "../SvgIcon";
 
 
 
-
-export function GroupPreview({ group, GroupTitleEditor, managingType, TaskList, TitleEditor, onUpdateGroup, onRemoveGroup, onAddTask }) {
+export function GroupPreview({ group, groupsLength, GroupTitleEditor, managingType, TaskList, TitleEditor, onUpdateGroup, onRemoveGroup, onAddTask }) {
 
     const demoColumns = ["Status", "Priority", "Members", "Date"];
+
+    const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id: group.id, disabled: groupsLength < 2 })
+
+    const style = {
+        transition: transition,
+        transform: CSS.Transform.toString(transform),
+    }
 
 
     return <div
         className="group-container"
-        style={group.style}
+        ref={setNodeRef}
+        {...attributes}
+        style={{
+            ...style,
+            ...group.style,
+            opacity: isDragging ? 0.5 : 1,
+            zIndex: isDragging ? 10 : 'auto',
+        }}
     >
         <header
             className="group-header"
@@ -37,14 +52,14 @@ export function GroupPreview({ group, GroupTitleEditor, managingType, TaskList, 
                         onUpdate={(newVals) => onUpdateGroup(group, newVals)}
                     />
                 </div>
-                <div className="task-count">
+                <div className="task-count" {...listeners}>
                     {group?.tasks?.length > 0 ? `${group?.tasks?.length} Tasks`
                         : 'No Tasks'}
                 </div>
             </div>
 
 
-            <div className="temporary-white-block"></div>
+            <div className="temporary-white-block" {...listeners}></div>
 
             <div className="table-row table-header">
                 <div className="sticky-cell-wrapper">

@@ -26,14 +26,14 @@ import { SvgIcon } from "../SvgIcon.jsx"
 
 
 
-export function TaskPreview({ task, groupId }) {
+export function TaskPreview({ task, groupId, tasksLength }) {
     const navigate = useNavigate()
     const isFloatingOpen = useSelector(state => state.systemModule.isFloatingOpen)
 
     const [membersSelectEl, setMembersSelectEl] = useState(null)
     const [memberEl, setMemberEl] = useState(null)
 
-    const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id: task.id })
+    const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id: task.id, disabled: tasksLength < 2 })
 
     const style = {
         transition: transition,
