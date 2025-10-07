@@ -22,7 +22,7 @@ export function ActionsMenu({ style,
                 <span>Open in new tab</span>
             </li>}
             {onToggleIsItemOpen && <li className="menu-action" onClick={() => { onCloseMenu(), onToggleIsItemOpen() }}>
-                <SvgIcon iconName="open" size={18} colorName="secondaryText" />
+                <SvgIcon iconName={isItemOpen ? "close" : "open"} size={18} colorName="secondaryText" />
                 <span>{isItemOpen ? "Close item" : "Open item"}</span>
             </li>}
 

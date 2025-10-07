@@ -1,12 +1,9 @@
-
 // services
-import { useParams, Link, useNavigate } from "react-router-dom"
-import { useEffect, useState } from "react"
-import { removeTask, updateTask } from "../../store/actions/board.actions.js"
-import { showErrorMsg, showSuccessMsg } from "../../services/event-bus.service"
+import { useEffect, useRef, useState } from "react"
+import { useParams, useNavigate } from "react-router-dom"
 import { useSelector } from "react-redux"
-import { DatePicker } from "../TaskCmps/DateCmp/DatePicker.jsx"
-import { PriorityPicker } from "../TaskCmps/PriorityCmp/PriorityPicker.jsx"
+import { duplicateTask, removeTask, updateTask } from "../../store/actions/board.actions.js"
+import { showErrorMsg, showSuccessMsg } from "../../services/event-bus.service"
 
 // dnd kit
 import { useSortable } from "@dnd-kit/sortable"
@@ -14,41 +11,54 @@ import { CSS } from "@dnd-kit/utilities"
 // import { DragOverlay } from "@dnd-kit/core"
 
 // cmps
-// import { DynamicCmp } from "../DynamicCmp"
-import { TitleEditor } from "./TitleEditor"
+import { SvgIcon } from "../SvgIcon.jsx"
+import { FloatingContainerCmp } from "../FloatingContainerCmp.jsx"
+import { ActionsMenu } from "../ActionsMenu.jsx"
 
-// icon
-// import updateIcon from "/icons/update.svg"
+// Dynamic Cmps
+import { TitleEditor } from "./TitleEditor"
 import { MemberPicker } from "../TaskCmps/MembersCmp/MemberPicker.jsx"
 import { StatusPicker } from "../TaskCmps/StatusPicker.jsx"
+import { DatePicker } from "../TaskCmps/DateCmp/DatePicker.jsx"
+import { PriorityPicker } from "../TaskCmps/PriorityCmp/PriorityPicker.jsx"
 
 
-// import { FloatingContainerCmp } from "../FloatingContainerCmp.jsx"
-// import { MemberTaskSelect } from "../TaskCmps/MembersCmp/MemberTaskSelect.jsx"
-// import { PopUp } from "../PopUp.jsx"
-// import { MemberSelectedPreview } from "../TaskCmps/MembersCmp/MemberSelectedPreview.jsx"
-// import { PriorityPreview } from "../TaskCmps/PriorityCmp/PriorityPreview.jsx"
+export function TaskPreview({ task, taskIdx, groupId, tasksLength }) {
 
-
-import { SvgIcon } from "../SvgIcon.jsx"
-
-
-
-export function TaskPreview({ task, groupId, tasksLength }) {
-    const navigate = useNavigate()
-    const isFloatingOpen = useSelector(state => state.systemModule.isFloatingOpen)
-    const board = useSelector(state => state.boardModule.board)
-
-    const [membersSelectEl, setMembersSelectEl] = useState(null)
-    const [memberEl, setMemberEl] = useState(null)
-
-    const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id: task.id, disabled: tasksLength < 2 })
+    // dnd kit
+    const { attributes, listeners, setNodeRef,
+        transform, transition, isDragging } = useSortable({ id: task.id, disabled: tasksLength < 2 })
 
     const style = {
         transition: transition,
         transform: CSS.Transform.toString(transform),
     }
+
+
+
+    // const isFloatingOpen = useSelector(state => state.systemModule.isFloatingOpen)
+    // const [membersSelectEl, setMembersSelectEl] = useState(null)
+    // const [memberEl, setMemberEl] = useState(null)
+
+
+    const navigate = useNavigate()
     const { boardId, taskId } = useParams()
+
+    const [isMenuOpen, setIsMenuOpen] = useState(false)
+    const board = useSelector(state => state.boardModule.board)
+
+    const btnRef = useRef(null)
+    const menuRef = useRef(null)
+
+    function toggleIsMenuOpen(ev) {
+        ev.stopPropagation()
+        setIsMenuOpen(!isMenuOpen)
+    }
+
+    function onCloseMenu() {
+        setIsMenuOpen(false)
+    }
+    
 
     const [cmps, setCmps] = useState(
         [
@@ -198,6 +208,20 @@ export function TaskPreview({ task, groupId, tasksLength }) {
             : `/board/${boardId}/task/${task.id}`)
     }
 
+    async function onDuplicateTask(task) {
+        const taskCopy = structuredClone(task)
+        taskCopy.title = taskCopy.title + ' (copy)'
+        delete taskCopy?.id, delete taskCopy.createdAt
+
+        try {
+            await duplicateTask(boardId, groupId, taskCopy, taskIdx + 1)
+            showSuccessMsg('task duplicated to the board')
+        } catch (err) {
+            console.log(err)
+            showErrorMsg('cannot duplicate task')
+        }
+    }
+
 
 
     return (
@@ -207,13 +231,29 @@ export function TaskPreview({ task, groupId, tasksLength }) {
 
                 <div className="sticky-cell-wrapper" >
                     <div className="task-menu-wrapper">
-                        <button onClick={onRemoveTask} className="white">
+                        <button
+                            onClick={toggleIsMenuOpen}
+                            className={`white task-menu-btn ${isMenuOpen ? "menu-open" : ""}`}
+                            ref={btnRef}>
                             <SvgIcon
-                                iconName="trash"
-                                size={20}
+                                iconName="dots"
+                                size={16}
                                 colorName={'primaryText'}
                             /></button>
+
+                        {isMenuOpen && <FloatingContainerCmp anchorEl={btnRef.current} onClose={onCloseMenu}>
+                            <ActionsMenu
+                                menuRef={menuRef}
+                                onCloseMenu={onCloseMenu}
+                                onRemoveItem={() => onRemoveTask(task?.id)}
+                                onToggleIsItemOpen={() => onToggleTaskDetails()}
+                                isItemOpen={taskId === task?.id}
+                                onDuplicateItem={() => onDuplicateTask(task)}
+                            />
+                        </FloatingContainerCmp>}
+
                     </div>
+
 
                     <div className="table-border"></div>
                     <div className="task-select"></div>
@@ -273,7 +313,7 @@ export function TaskPreview({ task, groupId, tasksLength }) {
                 }
                 <div className="column-cell full"></div>
             </div >
-        </div>
+        </div >
     )
 }
 

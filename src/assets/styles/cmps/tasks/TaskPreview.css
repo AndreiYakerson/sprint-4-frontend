@@ -12,6 +12,11 @@
 
        &:has(:focus, .focus) {
            background-color: var(--primary-selected-color-rgb);
+
+           .sticky-cell-wrapper {
+               background-color: var(--primary-selected-color-rgb);
+           }
+
        }
 
 
@@ -20,6 +25,10 @@
                background-color: var(--pulse-background-color-rgb);
                box-shadow: 4px 3px 6px -3px var(--ui-border-color);
                z-index: 3;
+
+               .sticky-cell-wrapper {
+                   background-color: var(--pulse-background-color-rgb);
+               }
            }
 
            .sticky-cell-wrapper {
@@ -96,6 +105,7 @@
                }
            }
 
+
            &>* {
                width: 24px;
                aspect-ratio: 1/1;
@@ -103,6 +113,16 @@
                margin-inline-end: 4px;
                margin-block-end: 4px;
                opacity: 0;
+           }
+
+           .task-menu-btn {
+               position: relative;
+
+               &.menu-open {
+                   position: relative;
+                   background-color: var(--primary-selected-color);
+                   opacity: 1;
+               }
            }
        }
 
@@ -187,4 +207,3 @@
            border-inline-end: 0;
        }
    }
-

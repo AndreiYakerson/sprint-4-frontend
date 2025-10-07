@@ -22,6 +22,7 @@ import {
     SET_TASK_ID_TO_EDIT,
     SET_IS_BOARD_EDITOR_OPEN,
     SET_BOARD_REMOVED_MSG,
+    DUPLICATE_TASK,
 } from '../reducers/board.reducer'
 import { SET_SIDE_BAR_OPEN } from '../reducers/system.reducer'
 
@@ -165,6 +166,18 @@ export async function addTask(boardId, groupId, title, method = '') {
         throw err
     }
 }
+
+
+export async function duplicateTask(boardId, groupId, taskCopy, taskCopyIdx) {
+    try {
+        const savedTask = await boardService.duplicateTask(boardId, groupId, taskCopy, taskCopyIdx)
+        store.dispatch({ type: DUPLICATE_TASK, groupId, taskCopy: savedTask, taskCopyIdx })
+    } catch (err) {
+        console.log('Cannot duplicate task', err)
+        throw err
+    }
+}
+
 
 
 export async function updateTask(boardId, groupId, taskToUpdate) {
