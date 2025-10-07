@@ -144,7 +144,7 @@ export function TaskPreview({ task, groupId, tasksLength }) {
         ])
     }, [task, board])
 
-    // const cmpsOrder = ['StatusPicker', 'PriorityPicker', 'MemberPicker', 'DatePicker']
+    const cmpsOrder = ['StatusPicker', 'PriorityPicker', 'MemberPicker', 'DatePicker']
 
     async function updateCmpInfo(cmp, cmpInfoPropName, data, activityTitle) {
 
@@ -224,27 +224,69 @@ export function TaskPreview({ task, groupId, tasksLength }) {
             }
 
 
-
-
             <div className="task-columns flex">
-                {cmps.map(cmp => {
+                {cmpsOrder.map((colName, idx) => {
 
-                    // 🛑 Skip the TitleEditor, as it's handled in the sticky header.
-                    if (cmp.type === 'TitleEditor') return null;
+                    // if (colName === 'PriorityPicker') {
+                    //     return <div style={{ cursor: 'pointer' }} key={colName} className={`column-cell ${colName}`}>
+                    //         <PriorityPreview />
+                    //     </div>
+                    // }
 
-                    return (
-                        <div className="column-cell" key={cmp.type}>
-                            {/* DynamicCmp handles mapping the cmp.type to the correct component (e.g., StatusPicker) */}
-                            <DynamicCmp cmp={cmp} updateCmpInfo={updateCmpInfo} />
+                    // if (colName === 'MemberPicker') {
+                    //     return <div onClick={(ev) => setMembersSelectEl(ev.currentTarget)} style={{ cursor: 'pointer' }} key={colName} className={`column-cell ${colName}`}>
+                    //         <MemberSelectedPreview task={task} />
+
+                    //         {membersSelectEl &&
+                    //             < FloatingContainerCmp
+                    //                 anchorEl={membersSelectEl}
+                    //                 onClose={() => setMembersSelectEl(null)}
+                    //             >
+                    //                 <MemberTaskSelect
+                    //                     boardId={boardId}
+                    //                     groupId={groupId}
+                    //                     task={task}
+                    //                     onClose={() => setMembersSelectEl(null)}
+                    //                 />
+                    //             </FloatingContainerCmp>
+                    //         }
+                    //     </div>
+                    // } else 
+                    if (colName === 'StatusPicker') {
+                        var cmp = cmps.find(cmp => cmp?.type === 'StatusPicker')
+                        return <div className="column-cell" key={colName}>
+                            {DynamicCmp({ cmp, updateCmpInfo })}
                         </div>
-                    );
-                })}
-
+                    }
+                    if (colName === 'MemberPicker') {
+                        var cmp = cmps.find(cmp => cmp?.type === 'MemberPicker')
+                        return <div className="column-cell" key={colName}>
+                            {DynamicCmp({ cmp, updateCmpInfo })}
+                        </div>
+                    }
+                    if (colName === 'PriorityPicker') {
+                        var cmp = cmps.find(cmp => cmp?.type === 'PriorityPicker')
+                        return <div className="column-cell" key={colName}>
+                            {DynamicCmp({ cmp, updateCmpInfo })}
+                        </div>
+                    }
+                    if (colName === 'DatePicker') {
+                        var cmp = cmps.find(cmp => cmp?.type === 'DatePicker')
+                        return <div className="column-cell" key={colName}>
+                            {DynamicCmp({ cmp, updateCmpInfo })}
+                        </div>
+                    }
+                    else {
+                        return <div className="column-cell" key={idx}></div>
+                    }
+                })
+                }
                 <div className="column-cell full"></div>
             </div >
         </div>
     )
 }
+
 
 
 

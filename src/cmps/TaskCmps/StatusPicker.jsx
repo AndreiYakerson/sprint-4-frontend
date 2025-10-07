@@ -9,7 +9,6 @@ import { PriorityList } from "./PriorityCmp//PriorityList";
 import { FloatingContainerCmp } from "../FloatingContainerCmp.jsx";
 
 export function StatusPicker({ info, onUpdate }) {
-    console.log("🚀 ~ StatusPicker ~ info:", info)
     const { selectedStatus, statuses } = info
     const [isEditOpen, setIsEditOpen] = useState(false)
     const board = useSelector(state => state.boardModule.board)
@@ -33,7 +32,6 @@ export function StatusPicker({ info, onUpdate }) {
 
     const status = selectedStatus ?  selectedStatus : statuses.find(status => status.id === 'default')
 
-    console.log("🚀 ~ StatusPicker ~ status:", status)
 
 
     const [anchorEl, setAnchorEl] = useState()
