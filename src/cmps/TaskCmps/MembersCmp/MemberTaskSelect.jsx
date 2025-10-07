@@ -1,29 +1,37 @@
-import searchGalss from '/icons/search-galss.svg'
-import xMark from '/icons/x-mark.svg'
-import inviteMember from '/icons/invite-member.svg'
+
+// SERVICES
 import { updateTask } from '../../../store/actions/board.actions'
 import { useSelector } from 'react-redux'
 import { showSuccessMsg } from '../../../services/event-bus.service'
 
-export function MemberTaskSelect({ task, boardId, groupId, onClose }) {
+// ICONS
+import searchGalss from '/icons/search-galss.svg'
+import xMark from '/icons/x-mark.svg'
+import inviteMember from '/icons/invite-member.svg'
+
+// COMPONENTS
+
+
+export function MemberTaskSelect({ selectedMemberIds, boardId, groupId, onClose, info, onUpdate }) {
+
 
     const users = useSelector(state => state.userModule.users)
-
     function onSelectMember(member) {
-        const updatedTask = structuredClone(task)
-        updatedTask.addedMembers.push(member)
-        updateTask(boardId, groupId, updatedTask)
-        showSuccessMsg(`Task updated`)
-        onClose()
+        const taskMembersIds = [...selectedMemberIds, member.id ] 
+        // const updatedTask = structuredClone(task)
+        // updatedTask.memberIds.push(member)
+        // updateTask(boardId, groupId, updatedTask)
+        // showSuccessMsg(`Task updated`)
+        onClose(taskMembersIds)
     }
     // 1. Create a Set of IDs from the "fitted" list (the members)
-    const fittedIds = new Set(task?.addedMembers.map(member => member.id));
+    // const fittedIds = new Set(selectedMemberIds?.map(member => member.id));
     // 2. Filter the "to-be-shown" list (the users) to exclude those already fitted
-    const usersToShow = users.filter(user => !fittedIds.has(user.id));
+    const usersToShow = users.filter(user => !selectedMemberIds.includes(user.id));
 
     return (
         <div className="member-task-select">
-            {/* <div className="search-bar">
+            <div className="search-bar">
                 <span className='search'>
                     <img src={searchGalss}
                         className='icon big search'
@@ -38,7 +46,7 @@ export function MemberTaskSelect({ task, boardId, groupId, onClose }) {
                         alt="Info Icon"
                     />
                 </span>
-            </div> */}
+            </div>
             <span className='suggested'>Suggested People</span>
             <section className="user-list">
                 {usersToShow.map((member, idx) => {
@@ -57,10 +65,10 @@ export function MemberTaskSelect({ task, boardId, groupId, onClose }) {
                     </button>
                 })}
 
-                {/* <button className="user flex">
+                 <button className="user flex">
                     <span className="img-container"> <img className="icon invite-member" src={inviteMember} alt="User Image" /></span>
                     {' Invite a new member by email'}
-                </button> */}
+                </button>
             </section>
 
         </div>

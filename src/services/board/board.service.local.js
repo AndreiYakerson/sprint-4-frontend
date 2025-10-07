@@ -1,5 +1,6 @@
 
 import { storageService } from '../async-storage.service'
+import { userService } from '../user'
 import { getRandomGroupColor, makeId } from '../util.service'
 // import { userService } from '../user'
 
@@ -223,6 +224,51 @@ async function removeTask(boardId, groupId, taskId) {
         throw err
     }
 }
+const DefaultPriorities = [
+    {
+        id: makeId(),
+        txt: 'Critical'
+        , cssVar: '--primary-text-color'
+    },
+    {
+        id: makeId(),
+        txt: 'High'
+        , cssVar: '--group-title-clr7'
+    },
+    {
+        id: makeId(),
+        txt: 'medium'
+        , cssVar: '--group-title-clr8'
+    },
+    {
+        id: makeId(),
+        txt: 'Low'
+        , cssVar: '--group-title-clr9'
+    },
+]
+
+const DefaultStatuses = [
+    {
+        id: makeId(),
+        txt: 'Done'
+        , cssVar: '--group-title-clr2'
+    },
+    {
+        id: makeId(),
+        txt: 'Working on it'
+        , cssVar: '--group-title-clr15'
+    },
+    {
+        id: makeId(),
+        txt: 'Stuck'
+        , cssVar: '--group-title-clr11'
+    },
+    {
+        id: 'default',
+        txt: 'Not Started'
+        , cssVar: '--group-title-clr18'
+    },
+]
 
 
 
@@ -234,6 +280,10 @@ function _setBaordToSave({ title = 'New board', managingType = 'items', privacy 
         managingType,
         isStarred: false,
         createdAt: Date.now(),
+        priorities: DefaultPriorities,
+        statuses: DefaultStatuses,
+        // Demo Members
+        members: userService.createDemoUsers(5),
         groups: [
             {
                 id: makeId(),
@@ -245,13 +295,16 @@ function _setBaordToSave({ title = 'New board', managingType = 'items', privacy 
                         id: makeId(),
                         title: 'Item 1',
                         createdAt: Date.now(),
-                        addedMembers: []
+                        memberIds: [],
+                        priority: { txt: 'Default Label', cssVar: '--group-title-clr18', id: makeId() },
+                        
                     },
                     {
                         id: makeId(),
                         title: 'Item 2',
                         createdAt: Date.now(),
-                        addedMembers: []
+                        memberIds: [],
+                        priority: { txt: 'Default Label', cssVar: '--group-title-clr18', id: makeId() }
                     },
                 ],
                 style: {
@@ -279,6 +332,7 @@ function _getEmptyTask(title = 'New Task') {
         id: makeId(),
         title: title,
         createdAt: Date.now(),
-        addedMembers: []
+        memberIds: [],
+        priority: { txt: 'Default Label', cssVar: '--group-title-clr18', id: makeId() }
     }
 }

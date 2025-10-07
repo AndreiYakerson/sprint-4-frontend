@@ -3,8 +3,15 @@ import { useParams, Link, useNavigate } from "react-router-dom"
 import { useSelector } from "react-redux"
 
 // services
+import { useEffect, useState } from "react"
+import { useParams, useNavigate } from "react-router-dom"
 import { removeTask, updateTask } from "../../store/actions/board.actions.js"
 import { showErrorMsg, showSuccessMsg } from "../../services/event-bus.service"
+import { useSelector } from "react-redux"
+import { DatePicker } from "../TaskCmps/DateCmp/DatePicker.jsx"
+import { PriorityPicker } from "../TaskCmps/PriorityCmp/PriorityPicker.jsx"
+import { useSortable } from "@dnd-kit/sortable"
+import { CSS } from "@dnd-kit/utilities"
 
 // dnd kit
 import { useSortable } from "@dnd-kit/sortable"
@@ -14,6 +21,13 @@ import { DragOverlay } from "@dnd-kit/core"
 // cmps
 // import { DynamicCmp } from "../DynamicCmp"
 import { TitleEditor } from "./TitleEditor"
+
+// icon
+import updateIcon from "/icons/update.svg"
+import { MemberPicker } from "../TaskCmps/MembersCmp/MemberPicker.jsx"
+import { StatusPicker } from "../TaskCmps/StatusPicker.jsx"
+
+
 import { FloatingContainerCmp } from "../FloatingContainerCmp.jsx"
 import { MemberTaskSelect } from "../TaskCmps/MembersCmp/MemberTaskSelect.jsx"
 import { PopUp } from "../PopUp.jsx"
@@ -29,6 +43,7 @@ import { SvgIcon } from "../SvgIcon.jsx"
 export function TaskPreview({ task, groupId, tasksLength }) {
     const navigate = useNavigate()
     const isFloatingOpen = useSelector(state => state.systemModule.isFloatingOpen)
+    const board = useSelector(state => state.boardModule.board)
 
     const [membersSelectEl, setMembersSelectEl] = useState(null)
     const [memberEl, setMemberEl] = useState(null)
@@ -39,18 +54,36 @@ export function TaskPreview({ task, groupId, tasksLength }) {
         transition: transition,
         transform: CSS.Transform.toString(transform),
     }
-
     const { boardId, taskId } = useParams()
 
     const [cmps, setCmps] = useState(
         [
             {
-                type: 'TitleEditor',
+                type: 'StatusPicker',
                 info: {
-                    taskId: task?.id,
-                    label: 'Title:',
-                    propName: 'title',
-                    currTitle: task?.title,
+                    label: 'Status:',
+                    propName: 'status',
+                    selectedStatus: task.status,
+                    statuses: board.statuses,
+                }
+            },
+            {
+                type: 'MemberPicker',
+                info: {
+                    label: 'Members:',
+                    propName: 'memberIds',
+                    selectedMemberIds: task.memberIds || [],
+                    members: board.members,
+                }
+            },
+            {
+                type: 'PriorityPicker',
+                info: {
+                    label: 'priority:',
+                    propName: 'priority',
+                    taskPriority: task.priority,
+                    boardPriorities: board.priorities,
+                    boardId: board._id
                 }
             },
             {
@@ -61,14 +94,74 @@ export function TaskPreview({ task, groupId, tasksLength }) {
                     selectedDate: task?.dueDate,
                 }
             },
+            {
+                type: 'TitleEditor',
+                info: {
+                    taskId: task?.id,
+                    label: 'Title:',
+                    propName: 'title',
+                    currTitle: task?.title,
+                }
+
+            },
         ]
     )
+    //QUESTION  Updates the view on change to task and board
+    // אני חושש שזה גורם לרינדור מיותר 
+    useEffect(() => {
+        setCmps([
+
+            {
+                type: 'StatusPicker',
+                info: {
+                    label: 'Status:',
+                    propName: 'status',
+                    selectedStatus: task.status,
+                    statuses: board.statuses,
+                }
+            },
+            {
+                type: 'MemberPicker',
+                info: {
+                    label: 'Members:',
+                    propName: 'memberIds',
+                    selectedMemberIds: task.memberIds || [],
+                    members: board.members,
+                }
+            },
+            {
+                type: 'PriorityPicker',
+                info: {
+                    label: 'priority:',
+                    propName: 'priority',
+                    taskPriority: task.priority,
+                    boardPriorities: board.priorities,
+                    boardId: board._id
+                }
+            },
+            {
+                type: 'DatePicker',
+                info: {
+                    label: 'Due date:',
+                    propName: 'dueDate',
+                    selectedDate: task?.dueDate,
+                }
+            },
+            {
+                type: 'TitleEditor',
+                info: {
+                    taskId: task?.id,
+                    label: 'Title:',
+                    propName: 'title',
+                    currTitle: task?.title,
+                }
+            },
+        ])
+    }, [task, board])
 
     const cmpsOrder = ['StatusPicker', 'PriorityPicker', 'MemberPicker', 'DatePicker']
 
     async function updateCmpInfo(cmp, cmpInfoPropName, data, activityTitle) {
-
-        console.log('data:', data)
 
         const taskPropName = cmp.info.propName
         console.log(`Updating: ${taskPropName} to: `, data)
@@ -150,35 +243,28 @@ export function TaskPreview({ task, groupId, tasksLength }) {
             }
 
 
-
             <div className="task-columns flex">
                 {cmpsOrder.map((colName, idx) => {
 
-                    if (colName === 'PriorityPicker') {
-                        return <div style={{ cursor: 'pointer' }} key={colName} className={`column-cell ${colName}`}>
-                            <PriorityPreview />
+                    if (colName === 'StatusPicker') {
+                        var cmp = cmps.find(cmp => cmp?.type === 'StatusPicker')
+                        return <div className="column-cell" key={colName}>
+                            {DynamicCmp({ cmp, updateCmpInfo })}
                         </div>
                     }
-
                     if (colName === 'MemberPicker') {
-                        return <div onClick={(ev) => setMembersSelectEl(ev.currentTarget)} style={{ cursor: 'pointer' }} key={colName} className={`column-cell ${colName}`}>
-                            <MemberSelectedPreview task={task} />
-
-                            {membersSelectEl &&
-                                < FloatingContainerCmp
-                                    anchorEl={membersSelectEl}
-                                    onClose={() => setMembersSelectEl(null)}
-                                >
-                                    <MemberTaskSelect
-                                        boardId={boardId}
-                                        groupId={groupId}
-                                        task={task}
-                                        onClose={() => setMembersSelectEl(null)}
-                                    />
-                                </FloatingContainerCmp>
-                            }
+                        var cmp = cmps.find(cmp => cmp?.type === 'MemberPicker')
+                        return <div className="column-cell" key={colName}>
+                            {DynamicCmp({ cmp, updateCmpInfo })}
                         </div>
-                    } else if (colName === 'DatePicker') {
+                    }
+                    if (colName === 'PriorityPicker') {
+                        var cmp = cmps.find(cmp => cmp?.type === 'PriorityPicker')
+                        return <div className="column-cell" key={colName}>
+                            {DynamicCmp({ cmp, updateCmpInfo })}
+                        </div>
+                    }
+                    if (colName === 'DatePicker') {
                         var cmp = cmps.find(cmp => cmp?.type === 'DatePicker')
                         return <div className="column-cell" key={colName}>
                             {DynamicCmp({ cmp, updateCmpInfo })}
@@ -197,20 +283,25 @@ export function TaskPreview({ task, groupId, tasksLength }) {
 
 
 
+
 function DynamicCmp({ cmp, updateCmpInfo }) {
     switch (cmp?.type) {
-        // case 'StatusPicker':
-        //     return <StatusPicker info={cmp.info} onUpdate={(data) => {
-        //         updateCmpInfo(cmp, 'selectedStatus', data, `Changed Status to ${data}`)
-        //     }} />
+        case 'StatusPicker':
+            return <StatusPicker info={cmp.info} onUpdate={(data) => {
+                updateCmpInfo(cmp, 'selectedStatus', data, `Changed Status to ${data}`)
+            }} />
         case 'DatePicker':
             return <DatePicker info={cmp?.info} onUpdate={(data) => {
                 updateCmpInfo(cmp, 'selectedDate', data, `Changed due date to ${data}`)
             }} />
-        // case 'MemberPicker':
-        //     return <MemberPicker info={cmp.info} onUpdate={(data) => {
-        //         updateCmpInfo(cmp, 'selectedMemberIds', data, `Changed members`)
-        //     }} />
+        case 'PriorityPicker':
+            return <PriorityPicker info={cmp?.info} onUpdate={(data) => {
+                updateCmpInfo(cmp, 'selectedPriority', data, `Changed due priority to ${data}`)
+            }} />
+        case 'MemberPicker':
+            return <MemberPicker info={cmp.info} onUpdate={(data) => {
+                updateCmpInfo(cmp, 'selectedMemberIds', data, `Changed members`)
+            }} />
         default:
             return <p>{cmp?.type}</p>
     }

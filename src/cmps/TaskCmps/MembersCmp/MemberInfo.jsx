@@ -1,10 +1,6 @@
 import person from '/icons/person.svg'
-import { useSelector } from 'react-redux'
-
 
 export function MemberInfo({ user }) {
-    const isFloatingOpen = useSelector(state => state.systemModule.isFloatingOpen)
-    const isPopUpOpen = useSelector(state => state.systemModule.isPopUpOpen)
     const timeNow = new Date().toLocaleTimeString()
     const curLocation = ' pardes-hana'
 
@@ -33,8 +29,6 @@ export function MemberInfo({ user }) {
                     </section>
 
                 </div>
-
-
             </article>
         </div>
     )
