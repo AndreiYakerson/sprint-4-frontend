@@ -1,10 +1,13 @@
-.member-selected-preview {
+.member-picker {
+    position: relative;
     display: flex;
-    place-content: center;
+    cursor: pointer;
+        place-content: center;
 
-    .plus-blue {
+    .plus {
+        position: absolute;
+        right: 14px;
         opacity: 0;
-        margin-inline-start: -8.px
     }
 
     &:hover .plus-blue {
@@ -13,7 +16,7 @@
 
     .cmp-img {
         display: flex;
-        margin-inline: 34px;
+        /* margin-inline: 34px; */
     }
 
     .img-wrapper {
@@ -21,11 +24,8 @@
     }
 
     .user-img {
-        display: block;
-        width: 30px;
-        height: 30px;
-        border-radius: 50%;
-        border: 2px solid var(--primary-background-color);
+        display: flex;
+        width: 35px;
         border-radius: var(--border-radius-big);
         align-self: center;
     }
