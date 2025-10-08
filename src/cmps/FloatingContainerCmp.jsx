@@ -22,10 +22,12 @@ export function FloatingContainerCmp({
     }, [])
 
 
+    console.log('Here:', centeredX, showTriangle, enforceLimit)
+
     useEffect(() => {
         if (!anchorEl || !enforceLimit) return
 
-        const HEADER_HEIGHT = 210
+        const HEADER_HEIGHT = 160
 
         const checkAnchorVisibility = () => {
             const rect = anchorEl.getBoundingClientRect()

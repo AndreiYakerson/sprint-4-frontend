@@ -4,7 +4,7 @@ import { DateTime, Info, Interval } from "luxon"
 // cmps
 import { SvgIcon } from "../../SvgIcon.jsx"
 
-export function Calendar({ dateInfo, onUpDate, onSetIsEditing, position }) {
+export function Calendar({ dateInfo, onUpDate, onSetIsEditing }) {
     const today = DateTime.local().setLocale("en")
     const weekDays = Info.weekdays("short", { locale: "en" })
     const months = Info.months("long", { locale: "en" })
@@ -94,7 +94,7 @@ export function Calendar({ dateInfo, onUpDate, onSetIsEditing, position }) {
     }
 
     return (
-        <section className={`calendar-container ${position} focus`} onClick={(ev) => ev.stopPropagation()}>
+        <section className={`calendar-container focus`} onClick={(ev) => ev.stopPropagation()}>
             <div className="btns-actions flex justify-between">
                 <button onClick={onToday}>Today</button>
                 <button onClick={toggleIsTimeShow} className={`white icon-svg ${isTimeShow ? "active" : ""}`}>

@@ -3,10 +3,6 @@
     background-color: inherit;
     cursor: pointer;
 
-    &:has(.calendar-container) {
-        position: relative;
-    }
-
     .select {
         opacity: 0;
         display: flex;

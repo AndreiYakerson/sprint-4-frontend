@@ -1,34 +1,14 @@
 .calendar-container {
     cursor: auto;
-    position: absolute;
-    left: 50%;
-    translate: -50%;
     background-color: var(--primary-background-color);
-    z-index: 1000;
 
-    border-radius: 4px;
-    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, .17);
-    border: 1px solid;
-    border-color: var(--layout-border-color);
-    outline: 1px solid transparent;
 
-    min-width: 280px;
-    padding: var(--spacing-small);
+
+    width: 280px;
 
     font-size: 14px;
     font-weight: 400;
     font-family: inherit;
-
-
-    &.down {
-        top: 100%;
-    }
-
-    &.up {
-        bottom: 100%;
-    }
-
-
 
     button {
         line-height: normal;

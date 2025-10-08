@@ -100,6 +100,10 @@ export function MemberPicker({ info, onUpdate }) {
                 memberEl && < FloatingContainerCmp
                     anchorEl={memberEl}
                     onClose={onClearHover}
+
+                    centeredX={true}
+                    showTriangle={true}
+                    enforceLimit={true}
                 >
                     <MemberInfo
                         user={hoveredUser}
@@ -111,6 +115,9 @@ export function MemberPicker({ info, onUpdate }) {
                 membersSelectEl && < FloatingContainerCmp
                     anchorEl={membersSelectEl}
                     onClose={closeMemberSelect}
+                    centeredX={true}
+                    showTriangle={true}
+                    enforceLimit={true}
                 >
                     <MemberTaskSelect
                         onRemove={onRemoveMember}

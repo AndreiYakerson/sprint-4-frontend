@@ -55,7 +55,10 @@ export function LabelSelect({ info, onUpdate }) {
       {labelToShow?.txt}
 
       {anchorEl && (
-        <FloatingContainerCmp anchorEl={anchorEl} onClose={onClose}>
+        <FloatingContainerCmp
+          anchorEl={anchorEl}
+          onClose={onClose}
+        >
           <div className={`priority-container ${isEditOpen}`}>
             <div className={`priority-select ${isEditOpen}`}>
               {!isEditOpen ? (
@@ -74,7 +77,8 @@ export function LabelSelect({ info, onUpdate }) {
             </div>
           </div>
         </FloatingContainerCmp>
-      )}
-    </div>
+      )
+      }
+    </div >
   )
 }

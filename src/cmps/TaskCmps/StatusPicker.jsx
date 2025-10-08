@@ -23,7 +23,7 @@ export function StatusPicker({ info, onUpdate }) {
 
 
     function onSaveLabel(label) {
-        const newLabel = ({...label, updatedAt: Date.now()})
+        const newLabel = ({ ...label, updatedAt: Date.now() })
         console.log("🚀 ~ onSaveLabel ~ newLabel:", newLabel)
         setSelectedLabelId(newLabel.id)
         onUpdate(newLabel)
@@ -57,8 +57,13 @@ export function StatusPicker({ info, onUpdate }) {
 
             {anchorEl &&
                 <FloatingContainerCmp
-                anchorEl={anchorEl}
-                onClose={onClose}>
+                    anchorEl={anchorEl}
+                    onClose={onClose}
+
+                    centeredX={true}
+                    showTriangle={true}
+                    enforceLimit={true}
+                >
                     <div className={`priority-container ${isEditOpen}`}>
                         <div className={`priority-select ${isEditOpen}`}>
                             {!isEditOpen ?

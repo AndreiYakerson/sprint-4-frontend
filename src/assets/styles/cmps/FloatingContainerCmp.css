@@ -15,9 +15,16 @@
 
     transition: width .1s;
 
-    /* &>* {
-        overflow: "auto";
-    } */
+    &:has(.calendar-container) {
+        border-radius: 4px;
+        box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, .17);
+        border: 1px solid;
+        border-color: var(--layout-border-color);
+        outline: 1px solid transparent;
+        padding: var(--spacing-small);
+
+    }
+
 
     &.triangle {
         &.up {

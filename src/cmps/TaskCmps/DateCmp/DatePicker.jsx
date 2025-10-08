@@ -2,11 +2,11 @@ import { useEffect, useRef, useState, useLayoutEffect } from "react"
 import { Calendar } from "./Calendar"
 import { SvgIcon } from "../../SvgIcon"
 import { functions, functionsIn } from "lodash"
+import { FloatingContainerCmp } from "../../FloatingContainerCmp"
 
 export function DatePicker({ info, onUpdate }) {
     const [dateToEdit, setDateToEdit] = useState(info?.selectedDate)
     const [isEditing, setIsEditing] = useState(false)
-    const [position, setPosition] = useState("down")
     const datePickerRef = useRef()
 
 
@@ -24,46 +24,6 @@ export function DatePicker({ info, onUpdate }) {
     function toggleIsEditing() {
         setIsEditing(!isEditing)
     }
-
-    useEffect(() => {
-        if (isEditing) {
-            window.addEventListener('mousedown', handleClickOutside)
-            window.addEventListener('keydown', handleEsc)
-
-        }
-        return () => {
-            window.removeEventListener('mousedown', handleClickOutside)
-            window.removeEventListener('keydown', handleEsc)
-        }
-    }, [isEditing])
-
-    function handleEsc(ev) {
-        if (ev.key === "Escape") setIsEditing(false)
-    }
-
-
-    function handleClickOutside({ target }) {
-        const elDatePicker = datePickerRef.current
-
-        if (target !== elDatePicker && !elDatePicker.contains(target)) {
-            setIsEditing(false)
-        }
-    }
-
-    useLayoutEffect(() => {
-        if (isEditing && datePickerRef.current) {
-            const rect = datePickerRef.current.getBoundingClientRect()
-            const spaceBelow = window.innerHeight - rect.bottom
-            const spaceAbove = rect.top
-
-            if (spaceBelow < 300 && spaceAbove > spaceBelow) {
-                setPosition("up")
-            } else {
-                setPosition("down")
-            }
-        }
-    }, [isEditing])
-
 
 
     function setDate(date) {
@@ -100,12 +60,19 @@ export function DatePicker({ info, onUpdate }) {
                 </div>
             }
 
-            {isEditing && <Calendar
-                dateInfo={dateToEdit}
-                onUpDate={onSaveDate}
-                onSetIsEditing={onSetIsEditing}
-                position={position}
-            />}
+
+            {isEditing && <FloatingContainerCmp
+                anchorEl={datePickerRef.current}
+                onClose={() => onSetIsEditing(false)}
+                enforceLimit={true}
+                centeredX={true}
+            >
+                <Calendar
+                    dateInfo={dateToEdit}
+                    onUpDate={onSaveDate}
+                    onSetIsEditing={onSetIsEditing}
+                />
+            </FloatingContainerCmp>}
 
         </section>
     )

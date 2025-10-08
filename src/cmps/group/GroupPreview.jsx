@@ -87,7 +87,13 @@ export function GroupPreview({ group, groupsLength, managingType, TaskList,
                         />
                     </button>
 
-                    {isMenuOpen && <FloatingContainerCmp anchorEl={btnRef.current} onClose={onCloseMenu}>
+                    {isMenuOpen && <FloatingContainerCmp
+                        anchorEl={btnRef.current}
+                        onClose={onCloseMenu}
+                        offsetX={40}
+                        offsetY={35}
+                        enforceLimit={true}
+                    >
                         <ActionsMenu
                             menuRef={menuRef}
                             onCloseMenu={onCloseMenu}

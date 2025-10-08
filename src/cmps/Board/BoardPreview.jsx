@@ -146,7 +146,12 @@ export function BoardPreview({ board, isSideBarDispaly }) {
                             <SvgIcon iconName="dots" size={16} colorName="currentColor" />
                         </button>
 
-                        {isMenuOpen && <FloatingContainerCmp anchorEl={btnRef.current} onClose={onCloseMenu}>
+                        {isMenuOpen && <FloatingContainerCmp
+                            anchorEl={btnRef.current}
+                            onClose={onCloseMenu}
+                            offsetX={40}
+                            offsetY={30}
+                        >
                             <ActionsMenu
                                 menuRef={menuRef}
                                 onCloseMenu={onCloseMenu}

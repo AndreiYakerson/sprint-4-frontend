@@ -60,7 +60,11 @@ export function PriorityPicker({ info, onUpdate }) {
             {anchorEl &&
                 <FloatingContainerCmp
                     anchorEl={anchorEl}
-                    onClose={onClose}>
+                    onClose={onClose}
+                    centeredX={true}
+                    showTriangle={true}
+                    enforceLimit={true}
+                >
                     <div className={`priority-container ${isEditOpen}`}>
                         <div className={`priority-select ${isEditOpen}`}>
                             {!isEditOpen ?
