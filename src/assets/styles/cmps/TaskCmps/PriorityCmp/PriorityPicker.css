@@ -1,7 +1,7 @@
 .priority-picker {
 
     /* //TODO some conflict with the grid */
-    /* position: relative; */
+    position: relative;
 
     display: flex;
     place-content: center;

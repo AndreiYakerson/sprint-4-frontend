@@ -42,8 +42,8 @@ export function StatusPicker({ info, onUpdate }) {
             style={{ background: `var(${status.cssVar})` }}
             onClick={(ev) => setAnchorEl(ev.currentTarget)}
         >
-            {/* <StatusAnimation color={`var(${status.cssVar})`} /> */}
             {status.txt}
+            <StatusAnimation color={`var(${status.cssVar})`} />
             {anchorEl &&
                 <FloatingContainerCmp
                     anchorEl={anchorEl}
