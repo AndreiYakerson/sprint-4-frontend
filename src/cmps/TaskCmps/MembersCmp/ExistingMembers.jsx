@@ -8,7 +8,7 @@ export function ExistingMembers({members,onRemove}) {
             return <section >
                 <span className='user-label'>
                     <img src={member.imgUrl} alt="Member Image" />
-                    {member.fullname}
+                    <span className="user-name">{member.fullname}</span>
                     <button className="remove-btn"
                     onClick={(ev)=>{
                         ev.stopPropagation()

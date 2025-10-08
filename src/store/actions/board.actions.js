@@ -58,10 +58,8 @@ export async function addBoard(board) {
 // UPDATE
 
 export async function updateBoard(board) {
-    console.log("🚀 ~ updateBoard ~ board:", board)
     try {
         const savedBoard = await boardService.save(board)
-        console.log("🚀 ~ updateBoard ~ savedBoard:", savedBoard)
         store.dispatch({ type: UPDATE_BOARD, board: savedBoard })
         store.dispatch({ type: SET_BOARD, board: savedBoard })
         return savedBoard

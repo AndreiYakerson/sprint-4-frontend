@@ -41,7 +41,6 @@ export function MemberPicker({ info, onUpdate }) {
     function onRemoveMember(memberId) {
         const memberIds = [...selectedMemberIds.filter(id => id !== memberId)]
         onUpdate(memberIds)
-
     }
 
     function updateTaskMembers(memberIds) {
