@@ -67,7 +67,6 @@ export function MemberPicker({ info, onUpdate }) {
                                     className={`img-wrapper ${isAnimation ? 'heartbeat ' : ''}`}
                                     onMouseLeave={onClearHover}
                                     onMouseOver={(ev) => onSetHoveredUser(member, ev.currentTarget)}
-                                    onClick={() => onRemoveMember(member.id)}
                                 >
                                     <img src={member.imgUrl} alt={member.fullname} className="user-img" />
                                 </div>
