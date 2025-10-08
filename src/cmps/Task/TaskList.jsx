@@ -8,8 +8,9 @@ import { showErrorMsg, showSuccessMsg } from "../../services/event-bus.service.j
 
 // cmps
 import { TaskPreview } from "../Task/TaskPreview"
-import { closestCorners, DndContext, MouseSensor, useSensor, useSensors } from "@dnd-kit/core"
+import { closestCorners, DndContext, DragOverlay, MouseSensor, useSensor, useSensors } from "@dnd-kit/core"
 import { arrayMove, SortableContext, verticalListSortingStrategy } from "@dnd-kit/sortable"
+import { TaskOverlay } from "./TaskOverlay.jsx"
 
 // dnd
 
@@ -21,6 +22,7 @@ export function TaskList({ tasks, groupId }) {
     const { boardId } = useParams()
 
     const [localTasks, setLocalTasks] = useState(tasks)
+    const [activeId, setActiveId] = useState(null);
 
 
     useEffect(() => {
@@ -49,8 +51,14 @@ export function TaskList({ tasks, groupId }) {
     }
 
 
+    function handleDragStart(event) {
+        setActiveId(event.active.id);
+    }
+
     function handleDragEnd(event) {
         const { active, over } = event;
+
+        setActiveId(null);
 
         // setIsDragging(false)
 
@@ -77,6 +85,7 @@ export function TaskList({ tasks, groupId }) {
         <DndContext
             collisionDetection={closestCorners}
             sensors={sensors}
+            onDragStart={handleDragStart}
             onDragEnd={handleDragEnd}
         >
 
@@ -103,6 +112,29 @@ export function TaskList({ tasks, groupId }) {
                     })}
                 </SortableContext>
 
+                    {/* <DragOverlay>
+                        {activeId ? (
+                            <div className="table-row drag-preview">
+                                <TaskPreview
+                                    task={localTasks.find(task => task.id === activeId)}
+                                    groupId={groupId}
+                                    isDragPreview
+                                />
+                            </div>
+                        ) : null}
+                    </DragOverlay> */}
+                    
+                    <DragOverlay>
+                        {activeId ? (
+                            <div className="table-row drag-preview">
+                                <TaskOverlay
+                                    task={localTasks.find(task => task.id === activeId)}
+                                    groupId={groupId}
+                                    isDragPreview
+                                />
+                            </div>
+                        ) : null}
+                    </DragOverlay>
             </section >
 
         </DndContext>

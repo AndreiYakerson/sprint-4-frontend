@@ -7,6 +7,17 @@
        background-color: var(--primary-background-color);
        margin-inline-start: 36px;
 
+       &.drag-preview {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        grid-column: 1/-1;
+        rotate: 1deg;
+        translate
+        opacity: .8;
+        background-color: rgb(19, 157, 203);
+       }
+
+
 
        &:has(:focus, .focus) {
            background-color: var(--primary-selected-color-rgb);
