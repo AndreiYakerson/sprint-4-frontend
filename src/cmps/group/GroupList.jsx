@@ -15,7 +15,7 @@ import { addGroup, addTask, removeGroup, setNewGroupIdToEdit, updateGroup, updat
 import { TaskList } from "../Task/TaskList";
 import { GroupPreview } from "./GroupPreview";
 import { GroupCollapsed } from "./GroupCollapsed";
-import { DndContext, DragOverlay } from "@dnd-kit/core";
+import { DndContext, DragOverlay, MouseSensor, useSensor, useSensors } from "@dnd-kit/core";
 import { arrayMove, SortableContext, verticalListSortingStrategy } from "@dnd-kit/sortable";
 
 
@@ -25,6 +25,16 @@ export function GroupList({ groups, managingType }) {
     const [localGroups, setLocalGroups] = useState(groups)
     const [isDragging, setIsDragging] = useState(false)
     const [activeId, setActiveId] = useState(null);
+
+    const mouseSensor = useSensor(MouseSensor, {
+        activationConstraint: {
+            distance: 15,
+            // delay: 0,
+            // tolerance: 50, 
+        },
+    });
+
+    const sensors = useSensors(mouseSensor);
 
 
     useEffect(() => {
@@ -124,6 +134,7 @@ export function GroupList({ groups, managingType }) {
     return (
 
         <DndContext
+            sensors={sensors}
             onDragStart={onDragStart}
             onDragEnd={onDragEnd}
         >
