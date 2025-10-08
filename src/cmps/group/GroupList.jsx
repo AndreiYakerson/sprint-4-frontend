@@ -15,7 +15,7 @@ import { addGroup, addTask, removeGroup, setNewGroupIdToEdit, updateGroup, updat
 import { TaskList } from "../Task/TaskList";
 import { GroupPreview } from "./GroupPreview";
 import { GroupCollapsed } from "./GroupCollapsed";
-import { DndContext, DragOverlay, MouseSensor, useSensor, useSensors } from "@dnd-kit/core";
+import { closestCorners, DndContext, DragOverlay, MouseSensor, useSensor, useSensors } from "@dnd-kit/core";
 import { arrayMove, SortableContext, verticalListSortingStrategy } from "@dnd-kit/sortable";
 
 
@@ -134,6 +134,7 @@ export function GroupList({ groups, managingType }) {
     return (
 
         <DndContext
+            collisionDetection={closestCorners}
             sensors={sensors}
             onDragStart={onDragStart}
             onDragEnd={onDragEnd}
