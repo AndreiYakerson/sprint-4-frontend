@@ -1,7 +1,7 @@
 
 export function StatusAnimation({ color }) {
    const varColor = color.replace(/var\((--[^)]+)\)/, '$1')
-    console.log(color);
+    // console.log(color);
     
 
     const rgbColor = getCssVarAsRgb(varColor)
