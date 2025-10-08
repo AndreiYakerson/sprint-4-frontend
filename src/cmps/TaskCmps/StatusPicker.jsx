@@ -7,7 +7,6 @@ import { useSelector } from "react-redux";
 import { LabelsListEdit } from "./PriorityCmp/LabelsListEdit.jsx";
 import { LabelsList } from "./PriorityCmp//LabelsList";
 import { FloatingContainerCmp } from "../FloatingContainerCmp.jsx";
-import { showSuccessMsg } from "../../services/event-bus.service.js";
 
 export function StatusPicker({ info, onUpdate }) {
     const { selectedStatus, statuses } = info
@@ -23,8 +22,10 @@ export function StatusPicker({ info, onUpdate }) {
 
 
     function onSaveLabel(label) {
-        setSelectedLabelId(label.id)
-        onUpdate(label)
+        const newLabel = ({...label, updatedAt: Date.now()})
+        console.log("🚀 ~ onSaveLabel ~ newLabel:", newLabel)
+        setSelectedLabelId(newLabel.id)
+        onUpdate(newLabel)
         onClose()
     }
 

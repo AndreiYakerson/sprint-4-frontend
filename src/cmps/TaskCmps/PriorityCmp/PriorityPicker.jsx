@@ -1,6 +1,7 @@
 
+
 // SERVICES
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { updateBoard } from "../../../store/actions/board.actions";
 import { useSelector } from "react-redux";
 
@@ -11,34 +12,49 @@ import { FloatingContainerCmp } from "../../FloatingContainerCmp";
 
 export function PriorityPicker({ info, onUpdate }) {
     const { boardPriorities, taskPriority } = info
+    const [anchorEl, setAnchorEl] = useState()
     const [isEditOpen, setIsEditOpen] = useState(false)
+    const [labels, setLabels] = useState(boardPriorities)
+    const [selectedLabelId, setSelectedLabelId] = useState(taskPriority?.id)
     const board = useSelector(state => state.boardModule.board)
+    const label = labels.find(l => l.id === selectedLabelId)
+
+
+    useEffect(() => {
+        setLabels(boardPriorities)
+    }, [boardPriorities])
+
 
     function onSaveLabel(label) {
-        onUpdate(label)
+        const newLabel = ({ ...label, updatedAt: Date.now() })
+        console.log("🚀 ~ onSaveLabel ~ newLabel:", newLabel)
+        setSelectedLabelId(newLabel.id)
+        onUpdate(newLabel)
         onClose()
     }
 
     function onUpdateLabels(labels) {
         const newBoard = { ...board, priorities: labels }
         updateBoard(newBoard)
+        setLabels(labels)
     }
 
     function onClose() {
         setIsEditOpen(false)
         setAnchorEl(null)
     }
-
     const editMode = !isEditOpen ? 'apply' : ''
 
+    const labelToShow = label ? label : labels.find(label => label.id === 'default')
 
-    const [anchorEl, setAnchorEl] = useState()
     //FIXME  להפוך את זה לקומפוננטה אחת לבחירה של לייבלים
     return (
         <div className="priority-picker"
-            style={{ background: `var(${taskPriority.cssVar})` }}
+            style={{ background: `var(${labelToShow?.cssVar})` }}
             onClick={(ev) => setAnchorEl(ev.currentTarget)}>
-            {taskPriority.txt}
+            {labelToShow?.txt}
+
+
             {anchorEl &&
                 <FloatingContainerCmp
                     anchorEl={anchorEl}
@@ -46,10 +62,11 @@ export function PriorityPicker({ info, onUpdate }) {
                     <div className={`priority-container ${isEditOpen}`}>
                         <div className={`priority-select ${isEditOpen}`}>
                             {!isEditOpen ?
-                                <LabelsList labels={boardPriorities} onSaveLabel={onSaveLabel} switchEditMode={() => setIsEditOpen(prev => prev = !prev)} />
+                                <LabelsList labels={labels} onSaveLabel={onSaveLabel} switchEditMode={() => setIsEditOpen(prev => prev = !prev)} />
                                 :
-                                <LabelsListEdit labels={boardPriorities} onUpdateLabels={onUpdateLabels} onClose={onClose} />
+                                <LabelsListEdit labels={labels} onUpdateLabels={onUpdateLabels} onClose={onClose} />
                             }
+
                         </div>
                     </div>
 
