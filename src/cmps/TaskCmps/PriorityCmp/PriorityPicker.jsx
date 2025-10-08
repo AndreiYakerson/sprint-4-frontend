@@ -9,6 +9,7 @@ import { useSelector } from "react-redux";
 import { LabelsListEdit } from "./LabelsListEdit";
 import { LabelsList } from "./LabelsList";
 import { FloatingContainerCmp } from "../../FloatingContainerCmp";
+import { StatusAnimation } from "../../StatusAnimation";
 
 export function PriorityPicker({ info, onUpdate }) {
     const { boardPriorities, taskPriority } = info

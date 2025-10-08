@@ -1,12 +1,21 @@
 .priority-picker {
+
+    /* //TODO some conflict with the grid */
+    position: relative;
+
     display: flex;
     place-content: center;
     align-items: center;
-
-
+    
+    
     width: 144px;
     color: var(--primary-background-color);
     cursor: pointer;
+    
+    &:hover .status-animation {
+        scale: 1;
+    }
+    
 }
 
 .priority-container {
@@ -14,6 +23,7 @@
     min-height: fit-content;
     gap: 8px;
     padding: 16px 24px 8px;
+
 
 }
 
