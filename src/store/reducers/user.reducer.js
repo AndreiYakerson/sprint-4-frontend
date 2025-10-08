@@ -41,6 +41,7 @@ export function userReducer(state = initialState, action = {}) {
             }
             break
         case SET_USERS:
+            
             newState = { ...state, users: action.users }
             break
         case SET_SCORE:

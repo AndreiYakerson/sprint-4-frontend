@@ -12,13 +12,14 @@ import { SortFilterCmp } from '../cmps/SortFilterCmp.jsx'
 import { TaskDetails } from '../cmps/Task/TaskDetails.jsx'
 import { SvgIcon } from '../cmps/SvgIcon.jsx'
 import { BoardRemovdMsg } from '../cmps/Board/BoardRemovdMsg.jsx'
+import { AppLoader } from '../cmps/AppLoader.jsx'
 
 
 export function BoardDetails() {
   const navigate = useNavigate()
 
   const { boardId, taskId } = useParams()
-
+  const isAppLoading = useSelector(state => state.systemModule.isAppLoading)
   const board = useSelector(storeState => storeState.boardModule.board)
   const boardRemovedMsg = useSelector(storeState => storeState.boardModule.boardRemovedMsg)
 
@@ -41,7 +42,7 @@ export function BoardDetails() {
 
       await loadBoard(boardId)
 
-      if (taskId) setTaskForDetails(taskId, board)
+      if (taskId && board) setTaskForDetails(taskId, board)
       else if (task) setTask(null)
 
     } catch (err) {
@@ -97,6 +98,7 @@ export function BoardDetails() {
   }
 
 
+  if (isAppLoading) return <AppLoader />
   if (boardRemovedMsg && !board) return <BoardRemovdMsg removedMsg={boardRemovedMsg} />
 
   return (

@@ -5,56 +5,43 @@ import { useSelector } from 'react-redux'
 
 export function FloatingContainerCmp({ anchorEl, children, onClose }) {
     const isPopUpOpen = useSelector(state => state.systemModule.isPopUpOpen)
-    
+
     const [style, setStyle] = useState({})
     const [isVisible, setIsVisible] = useState(false)
     const popupRef = useRef(null)
 
-
-
     useEffect(() => {
-        if (isPopUpOpen) return null
+        if (isPopUpOpen) return
         onSetFloatingIsOpen(true)
         return () => onSetFloatingIsOpen(false)
     }, [])
 
-
-    // Close on outside click
-    function handleClickOutside(e) {
-        setTimeout(() => {
+    // --- Close when clicking outside ---
+    useEffect(() => {
+        function handleClickOutside(e) {
             if (!popupRef.current || !anchorEl) return
             const clickedInside = e.target.closest('.fcc-container')
             const clickedAnchor = anchorEl.contains(e.target)
             if (!clickedInside && !clickedAnchor) onClose()
-        }, 0)
-    }
+        }
 
-    useLayoutEffect(() => {
         document.addEventListener('mousedown', handleClickOutside)
-        return () => {
-            document.removeEventListener('mousedown', handleClickOutside)
-        }
-    }, [anchorEl])
+        return () => document.removeEventListener('mousedown', handleClickOutside)
+    }, [anchorEl, onClose])
 
+    // --- Positioning logic ---
     useLayoutEffect(() => {
-        if (!anchorEl || !popupRef.current) {
-            setIsVisible(false)
-            setStyle({})
-            return
-        }
+        if (!anchorEl || !popupRef.current) return
 
-        const id = setTimeout(() => {
-            // Get anchor and popup metrics
+        const updatePosition = () => {
             const anchorRect = anchorEl.getBoundingClientRect()
             const popupEl = popupRef.current
             const popupHeight = popupEl.offsetHeight
             const popupWidth = popupEl.offsetWidth
-
             const windowHeight = window.innerHeight
             const windowWidth = window.innerWidth
             const SPACING = 10
 
-            // Calculate vertical position
             let top
             const spaceBelow = windowHeight - anchorRect.bottom
             if (popupHeight + SPACING < spaceBelow) {
@@ -64,33 +51,40 @@ export function FloatingContainerCmp({ anchorEl, children, onClose }) {
             } else {
                 top = anchorRect.bottom + window.scrollY + SPACING
             }
-            // Calculate horizontal position
+
             let left = anchorRect.left + window.scrollX
             if (left + popupWidth > windowWidth - SPACING) {
                 left = anchorRect.right + window.scrollX - popupWidth
                 if (left < SPACING) left = SPACING
             }
-            // Set initial style with scale(0) and opacity 0
+
             setStyle({
+                position: 'absolute',
                 top,
                 left,
                 zIndex: 1000,
                 transformOrigin: 'top center',
-                transform: 'scale(0)',
-                opacity: 0,
-                transition: 'transform 0.3s ease, opacity 0.3s ease',
+                transform: 'scale(1)',
+                opacity: 1,
+                transition: 'transform 0.2s ease, opacity 0.2s ease',
             })
+            setIsVisible(true)
+        }
 
-            setIsVisible(false)
-            setTimeout(() => setIsVisible(true), 10)// reset animation state
-        }, 0)
+        // Run immediately
+        updatePosition()
 
-
-        // Trigger scale up animation shortly after render
-        return () => clearTimeout(id)
+        // Update on scroll/resize
+        window.addEventListener('scroll', updatePosition, true)
+        window.addEventListener('resize', updatePosition)
+        return () => {
+            window.removeEventListener('scroll', updatePosition, true)
+            window.removeEventListener('resize', updatePosition)
+        }
     }, [anchorEl])
 
-    // Update style based on isVisible to scale up/down
+    if (!anchorEl) return null
+
     useLayoutEffect(() => {
         setStyle(prev => ({
             ...prev,
@@ -99,18 +93,16 @@ export function FloatingContainerCmp({ anchorEl, children, onClose }) {
         }))
     }, [isVisible])
 
-    if (!anchorEl) return null
-
-
     return createPortal(
         <div
             className="fcc-container"
             ref={popupRef}
             style={style}
-            onClick={e => e.stopPropagation()} 
+            onClick={e => e.stopPropagation()}
         >
             {children}
         </div>,
         document.getElementById('portal-root')
     )
 }
+

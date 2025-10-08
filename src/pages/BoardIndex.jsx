@@ -9,10 +9,12 @@ import { boardService } from '../services/board'
 // cmps
 import { BoardList } from '../cmps/Board/BoardList'
 import { SvgIcon } from '../cmps/SvgIcon'
+import { AppLoader } from '../cmps/AppLoader'
 
 
 export function BoardIndex({ setIsSideBarOpen }) {
 
+    const isAppLoading = useSelector(state => state.systemModule.isAppLoading)
     const boards = useSelector(storeState => storeState.boardModule.boards)
     const [filterBy, setFilterBy] = useState(boardService.getDefaultFilter())
     const [isCollapse, setIsCollapse] = useState(false)
@@ -48,6 +50,7 @@ export function BoardIndex({ setIsSideBarOpen }) {
         setIsCollapse(!isCollapse)
     }
 
+    if (isAppLoading) return <AppLoader />
     return (
         <section className="board-index">
             <header className='board-index-header'>

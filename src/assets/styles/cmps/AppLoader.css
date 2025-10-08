@@ -1,0 +1,5 @@
+.app-loader {
+    display: grid;
+    place-content: center;
+    height: 70%;
+}

@@ -1,5 +1,5 @@
 
-import { IS_FLOATING_OPEN, IS_POPUP_ON, SET_SIDE_BAR_OPEN } from '../reducers/system.reducer.js'
+import { IS_FLOATING_OPEN, IS_POPUP_ON, SET_IS_APP_LOADING, SET_SIDE_BAR_OPEN } from '../reducers/system.reducer.js'
 import { store } from '../store'
 
 
@@ -28,4 +28,9 @@ export async function onSetFloatingIsOpen(value) {
         console.log('Cannot Close floating cmp', err)
         throw err
     }
+}
+
+
+export function onSetIsApploading(isLoading) {
+    store.dispatch({ type: SET_IS_APP_LOADING, isLoading })
 }

@@ -1,5 +1,18 @@
 import { storageService } from '../async-storage.service'
 import { getRandomIntInclusive, makeId } from '../util.service'
+
+import userImg1 from '/img/demoUsers/user1.png'
+import userImg2 from '/img/demoUsers/user2.png'
+import userImg3 from '/img/demoUsers/user3.png'
+import userImg4 from '/img/demoUsers/user4.png'
+import userImg5 from '/img/demoUsers/user5.png'
+import userImg6 from '/img/demoUsers/user6.png'
+import userImg7 from '/img/demoUsers/user7.png'
+import userImg8 from '/img/demoUsers/user8.png'
+import userImg9 from '/img/demoUsers/user9.png'
+import userImg10 from '/img/demoUsers/user10.png'
+
+const usersImgs = [userImg1, userImg2, userImg3, userImg4, userImg5, userImg6, userImg7, userImg8, userImg9, userImg10,]
 const STORAGE_KEY_LOGGEDIN_USER = 'loggedinUser'
 
 export const userService = {
@@ -12,7 +25,8 @@ export const userService = {
     update,
     getLoggedinUser,
     saveLoggedinUser,
-    createDemoUsers
+    createDemoUsersForBoard,
+    createDemoUsersForLoggedUsers
 }
 
 async function getUsers() {
@@ -58,7 +72,8 @@ async function signup(userCred) {
     return saveLoggedinUser(user)
 }
 
-function createDemoUsers(num) {
+
+function createDemoUsersForLoggedUsers(num) {
     var professions = [
         'Head Chef',
         'Junior Developer',
@@ -71,22 +86,77 @@ function createDemoUsers(num) {
         'Elementary School Teacher',
         'Urban Planner']
 
+    var names = [
+        'Liam OConnell',
+        'Sofia Fernandez',
+        'Kai Nakamura',
+        'Chloe Davies',
+        'Elijah Vance',
+        'Aisha Khan',
+        'Benjamin Chen',
+        'Grace Dubois',
+        'Samuel Rivera',
+        'Olivia Mason'
+    ]
+
+    var users = []
+    for (let i = 5; i < num; i++) {
+
+        const user = {
+            id: makeId(),
+            fullname: names[i],
+            password: `user ${i + 1}`,
+            profession: professions.splice(getRandomIntInclusive(0, professions.length), 1)[0],
+            tags: ['member'],
+            imgUrl: usersImgs[i]
+        }
+        users.push(user)
+    }
+
+    return users
+}
+
+
+function createDemoUsersForBoard(num) {
+    var professions = [
+        'Head Chef',
+        'Junior Developer',
+        'Data Scientist',
+        'UX Designer',
+        'Registered Nurse (RN)',
+        'Financial Analyst',
+        'Solar Panel Installer',
+        'Technical Writer',
+        'Elementary School Teacher',
+        'Urban Planner']
+
+    var names = [
+        'Liam OConnell',
+        'Sofia Fernandez',
+        'Kai Nakamura',
+        'Chloe Davies',
+        'Elijah Vance',
+        'Aisha Khan',
+        'Benjamin Chen',
+        'Grace Dubois',
+        'Samuel Rivera',
+        'Olivia Mason'
+    ]
+
     var users = []
     for (let i = 0; i < num; i++) {
         const user = {
             id: makeId(),
-            fullname: `user ${i + 1}`,
+            fullname: names[i],
             password: `user ${i + 1}`,
-            profession:  professions.splice(getRandomIntInclusive(0, professions.length), 1)[0],
-            score: 10000,
-            tags:['member']
+            profession: professions.splice(getRandomIntInclusive(0, professions.length), 1)[0],
+            tags: ['member'],
+            imgUrl: usersImgs[i]
+
         }
-        user.imgUrl = `https://api.dicebear.com/8.x/adventurer/svg?seed=${user.id}`,
-            users.push(user)
+        users.push(user)
     }
     return users
-    // const user = await storageService.post('user', userCred)
-    // return saveLoggedinUser(user)
 }
 
 async function logout() {
@@ -116,7 +186,7 @@ async function _createAdmin() {
         username: 'admin',
         password: 'admin',
         fullname: 'Mustafa Adminsky',
-        imgUrl: 'https://cdn.pixabay.com/photo/2020/07/01/12/58/icon-5359553_1280.png',
+        imgUrl: user1,
         score: 10000,
     }
 

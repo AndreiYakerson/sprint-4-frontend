@@ -17,6 +17,7 @@ export const SET_GROUP_ID_TO_EDIT = 'SET_GROUP_ID_TO_EDIT'
 
 export const SET_TASKS = 'SET_TASKS'
 export const ADD_TASK = 'ADD_TASK'
+export const DUPLICATE_TASK = 'DUPLICATE_TASK'
 export const UPDATE_TASK = 'UPDATE_TASK'
 export const REMOVE_TASK = 'REMOVE_TASK'
 export const SET_TASK_ID_TO_EDIT = 'SET_TASK_ID_TO_EDIT'
@@ -119,6 +120,22 @@ export function boardReducer(state = initialState, action = {}) {
                 } else {
                     group.tasks = [...group.tasks, action.task]
                 }
+                return group
+            })
+            // board.activities = [...board.activities, action.activity]
+            newState = { ...state, board }
+            break
+
+        case DUPLICATE_TASK:
+            var board = { ...state.board }
+            board.groups = action.groups
+
+            board.groups = state.board.groups.map(g => {
+                if (g.id !== action.groupId) return g
+                const group = { ...g }
+
+                group.tasks.splice(action.taskCopyIdx, 0, action.taskCopy)
+
                 return group
             })
             // board.activities = [...board.activities, action.activity]

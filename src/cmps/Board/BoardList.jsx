@@ -3,6 +3,8 @@ import { Link, useLocation, useNavigate } from 'react-router-dom'
 
 // cmps
 import { BoardPreview } from './BoardPreview'
+import { setBoard } from '../../store/actions/board.actions'
+import { boardService } from '../../services/board'
 
 export function BoardList({ boards, isSideBarDispaly = false }) {
     const navigate = useNavigate()
@@ -17,7 +19,15 @@ export function BoardList({ boards, isSideBarDispaly = false }) {
     // }
 
 
-    function onNavigateToBoard(boardId) {
+    async function onNavigateToBoard(boardId) {
+        // Set Board To Store
+        try {
+            const board = await boardService.getById(boardId)
+            setBoard(board)
+        } catch (error) {
+            console.log('cant set board to store')
+            
+        }
         navigate(`/board/${boardId}`)
     }
 

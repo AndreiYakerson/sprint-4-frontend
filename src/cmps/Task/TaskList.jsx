@@ -106,6 +106,7 @@ export function TaskList({ tasks, groupId }) {
 
                                 <TaskPreview
                                     task={task}
+                                    taskIdx={idx}
                                     groupId={groupId}
                                     tasksLength={localTasks.length}
                                 />

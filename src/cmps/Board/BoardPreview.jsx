@@ -7,14 +7,15 @@ import { showErrorMsg, showSuccessMsg } from '../../services/event-bus.service.j
 import { removeBoard, setBoard, setBoardRemovedMsg, updateBoard } from '../../store/actions/board.actions.js'
 
 // cmps
+import { FloatingContainerCmp } from '../FloatingContainerCmp.jsx'
 import { HoveredTextCmp } from '../HoveredTextCmp.jsx'
+import { TitleEditor } from '../Task/TitleEditor.jsx'
+import { ActionsMenu } from '../ActionsMenu.jsx'
 import { SvgIcon } from '../SvgIcon.jsx'
-import { BoardMenu } from './BoardMenu.jsx'
 
 // images
 import boardItemLogo from '/img/board-item-img.svg'
-import { FloatingContainerCmp } from '../FloatingContainerCmp.jsx'
-import { TitleEditor } from '../Task/TitleEditor.jsx'
+
 
 
 export function BoardPreview({ board, isSideBarDispaly }) {
@@ -146,12 +147,12 @@ export function BoardPreview({ board, isSideBarDispaly }) {
                         </button>
 
                         {isMenuOpen && <FloatingContainerCmp anchorEl={btnRef.current} onClose={onCloseMenu}>
-                            <BoardMenu
+                            <ActionsMenu
                                 menuRef={menuRef}
                                 onCloseMenu={onCloseMenu}
                                 onOpenInNewTab={onOpenInNewTab}
                                 toggleIsStarred={() => toggleIsStarred(!isStarred)}
-                                onRemoveBoard={() => onRemoveBoard(board)}
+                                onRemoveItem={() => onRemoveBoard(board)}
                                 isStarred={isStarred}
                                 onRenameBoard={onSetRenameBoard}
                             />

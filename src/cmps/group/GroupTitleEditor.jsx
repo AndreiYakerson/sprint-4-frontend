@@ -130,7 +130,7 @@ export function GroupTitleEditor({ info, onUpdate }) {
 
                 </div>
 
-                : <div onClick={() => setIsEditing(true)}>{info?.title}</div>
+                : <div className="group-title" onClick={() => setIsEditing(true)}>{info?.title}</div>
             }
 
         </>

@@ -5,11 +5,15 @@ export const IS_POPUP_ON = 'IS_POPUP_ON'
 export const IS_FLOATING_OPEN = 'IS_FLOATING_OPEN'
 export const SET_SIDE_BAR_OPEN = 'SET_SIDE_BAR_OPEN'
 
+export const SET_IS_APP_LOADING = 'SET_IS_APP_LOADING'
+
+
 const initialState = {
   isLoading: false,
   isSideBarOpen: true,
   isPopUpOpen: false,
   isFloatingOpen: false,
+  isAppLoading: false
 }
 
 export function systemReducer(state = initialState, action = {}) {
@@ -25,6 +29,8 @@ export function systemReducer(state = initialState, action = {}) {
       return { ...state, isFloatingOpen: action.value }
     case SET_SIDE_BAR_OPEN:
       return { ...state, isSideBarOpen: action.value }
+    case SET_IS_APP_LOADING:
+      return { ...state, isAppLoading: action.isLoading }
     default: return state
   }
 }

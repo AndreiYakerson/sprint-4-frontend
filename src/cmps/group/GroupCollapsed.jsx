@@ -23,7 +23,7 @@ export function GroupCollapsed({ group, groupsLength }) {
     >
         <div className="group-collapsed-content">
             {/* <div className="fold-icon">{'>'}</div> */}
-            <div className="group-title">{group.title}</div>
+            <div className="group-title-wrapper">{group.title}</div>
             <div>{!group.tasks.length ? 'No' : group.tasks.length} Tasks</div>
         </div>
     </div>

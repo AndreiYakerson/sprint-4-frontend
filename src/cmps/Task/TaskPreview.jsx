@@ -232,10 +232,8 @@ export function TaskPreview({ task, groupId, tasksLength }) {
                             />
                         </div>
                     </div>
-
                 </div >
             }
-
 
             <div className="task-columns flex">
                 {cmpsOrder.map((colName, idx) => {

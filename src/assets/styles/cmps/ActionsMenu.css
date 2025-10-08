@@ -1,4 +1,4 @@
-.board-menu {
+.actions-menu {
     cursor: auto;
     width: max-content;
     height: max-content;
@@ -30,8 +30,21 @@
         outline: none;
         border-radius: 4px;
 
-        &:hover {
+        &:hover:not(.disabled) {
             background-color: var(--primary-background-hover-color);
         }
+
+        &.disabled {
+            cursor: not-allowed;
+            color: var(--disabled-text-color);
+
+            .svg-icon {
+                &>* {
+                    color: var(--disabled-text-color);
+                }
+            }
+        }
+
+
     }
 }

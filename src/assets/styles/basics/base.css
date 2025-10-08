@@ -1,6 +1,44 @@
-* {
+*,
+*::before,
+*::after {
     box-sizing: border-box;
 }
+
+
+html {
+    /* scrollbar style */
+
+    ::-webkit-scrollbar {
+        width: 10px;
+        height: 15px;
+    }
+
+    ::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background: #c3c6d4;
+        border-radius: 0px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+        background: #b4b7c8;
+    }
+
+    /* scrollbar-width: thin;
+    scrollbar-color: #c3c6d4 transparent; */
+
+}
+
+
+@media (prefers-reduced-motion: no-preference) {
+    html {
+        scroll-behavior: smooth;
+    }
+}
+
+
 
 body {
     margin: 0 auto;
@@ -90,4 +128,11 @@ object {
         border-radius: 50%;
         stroke-width: 10;
     }
+}
+
+
+.text-overflow {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
 }

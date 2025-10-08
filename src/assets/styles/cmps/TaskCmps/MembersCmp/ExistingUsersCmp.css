@@ -1,0 +1,59 @@
+ .existing-members {
+     position: relative;
+     display: flex;
+     flex-wrap: wrap;
+     justify-content: flex-start;
+
+     gap: 8px;
+     width: 100%;
+     padding: 8px 2px 0px 16px;
+     /* z-index: 1; */
+
+     .user-label {
+
+         display: flex;
+         padding-inline: 8px;
+
+         max-width: 130px;
+
+         align-items: center;
+
+         transition: flex-shrink .15s ease-in;
+
+         background-color: var(--primary-selected-color-rgb);
+         border-radius: var(--border-radius-small);
+
+         .user-name {
+             overflow: hidden;
+             text-overflow: ellipsis;
+             white-space: nowrap;
+
+         }
+
+         img {
+             margin-inline-end: var(--spacing-xs);
+             border-radius: var(--border-radius-medium);
+             height: 18px;
+             width: 18px;
+         }
+
+         button {
+             display: flex;
+             justify-content: center;
+             align-items: center;
+
+             margin-inline-start: var(--spacing-xs);
+             padding: 0px;
+
+             width: 16px;
+             height: 16px;
+
+             background-color: var(--primary-selected-color-rgb);
+             border: none;
+         }
+
+         &:hover .remove-btn {
+             backdrop-filter: brightness(85%);
+         }
+     }
+ }
