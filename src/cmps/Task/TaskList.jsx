@@ -10,8 +10,7 @@ import { showErrorMsg, showSuccessMsg } from "../../services/event-bus.service.j
 import { TaskPreview } from "../Task/TaskPreview"
 
 // dnd
-import { closestCorners, DndContext, DragOverlay } from "@dnd-kit/core"
-import { arrayMove, SortableContext, verticalListSortingStrategy } from "@dnd-kit/sortable"
+
 
 
 
@@ -20,8 +19,6 @@ export function TaskList({ tasks, groupId }) {
     const { boardId } = useParams()
 
     const [localTasks, setLocalTasks] = useState(tasks)
-    const [placeholderIndex, setPlaceholderIndex] = useState(null);
-    const [activeId, setActiveId] = useState(null);
 
 
     useEffect(() => {
@@ -29,46 +26,6 @@ export function TaskList({ tasks, groupId }) {
     }, [tasks])
 
 
-
-
-    function onDragOver(event) {
-        const { active, over } = event;
-
-        if (!over) {
-            setPlaceholderIndex(null);
-            return;
-        }
-
-        const overIndex = localTasks.findIndex((task) => task.id === over.id);
-
-        if (overIndex !== placeholderIndex) {
-            setPlaceholderIndex(overIndex);
-        }
-    }
-
-
-    function onDragStart(event) {
-        const { active } = event;
-        setActiveId(active.id);
-    }
-
-
-    function onDragEnd(event) {
-        const { active, over } = event;
-
-        if (!over || active.id === over.id) {
-            setPlaceholderIndex(null);
-            return;
-        }
-
-        const oldIndex = localTasks.findIndex((task) => task.id === active.id);
-        const newIndex = localTasks.findIndex((task) => task.id === over.id);
-
-        const reorderedTasks = arrayMove(localTasks, oldIndex, newIndex);
-        setLocalTasks(reorderedTasks)
-        onUpdateTasksOrder(reorderedTasks, groupId)
-        setPlaceholderIndex(null)
-    }
 
     async function onUpdateTasksOrder(tasks, groupId) {
         try {
@@ -83,51 +40,36 @@ export function TaskList({ tasks, groupId }) {
 
     return (
 
-        <DndContext
-            collisionDetection={closestCorners}
-            onDragStart={onDragStart}
-            onDragOver={onDragOver}
-            onDragEnd={onDragEnd}
-        >
 
 
-            <section className="task-list">
 
-                <SortableContext items={localTasks} strategy={verticalListSortingStrategy} >
-                    {localTasks.map((task, idx) => {
+        <section className="task-list">
 
-                        return (
+            {localTasks.map((task, idx) => {
 
-
-                            <div
-                                className="table-row"
-                                key={task.id}
-                            >
-
-                                <TaskPreview
-                                    task={task}
-                                    taskIdx={idx}
-                                    groupId={groupId}
-                                    tasksLength={localTasks.length}
-                                />
-                            </div>
+                return (
 
 
-                        )
-                    })}
+                    <div
+                        className="table-row"
+                        key={task.id}
+                    >
 
-                </SortableContext>
-
-            </section >
-
-            <DragOverlay>
-                {activeId ? (
-                    <div className="drag-overlay">
-                        <TaskPreview task={localTasks.find((task) => task.id === activeId)} groupId={groupId} />
+                        <TaskPreview
+                            task={task}
+                            taskIdx={idx}
+                            groupId={groupId}
+                            tasksLength={localTasks.length}
+                        />
                     </div>
-                ) : null}
-            </DragOverlay>
 
-        </DndContext >
+
+                )
+            })}
+
+
+        </section >
+
+
     )
 }

@@ -199,9 +199,8 @@ export function TaskPreview({ task, groupId, tasksLength }) {
 
 
     return (
-        <div className={`task-preview ${isDragging ? 'dragged' : ''}`} ref={setNodeRef} style={style} {...attributes}>
+        <div className="task-preview" ref={setNodeRef} style={style} {...attributes}>
 
-            {isDragging ? <div className="dragged"></div> :
 
                 <div className="sticky-cell-wrapper" >
                     <div className="task-menu-wrapper">
@@ -222,7 +221,7 @@ export function TaskPreview({ task, groupId, tasksLength }) {
 
                         }} />
 
-                        <div className="grab-block" {...listeners}></div>
+                        <div className="grab-block" ></div>
 
                         <div onClick={onToggleTaskDetails} className={`task-updates-cell ${task.id === taskId ? "focus" : ""}`}>
                             <SvgIcon
@@ -233,7 +232,6 @@ export function TaskPreview({ task, groupId, tasksLength }) {
                         </div>
                     </div>
                 </div >
-            }
 
             <div className="task-columns flex">
                 {cmpsOrder.map((colName, idx) => {
