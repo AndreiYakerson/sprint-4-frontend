@@ -8,12 +8,56 @@
     /* box-shadow: var(--box-shadow-large); */
 
     box-shadow: 0 4px 17px 6px rgba(0, 0, 0, .1);
-    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, .32);
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, .42);
 
     background-color: var(--primary-background-color);
     border-radius: var(--border-radius-big);
 
     transition: width .1s;
+
+    /* &>* {
+        overflow: "auto";
+    } */
+
+    &.triangle {
+        &.up {
+            &::before {
+                content: "";
+                position: absolute;
+                top: -8px;
+                left: 50%;
+                translate: -50%;
+                z-index: 1;
+
+                width: 0;
+                height: 0;
+                border-left: 12px solid transparent;
+                border-right: 12px solid transparent;
+
+                border-bottom: 10px solid rgb(255, 255, 255);
+            }
+        }
+
+        &.down {
+            &::before {
+                content: "";
+                position: absolute;
+                bottom: -8px;
+                left: 50%;
+                translate: -50%;
+                z-index: 1;
+
+                width: 0;
+                height: 0;
+                border-left: 12px solid transparent;
+                border-right: 12px solid transparent;
+
+                border-top: 10px solid white;
+            }
+        }
+
+    }
+
 }
 
 /* border-radius: 8px;

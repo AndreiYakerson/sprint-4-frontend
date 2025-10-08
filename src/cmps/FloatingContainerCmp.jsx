@@ -3,11 +3,16 @@ import { createPortal } from 'react-dom'
 import { onSetFloatingIsOpen } from '../store/actions/system.actions'
 import { useSelector } from 'react-redux'
 
-export function FloatingContainerCmp({ anchorEl, children, onClose }) {
+export function FloatingContainerCmp({
+    anchorEl, children, onClose,
+    offsetX = 0, offsetY = 0, centeredX = false,
+    showTriangle = false, enforceLimit = false
+}) {
     const isPopUpOpen = useSelector(state => state.systemModule.isPopUpOpen)
 
     const [style, setStyle] = useState({})
     const [isVisible, setIsVisible] = useState(false)
+    const [trianglePos, setTrianglePos] = useState('UP')
     const popupRef = useRef(null)
 
     useEffect(() => {
@@ -18,9 +23,9 @@ export function FloatingContainerCmp({ anchorEl, children, onClose }) {
 
 
     useEffect(() => {
-        if (!anchorEl) return
+        if (!anchorEl || !enforceLimit) return
 
-        const HEADER_HEIGHT = 200
+        const HEADER_HEIGHT = 210
 
         const checkAnchorVisibility = () => {
             const rect = anchorEl.getBoundingClientRect()
@@ -40,10 +45,11 @@ export function FloatingContainerCmp({ anchorEl, children, onClose }) {
             window.removeEventListener('scroll', checkAnchorVisibility, true)
             window.removeEventListener('resize', checkAnchorVisibility)
         }
-    }, [anchorEl, onClose])
+    }, [anchorEl, onClose, enforceLimit])
 
 
-    // --- Close when clicking outside ---
+
+
     useEffect(() => {
         function handleClickOutside(e) {
             if (!popupRef.current || !anchorEl) return
@@ -52,12 +58,14 @@ export function FloatingContainerCmp({ anchorEl, children, onClose }) {
             if (!clickedInside && !clickedAnchor)
                 setTimeout(() => {
                     onClose()
-                }, 0);
+                }, 0)
         }
 
         document.addEventListener('mousedown', handleClickOutside)
         return () => document.removeEventListener('mousedown', handleClickOutside)
     }, [anchorEl, onClose])
+
+
 
     // --- Positioning logic ---
     useLayoutEffect(() => {
@@ -68,25 +76,49 @@ export function FloatingContainerCmp({ anchorEl, children, onClose }) {
             const popupEl = popupRef.current
             const popupHeight = popupEl.offsetHeight
             const popupWidth = popupEl.offsetWidth
+
             const windowHeight = window.innerHeight
             const windowWidth = window.innerWidth
-            const SPACING = 10
+            const SPACING = 5
 
             let top
             const spaceBelow = windowHeight - anchorRect.bottom
-            if (popupHeight + SPACING < spaceBelow) {
-                top = anchorRect.bottom + window.scrollY + SPACING
-            } else if (anchorRect.top > popupHeight + SPACING) {
-                top = anchorRect.top + window.scrollY - popupHeight - SPACING
+            const spaceAbove = anchorRect.top
+
+
+            if (popupHeight + SPACING <= spaceBelow) {
+                top = anchorRect.bottom + window.scrollY + SPACING - offsetY
+                if (showTriangle) setTrianglePos('up')
+            } else if (popupHeight + SPACING <= spaceAbove) {
+                top = anchorRect.top + window.scrollY - popupHeight - SPACING + offsetY
+                if (showTriangle) setTrianglePos('down')
             } else {
-                top = anchorRect.bottom + window.scrollY + SPACING
+                if (spaceBelow >= spaceAbove) {
+                    top = Math.min(
+                        anchorRect.bottom + window.scrollY + SPACING - offsetY,
+                        window.scrollY + windowHeight - popupHeight - SPACING
+                    )
+                    if (showTriangle) setTrianglePos('up')
+                } else {
+                    top = Math.max(
+                        anchorRect.top + window.scrollY - popupHeight - SPACING + offsetY,
+                        window.scrollY + SPACING
+                    )
+                    if (showTriangle) setTrianglePos('down')
+                }
             }
 
             let left = anchorRect.left + window.scrollX
-            if (left + popupWidth > windowWidth - SPACING) {
-                left = anchorRect.right + window.scrollX - popupWidth
-                if (left < SPACING) left = SPACING
+
+            if (centeredX) {
+                left = anchorRect.left + window.scrollX + anchorRect.width / 2 - popupWidth / 2
             }
+
+            if (left + popupWidth > windowWidth - SPACING) left = windowWidth - popupWidth - SPACING
+
+            if (left < SPACING) left = SPACING
+
+            left += offsetX
 
             setStyle({
                 position: 'absolute',
@@ -100,7 +132,6 @@ export function FloatingContainerCmp({ anchorEl, children, onClose }) {
             })
             setIsVisible(true)
         }
-
         // Run immediately
         updatePosition()
 
@@ -123,9 +154,11 @@ export function FloatingContainerCmp({ anchorEl, children, onClose }) {
         }))
     }, [isVisible])
 
+
+
     return createPortal(
         <div
-            className="fcc-container"
+            className={`fcc-container ${showTriangle ? "triangle" : ""} ${showTriangle ? trianglePos : ""}`}
             ref={popupRef}
             style={style}
             onClick={e => e.stopPropagation()}
