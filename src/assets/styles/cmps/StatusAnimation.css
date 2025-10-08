@@ -28,8 +28,8 @@
     transform-origin: right top;
 
     &:hover {
-        width: 15px;
-        height: 15px;
+        width: 17px;
+        height: 17px;
     }
 
     &:hover .task-editor-btn {
@@ -39,7 +39,7 @@
 
     .task-editor-btn {
         position: absolute;
-        bottom: 0;
+        bottom: 2px;
         right: 0;
         opacity: 0;
         color: black;
