@@ -53,6 +53,7 @@ export function StatusPicker({ info, onUpdate }) {
             style={{ background: `var(${labelToShow?.cssVar})` }}
             onClick={(ev) => setAnchorEl(ev.currentTarget)}>
             {labelToShow?.txt}
+            <StatusAnimation color={`var(${labelToShow?.cssVar})`} />
 
 
             {anchorEl &&
