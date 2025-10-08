@@ -42,12 +42,12 @@ export function StatusPicker({ info, onUpdate }) {
             style={{ background: `var(${status.cssVar})` }}
             onClick={(ev) => setAnchorEl(ev.currentTarget)}
         >
-            {status.txt}
             <StatusAnimation color={`var(${status.cssVar})`} />
+            {status.txt}
             {anchorEl &&
                 <FloatingContainerCmp
-                    anchorEl={anchorEl}
-                    onClose={onClose}>
+                anchorEl={anchorEl}
+                onClose={onClose}>
                     <div className={`priority-container ${isEditOpen}`}>
                         <div className={`priority-select ${isEditOpen}`}>
                             {!isEditOpen ?

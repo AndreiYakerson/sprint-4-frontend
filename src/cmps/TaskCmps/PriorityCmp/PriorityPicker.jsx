@@ -8,6 +8,7 @@ import { useSelector } from "react-redux";
 import { LabelsListEdit } from "./LabelsListEdit";
 import { LabelsList } from "./LabelsList";
 import { FloatingContainerCmp } from "../../FloatingContainerCmp";
+import { StatusAnimation } from "../../StatusAnimation";
 
 export function PriorityPicker({ info, onUpdate }) {
     const { boardPriorities, taskPriority } = info
@@ -37,7 +38,9 @@ export function PriorityPicker({ info, onUpdate }) {
     return (
         <div className="priority-picker"
             style={{ background: `var(${taskPriority.cssVar})` }}
-            onClick={(ev) => setAnchorEl(ev.currentTarget)}>
+            onClick={(ev) => setAnchorEl(ev.currentTarget)}
+        >
+            <StatusAnimation color={`var(${taskPriority.cssVar})`} />
             {taskPriority.txt}
             {anchorEl &&
                 <FloatingContainerCmp
