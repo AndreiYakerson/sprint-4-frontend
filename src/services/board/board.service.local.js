@@ -274,6 +274,11 @@ const DefaultPriorities = [
         txt: 'Low'
         , cssVar: '--group-title-clr9'
     },
+    {
+        id:'default',
+        txt: ''
+        , cssVar: '--group-title-clr18'
+    },
 ]
 
 const DefaultStatuses = [
