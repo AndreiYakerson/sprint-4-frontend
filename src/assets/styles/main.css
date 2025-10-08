@@ -7,6 +7,8 @@
 @import "basics/layout";
 @import "basics/base";
 @import "basics/forms";
+@import "basics/forms";
+@import "basics/animations.css";
 
 /* ROOT */
 @import "RootCmp";

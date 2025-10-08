@@ -1,5 +1,12 @@
 import { storageService } from '../async-storage.service'
 import { getRandomIntInclusive, makeId } from '../util.service'
+
+import userImg1 from '/img/demoUsers/user1.png'
+import userImg2 from '/img/demoUsers/user2.png'
+import userImg3 from '/img/demoUsers/user3.png'
+import userImg4 from '/img/demoUsers/user4.png'
+import userImg5 from '/img/demoUsers/user5.png'
+const usersImgs = [userImg1, userImg2, userImg3, userImg4, userImg5]
 const STORAGE_KEY_LOGGEDIN_USER = 'loggedinUser'
 
 export const userService = {
@@ -77,11 +84,10 @@ function createDemoUsers(num) {
             id: makeId(),
             fullname: `user ${i + 1}`,
             password: `user ${i + 1}`,
-            profession:  professions.splice(getRandomIntInclusive(0, professions.length), 1)[0],
-            score: 10000,
-            tags:['member']
+            profession: professions.splice(getRandomIntInclusive(0, professions.length), 1)[0],
+            tags: ['member']
         }
-        user.imgUrl = `https://api.dicebear.com/8.x/adventurer/svg?seed=${user.id}`,
+        user.imgUrl = usersImgs[i],
             users.push(user)
     }
     return users
@@ -116,7 +122,7 @@ async function _createAdmin() {
         username: 'admin',
         password: 'admin',
         fullname: 'Mustafa Adminsky',
-        imgUrl: 'https://cdn.pixabay.com/photo/2020/07/01/12/58/icon-5359553_1280.png',
+        imgUrl: user1,
         score: 10000,
     }
 
