@@ -17,6 +17,11 @@ export function LabelsListEdit({ labels, onUpdateLabels, onClose }) {
     const [labelsToUpdate, setLabelsToUpdate] = useState(labels)
 
 
+    function updateLabel() {
+        onUpdateLabels(labelsToUpdate)
+        onClose()
+    }
+
     function handelChange(ev, id) {
         const value = ev.target.value
         setLabelsToUpdate(prevLabels => {
@@ -60,7 +65,7 @@ export function LabelsListEdit({ labels, onUpdateLabels, onClose }) {
                             <input name='title'
                                 type="text"
                                 value={label.txt}
-                                onBlur={() => onUpdateLabels(labelsToUpdate)}
+                                onBlur={updateLabel}
                                 onKeyDown={ev => ev.key === 'Enter' && handelChange(ev, label.id)}
                                 onChange={(ev) => handelChange(ev, label.id)}
                             />
@@ -75,8 +80,7 @@ export function LabelsListEdit({ labels, onUpdateLabels, onClose }) {
                                 anchorEl={anchorEl}
                                 onClose={() => setAnchorEl(null)}
                             >
-                                <button onClick={() =>
-                                    onRemoveLabel(label.id)}
+                                <button onClick={() => onRemoveLabel(label.id)}
                                     className="delete">
                                     <img className='icon big' src={xMark} alt='delet icon' /> Delete
                                 </button>
@@ -103,10 +107,7 @@ export function LabelsListEdit({ labels, onUpdateLabels, onClose }) {
                     </div>
                 </li>
             </ul>
-            <button onClick={() => {
-                onUpdateLabels(labelsToUpdate)
-                onClose()
-            }}
+            <button onClick={updateLabel}
                 className='edit-labels edit'> Apply </button>
         </>
     )

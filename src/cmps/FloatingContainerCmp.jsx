@@ -49,7 +49,10 @@ export function FloatingContainerCmp({ anchorEl, children, onClose }) {
             if (!popupRef.current || !anchorEl) return
             const clickedInside = e.target.closest('.fcc-container')
             const clickedAnchor = anchorEl.contains(e.target)
-            if (!clickedInside && !clickedAnchor) onClose()
+            if (!clickedInside && !clickedAnchor)
+                setTimeout(() => {
+                    onClose()
+                }, 0);
         }
 
         document.addEventListener('mousedown', handleClickOutside)

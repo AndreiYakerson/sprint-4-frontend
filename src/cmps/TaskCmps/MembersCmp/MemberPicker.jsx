@@ -28,6 +28,7 @@ export function MemberPicker({ info, onUpdate }) {
     }
 
     function closeMemberSelect() {
+        setMemberEl(null)
         setMembersSelectEl(null)
         onClearHover()
     }
