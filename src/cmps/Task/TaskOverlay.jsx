@@ -1,4 +1,5 @@
 
+
 // services
 import { useParams, Link, useNavigate } from "react-router-dom"
 import { useEffect, useState } from "react"
@@ -39,7 +40,7 @@ import { constant } from "lodash"
 
 
 
-export function TaskPreview({ task, groupId, }) {
+export function TaskOverlay({ task, groupId, }) {
     const navigate = useNavigate()
     const isFloatingOpen = useSelector(state => state.systemModule.isFloatingOpen)
     const board = useSelector(state => state.boardModule.board)
@@ -47,17 +48,16 @@ export function TaskPreview({ task, groupId, }) {
     const [membersSelectEl, setMembersSelectEl] = useState(null)
     const [memberEl, setMemberEl] = useState(null)
 
-    const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id: task.id })
-    const style = {
+   const {attributes, listeners, setNodeRef, transform, transition, isDragging} = useSortable({ id: task.id })
+   const style = {
         transition,
         transform: CSS.Transform.toString(transform),
-        // zIndex: isDragging ? 999 : 'auto',
-        opacity: isDragging ? 0 : 1, // Fade the original item while dragging
+        zIndex: isDragging ? 999 : 'auto',
+        opacity: isDragging ? 0.5 : 1, // Fade the original item while dragging
         border: isDragging ? '1px dashed #000' : 'none',
         backgroundColor: isDragging ? '#f0f0f0' : 'transparent',
-        border: isDragging ? "2px dashed #000" : "none", // Dashed border when dragging
 
-    }
+   }
 
 
     const { boardId, taskId } = useParams()
@@ -212,75 +212,68 @@ export function TaskPreview({ task, groupId, }) {
 
     return (
 
-        <div className="task-preview" style={style} ref={setNodeRef} {...attributes} {...listeners} >
+            <div className="task-preview" style={style} ref={setNodeRef} {...attributes} {...listeners} >
 
 
-            <div className="sticky-cell-wrapper" >
-                <div className="task-menu-wrapper">
-                    <button onClick={onRemoveTask} className="white">
-                        <SvgIcon
-                            iconName="trash"
-                            size={20}
-                            colorName={'primaryText'}
-                        /></button>
-                </div>
+                <div className="sticky-cell-wrapper" >
 
-                <div className="table-border"></div>
-                <div className="task-select"></div>
-                <div className="task-title flex align-center">
-                    <TitleEditor info={cmps.find(cmp => cmp.type === 'TitleEditor')?.info} onUpdate={(data) => {
-                        updateCmpInfo(cmps.find(cmp => cmp.type === 'TitleEditor'),
-                            'currTitle', data, `Changed title to ${data}`)
 
-                    }} />
+                    <div className="table-border"></div>
+                    <div className="task-select"></div>
+                    <div className="task-title flex align-center">
+                        <TitleEditor info={cmps.find(cmp => cmp.type === 'TitleEditor')?.info} onUpdate={(data) => {
+                            updateCmpInfo(cmps.find(cmp => cmp.type === 'TitleEditor'),
+                                'currTitle', data, `Changed title to ${data}`)
 
-                    <div className="grab-block" ></div>
+                        }} />
 
-                    <div onClick={onToggleTaskDetails} className={`task-updates-cell ${task.id === taskId ? "focus" : ""}`}>
-                        <SvgIcon
-                            iconName="bubblePlus"
-                            size={20}
-                            colorName={'primaryText'}
-                        />
+                        <div className="grab-block" ></div>
+
+                        <div onClick={onToggleTaskDetails} className={`task-updates-cell ${task.id === taskId ? "focus" : ""}`}>
+                            <SvgIcon
+                                iconName="bubblePlus"
+                                size={20}
+                                colorName={'primaryText'}
+                            />
+                        </div>
                     </div>
-                </div>
-            </div >
+                </div >
 
-            <div className="task-columns flex">
-                {cmpsOrder.map((colName, idx) => {
+                <div className="task-columns flex">
+                    {cmpsOrder.map((colName, idx) => {
 
-                    if (colName === 'StatusPicker') {
-                        var cmp = cmps.find(cmp => cmp?.type === 'StatusPicker')
-                        return <div className="column-cell" key={colName}>
-                            {DynamicCmp({ cmp, updateCmpInfo })}
-                        </div>
+                        if (colName === 'StatusPicker') {
+                            var cmp = cmps.find(cmp => cmp?.type === 'StatusPicker')
+                            return <div className="column-cell" key={colName}>
+                                {DynamicCmp({ cmp, updateCmpInfo })}
+                            </div>
+                        }
+                        if (colName === 'MemberPicker') {
+                            var cmp = cmps.find(cmp => cmp?.type === 'MemberPicker')
+                            return <div className="column-cell" key={colName}>
+                                {DynamicCmp({ cmp, updateCmpInfo })}
+                            </div>
+                        }
+                        if (colName === 'PriorityPicker') {
+                            var cmp = cmps.find(cmp => cmp?.type === 'PriorityPicker')
+                            return <div className="column-cell" key={colName}>
+                                {DynamicCmp({ cmp, updateCmpInfo })}
+                            </div>
+                        }
+                        if (colName === 'DatePicker') {
+                            var cmp = cmps.find(cmp => cmp?.type === 'DatePicker')
+                            return <div className="column-cell" key={colName}>
+                                {DynamicCmp({ cmp, updateCmpInfo })}
+                            </div>
+                        }
+                        else {
+                            return <div className="column-cell" key={idx}></div>
+                        }
+                    })
                     }
-                    if (colName === 'MemberPicker') {
-                        var cmp = cmps.find(cmp => cmp?.type === 'MemberPicker')
-                        return <div className="column-cell" key={colName}>
-                            {DynamicCmp({ cmp, updateCmpInfo })}
-                        </div>
-                    }
-                    if (colName === 'PriorityPicker') {
-                        var cmp = cmps.find(cmp => cmp?.type === 'PriorityPicker')
-                        return <div className="column-cell" key={colName}>
-                            {DynamicCmp({ cmp, updateCmpInfo })}
-                        </div>
-                    }
-                    if (colName === 'DatePicker') {
-                        var cmp = cmps.find(cmp => cmp?.type === 'DatePicker')
-                        return <div className="column-cell" key={colName}>
-                            {DynamicCmp({ cmp, updateCmpInfo })}
-                        </div>
-                    }
-                    else {
-                        return <div className="column-cell" key={idx}></div>
-                    }
-                })
-                }
-                <div className="column-cell full"></div>
-            </div >
-        </div>
+                    <div className="column-cell full"></div>
+                </div >
+            </div>
     )
 }
 

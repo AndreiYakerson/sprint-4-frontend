@@ -1,13 +1,21 @@
    /* A row of each task */
    .table-row {
-       position: relative;
        display: grid;
        grid-template-columns: subgrid;
        grid-column: 1/-1;
        height: 36px;
        background-color: var(--primary-background-color);
        margin-inline-start: 36px;
-       transition: transform 0.2s ease;
+
+       &.drag-preview {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        grid-column: 1/-1;
+        rotate: 1deg;
+        opacity: 0.8;
+        background-color: rgb(19, 157, 203);
+       }
+
 
 
        &:has(:focus, .focus) {
@@ -39,13 +47,7 @@
        }
 
 
-       &.dragged {
-           display: grid;
-           grid-template-columns: 434px 1fr;
-           box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-           filter: contrast(80%) opacity(70%);
-           rotate: 0.5deg
-       }
+
 
    }
 
