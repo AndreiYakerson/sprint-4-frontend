@@ -8,10 +8,8 @@ import { useSelector } from "react-redux"
 import { DatePicker } from "../TaskCmps/DateCmp/DatePicker.jsx"
 import { PriorityPicker } from "../TaskCmps/PriorityCmp/PriorityPicker.jsx"
 
-// dnd kit
-import { useSortable } from "@dnd-kit/sortable"
-import { CSS } from "@dnd-kit/utilities"
-// import { DragOverlay } from "@dnd-kit/core"
+
+
 
 // cmps
 // import { DynamicCmp } from "../DynamicCmp"
@@ -32,9 +30,15 @@ import { StatusPicker } from "../TaskCmps/StatusPicker.jsx"
 
 import { SvgIcon } from "../SvgIcon.jsx"
 
+//dnd-kit
+import { useSortable } from "@dnd-kit/sortable"
+import { CSS } from "@dnd-kit/utilities"
 
 
-export function TaskPreview({ task, groupId, tasksLength }) {
+
+
+
+export function TaskPreview({ task, groupId, }) {
     const navigate = useNavigate()
     const isFloatingOpen = useSelector(state => state.systemModule.isFloatingOpen)
     const board = useSelector(state => state.boardModule.board)
@@ -42,12 +46,15 @@ export function TaskPreview({ task, groupId, tasksLength }) {
     const [membersSelectEl, setMembersSelectEl] = useState(null)
     const [memberEl, setMemberEl] = useState(null)
 
-    const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id: task.id, disabled: tasksLength < 2 })
-
-    const style = {
-        transition: transition,
+   const {attributes, listeners, setNodeRef, transform, transition, isDragging} = useSortable({ id: task.id })
+   const style = {
+        transition,
         transform: CSS.Transform.toString(transform),
-    }
+        zIndex: isDragging ? 999 : 'auto',
+
+   }
+
+
     const { boardId, taskId } = useParams()
 
     const [cmps, setCmps] = useState(
@@ -199,7 +206,8 @@ export function TaskPreview({ task, groupId, tasksLength }) {
 
 
     return (
-        <div className="task-preview" ref={setNodeRef} style={style} {...attributes}>
+
+            <div className="task-preview" style={style} ref={setNodeRef} {...attributes} {...listeners} >
 
 
                 <div className="sticky-cell-wrapper" >
@@ -233,41 +241,41 @@ export function TaskPreview({ task, groupId, tasksLength }) {
                     </div>
                 </div >
 
-            <div className="task-columns flex">
-                {cmpsOrder.map((colName, idx) => {
+                <div className="task-columns flex">
+                    {cmpsOrder.map((colName, idx) => {
 
-                    if (colName === 'StatusPicker') {
-                        var cmp = cmps.find(cmp => cmp?.type === 'StatusPicker')
-                        return <div className="column-cell" key={colName}>
-                            {DynamicCmp({ cmp, updateCmpInfo })}
-                        </div>
+                        if (colName === 'StatusPicker') {
+                            var cmp = cmps.find(cmp => cmp?.type === 'StatusPicker')
+                            return <div className="column-cell" key={colName}>
+                                {DynamicCmp({ cmp, updateCmpInfo })}
+                            </div>
+                        }
+                        if (colName === 'MemberPicker') {
+                            var cmp = cmps.find(cmp => cmp?.type === 'MemberPicker')
+                            return <div className="column-cell" key={colName}>
+                                {DynamicCmp({ cmp, updateCmpInfo })}
+                            </div>
+                        }
+                        if (colName === 'PriorityPicker') {
+                            var cmp = cmps.find(cmp => cmp?.type === 'PriorityPicker')
+                            return <div className="column-cell" key={colName}>
+                                {DynamicCmp({ cmp, updateCmpInfo })}
+                            </div>
+                        }
+                        if (colName === 'DatePicker') {
+                            var cmp = cmps.find(cmp => cmp?.type === 'DatePicker')
+                            return <div className="column-cell" key={colName}>
+                                {DynamicCmp({ cmp, updateCmpInfo })}
+                            </div>
+                        }
+                        else {
+                            return <div className="column-cell" key={idx}></div>
+                        }
+                    })
                     }
-                    if (colName === 'MemberPicker') {
-                        var cmp = cmps.find(cmp => cmp?.type === 'MemberPicker')
-                        return <div className="column-cell" key={colName}>
-                            {DynamicCmp({ cmp, updateCmpInfo })}
-                        </div>
-                    }
-                    if (colName === 'PriorityPicker') {
-                        var cmp = cmps.find(cmp => cmp?.type === 'PriorityPicker')
-                        return <div className="column-cell" key={colName}>
-                            {DynamicCmp({ cmp, updateCmpInfo })}
-                        </div>
-                    }
-                    if (colName === 'DatePicker') {
-                        var cmp = cmps.find(cmp => cmp?.type === 'DatePicker')
-                        return <div className="column-cell" key={colName}>
-                            {DynamicCmp({ cmp, updateCmpInfo })}
-                        </div>
-                    }
-                    else {
-                        return <div className="column-cell" key={idx}></div>
-                    }
-                })
-                }
-                <div className="column-cell full"></div>
-            </div >
-        </div>
+                    <div className="column-cell full"></div>
+                </div >
+            </div>
     )
 }
 

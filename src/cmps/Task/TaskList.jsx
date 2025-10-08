@@ -8,6 +8,8 @@ import { showErrorMsg, showSuccessMsg } from "../../services/event-bus.service.j
 
 // cmps
 import { TaskPreview } from "../Task/TaskPreview"
+import { closestCorners, DndContext, MouseSensor, useSensor, useSensors } from "@dnd-kit/core"
+import { arrayMove, SortableContext, verticalListSortingStrategy } from "@dnd-kit/sortable"
 
 // dnd
 
@@ -25,7 +27,15 @@ export function TaskList({ tasks, groupId }) {
         setLocalTasks(tasks)
     }, [tasks])
 
+    const mouseSensor = useSensor(MouseSensor, {
+        activationConstraint: {
+            distance: 10,
+            // delay: 0,
+            // tolerance: 50, 
+        },
+    });
 
+    const sensors = useSensors(mouseSensor);
 
     async function onUpdateTasksOrder(tasks, groupId) {
         try {
@@ -38,38 +48,63 @@ export function TaskList({ tasks, groupId }) {
 
     }
 
+
+    function handleDragEnd(event) {
+        const { active, over } = event;
+
+        // setIsDragging(false)
+
+        if (!over || active.id === over.id) {
+            return;
+        }
+
+        const oldIndex = localTasks.findIndex((task) => task.id === active.id);
+        const newIndex = localTasks.findIndex((task) => task.id === over.id);
+
+        const reorderedTasks = arrayMove(localTasks, oldIndex, newIndex);
+
+
+        setLocalTasks(reorderedTasks)
+        onUpdateTasksOrder(reorderedTasks, groupId)
+
+    }
+
+
+
     return (
 
 
+        <DndContext
+            collisionDetection={closestCorners}
+            sensors={sensors}
+            onDragEnd={handleDragEnd}
+        >
 
+            <section className="task-list">
+                <SortableContext items={localTasks} strategy={verticalListSortingStrategy}>
+                    {localTasks.map((task, idx) => {
 
-        <section className="task-list">
+                        return (
+                            <div
+                                className="table-row"
+                                key={task.id}
+                            >
 
-            {localTasks.map((task, idx) => {
+                                <TaskPreview
+                                    tasks={localTasks}
+                                    task={task}
+                                    taskIdx={idx}
+                                    groupId={groupId}
+                                    tasksLength={localTasks.length}
+                                />
+                            </div>
+                        )
 
-                return (
+                    })}
+                </SortableContext>
 
+            </section >
 
-                    <div
-                        className="table-row"
-                        key={task.id}
-                    >
-
-                        <TaskPreview
-                            task={task}
-                            taskIdx={idx}
-                            groupId={groupId}
-                            tasksLength={localTasks.length}
-                        />
-                    </div>
-
-
-                )
-            })}
-
-
-        </section >
-
-
+        </DndContext>
     )
 }
