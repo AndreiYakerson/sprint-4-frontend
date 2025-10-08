@@ -48,7 +48,7 @@ export function LabelSelect({ info, onUpdate }) {
 
   return (
     <div
-      className="priority-picker"
+      className="priority-picker "
       style={{ background: `var(${labelToShow?.cssVar})` }}
       onClick={ev => setAnchorEl(ev.currentTarget)}
     >

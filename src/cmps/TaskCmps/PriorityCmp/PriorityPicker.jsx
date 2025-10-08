@@ -50,7 +50,7 @@ export function PriorityPicker({ info, onUpdate }) {
 
     //FIXME  להפוך את זה לקומפוננטה אחת לבחירה של לייבלים
     return (
-        <div className="priority-picker"
+        <div className={`priority-picker ${anchorEl ? "focus" : ""}`}
             style={{ background: `var(${labelToShow?.cssVar})` }}
             onClick={(ev) => setAnchorEl(ev.currentTarget)}>
             {labelToShow?.txt}

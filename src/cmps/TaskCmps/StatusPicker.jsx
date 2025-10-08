@@ -49,7 +49,7 @@ export function StatusPicker({ info, onUpdate }) {
 
     const [anchorEl, setAnchorEl] = useState()
     return (
-        <div className="priority-picker"
+        <div className={`priority-picker ${anchorEl ? "focus" : ""}`}
             style={{ background: `var(${labelToShow?.cssVar})` }}
             onClick={(ev) => setAnchorEl(ev.currentTarget)}>
             {labelToShow?.txt}

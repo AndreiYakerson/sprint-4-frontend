@@ -24,15 +24,15 @@
         .date-to-edit {
             outline: solid 1px var(--ui-border-color);
             border-radius: 4px;
-            height: 80%;
-            margin: 4px;
             color: var(--link-color);
-            align-content: center;
         }
     }
 
     .date-to-edit {
         position: relative;
+        height: 80%;
+        margin: 4px;
+        align-content: center;
 
         &:hover {
             .remove-date {

@@ -40,7 +40,8 @@ export function DatePicker({ info, onUpdate }) {
     }
 
     return (
-        <section className="date-picker" ref={datePickerRef} onClick={toggleIsEditing}>
+        <section className={`date-picker ${isEditing ? "focus" : ""}`} ref={datePickerRef} onClick={toggleIsEditing}>
+
             {dateToEdit?.date && <div
                 className="date-to-edit"
                 onClick={() => setIsEditing(true)} >

@@ -11,6 +11,7 @@ import person from "/icons/person.svg"
 import plus from "/icons/plus.svg"
 import { remove } from "lodash"
 import { useSelector } from "react-redux"
+
 export function MemberPicker({ info, onUpdate }) {
     const { label, members, propName, selectedMemberIds } = info
 
@@ -57,7 +58,7 @@ export function MemberPicker({ info, onUpdate }) {
     }).filter(Boolean)
 
     return (
-        <article className="member-picker" onClick={(ev) => setMembersSelectEl(ev.currentTarget)}>
+        <article className={`member-picker ${membersSelectEl ? "focus" : ""}`} onClick={(ev) => setMembersSelectEl(ev.currentTarget)}>
             {!!membersToShow.length ?
                 <div className="cmp-img">
                     {membersToShow.map((member, idx) => {
@@ -100,9 +101,7 @@ export function MemberPicker({ info, onUpdate }) {
                 memberEl && < FloatingContainerCmp
                     anchorEl={memberEl}
                     onClose={onClearHover}
-
                     centeredX={true}
-                    showTriangle={true}
                     enforceLimit={true}
                 >
                     <MemberInfo

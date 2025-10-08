@@ -8,12 +8,12 @@
        margin-inline-start: 36px;
 
        &.drag-preview {
-        display: grid;
-        grid-template-columns: 1fr auto;
-        grid-column: 1/-1;
-        rotate: 1deg;
-        opacity: 0.8;
-        background-color: rgb(19, 157, 203);
+           display: grid;
+           grid-template-columns: 1fr auto;
+           grid-column: 1/-1;
+           rotate: 1deg;
+           opacity: 0.8;
+           background-color: rgb(19, 157, 203);
        }
 
 
@@ -201,7 +201,10 @@
        }
 
        &:has(:focus, .focus) {
-           border: 1px solid var(--primary-color);
+
+           &>* {
+               border: 1px solid var(--primary-color);
+           }
        }
 
        &.full {
