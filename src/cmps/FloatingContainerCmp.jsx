@@ -16,6 +16,33 @@ export function FloatingContainerCmp({ anchorEl, children, onClose }) {
         return () => onSetFloatingIsOpen(false)
     }, [])
 
+
+    useEffect(() => {
+        if (!anchorEl) return
+
+        const HEADER_HEIGHT = 200
+
+        const checkAnchorVisibility = () => {
+            const rect = anchorEl.getBoundingClientRect()
+            const isBelowHeader = rect.top < HEADER_HEIGHT
+            const isOffScreen = rect.bottom < 0 || rect.top > window.innerHeight
+
+            if (isBelowHeader || isOffScreen) {
+                onClose()
+            }
+        }
+
+        checkAnchorVisibility()
+        window.addEventListener('scroll', checkAnchorVisibility, true)
+        window.addEventListener('resize', checkAnchorVisibility)
+
+        return () => {
+            window.removeEventListener('scroll', checkAnchorVisibility, true)
+            window.removeEventListener('resize', checkAnchorVisibility)
+        }
+    }, [anchorEl, onClose])
+
+
     // --- Close when clicking outside ---
     useEffect(() => {
         function handleClickOutside(e) {
