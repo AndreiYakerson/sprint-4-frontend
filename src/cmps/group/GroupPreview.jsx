@@ -77,7 +77,7 @@ export function GroupPreview({ group, groupsLength, managingType, TaskList,
         <header
             className="group-header"
         >
-            <div className="group-title-row">
+            <div className="group-title-row" {...listeners}>
                 <div className="group-menu-wrapper">
                     <button onClick={toggleIsMenuOpen} className={`white group-menu ${isMenuOpen ? "menu-open" : ""}`} ref={btnRef}>
                         <SvgIcon
@@ -106,13 +106,13 @@ export function GroupPreview({ group, groupsLength, managingType, TaskList,
                         onUpdate={(newVals) => onSetGroupToUpdate(group, newVals)}
                     />
                 </div>
-                <div className="task-count" {...listeners}>
+                <div className="task-count" >
                     {group?.tasks?.length > 0 ? `${group?.tasks?.length} Tasks`
                         : 'No Tasks'}
                 </div>
-                <div className="temporary-white-block" {...listeners}></div>
+                <div className="temporary-white-block" ></div>
             </div>
-            <div className="temporary-white-block" {...listeners}></div>
+            <div className="temporary-white-block"></div>
 
 
 
