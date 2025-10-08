@@ -21,9 +21,6 @@ export function FloatingContainerCmp({
         return () => onSetFloatingIsOpen(false)
     }, [])
 
-
-    console.log('Here:', centeredX, showTriangle, enforceLimit)
-
     useEffect(() => {
         if (!anchorEl || !enforceLimit) return
 
