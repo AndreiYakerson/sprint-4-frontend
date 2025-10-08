@@ -31,4 +31,18 @@
         width: 15px;
         height: 15px;
     }
+
+    &:hover .task-editor-btn {
+        opacity: 1;
+        transition: opacity .1s .2s ease-out;
+    }
+
+    .task-editor-btn {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        opacity: 0;
+        color: black;
+    }
+
 }

@@ -1,12 +1,16 @@
 
 export function StatusAnimation({ color }) {
-    color = color.replace(/var\((--[^)]+)\)/, '$1')
+   const varColor = color.replace(/var\((--[^)]+)\)/, '$1')
+    console.log(color);
+    
 
-    const rgbColor = getCssVarAsRgb(color)
+    const rgbColor = getCssVarAsRgb(varColor)
     const colorParts = rgbColor.split(',')
     const newPart = colorParts[1] - 30
     const newColor = rgbColor.replace(colorParts[1], newPart)
-    return <div className="status-animation" style={{ background: `linear-gradient(45deg,${newColor} 50%, #ffffff  50%)` }}></div>
+    return <div className="status-animation" style={{ background: `linear-gradient(45deg,${newColor} 50%, #ffffff  50%)` }}>
+        <div className="task-editor-btn" style={{color: `${color}`}}>+</div>
+    </div>
 }
 
 function getCssVarAsRgb(variableName) {
