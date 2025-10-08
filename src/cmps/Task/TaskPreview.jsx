@@ -35,7 +35,6 @@ export function TaskPreview({ task, taskIdx, groupId, tasksLength }) {
     }
 
 
-
     // const isFloatingOpen = useSelector(state => state.systemModule.isFloatingOpen)
     // const [membersSelectEl, setMembersSelectEl] = useState(null)
     // const [memberEl, setMemberEl] = useState(null)

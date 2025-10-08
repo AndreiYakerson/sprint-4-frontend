@@ -11,8 +11,12 @@ export function ActionsMenu({ style,
     isStarred,
     onRemoveItem,
     onDuplicateItem,
-    onRenameBoard
+    onRenameBoard,
 
+    onRemoveGroup,
+    groupsLength,
+    onAddGroup,
+    onRenameGroup,
 }) {
 
     return (<div className="actions-menu" style={{ ...style }} ref={menuRef}>
@@ -26,11 +30,21 @@ export function ActionsMenu({ style,
                 <span>{isItemOpen ? "Close item" : "Open item"}</span>
             </li>}
 
+            {onAddGroup && <li className="menu-action" onClick={() => { onCloseMenu(), onAddGroup() }}>
+                <SvgIcon iconName="newTab" size={18} colorName="secondaryText" />
+                <span>Add group</span>
+            </li>}
+
             <div className="hr"></div>
 
             {onRenameBoard && <li className="menu-action" onClick={() => { onCloseMenu(), onRenameBoard(true) }}>
                 <SvgIcon iconName="pen" size={18} colorName="secondaryText" />
                 <span>Rename</span>
+            </li>}
+
+            {onRenameGroup && <li className="menu-action" onClick={() => { onCloseMenu(), onRenameGroup() }}>
+                <SvgIcon iconName="pen" size={18} colorName="secondaryText" />
+                <span>Rename Group</span>
             </li>}
             {toggleIsStarred && <li className="menu-action" onClick={() => { onCloseMenu(), toggleIsStarred() }}>
                 <SvgIcon iconName="star" size={18} colorName="secondaryText" />
@@ -46,6 +60,11 @@ export function ActionsMenu({ style,
             {onRemoveItem && <li className="menu-action" onClick={() => { onCloseMenu(), onRemoveItem() }}>
                 <SvgIcon iconName="trash" size={18} colorName="secondaryText" />
                 <span>Delete</span>
+            </li>}
+            {onRemoveGroup && <li className={`menu-action ${groupsLength > 1 ? "" : "disabled"}`}
+                onClick={() => { onCloseMenu(), groupsLength > 1 ? onRemoveGroup() : "" }}>
+                <SvgIcon iconName="trash" size={18} colorName="secondaryText" />
+                <span>Delete group</span>
             </li>}
         </ul>
     </div >)

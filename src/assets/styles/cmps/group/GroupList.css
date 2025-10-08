@@ -74,6 +74,14 @@
                 margin-inline-end: 4px;
                 opacity: 0;
             }
+
+            .group-menu {
+                &.menu-open {
+                    opacity: 1;
+                    background-color: var(--primary-selected-color);
+                }
+            }
+
         }
 
         .group-title-wrapper {

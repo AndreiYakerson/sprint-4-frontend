@@ -16,6 +16,7 @@
   --text-color-on-primary: rgb(255, 255, 255);
   --disabled-text-color: rgba(50, 51, 56, 0.38);
   --link-color: #1f76c2;
+  --disabled-text-color: rgba(50, 51, 56, 0.38);
 
   /* border */
   --application-border-color: rgb(230, 233, 239);

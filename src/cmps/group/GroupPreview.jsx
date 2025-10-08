@@ -1,5 +1,5 @@
 // dnd kit
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 
@@ -7,11 +7,11 @@ import { CSS } from "@dnd-kit/utilities";
 import { SvgIcon } from "../SvgIcon";
 import { TitleEditor } from "../Task/TitleEditor.jsx";
 import { GroupTitleEditor } from "./GroupTitleEditor.jsx";
-
-
+import { FloatingContainerCmp } from "../FloatingContainerCmp.jsx";
+import { ActionsMenu } from "../ActionsMenu.jsx";
 
 export function GroupPreview({ group, groupsLength, managingType, TaskList,
-    onRemoveGroup, onUpdateGroup, onAddTask }) {
+    onRemoveGroup, onUpdateGroup, onAddTask, onAddGroup, onOpenGroupEditor }) {
 
     // dnd kit
     const { attributes, listeners, setNodeRef,
@@ -21,6 +21,22 @@ export function GroupPreview({ group, groupsLength, managingType, TaskList,
         transition: transition,
         transform: CSS.Transform.toString(transform),
     }
+
+
+    //menu 
+    const [isMenuOpen, setIsMenuOpen] = useState(false)
+    const btnRef = useRef(null)
+    const menuRef = useRef(null)
+
+    function toggleIsMenuOpen(ev) {
+        ev.stopPropagation()
+        setIsMenuOpen(!isMenuOpen)
+    }
+
+    function onCloseMenu() {
+        setIsMenuOpen(false)
+    }
+    // crudl
 
     const demoColumns = ["Status", "Priority", "Members", "Date"];
 
@@ -45,6 +61,8 @@ export function GroupPreview({ group, groupsLength, managingType, TaskList,
         }
     }
 
+
+
     return <div
         className="group-container"
         ref={setNodeRef}
@@ -61,13 +79,25 @@ export function GroupPreview({ group, groupsLength, managingType, TaskList,
         >
             <div className="group-title-row">
                 <div className="group-menu-wrapper">
-                    <button onClick={() => onRemoveGroup(group.id)} className="white group-menu">
+                    <button onClick={toggleIsMenuOpen} className={`white group-menu ${isMenuOpen ? "menu-open" : ""}`} ref={btnRef}>
                         <SvgIcon
                             iconName="dots"
                             size={22}
                             colorName={'primaryText'}
                         />
                     </button>
+
+                    {isMenuOpen && <FloatingContainerCmp anchorEl={btnRef.current} onClose={onCloseMenu}>
+                        <ActionsMenu
+                            menuRef={menuRef}
+                            onCloseMenu={onCloseMenu}
+                            onRemoveGroup={() => onRemoveGroup(group?.id)}
+                            groupsLength={groupsLength}
+                            onAddGroup={onAddGroup}
+                            onRenameGroup={() => onOpenGroupEditor(group?.id)}
+                        />
+                    </FloatingContainerCmp>}
+
                 </div>
                 <div className="collapse-group"></div>
                 <div className="group-title-wrapper flex" >

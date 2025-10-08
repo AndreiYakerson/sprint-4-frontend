@@ -200,6 +200,7 @@ export async function removeTask(boardId, groupId, taskId) {
     }
 }
 
+
 export function setNewTaskIdToEdit(taskId) {
     store.dispatch({ type: SET_TASK_ID_TO_EDIT, taskId })
 }

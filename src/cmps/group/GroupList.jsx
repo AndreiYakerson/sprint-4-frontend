@@ -9,7 +9,7 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router"
 // services
 import { showErrorMsg, showSuccessMsg } from "../../services/event-bus.service"
-import { addTask, removeGroup, updateGroup, updateGroupsOrder } from "../../store/actions/board.actions"
+import { addGroup, addTask, removeGroup, setNewGroupIdToEdit, updateGroup, updateGroupsOrder } from "../../store/actions/board.actions"
 
 // cmps
 import { TaskList } from "../Task/TaskList";
@@ -54,6 +54,18 @@ export function GroupList({ groups, managingType }) {
         }
     }
 
+    async function onAddGroup() {
+        try {
+            await addGroup(boardId)
+            showSuccessMsg('group added to the board')
+        } catch (err) {
+            console.log(err)
+            showErrorMsg('cannot add group')
+        }
+    }
+
+    // This needs to be improved, add the group's IDX, and add the new one below it.
+
     async function onAddTask(groupId, title) {
         try {
             await addTask(boardId, groupId, title)
@@ -63,6 +75,19 @@ export function GroupList({ groups, managingType }) {
             showErrorMsg('cannot add task')
         }
     }
+
+
+    async function onOpenGroupEditor(groupId) {
+        try {
+            setNewGroupIdToEdit(groupId)
+        } catch (err) {
+            console.log(err)
+            showErrorMsg('cannot open group editor')
+        }
+    }
+
+
+
 
     function onDragStart(event) {
         setIsDragging(true)
@@ -96,7 +121,6 @@ export function GroupList({ groups, managingType }) {
 
     }
 
-
     return (
 
         <DndContext
@@ -128,6 +152,8 @@ export function GroupList({ groups, managingType }) {
                                 onRemoveGroup={onRemoveGroup}
                                 onAddTask={onAddTask}
                                 groupsLength={localGroups.length}
+                                onAddGroup={onAddGroup}
+                                onOpenGroupEditor={onOpenGroupEditor}
                             />
 
                     })}
