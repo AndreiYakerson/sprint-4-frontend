@@ -5,7 +5,7 @@
     width: 100%;
 
     gap: 8px;
-    padding: 20px;
+    padding: 16px;
 
 
     .search-bar {
@@ -26,18 +26,31 @@
             place-content: center;
         }
 
+
     }
+
 
     .user {
         width: 100%;
-        padding: 16px;
+        padding-inline: 8px;
+
         align-items: center;
         border-radius: var(--border-radius-small);
         gap: 9px;
         border-color: transparent;
 
+        &.invite {
+            .addMember {
+                margin-inline: 6px;
+            }
+        }
+
+         .profession {
+            color: var(--secondary-text-color);
+        }
+
         .img-container {
-            width: 36px;
+            width: 26px;
             display: flex;
             place-content: center;
 

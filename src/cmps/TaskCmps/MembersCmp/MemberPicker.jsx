@@ -9,6 +9,8 @@ import { MemberTaskSelect } from "./MemberTaskSelect"
 // ICONS
 import person from "/icons/person.svg"
 import plus from "/icons/plus.svg"
+import { remove } from "lodash"
+import { useSelector } from "react-redux"
 export function MemberPicker({ info, onUpdate }) {
     const { label, members, propName, selectedMemberIds } = info
 
@@ -16,9 +18,11 @@ export function MemberPicker({ info, onUpdate }) {
     const [membersSelectEl, setMembersSelectEl] = useState(null)
     const [isAnimation, setIsAnimation] = useState(false)
     const [hoveredUser, setHoveredUser] = useState(null)
+    const isFloatingOpen = useSelector(state => state.systemModule.isFloatingOpen)
+
 
     function onSetHoveredUser(user, target) {
-        if (membersSelectEl) return
+        if (membersSelectEl || isFloatingOpen) return
         setHoveredUser(user);
         setMemberEl(target)
     }
@@ -36,7 +40,8 @@ export function MemberPicker({ info, onUpdate }) {
 
     function onRemoveMember(memberId) {
         const memberIds = [...selectedMemberIds.filter(id => id !== memberId)]
-        updateTaskMembers(memberIds)
+        onUpdate(memberIds)
+
     }
 
     function updateTaskMembers(memberIds) {
@@ -48,26 +53,28 @@ export function MemberPicker({ info, onUpdate }) {
     }
 
     const membersToShow = selectedMemberIds.map(memberId => {
-        return members.find(user => user.id === memberId)
+        return members.find(member => member.id === memberId)
     }).filter(Boolean)
 
     return (
         <article className="member-picker" onClick={(ev) => setMembersSelectEl(ev.currentTarget)}>
-
             {!!membersToShow.length ?
                 <div className="cmp-img">
-                    {membersToShow.map((user, idx) => {
-                        // show normally if total ≤ 2
-                        // or if this is the first image
+                    {membersToShow.map((member, idx) => {
                         if (membersToShow.length <= 2 || idx === 0) {
                             return (
-                                <div key={user.id} className={`img-wrapper ${isAnimation ? 'heartbeat ' : ''}`}>
-                                    <img src={user.imgUrl} alt={user.fullname} className="user-img" />
+                                <div
+                                    key={member.id}
+                                    className={`img-wrapper ${isAnimation ? 'heartbeat ' : ''}`}
+                                    onMouseLeave={onClearHover}
+                                    onMouseOver={(ev) => onSetHoveredUser(member, ev.currentTarget)}
+                                    onClick={() => onRemoveMember(member.id)}
+                                >
+                                    <img src={member.imgUrl} alt={member.fullname} className="user-img" />
                                 </div>
                             )
                         }
 
-                        // if more than 2, replace the 2nd image with +N
                         if (idx === 1 && membersToShow.length > 2) {
                             return (
                                 <div key="more-users" className={`img-wrapper more ${isAnimation ? 'heartbeat ' : ''}`}>
@@ -76,7 +83,6 @@ export function MemberPicker({ info, onUpdate }) {
                             )
                         }
 
-                        // skip showing any other images
                         return null
                     })}
                 </div>
@@ -90,29 +96,6 @@ export function MemberPicker({ info, onUpdate }) {
                     />
                 </span>
             }
-
-
-            {/* membersToShow.map(member => {
-
-                        return <div
-                        className={`img-wrapper ${MoreThen2Img}`}
-                        data-type={membersToShow.length}
-                        key={member.id}
-                        onMouseLeave={onClearHover}
-                        onMouseOver={(ev) => onSetHoveredUser(member, ev.currentTarget)}
-                        onClick={() => onRemoveMember(member.id)
-                        }
-                    >
-                        <img
-                            id={member.fullname}
-                            src={member.imgUrl}
-                            className="user-img"
-                            alt="person icon"
-                        />
-                    </div>
-                    })
-                  
-                } */}
 
             {
                 memberEl && < FloatingContainerCmp
@@ -131,6 +114,7 @@ export function MemberPicker({ info, onUpdate }) {
                     onClose={closeMemberSelect}
                 >
                     <MemberTaskSelect
+                        onRemove={onRemoveMember}
                         selectedMemberIds={selectedMemberIds}
                         members={members}
                         // groupId={ }
