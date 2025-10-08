@@ -55,7 +55,6 @@ export function StatusPicker({ info, onUpdate }) {
             {labelToShow?.txt}
             <StatusAnimation color={`var(${labelToShow?.cssVar})`} />
 
-
             {anchorEl &&
                 <FloatingContainerCmp
                 anchorEl={anchorEl}
