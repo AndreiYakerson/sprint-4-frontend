@@ -76,11 +76,20 @@
             }
         }
 
-        .group-title {
+        .group-title-wrapper {
             cursor: text;
             font-size: 1.28571428571em;
             font-weight: 500;
             color: var(--group-color);
+
+            .group-title {
+                padding: 2px;
+
+                &:hover {
+                    outline: 1px solid var(--layout-border-color);
+                    border-radius: 4px;
+                }
+            }
         }
 
         .task-count {
@@ -88,6 +97,7 @@
             opacity: 0;
             transition: 200ms ease-in-out;
             margin-inline-start: 0.5em;
+            white-space: nowrap;
         }
 
         .temporary-white-block {
@@ -235,7 +245,7 @@
         padding: 8px 16px;
     }
 
-    .group-title {
+    .group-title-wrapper {
         cursor: text;
         font-size: 1.28571428571em;
         font-weight: 500;
@@ -254,7 +264,7 @@
     .fold-icon {
         color: var(--group-color);
         font-size: 1.28571428571em;
-        
+
     }
 
 }

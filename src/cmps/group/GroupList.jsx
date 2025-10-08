@@ -13,8 +13,6 @@ import { addTask, removeGroup, updateGroup, updateGroupsOrder } from "../../stor
 
 // cmps
 import { TaskList } from "../Task/TaskList";
-import { TitleEditor } from "../Task/TitleEditor";
-import { GroupTitleEditor } from "./GroupTitleEditor";
 import { GroupPreview } from "./GroupPreview";
 import { GroupCollapsed } from "./GroupCollapsed";
 import { DndContext, DragOverlay } from "@dnd-kit/core";
@@ -34,8 +32,7 @@ export function GroupList({ groups, managingType }) {
     }, [groups])
 
 
-    async function onUpdateGroup(group, newVals) {
-        const groupToUpdate = { ...structuredClone(group), ...newVals }
+    async function onUpdateGroup(groupToUpdate) {
 
         try {
             await updateGroup(boardId, groupToUpdate)
@@ -43,6 +40,7 @@ export function GroupList({ groups, managingType }) {
         } catch (err) {
             console.log(err)
             showErrorMsg('cannot update group')
+            throw err
         }
     }
 
@@ -124,10 +122,8 @@ export function GroupList({ groups, managingType }) {
                             <GroupPreview
                                 key={group.id}
                                 group={group}
-                                GroupTitleEditor={GroupTitleEditor}
                                 managingType={managingType}
                                 TaskList={TaskList}
-                                TitleEditor={TitleEditor}
                                 onUpdateGroup={onUpdateGroup}
                                 onRemoveGroup={onRemoveGroup}
                                 onAddTask={onAddTask}
@@ -138,7 +134,7 @@ export function GroupList({ groups, managingType }) {
 
 
                 </SortableContext>
-        
+
             </section>
 
 

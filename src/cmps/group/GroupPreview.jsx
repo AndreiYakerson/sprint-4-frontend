@@ -1,20 +1,49 @@
+// dnd kit
+import { useState } from "react";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
+
+// cmps
 import { SvgIcon } from "../SvgIcon";
+import { TitleEditor } from "../Task/TitleEditor.jsx";
+import { GroupTitleEditor } from "./GroupTitleEditor.jsx";
 
 
 
-export function GroupPreview({ group, groupsLength, GroupTitleEditor, managingType, TaskList, TitleEditor, onUpdateGroup, onRemoveGroup, onAddTask }) {
+export function GroupPreview({ group, groupsLength, managingType, TaskList,
+    onRemoveGroup, onUpdateGroup, onAddTask }) {
 
-    const demoColumns = ["Status", "Priority", "Members", "Date"];
-
-    const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id: group.id, disabled: groupsLength < 2 })
+    // dnd kit
+    const { attributes, listeners, setNodeRef,
+        transform, transition, isDragging } = useSortable({ id: group.id, disabled: groupsLength < 2 })
 
     const style = {
         transition: transition,
         transform: CSS.Transform.toString(transform),
     }
 
+    const demoColumns = ["Status", "Priority", "Members", "Date"];
+
+    const [groupInfoToEdit, setGroupInfoToEdit] = useState({
+        groupId: group?.id,
+        title: group?.title,
+        color: group?.style['--group-color'],
+        style: group?.style
+    })
+
+    async function onSetGroupToUpdate(group, newVals) {
+        const prevGroupInfo = { ...groupInfoToEdit }
+
+        setGroupInfoToEdit(prev => ({ ...prev, ...newVals, color: style['--group-color'] }))
+
+        const groupToUpdate = { ...structuredClone(group), ...newVals }
+
+        try {
+            await onUpdateGroup(groupToUpdate)
+        } catch (err) {
+            setGroupInfoToEdit(prevGroupInfo)
+        }
+    }
 
     return <div
         className="group-container"
@@ -22,7 +51,7 @@ export function GroupPreview({ group, groupsLength, GroupTitleEditor, managingTy
         {...attributes}
         style={{
             ...style,
-            ...group.style,
+            ...groupInfoToEdit?.style,
             opacity: isDragging ? 0.5 : 1,
             zIndex: isDragging ? 10 : 'auto',
         }}
@@ -32,24 +61,19 @@ export function GroupPreview({ group, groupsLength, GroupTitleEditor, managingTy
         >
             <div className="group-title-row">
                 <div className="group-menu-wrapper">
-                    <button onClick={() => onRemoveGroup(group.id)} className="white">
+                    <button onClick={() => onRemoveGroup(group.id)} className="white group-menu">
                         <SvgIcon
-                            iconName="trash"
-                            size={20}
+                            iconName="dots"
+                            size={22}
                             colorName={'primaryText'}
                         />
                     </button>
                 </div>
                 <div className="collapse-group"></div>
-                <div className="group-title flex" >
+                <div className="group-title-wrapper flex" >
                     <GroupTitleEditor
-                        info={{
-                            groupId: group?.id,
-                            title: group.title,
-                            color: group.style['--group-color'],
-                            style: group?.style
-                        }}
-                        onUpdate={(newVals) => onUpdateGroup(group, newVals)}
+                        info={groupInfoToEdit}
+                        onUpdate={(newVals) => onSetGroupToUpdate(group, newVals)}
                     />
                 </div>
                 <div className="task-count" {...listeners}>
