@@ -13,6 +13,7 @@
     display: grid;
     min-height: fit-content;
     gap: 8px;
+    padding: 16px 24px 8px;
 
 }
 
@@ -50,7 +51,7 @@
     }
 
     .label {
-        width: 144px;
+        width: 152px;
         height: 33px;
 
         margin-inline: 2px;
@@ -113,7 +114,7 @@
     width: 120px;
     height: 30px;
 
-    padding: 4px 8px;
+    /* padding: 4px 8px; */
 
     border: none;
 }

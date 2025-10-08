@@ -1,19 +1,29 @@
 
 // SERVICES
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { updateBoard } from "../../store/actions/board.actions.js";
 import { useSelector } from "react-redux";
 // COMPONENTS
 import { LabelsListEdit } from "./PriorityCmp/LabelsListEdit.jsx";
 import { LabelsList } from "./PriorityCmp//LabelsList";
 import { FloatingContainerCmp } from "../FloatingContainerCmp.jsx";
+import { showSuccessMsg } from "../../services/event-bus.service.js";
 
 export function StatusPicker({ info, onUpdate }) {
     const { selectedStatus, statuses } = info
     const [isEditOpen, setIsEditOpen] = useState(false)
+    const [selectedLabelId, setSelectedLabelId] = useState(selectedStatus?.id)
+    const [labels, setLabels] = useState(statuses)
     const board = useSelector(state => state.boardModule.board)
+    const label = labels.find(l => l.id === selectedLabelId)
+
+    useEffect(() => {
+        setLabels(statuses)
+    }, [statuses])
+
 
     function onSaveLabel(label) {
+        setSelectedLabelId(label.id)
         onUpdate(label)
         onClose()
     }
@@ -21,6 +31,7 @@ export function StatusPicker({ info, onUpdate }) {
     function onUpdateLabels(labels) {
         const newBoard = { ...board, statuses: labels }
         updateBoard(newBoard)
+        setLabels(labels)
     }
 
     function onClose() {
@@ -30,16 +41,18 @@ export function StatusPicker({ info, onUpdate }) {
 
     const editMode = !isEditOpen ? 'apply' : ''
 
-    const status = selectedStatus ?  selectedStatus : statuses.find(status => status.id === 'default')
+    const labelToShow = label ? label : labels.find(status => status.id === 'default')
 
 
 
     const [anchorEl, setAnchorEl] = useState()
     return (
         <div className="priority-picker"
-            style={{ background: `var(${status.cssVar})` }}
+            style={{ background: `var(${labelToShow?.cssVar})` }}
             onClick={(ev) => setAnchorEl(ev.currentTarget)}>
-            {status.txt}
+            {labelToShow?.txt}
+
+
             {anchorEl &&
                 <FloatingContainerCmp
                     anchorEl={anchorEl}
@@ -47,9 +60,9 @@ export function StatusPicker({ info, onUpdate }) {
                     <div className={`priority-container ${isEditOpen}`}>
                         <div className={`priority-select ${isEditOpen}`}>
                             {!isEditOpen ?
-                                <LabelsList labels={statuses} onSaveLabel={onSaveLabel} switchEditMode={() => setIsEditOpen(prev => prev = !prev)} />
+                                <LabelsList labels={labels} onSaveLabel={onSaveLabel} switchEditMode={() => setIsEditOpen(prev => prev = !prev)} />
                                 :
-                                <LabelsListEdit labels={statuses} onUpdateLabels={onUpdateLabels} onClose={onClose} />
+                                <LabelsListEdit labels={labels} onUpdateLabels={onUpdateLabels} onClose={onClose} />
                             }
 
                         </div>
