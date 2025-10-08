@@ -21,6 +21,7 @@
         grid-template-columns: 1fr;
         gap: 20px;
         margin-inline-end: 20px;
+        cursor: grabbing;
     }
 
 
