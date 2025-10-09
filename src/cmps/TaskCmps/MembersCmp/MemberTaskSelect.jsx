@@ -6,16 +6,27 @@ import { SvgIcon } from '../../SvgIcon'
 import { ExistingMembers } from './ExistingMembers'
 import { useSelector } from 'react-redux'
 import { FloatingContainerCmp } from '../../FloatingContainerCmp'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { updateBoard } from '../../../store/actions/board.actions'
+import { loadFromStorage, saveToStorage } from '../../../services/util.service'
 
 // COMPONENTS
 
-
 export function MemberTaskSelect({ selectedMemberIds, onClose, members, onRemove }) {
+    //Demo
+    useEffect(() => {
+        if (!loadFromStorage('users')) {
+            console.log(' Setting demo user to LocalStorage ')
+            const users = userService.createDemoUsersForLoggedUsers(10)
+            saveToStorage('users', users)
+        }
+    }, [])
 
-    const users = useSelector(state => state.userModule.users)
     const board = useSelector(state => state.boardModule.board)
+
+
+    const users = loadFromStorage('users')
+
 
     const [anchorEl, setAnchorEl] = useState(false)
     const [notBoardMembers, setNotBoardMembers] = useState(false)
@@ -30,7 +41,7 @@ export function MemberTaskSelect({ selectedMemberIds, onClose, members, onRemove
         const regex = new RegExp('^' + userToFind, 'i')
         const notMembers = users.filter(user => regex.test(user.fullname)).filter(u => !members.some(m => m._id === u._id))
 
-        if (!!notMembers.length)  setNotBoardMembers(notMembers) 
+        if (!!notMembers.length) setNotBoardMembers(notMembers)
         setAnchorEl(ev.currentTarget)
     }
 

@@ -116,6 +116,7 @@ export function MemberPicker({ info, onUpdate }) {
                     centeredX={true}
                     showTriangle={true}
                     enforceLimit={true}
+                    
                 >
                     <MemberTaskSelect
                         onRemove={onRemoveMember}

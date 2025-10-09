@@ -4,7 +4,7 @@ import { Link, NavLink } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router'
 import { useDispatch, useSelector } from 'react-redux'
-import { logout } from '../store/actions/user.actions'
+import { logout, signup } from '../store/actions/user.actions'
 import { showErrorMsg, showSuccessMsg } from '../services/event-bus.service'
 
 // cmps
@@ -15,28 +15,15 @@ import { SvgIcon } from './SvgIcon.jsx'
 import headerLogo from '/img/logo.png'
 
 // icons
-import notification from '/icons/notification.svg'
-import { userService } from '../services/user/user.service.local.js'
-import { SET_USERS } from '../store/reducers/user.reducer.js'
-
 
 
 export function AppHeader() {
-	
+
 	const user = useSelector(storeState => storeState.userModule.user)
-	const users = useSelector(storeState => storeState.userModule.users)
 
 	const [anchorEl, setAnchorEl] = useState(null)
 	const navigate = useNavigate()
-	const dispatch = useDispatch()
 
-	useEffect(() => {
-		if (!users.length) {
-			console.log(' Setting demo user to stores ')
-			const users = userService.createDemoUsersForLoggedUsers(10)
-			dispatch({ type: SET_USERS, users })
-		}
-	}, [users.length, dispatch])
 
 
 	async function onLogout() {
