@@ -1,4 +1,4 @@
-import appLoderimg from '/img/loader.gif'
+import appLoaderImg from '/img/loader.gif'
 
 export function AppLoader(props) {
     return (
@@ -6,4 +6,4 @@ export function AppLoader(props) {
             <img src={appLoderimg} alt="loader" />
         </section>
     )
-}
+} 
