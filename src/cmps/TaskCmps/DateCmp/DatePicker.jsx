@@ -61,7 +61,6 @@ export function DatePicker({ info, onUpdate }) {
             setTitleMsg(msg)
             setStatusIcon('ExclamationMarkCircle')
 
-            console.log(statusInfo.id === 'done' ? "positive" : "negative");
 
             setStatusColor(statusInfo.id === 'done' ? "positive" : "negative")
             setIconSize(18)
@@ -88,7 +87,6 @@ export function DatePicker({ info, onUpdate }) {
         setIconSize(16)
 
         if (diffInDays < 7) {
-            console.log(diffInDays);
             setStatusIcon(`day${diffInDays}`)
         } else {
             setStatusIcon('emptyCircle')
