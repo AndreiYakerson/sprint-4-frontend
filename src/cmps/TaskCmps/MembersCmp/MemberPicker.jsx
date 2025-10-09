@@ -57,7 +57,7 @@ export function MemberPicker({ info, onUpdate }) {
     }
 
     const membersToShow = selectedMemberIds.map(memberId => {
-        return members.find(member => member.id === memberId)
+        return members.find(member => member._id === memberId)
     }).filter(Boolean)
 
     return (
@@ -68,7 +68,7 @@ export function MemberPicker({ info, onUpdate }) {
                         if (membersToShow.length <= 2 || idx === 0) {
                             return (
                                 <div
-                                    key={member.id}
+                                    key={member._id}
                                     className={`img-wrapper ${isAnimation ? 'heartbeat ' : ''}`}
                                     onMouseLeave={onClearHover}
                                     onMouseOver={(ev) => onSetHoveredUser(member, ev.currentTarget)}

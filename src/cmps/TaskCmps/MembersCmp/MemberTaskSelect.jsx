@@ -28,19 +28,19 @@ export function MemberTaskSelect({ selectedMemberIds, onClose, members, onRemove
             return
         }
         const regex = new RegExp('^' + userToFind, 'i')
-        const notMembers = users.filter(user => regex.test(user.fullname)).filter(u => !members.includes(u))
+        const notMembers = users.filter(user => regex.test(user.fullname)).filter(u => !members.some(m => m._id === u._id))
 
         if (!!notMembers.length)  setNotBoardMembers(notMembers) 
         setAnchorEl(ev.currentTarget)
     }
 
     function onSelectMember(member) {
-        const taskMembersIds = [...selectedMemberIds, member.id]
+        const taskMembersIds = [...selectedMemberIds, member._id]
         onClose(taskMembersIds)
     }
 
     async function onAddMemberToBoard(member) {
-        const taskMembersIds = [...selectedMemberIds, member.id]
+        const taskMembersIds = [...selectedMemberIds, member._id]
         try {
             const newBoard = { ...board, members: [...board.members, member] }
             await updateBoard(newBoard)
@@ -50,8 +50,8 @@ export function MemberTaskSelect({ selectedMemberIds, onClose, members, onRemove
         }
     }
 
-    const usersToShow = members.filter(member => !selectedMemberIds.includes(member.id));
-    const existingUsers = members.filter(member => selectedMemberIds.includes(member.id));
+    const usersToShow = members.filter(member => !selectedMemberIds.includes(member._id));
+    const existingUsers = members.filter(member => selectedMemberIds.includes(member._id));
 
     return (
         <div className='member-task-select-wrapper'>
@@ -82,7 +82,7 @@ export function MemberTaskSelect({ selectedMemberIds, onClose, members, onRemove
                     {usersToShow.map((member, idx) => {
                         return <button
                             onClick={() => onSelectMember(member, idx)}
-                            key={member.id}
+                            key={member._id}
                             className="user flex"
                         >
                             <span className="img-container"><img className=" user-img" src={member.imgUrl} alt="User Image" /></span>
@@ -108,7 +108,7 @@ export function MemberTaskSelect({ selectedMemberIds, onClose, members, onRemove
                         {notBoardMembers.map((user, idx) => {
                             return <button
                                 onClick={() => onAddMemberToBoard(user, idx)}
-                                key={user.id}
+                                key={user._id}
                                 className="user flex"
                             >
                                 <span className="img-container"><img className=" user-img" src={user.imgUrl} alt="User Image" /></span>

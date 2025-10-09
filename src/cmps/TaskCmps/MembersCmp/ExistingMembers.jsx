@@ -12,7 +12,7 @@ export function ExistingMembers({members,onRemove}) {
                     <button className="remove-btn"
                     onClick={(ev)=>{
                         ev.stopPropagation()
-                        onRemove(member.id)}}>
+                        onRemove(member._id)}}>
                         <SvgIcon
                             // className='remove-btn'
                             iconName="xMark"

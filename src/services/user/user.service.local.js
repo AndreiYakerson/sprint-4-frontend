@@ -104,7 +104,7 @@ function createDemoUsersForLoggedUsers(num) {
     for (let i = 5; i < num; i++) {
 
         const user = {
-            id: makeId(),
+            _id: makeId(),
             fullname: names[i],
             password: `user ${i + 1}`,
             profession: professions.splice(getRandomIntInclusive(0, professions.length), 1)[0],
@@ -147,7 +147,7 @@ function createDemoUsersForBoard(num) {
     var users = []
     for (let i = 0; i < num; i++) {
         const user = {
-            id: makeId(),
+            _id: makeId(),
             fullname: names[i],
             password: `user ${i + 1}`,
             profession: professions.splice(getRandomIntInclusive(0, professions.length), 1)[0],
