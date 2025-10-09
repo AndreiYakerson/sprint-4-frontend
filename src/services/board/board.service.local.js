@@ -275,7 +275,7 @@ const DefaultPriorities = [
         , cssVar: '--group-title-clr9'
     },
     {
-        id:'default',
+        id: 'default',
         txt: ''
         , cssVar: '--group-title-clr18'
     },
@@ -283,19 +283,19 @@ const DefaultPriorities = [
 
 const DefaultStatuses = [
     {
-        id: makeId(),
+        id: 'done',
         txt: 'Done'
         , cssVar: '--group-title-clr2'
     },
     {
         id: makeId(),
         txt: 'Working on it'
-        , cssVar: '--group-title-clr15'
+        , cssVar: ' --group-title-clr16'
     },
     {
         id: makeId(),
         txt: 'Stuck'
-        , cssVar: '--group-title-clr11'
+        , cssVar: '--group-title-clr12'
     },
     {
         id: 'default',

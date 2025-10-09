@@ -136,3 +136,11 @@ object {
     text-overflow: ellipsis;
     overflow: hidden;
 }
+
+svg {
+    display: block;
+
+    path {
+        display: block;
+    }
+}
