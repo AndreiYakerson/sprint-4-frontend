@@ -2,7 +2,7 @@
     position: relative;
     display: flex;
     cursor: pointer;
-    place-content: center;
+    place-content: space-evenly;
 
     .plus {
         position: absolute;
@@ -10,7 +10,7 @@
         opacity: 0;
     }
 
-    &:hover .plus-blue {
+    &:hover .user-img .plus-blue {
         opacity: 1;
     }
 
@@ -26,8 +26,7 @@
         /* z-index: 0; */
         width: 30px;
         height: 30px;
-        
-        margin-left: -8px;
+        z-index: 1;
 
         &.more {
             border-radius: 50%;
@@ -44,9 +43,30 @@
 
     }
 
+    .img-wrapper+.img-wrapper {
+        margin-left: -5px;
+        z-index: 2;
+    }
+
     .user-img {
+        position: relative;
         display: flex;
         border-radius: var(--border-radius-big);
-        align-self: center;
+        place-self: center;
+
+
+        .person {
+            position: relative;
+            right: 15%;
+            
+        }
+
+        .plus-blue {
+            position: relative;
+            right: 100%;
+            opacity: 0;
+        }
+
+
     }
 }
