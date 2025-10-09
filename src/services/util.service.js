@@ -59,3 +59,11 @@ export function getRandomGroupColor() {
     const idx = getRandomIntInclusive(0, colors.length - 1)
     return colors[idx]
 }
+export function getVarColors() {
+    const colors = []
+    for (let i = 0; i < 19; i++) {
+       colors.push(`--group-title-clr${i+1}`)
+    }
+        return colors
+}
+
