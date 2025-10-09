@@ -35,12 +35,14 @@
         display: flex;
         place-items: center;
 
-        .more-icon,
-        .drag-icon {
+        .more-icon {
             opacity: 0;
             transition: opacity .5s ease;
         }
 
+        .drag-icon{
+            opacity: 0;
+        }
     }
 
 
@@ -108,7 +110,7 @@
     }
 
     .label-list-edit-container:hover .drag-icon {
-        opacity: 1;
+        /* opacity: 1; */
     }
 
     .label-list-edit-container:hover .more-icon {
