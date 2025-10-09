@@ -290,12 +290,12 @@ const DefaultStatuses = [
     {
         id: makeId(),
         txt: 'Working on it'
-        , cssVar: '--group-title-clr15'
+        , cssVar: ' --group-title-clr16'
     },
     {
         id: makeId(),
         txt: 'Stuck'
-        , cssVar: '--group-title-clr11'
+        , cssVar: '--group-title-clr12'
     },
     {
         id: 'default',
