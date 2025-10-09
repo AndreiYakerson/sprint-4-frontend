@@ -1,5 +1,4 @@
 .date-picker {
-
     background-color: inherit;
     cursor: pointer;
 
@@ -11,8 +10,9 @@
 
         outline: solid 1px var(--ui-border-color);
         border-radius: 4px;
-        height: 80%;
-        margin: 4px;
+
+        justify-self: center;
+        width: 130px;
     }
 
     &:hover {
@@ -29,14 +29,32 @@
     }
 
     .date-to-edit {
+        justify-self: center;
+        width: 130px;
         position: relative;
-        height: 80%;
-        margin: 4px;
         align-content: center;
+
+
 
         &:hover {
             .remove-date {
                 opacity: 1;
+            }
+        }
+
+        .selected-time {
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
+
+            margin-inline: 1em;
+
+            width: 100%;
+            max-width: 100%;
+
+            &.done {
+
+                text-decoration: line-through;
             }
         }
 

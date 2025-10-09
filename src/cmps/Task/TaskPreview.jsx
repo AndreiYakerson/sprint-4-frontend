@@ -1,5 +1,5 @@
 
-import { useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { useParams, useNavigate } from "react-router-dom"
 import { useSelector } from "react-redux"
 
@@ -79,6 +79,7 @@ export function TaskPreview({ task, groupId, taskIdx }) {
                     label: 'Due date:',
                     propName: 'dueDate',
                     selectedDate: task?.dueDate,
+                    selectedStatus: task.status,
                 }
             },
             {
@@ -93,6 +94,59 @@ export function TaskPreview({ task, groupId, taskIdx }) {
             },
         ]
     )
+
+    useEffect(() => {
+        setCmps([
+
+            {
+                type: 'StatusPicker',
+                info: {
+                    label: 'Status:',
+                    propName: 'status',
+                    selectedStatus: task.status,
+                    statuses: board.statuses,
+                }
+            },
+            {
+                type: 'MemberPicker',
+                info: {
+                    label: 'Members:',
+                    propName: 'memberIds',
+                    selectedMemberIds: task.memberIds || [],
+                    members: board.members,
+                }
+            },
+            {
+                type: 'PriorityPicker',
+                info: {
+                    label: 'priority:',
+                    propName: 'priority',
+                    taskPriority: task.priority,
+                    boardPriorities: board.priorities,
+                    boardId: board._id
+                }
+            },
+            {
+                type: 'DatePicker',
+                info: {
+                    label: 'Due date:',
+                    propName: 'dueDate',
+                    selectedDate: task?.dueDate,
+                    selectedStatus: task.status,
+                }
+            },
+            {
+                type: 'TitleEditor',
+                info: {
+                    taskId: task?.id,
+                    label: 'Title:',
+                    propName: 'title',
+                    currTitle: task?.title,
+                }
+            },
+        ])
+    }, [task, board])
+
 
     const [isMenuOpen, setIsMenuOpen] = useState(false)
 

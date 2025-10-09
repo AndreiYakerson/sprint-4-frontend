@@ -32,7 +32,9 @@
            &:not(.table-header, .sum-row, :has(:focus, .focus)) {
                background-color: var(--pulse-background-color-rgb);
                box-shadow: 4px 3px 6px -3px var(--ui-border-color);
-               z-index: 3;
+
+               /* make bug - bark the layout - need to find solution */
+               /* z-index: 3; */
 
                .sticky-cell-wrapper {
                    background-color: var(--pulse-background-color-rgb);
@@ -45,8 +47,6 @@
                }
            }
        }
-
-
 
 
    }
@@ -101,7 +101,6 @@
            z-index: 50;
 
            &:hover {
-
                &>* {
                    opacity: 1;
                }
@@ -186,13 +185,16 @@
 
    .column-cell {
        display: flex;
-
        min-width: 150px;
-       height: 100%;
+       max-height: 100%;
 
        border-block-end: 1px solid var(--layout-border-color);
        border-inline-end: 1px solid var(--layout-border-color);
 
+       /* Will be changed later to something much better */
+       &:not(.full) {
+           max-width: 150px;
+       }
 
        &>* {
            text-align: center;
