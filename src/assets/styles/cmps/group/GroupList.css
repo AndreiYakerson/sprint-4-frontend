@@ -207,7 +207,11 @@
 
 /* The left column usually contains the task title. */
 .sticky-cell-wrapper {
-    z-index: 40;
+    z-index: 30;
+
+    &:has(.border-radius-block) {
+        z-index: 40;
+    }
 
     &:has(.add-task-cell) {
         .table-border {

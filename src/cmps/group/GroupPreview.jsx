@@ -9,6 +9,7 @@ import { TitleEditor } from "../Task/TitleEditor.jsx";
 import { GroupTitleEditor } from "./GroupTitleEditor.jsx";
 import { FloatingContainerCmp } from "../FloatingContainerCmp.jsx";
 import { ActionsMenu } from "../ActionsMenu.jsx";
+import { LabelSum } from "../TaskCmps/SumCmps/LabelSum.Jsx";
 
 export function GroupPreview({ group, groupsLength, managingType, TaskList,
     onRemoveGroup, onUpdateGroup, onAddTask, onAddGroup, onOpenGroupEditor }) {
@@ -38,7 +39,7 @@ export function GroupPreview({ group, groupsLength, managingType, TaskList,
     }
     // crudl
 
-    const demoColumns = ["Status", "Priority", "Members", "Date"];
+    const demoColumns = ["Status", "Priority", "Members", "Due Date"];
 
     const [groupInfoToEdit, setGroupInfoToEdit] = useState({
         groupId: group?.id,
@@ -60,6 +61,25 @@ export function GroupPreview({ group, groupsLength, managingType, TaskList,
             setGroupInfoToEdit(prevGroupInfo)
         }
     }
+
+    // sum data
+
+    const statuses = group?.tasks.map(t => {
+        if (!t?.status) {
+            return { id: 'default', txt: 'Not Started', cssVar: '--group-title-clr18' }
+        } else {
+            return t.status
+        }
+    })
+
+
+    const priorities = group?.tasks.map(t => {
+        if (!t?.priority) {
+            return { txt: 'Default Label', cssVar: '--group-title-clr18', id: 'Default' }
+        } else {
+            return t.priority
+        }
+    })
 
 
 
@@ -165,6 +185,7 @@ export function GroupPreview({ group, groupsLength, managingType, TaskList,
 
         <div className="table-row sum-row">
             <div className="sticky-cell-wrapper">
+                <div className="task-menu-wrapper"></div>
                 <div className="border-radius-block">
                     <span></span>
                 </div>
@@ -172,9 +193,20 @@ export function GroupPreview({ group, groupsLength, managingType, TaskList,
 
             <div className="task-columns flex">
                 {demoColumns.map(colName => {
-                    return <div key={colName} className="column-cell">
-                        <span></span>
-                    </div>
+                    if (colName === 'Status') {
+                        return <div key={colName} className="column-cell">
+                            <LabelSum labels={statuses} />
+                        </div>
+                    } else if (colName === 'Priority') {
+                        return <div key={colName} className="column-cell">
+                            {priorities?.length > 0 && <LabelSum labels={priorities} />}
+                        </div>
+                    } else {
+                        return <div key={colName} className="column-cell">
+                            <span></span>
+                        </div>
+                    }
+
                 })}
                 <div className="column-cell full"></div>
             </div>
