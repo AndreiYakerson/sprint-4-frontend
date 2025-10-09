@@ -18,20 +18,20 @@ export function MemberTaskSelect({ selectedMemberIds, onClose, members, onRemove
     const board = useSelector(state => state.boardModule.board)
 
     const [anchorEl, setAnchorEl] = useState(false)
-    const [stateUsers, setStateUsers] = useState()
+    const [notBoardMembers, setNotBoardMembers] = useState(false)
 
     function handelChange(ev) {
         const userToFind = ev.target.value
         if (userToFind.length === 0) {
-            setStateUsers('')
+            setNotBoardMembers(false)
             setAnchorEl(false)
             return
         }
-        // ev.stopPropagation()
         const regex = new RegExp('^' + userToFind, 'i')
-        setStateUsers((users.filter(user => regex.test(user.fullname))))
-        setAnchorEl(ev.currentTarget)
+        const notMembers = users.filter(user => regex.test(user.fullname)).filter(u => !members.includes(u))
 
+        if (!!notMembers.length)  setNotBoardMembers(notMembers) 
+        setAnchorEl(ev.currentTarget)
     }
 
     function onSelectMember(member) {
@@ -81,7 +81,6 @@ export function MemberTaskSelect({ selectedMemberIds, onClose, members, onRemove
                 <section className="user-list">
                     {usersToShow.map((member, idx) => {
                         return <button
-                            // Pass the actual numeric 'idx' here
                             onClick={() => onSelectMember(member, idx)}
                             key={member.id}
                             className="user flex"
@@ -102,13 +101,12 @@ export function MemberTaskSelect({ selectedMemberIds, onClose, members, onRemove
                         {' Invite a new member by email'}
                     </button> */}
                 </section>
-                {anchorEl &&
+                {anchorEl && notBoardMembers &&
                     <FloatingContainerCmp
                         anchorEl={anchorEl}
                         onClose={onClose}>
-                        {stateUsers.map((user, idx) => {
+                        {notBoardMembers.map((user, idx) => {
                             return <button
-                                // Pass the actual numeric 'idx' here
                                 onClick={() => onAddMemberToBoard(user, idx)}
                                 key={user.id}
                                 className="user flex"

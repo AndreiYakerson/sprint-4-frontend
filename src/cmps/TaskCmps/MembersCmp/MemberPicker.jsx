@@ -12,6 +12,7 @@ import plus from "/icons/plus.svg"
 import { remove } from "lodash"
 import { useSelector } from "react-redux"
 import { SvgIcon } from "../../SvgIcon"
+import { showErrorMsg } from "../../../services/event-bus.service"
 
 export function MemberPicker({ info, onUpdate }) {
     const { label, members, propName, selectedMemberIds } = info
@@ -47,6 +48,7 @@ export function MemberPicker({ info, onUpdate }) {
     }
 
     function updateTaskMembers(memberIds) {
+        if (!memberIds) return showErrorMsg(' Did not update task members')
         setIsAnimation(true)
         setTimeout(() => setIsAnimation(false), 400)
         onUpdate(memberIds)

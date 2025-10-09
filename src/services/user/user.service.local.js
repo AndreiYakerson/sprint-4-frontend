@@ -93,6 +93,7 @@ function createDemoUsersForLoggedUsers(num) {
         'Chloe Davies',
         'Elijah Vance',
         'Aisha Khan',
+        'Asked jo',
         'Benjamin Chen',
         'Grace Dubois',
         'Samuel Rivera',
