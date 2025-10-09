@@ -11,6 +11,7 @@ import person from "/icons/person.svg"
 import plus from "/icons/plus.svg"
 import { remove } from "lodash"
 import { useSelector } from "react-redux"
+import { SvgIcon } from "../../SvgIcon"
 
 export function MemberPicker({ info, onUpdate }) {
     const { label, members, propName, selectedMemberIds } = info
@@ -87,14 +88,10 @@ export function MemberPicker({ info, onUpdate }) {
                     })}
                 </div>
                 :
-                <span className="user-img">
-                    <img src={plus} className="icon big plus" alt="plus icon" />
-                    <img
-                        src={person}
-                        className="user-img "
-                        alt="person icon"
-                    />
-                </span>
+                <div className="user-img">
+                    <SvgIcon iconName="plus" size={14} className='plus-blue' colorName='whiteText' />
+                    <SvgIcon iconName="person" className="person" size={30}/>
+                </div>
             }
 
             {
