@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 // images
 
-import boardRemovedIcon from '../../../public/img/board-removed-icon.svg'
+import boardRemovedIcon from '/img/board-removed-icon.svg'
 
 export function BoardRemovdMsg({ removedMsg }) {
     return (

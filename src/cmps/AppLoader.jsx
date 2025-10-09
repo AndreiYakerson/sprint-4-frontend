@@ -1,4 +1,4 @@
-import appLoderimg from '../../public/img/loader.gif'
+import appLoderimg from '/img/loader.gif'
 
 export function AppLoader(props) {
     return (
