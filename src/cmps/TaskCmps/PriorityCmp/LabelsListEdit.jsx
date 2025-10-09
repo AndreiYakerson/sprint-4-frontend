@@ -20,21 +20,21 @@ export function LabelsListEdit({ labels, onUpdateLabels, onClose }) {
     const [editingLabel, setEditingLabel] = useState(labels)
     const bgColors = getVarColors()
 
-useEffect(() => {
- if (editingLabel){
-     setLabelsToUpdate(prevLabels => {
-         let labels = prevLabels.map(label => label.id === editingLabel.id ? { ...label, cssVar: editingLabel.cssVar } : label)
-         onUpdateLabels(labels)
-         return labels
-        })
-    }
-    
-}, [editingLabel])
+    useEffect(() => {
+        if (editingLabel) {
+            setLabelsToUpdate(prevLabels => {
+                let labels = prevLabels.map(label => label.id === editingLabel.id ? { ...label, cssVar: editingLabel.cssVar } : label)
+                onUpdateLabels(labels)
+                return labels
+            })
+        }
+
+    }, [editingLabel])
 
 
 
     function updateLabel() {
-        
+
         onUpdateLabels(labelsToUpdate)
         onClose()
     }
@@ -46,9 +46,9 @@ useEffect(() => {
         })
     }
     function handelColorChange(color, id) {
-        setEditingLabel(prevLabel=>({...prevLabel, cssVar: color}))
+        setEditingLabel(prevLabel => ({ ...prevLabel, cssVar: color }))
         // setLabelsToUpdate(prevLabels => {
-            // return prevLabels.map(label => label.id === id ? { ...label, cssVar: color } : label)
+        // return prevLabels.map(label => label.id === id ? { ...label, cssVar: color } : label)
         // })
         setColorAnchorEl(null)
     }
@@ -82,7 +82,7 @@ useEffect(() => {
     return (
         <>
             <ul className='label-list edit'>
-                {labelsToUpdate.map(l => (          
+                {labelsToUpdate.map(l => (
                     <li key={l.id} className="label-list-edit-container flex">
                         <span className="drag-icon">
                             <img className='icon' src={editPen} alt="icon color" />
@@ -97,7 +97,7 @@ useEffect(() => {
                                 <SvgIcon iconName='bucket' size={16} colorName='whiteText' />
                             </span>
 
-                           
+
                             {colorAnchorEl && editingLabel?.id === l.id && (
                                 <FloatingContainerCmp
                                     anchorEl={colorAnchorEl}
@@ -132,9 +132,13 @@ useEffect(() => {
 
                         {anchorEl && (
                             <FloatingContainerCmp anchorEl={anchorEl} onClose={() => setAnchorEl(null)}>
-                                <button onClick={() => onRemoveLabel(l.id)} className="delete">
-                                    <img className='icon big' src={xMark} alt='delete icon' /> Delete
+                                <button class='now-con' onClick={() => onRemoveLabel(l.id)}>
+                                    <SvgIcon iconName='trash' size={20}  />
                                 </button>
+
+                                {/* <button onClick={() => onRemoveLabel(l.id)} className="delete">
+                                    <img className='icon big' src={xMark} alt='delete icon' /> Delete
+                                </button> */}
                             </FloatingContainerCmp>
                         )}
                     </li>
