@@ -67,6 +67,7 @@ function _getIcon(iconName) {
 
 function _getColor(colorName) {
     const colors = {
+        grayPerson: 'var(--group-title-clr18)',
         primaryText: 'var(--primary-text-color)',
         secondaryText: 'var(--secondary-text-color)',
         whiteText: 'var(--text-color-on-primary)',

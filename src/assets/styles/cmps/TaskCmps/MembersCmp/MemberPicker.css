@@ -52,12 +52,13 @@
         position: relative;
         display: flex;
         border-radius: var(--border-radius-big);
+        place-self: center;
 
-        /* align-self: center; */
 
         .person {
             position: relative;
             right: 15%;
+            
         }
 
         .plus-blue {

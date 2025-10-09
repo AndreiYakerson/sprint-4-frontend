@@ -90,7 +90,7 @@ export function MemberPicker({ info, onUpdate }) {
                 :
                 <div className="user-img">
                     <SvgIcon iconName="plus" size={14} className='plus-blue' colorName='whiteText' />
-                    <SvgIcon iconName="person" className="person" size={30}/>
+                    <SvgIcon iconName="person" className="person" colorName='grayPerson' size={30}/>
                 </div>
             }
 
