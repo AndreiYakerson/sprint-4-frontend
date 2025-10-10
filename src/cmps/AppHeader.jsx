@@ -41,7 +41,7 @@ export function AppHeader() {
 		<header className="app-header full">
 			<Link to="/board" className='app-logo'>
 				<img className='logo-img' src={headerLogo} alt="logo-img" />
-				<div className='app-name'>NodeDay</div>
+				<div className='app-name'>OneBay</div>
 			</Link>
 
 			<section className='main-nav'>
@@ -65,13 +65,8 @@ export function AppHeader() {
 				<section className="main-mini-user">
 					{!user && <NavLink to="auth/login" className="login-link">Login</NavLink>}
 					{user && (
-						<div className="member-Info">
-							<img className='' src="/img/logo.png" alt="logo" />
-							<Link to={`user/${user._id}`}>
-								{user.imgUrl && <img src={user.imgUrl} />}
-							</Link>
 							<button onClick={onLogout}>logout</button>
-						</div>
+						
 					)}
 
 				</section>
