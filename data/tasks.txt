@@ -1,0 +1,523 @@
+Sidebar.
+
+Missing spaces in a different. Buttons. Of the sidebar.
+Missing margins. In the sidebar.
+
+
+Groups. 
+Missing the arrow beside the group Header.
+Make a group collapse, not when Dragged. - Bonus. 
+The group. Colored line. Is not set exactly straight. 
+When adding tasks and groups, at some point the. Outer colored line of the group. Becomes separated.
+
+
+
+Task
+Set different. width for the different component columns to make it look more real
+When an hover Show box shadow. On the Whole task.
+When a task is active, the border should have a bit of a more. Darker color. Suggest delete. Bye. Changing brightness.
+Columns that have sync between them should show. By icon And a small. Window that opens. And explains what it sink with.
+When a specific component is picked in a cell. Dory says the border should be maybe a bit thicker.
+It seems as if the border is not covering totally the line itself, but it is inside and not as the borderline.
+
+
+
+Date picker component.
+Center the time Also when Clock shows.
+Time remaining clock should be fully round.
+Adjust coloring. And sizing.
+Build custom input without extra. Clock icon.
+
+
+
+Label select component.
+When user is editing a label show indicate.
+Arrange relevant files in a relevant folder for this.
+Change the names of the CSS properties needed.
+Set the relevant icon for dragging. Leave it hidden as long as it's not Usable.
+On first loading. Of aboard the default task load without any text inside them, only the default color.
+Add animation when done status is selected.
+Add drag and drop.
+Remove label fix bug. It's not deleting the current label that. It's on. 
+In general, this text is almost done, it's just updated to work according to the ID only. 
+
+
+Task Members component.
+Taxt is not in a good color.
+In the search option, the X should be only on hover
+Adjust paddings now that floating component has been dropped It's default padding. Specifically. In the existing member component.
+Invite by main feature.
+Adjust the plus icon a little bit bigger. And also maybe the empty user image.
+Add to the empty user image a small. Box shadow.
+
+
+Board index.
+Drop the header. That's named board index
+Floating help button that. That has an option to be removed. Set in the session storage.
+
+
+
+board Details.
+Make more. Interesting demo data. 
+Make sure when presenting. To have a fool. Container so it could look more impressing.
+Sticky header The knows when and how to switch the group headers. Property.
+
+
+General notes.
+Change the browser tab name. Of our project and dropped off unneeded icon.
+Switch all icons across application to use SVG icon component.
+Explain how to work using the SVG icon component
+Explain how to work using the ellipse class
+set class for all ellipse text needed in the application.
+Provide each member profile pic. For styling later about members
+
+
+Board header.
+Sort filter component Build with the. Skeleton buttons and. Structure. - Bonus. 
+Search feature.
+Sorting feature.
+Filter feature.
+By person filter.
+Invite people to the board feature.
+Activity log with Listed members Images 
+Allow different View of the lists Table / guntt / kaban /.
+
+
+App header.
+Monday flower icon with the work management
+See Plans button with hover option.
+Different icons.
+Create this custom board barrier. Between the question mark. And the Monday vibe.
+Mini user component with user image and our icon.
+New name for project. And design of it 
+
+
+
+Bonus features.
+Dragon drops for columns.
+Home page, full landing page.
+Extra column. Components. - Text. Numbers. Timeline.  Add file. Possibly more, but this is what was offered.
+Progress bar. With different statistics from the different components and possibilities to change the. Sums.
+Sort filter component Build with the. Skeleton buttons and. Structure. - Bonus. 
+
+
+
+Back end.
+Deploy Back and front to render
+Create a full API server. Understand and acknowledge the requests needed before.
+Connect chat sockets. And sockets from different. Information needs to be shared between the users.
+Refactored. Back end project starter.
+
+
+
+Landing page. 
+team photo highlight component.
+Call to action get started Button.
+Always keep an option to allow users a quick preview without needing to go through this process.
+This process should be something. Allowed to select and not forced. For demos.
+Landing page, nav bar. open and close options
+Landing page, nav bar buttons - Notifications. Update. invite members.
+
+
+
+Login signUp
+Create a login sign up page according to monday 
+Button. To log in with Google.
+Log in / sign up cmp
+Add cookie for user.
+Create middleware to. Move the cookie across the hole. application.
+Terms of service and privacy policy 
+Maybe when user logs in? When he creates a board, he should be admitted as 
+the admin and then whenever he adds people to the board, they will never be admin.
+
+
+
+/////////////////////////////////////////////////////////////
+
+Sidebar
+Add missing spaces between buttons.
+
+Add missing margins throughout the sidebar.
+
+Show the arrow icon beside each group header.
+
+Make groups collapsible, but not while being dragged. (Bonus)
+
+Align the group’s colored line perfectly straight.
+
+Fix the issue where the outer colored line of a group becomes separated after adding tasks or groups.
+
+
+
+Tasks
+Set different column widths for each component to make the layout feel more realistic.
+
+On hover, show a box shadow around the entire task.
+
+When a task is active, make its border slightly darker by adjusting brightness.
+
+For columns that synchronize with others, show a sync icon and a small pop-up window explaining what it syncs with.
+
+When a specific component is selected within a cell, slightly thicken the border.
+
+Fix the issue where the border appears inside the line instead of covering it fully.
+
+
+
+
+Date Picker Component
+Center the time display, including when the clock view is open.
+
+Ensure the time-remaining clock is perfectly circular.
+
+Adjust colors and sizing for consistency.
+
+Build a custom input field without the extra clock icon.
+
+
+
+
+Label Select Component
+When the user is editing a label, show an indicator.
+
+Organize relevant files into a suitable folder.
+
+Rename CSS properties as needed.
+
+Set a drag icon but keep it hidden until usable.
+
+When loading a board for the first time, default tasks should have only their base color, without text.
+
+Add an animation when a label’s “done” status is selected.
+
+Implement drag-and-drop functionality.
+
+Fix the bug preventing deletion of the currently applied label (update to work by ID only).
+
+
+
+
+Task Members Component
+Adjust text color for better visibility.
+
+The “X” in the search option should only appear on hover.
+
+Fix paddings now that the floating component’s default padding has been removed, especially in the existing member component.
+
+Complete the "Invite by Main" feature.
+
+Enlarge the plus icon slightly, as well as the empty user image.
+
+Add a subtle box shadow to the empty user image.
+
+
+
+
+Board Index
+Remove the header labeled “Board Index.”
+
+Add a floating help button that can be removed, storing this preference in session storage.
+
+
+
+
+Board Details
+Create more interesting demo data.
+
+During presentation, ensure a full container is used for an impressive layout.
+
+Implement a sticky header that dynamically switches group headers appropriately.
+
+
+
+
+General Notes
+Change the browser tab name of the project and remove any unnecessary icons.
+
+Replace all icons across the application with the unified SVG Icon component.
+
+Provide a short explanation on how to use the SVG Icon component.
+
+Explain how to use the “ellipse” class for text truncation.
+
+Assign the ellipse class to all text elements that need it.
+
+Add a profile picture for each member for later styling.
+
+
+
+
+Board Header
+Build a Sort/Filter component using skeleton buttons and structure. (Bonus)
+
+Implement search, sorting, and filtering features.
+
+Add “Filter by Person.”
+
+Implement an “Invite People to Board” feature.
+
+Add an activity log displaying listed member images.
+
+Allow switching between different list views: Table, Gantt, and Kanban.
+
+
+
+App Header
+Add the Monday Flower logo with the “Work Management” label.
+
+Include a “See Plans” button with hover effects.
+
+Update the icons.
+
+Create a custom divider (“board barrier”) between the question mark and the Monday logo.
+
+Add a mini user component with a user image and app icon.
+
+Choose a new project name and overall header design.
+
+
+
+
+Bonus Features
+Add drag-and-drop capability for columns.
+
+Build a complete landing (home) page.
+
+Add extra column components: Text, Numbers, Timeline, Add File, and potentially more.
+
+Create a progress bar that shows statistics from various components and allows adjusting totals.
+
+Build the Sort/Filter component with skeleton buttons and structure. (Bonus)
+
+
+
+
+Back End
+Deploy both backend and frontend on Render.
+
+Create a full API server and define all necessary requests beforehand.
+
+Set up chat sockets and other real-time data sockets for user interactions.
+
+Refactor and finalize the backend project starter.
+
+
+
+
+Landing Page
+Add a “Team Photo Highlight” component.
+
+Include a call-to-action “Get Started” button.
+
+Allow users to preview the app without completing the setup process.
+
+Make the onboarding process optional for demo purposes.
+
+Build a landing page navigation bar with open/close options.
+
+Add landing nav buttons: Notifications, Updates, and Invite Members.
+
+
+
+Login / Sign Up
+Create a login/sign-up page matching Monday’s style.
+
+Add “Log In with Google” functionality.
+
+Build the combined Login/Sign-Up component.
+
+Implement cookies to store user sessions.
+
+Create middleware to pass cookies throughout the entire app.
+
+Add Terms of Service and Privacy Policy.
+
+When a user creates a board, automatically assign them as the admin.
+
+Ensure added members never receive admin privileges automatically.
+
+
+
+dnd
+
+להוסיף קו מקובקב כאשר גוררים כמו במקור
+
+כשהפריוויו  נמשך האופיסיטי יותר בהיר ולא כמטו אצלהם
+
+המקום הריק במקום הקונטיינר שנגרר 0 זה  מורכב !
+
+לחבר את הקולאפס של הגרופים בצורה טובה ל dnd
+
+בגרופ הגרור הוא הרבה יותר דק 
+
+לאפשר גרירה של 
+
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+
+Sidebar — Priority: High
+Add missing spaces between buttons. (Medium)
+
+Add missing margins throughout the sidebar. (Medium)
+
+Show the arrow icon beside each group header. (High)
+
+Make groups collapsible, but not while being dragged. (Bonus / Optional)
+
+Align the group’s colored line perfectly straight. (Low)
+
+Fix group outer colored line separation issue when adding tasks or groups. (High)
+
+Tasks — Priority: Critical
+Set different column widths for realistic layout. (High)
+
+Show box shadow on hover. (Medium)
+
+Darken the border of active tasks by adjusting brightness. (Medium)
+
+Display sync icon and small info popup for synced columns. (High)
+
+Thicken the border slightly when a component is selected. (Low)
+
+Fix border misalignment (border appears inside line). (Critical)
+
+Date Picker Component — Priority: Medium
+Center the time display (including clock view). (Medium)
+
+Ensure the remaining-time clock is perfectly circular. (Low)
+
+Adjust colors and sizing for visual consistency. (Medium)
+
+Build a custom input without an extra clock icon. (High)
+
+Label Select Component — Priority: High
+Show an indicator when editing a label. (Medium)
+
+Organize relevant files into a proper folder. (Low)
+
+Rename necessary CSS properties. (Low)
+
+Add a hidden drag icon until usable. (Medium)
+
+On first load, default tasks appear with only color (no text). (Low)
+
+Add animation for "done" status change. (Medium)
+
+Implement drag-and-drop functionality. (High)
+
+Fix bug preventing label deletion (update to ID-based). (Critical)
+
+Task Members Component — Priority: Medium
+Improve text color contrast. (Low)
+
+Show “X” button in search field only on hover. (Low)
+
+Adjust paddings after floating component removal. (Medium)
+
+Finish “Invite by Main” feature. (High)
+
+Slightly enlarge plus icon and empty user image. (Low)
+
+Add a subtle box shadow to empty user image. (Low)
+
+Board Index — Priority: Low
+Remove the “Board Index” header. (Low)
+
+Add a floating help button removable via session storage. (Medium)
+
+Board Details — Priority: High
+Use more interesting demo data. (Medium)
+
+Display full container during presentation. (High)
+
+Implement sticky header that smartly changes group header labels. (Critical)
+
+General Notes — Priority: Critical
+Change the browser tab name and remove unused icons. (Medium)
+
+Switch all icons to the unified SVG Icon component. (Critical)
+
+Explain how to use the SVG Icon component. (Medium)
+
+Explain how to use the ellipse class for text truncation. (Low)
+
+Assign ellipse class to needed text elements. (Low)
+
+Add member profile pictures for future styling. (Medium)
+
+Board Header — Priority: High
+Build the Sort/Filter component using skeleton structure. (High)
+
+Implement search, sort, and filter features. (Critical)
+
+Add “Filter by Person.” (Medium)
+
+Implement “Invite People to Board” feature. (High)
+
+Add activity log showing member images. (Medium)
+
+Support multiple board views (Table, Gantt, Kanban). (High)
+
+App Header — Priority: High
+Add Monday Flower logo with “Work Management.” (Medium)
+
+“See Plans” button with hover effects. (Low)
+
+Update icons. (Medium)
+
+Create divider between question mark and Monday logo. (Medium)
+
+Add mini user component with user image and app icon. (High)
+
+Rename and redesign overall project header. (Critical)
+
+Bonus Features — Priority: Optional
+Add drag-and-drop for columns. (Optional)
+
+Build a complete landing (home) page. (Optional)
+
+Add extra column components (Text, Numbers, Timeline, Add File, etc.). (Optional)
+
+Create a progress bar showing component statistics and editable totals. (Optional)
+
+Build Sort/Filter component skeleton variant (duplicate bonus). (Optional)
+
+Back End — Priority: Critical
+Deploy backend and frontend to Render. (High)
+
+Build a full API server with pre-designed request handling. (Critical)
+
+Implement socket connections for chats and shared data. (High)
+
+Refactor backend starter structure. (Medium)
+
+Landing Page — Priority: Medium
+Add a “Team Photo Highlight” component. (Low)
+
+Add “Get Started” call-to-action button. (Medium)
+
+Enable preview without completing signup process. (Medium)
+
+Keep onboarding optional for demos. (Low)
+
+Build navigation bar with open/close functionality. (Medium)
+
+Add nav bar buttons: Notifications, Updates, Invite Members. (Medium)
+
+Login / Sign Up — Priority: Critical
+Design login/sign-up page inspired by Monday.com. (High)
+
+Implement Google Login option. (High)
+
+Build login/signup unified component. (High)
+
+Add user session cookies. (Critical)
+
+Create middleware to share cookies across the app. (Critical)
+
+Add Terms of Service and Privacy Policy. (Medium)
+
+Set board creator as admin automatically. (High)
+
+Ensure new members never get admin privileges. (Critical)

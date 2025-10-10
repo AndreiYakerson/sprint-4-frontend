@@ -1,0 +1,245 @@
+Here are all your Hebrew tasks, translated precisely into English, and organized so none of your points are lost. Next, they will be synchronized with the existing roadmap for full coverage.
+
+General & Procedural
+Confirm the proposed work plan and team agreement to shift focus toward design.
+
+Stop work on anything currently in progress.
+
+Minimum—complete what is built so far to function at a minimal level.
+
+Divide the project phases between team members with an estimated end date.
+
+Avoid getting stuck on any single feature for too long.
+
+If more than one hour is spent stuck on a feature—write a note and raise the issue to the team.
+
+If someone else has a solution, suggest it or take ownership of the problem.
+
+Avoid voice calls (use asynchronous communication).
+
+Each evening—write in Discord about what you are working on.
+
+At day’s end—write what you finished and your current status.
+
+Raise blockers as you encounter them (at any point).
+
+Each team member chooses what to work on from the three options in phase 1.
+
+Phase 1: First Impression (Deadline: By Sunday Evening)
+Review the first three elements users see on the site.
+
+Complete the design of all three fully.
+
+Enter all visual design data.
+
+Add all icons and buttons as on the original site (even if non-functional).
+
+For hover, show color or a note indicating non-functionality (for design mode).
+
+App Header (Phase 1)
+Add all icons to the App Header.
+
+Refine the App Header design as much as possible.
+
+Finalize connected user icon and its appearance.
+
+(Check) Whoever picks up the task decides which features to add now.
+
+Sidebar (Phase 1)
+Add all missing buttons to the Sidebar (not yet active).
+
+Perfect the Sidebar design at pixel-perfect level.
+
+Add board filtering/search feature (possible feature).
+
+BoardIndex (Phase 1)
+Refine the BoardIndex header.
+
+Set up the preview board with the flower icon.
+
+Check for additional improvements and alignment.
+
+(Check) Deeper review of possible features for whoever takes the task.
+
+Convention (Design Emphasis)
+Try to work according to convention.
+
+Replace all pixel values with CSS vars.
+
+Tidy the CSS page and finalize so no one revisits.
+
+Landing Page (Decision)
+Decide whether to build landing page foundation.
+
+(If yes) Build the landing page structure (Header, Main, Footer).
+
+(Temporary) Insert a purple square with a friendly welcome message in the main section.
+
+(Later) Take at least three design features from the landing, assign one to each person.
+
+(Optional) Whoever handles boardIndex sets the landing base.
+
+Phase 2: Board Details (Deadline: Tuesday/Wednesday Evening)
+Handle everything related to Board Details (start with design).
+
+(Later) Focus on Board Details functionality.
+
+Board Details Header (Phase 2)
+Design the header with all buttons.
+
+Design filter buttons (design only).
+
+Build tight design (e.g., clicking on board name opens a small info popup).
+
+(Later) Assign each team member a filter to build.
+
+Group Header (Phase 2)
+Build the smart sticky Group Header (knows which group it’s above).
+
+Layout (Phase 2)
+Finalize layout design.
+
+Set different widths for columns.
+
+Make minor design tweaks (colors, fonts, hover, z-index).
+
+Add collapse/expand group button.
+
+Add plus button to enable adding columns (design level).
+
+Prepare design for the ability to expand/collapse columns.
+
+Phase 3: Dynamic Components (Deadline: 18/10 or 19/10)
+Revisit existing dynamic components.
+
+Review dynamic components.
+
+Finalize components’ design.
+
+Complete functional parts of components (if any remain).
+
+Phase 4: Bonus Features (Deadline: By 25/10)
+Decide which bonus features are more or less important.
+
+Divide bonus work among team members.
+
+Consider switching to backend development and building it.
+
+Phase 5: Finishes (Deadline: By Sprint End)
+Address all landing page issues (final design and arrangement).
+
+Design login page correctly.
+
+Check for any unfinished tasks and close them.
+
+Next step:
+This translated list will be matched and synchronized with the earlier roadmap, divided into:
+
+Already Listed Tasks: Those found in our previous roadmap
+
+Not Previously Listed: New details to be added for full coverage
+
+Would you like the synchronization in Hebrew, English, or both?
+
+English
+
+English
+Below is the English synchronization between your recent Hebrew tasks (now translated) and our existing roadmap.
+
+1. Already Listed Tasks
+These tasks are already listed and covered within our previous roadmap:
+
+Design Focus: Shifted attention toward design phases and tasks.
+
+Freeze Existing Work: Stop ongoing tasks and move to new phase.
+
+Minimal Functionality: Ensure the current product works at a basic level before proceeding.
+
+Team Task Assignment: Distribute phases among team members with target dates.
+
+Feature Blockers: Note issues after spending an hour; share with team.
+
+Peer Solutions: Let team members take over or suggest fixes when possible.
+
+Async Communication: Prefer text updates (Discord) over voice calls.
+
+Daily Discord Updates: Log daily progress and blockers in Discord.
+
+Team Choice: Everyone chooses what to handle from Phase 1 proposal.
+
+First Impression Elements: Focus design efforts on the first three elements users encounter.
+
+Icon and Button Parity: Add all icons and buttons as required, even if not wired up yet.
+
+Hover Effects: Add styling or design comments in 'hover' mode for buttons/features.
+
+App Header Design: Include all icons, polish the header, finalize user avatar display.
+
+Sidebar Buttons and Design: Add all missing buttons, filter/search boards, ensure sidebar is pixel perfect.
+
+BoardIndex Header and Preview: Refine header, preview board with flower icon, review improvements.
+
+Design Convention: Use CSS variables instead of pixels, finalize CSS files.
+
+Landing Page Decisions and Setup: Decide on base structure, set up main sections, temporary placeholders.
+
+Board Details (Phase 2): Begin design and later functional implementation for Board Details.
+
+Board Details Header: Build complete header with all buttons, and info popup, assign filters to team.
+
+Sticky Group Header: Implement intelligent, position-aware group headers.
+
+Layout Finalization: Set different column widths, polish colors, fonts, hovers, z-index, add expansion/collapse, plus for columns.
+
+Dynamic Components (Phase 3): Revisit, design, and (if needed) complete dynamic components.
+
+Bonus Features (Phase 4): Decide and distribute bonus features, plan for backend tasks.
+
+Landing Page Finishes: Final design pass and arrangement for landing.
+
+Login Page Design: Properly build login page and ensure high fidelity.
+
+Closing Outstanding Tasks: End-of-sprint review and closure.
+
+2. Not Previously Listed (Should Be Added)
+These are new details or procedures not clearly covered in our previous roadmap and should be added:
+
+1. Completion Reporting
+
+At end of day, each member should write what was finished and current status (not just ongoing Discord updates).
+
+2. Immediate Blocker Escalation
+
+Raise blockers “at any point” (vs only structured checkpoint, adds proactivity).
+
+3. Review First Impression Elements
+
+Explicitly review and document the three first elements the user observes (not just “design them”).
+
+4. Deep Feature Decision
+
+The person taking a task should do a deep review and decide which features are feasible for "BoardIndex" and others, not only implement as directed.
+
+5. CSS Page Closure
+
+The CSS file is to be finalized “knowing no further revisits,” enforcing closure and stability.
+
+6. Temporary Welcome in Main Section
+
+Use a temporary UI element (purple square with a welcome note) in the landing page until design features are assigned.
+
+7. Per-Feature Assignment
+
+After landing page base is built, take three design features from the entry and assign each to different team member.
+
+8. Expansion/Collapse for Groups
+
+Add explicit control buttons for minimizing/maximizing groups along with other layout refinements.
+
+9. Meta-Decision on Backend Switch
+
+After bonus features, plan and possibly transition to backend tasks with group decision.
+
+10. Final Individual Assignment
+
+Each team member is to select their preferred area among the three initial options.
