@@ -20,7 +20,7 @@ export function LabelsList({ labels, switchEditMode, onSaveLabel}) {
                     Default Label
                 </li>
             </ul>
-            <button onClick={switchEditMode} className='edit-labels'>
+            <button onClick={switchEditMode} className='edit-labels-btn'>
                 <img className='icon big' src={editPen} alt="Edit Icon" /> Edit Labels</button>
         </>
     )

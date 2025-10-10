@@ -5,7 +5,9 @@
     .member-task-select {
         display: flex;
         flex-direction: column;
+        max-height: 276px;
 
+        overflow: auto;
 
         gap: 8px;
         padding: 16px;
@@ -54,7 +56,8 @@
         }
     }
 
-    .user-name, .profession {
+    .user-name,
+    .profession {
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;

@@ -6,16 +6,16 @@
     display: flex;
     place-content: center;
     align-items: center;
-    
-    
+
+
     width: 144px;
     color: var(--primary-background-color);
     cursor: pointer;
-    
+
     &:hover .status-animation {
         scale: 1;
     }
-    
+
 }
 
 .priority-container {
@@ -35,12 +35,14 @@
         display: flex;
         place-items: center;
 
-        .more-icon,
-        .drag-icon {
+        .more-icon {
             opacity: 0;
             transition: opacity .5s ease;
         }
 
+        .drag-icon{
+            opacity: 0;
+        }
     }
 
 
@@ -90,6 +92,8 @@
             padding: 4px;
             border-radius: var(--border-radius-small)
         }
+
+
     }
 
     .new-label-container {
@@ -106,7 +110,7 @@
     }
 
     .label-list-edit-container:hover .drag-icon {
-        opacity: 1;
+        /* opacity: 1; */
     }
 
     .label-list-edit-container:hover .more-icon {
@@ -115,7 +119,25 @@
 
 }
 
-.edit-labels {
+
+.color-option-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+
+    max-width: 140px;
+    padding: 10px;
+    border-radius: var(--border-radius-small);
+
+    .color-option {
+        width: 24px;
+        height: 24px;
+        border-radius: var(--border-radius-small);
+    }
+}
+
+.edit-labels-btn,
+.edit-apply-btn {
     display: flex;
     place-self: center;
     place-content: space-around;

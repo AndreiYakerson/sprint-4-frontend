@@ -6,41 +6,52 @@ import { SvgIcon } from '../../SvgIcon'
 import { ExistingMembers } from './ExistingMembers'
 import { useSelector } from 'react-redux'
 import { FloatingContainerCmp } from '../../FloatingContainerCmp'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { updateBoard } from '../../../store/actions/board.actions'
+import { loadFromStorage, saveToStorage } from '../../../services/util.service'
 
 // COMPONENTS
 
-
 export function MemberTaskSelect({ selectedMemberIds, onClose, members, onRemove }) {
+    //Demo
+    useEffect(() => {
+        if (!loadFromStorage('users')) {
+            console.log(' Setting demo user to LocalStorage ')
+            const users = userService.createDemoUsersForLoggedUsers(10)
+            saveToStorage('users', users)
+        }
+    }, [])
 
-    const users = useSelector(state => state.userModule.users)
     const board = useSelector(state => state.boardModule.board)
 
+
+    const users = loadFromStorage('users')
+
+
     const [anchorEl, setAnchorEl] = useState(false)
-    const [stateUsers, setStateUsers] = useState()
+    const [notBoardMembers, setNotBoardMembers] = useState(false)
 
     function handelChange(ev) {
         const userToFind = ev.target.value
         if (userToFind.length === 0) {
-            setStateUsers('')
+            setNotBoardMembers(false)
             setAnchorEl(false)
             return
         }
-        // ev.stopPropagation()
         const regex = new RegExp('^' + userToFind, 'i')
-        setStateUsers((users.filter(user => regex.test(user.fullname))))
-        setAnchorEl(ev.currentTarget)
+        const notMembers = users.filter(user => regex.test(user.fullname)).filter(u => !members.some(m => m._id === u._id))
 
+        if (!!notMembers.length) setNotBoardMembers(notMembers)
+        setAnchorEl(ev.currentTarget)
     }
 
     function onSelectMember(member) {
-        const taskMembersIds = [...selectedMemberIds, member.id]
+        const taskMembersIds = [...selectedMemberIds, member._id]
         onClose(taskMembersIds)
     }
 
     async function onAddMemberToBoard(member) {
-        const taskMembersIds = [...selectedMemberIds, member.id]
+        const taskMembersIds = [...selectedMemberIds, member._id]
         try {
             const newBoard = { ...board, members: [...board.members, member] }
             await updateBoard(newBoard)
@@ -50,8 +61,8 @@ export function MemberTaskSelect({ selectedMemberIds, onClose, members, onRemove
         }
     }
 
-    const usersToShow = members.filter(member => !selectedMemberIds.includes(member.id));
-    const existingUsers = members.filter(member => selectedMemberIds.includes(member.id));
+    const usersToShow = members.filter(member => !selectedMemberIds.includes(member._id));
+    const existingUsers = members.filter(member => selectedMemberIds.includes(member._id));
 
     return (
         <div className='member-task-select-wrapper'>
@@ -81,9 +92,8 @@ export function MemberTaskSelect({ selectedMemberIds, onClose, members, onRemove
                 <section className="user-list">
                     {usersToShow.map((member, idx) => {
                         return <button
-                            // Pass the actual numeric 'idx' here
                             onClick={() => onSelectMember(member, idx)}
-                            key={member.id}
+                            key={member._id}
                             className="user flex"
                         >
                             <span className="img-container"><img className=" user-img" src={member.imgUrl} alt="User Image" /></span>
@@ -102,15 +112,14 @@ export function MemberTaskSelect({ selectedMemberIds, onClose, members, onRemove
                         {' Invite a new member by email'}
                     </button> */}
                 </section>
-                {anchorEl &&
+                {anchorEl && notBoardMembers &&
                     <FloatingContainerCmp
                         anchorEl={anchorEl}
                         onClose={onClose}>
-                        {stateUsers.map((user, idx) => {
+                        {notBoardMembers.map((user, idx) => {
                             return <button
-                                // Pass the actual numeric 'idx' here
                                 onClick={() => onAddMemberToBoard(user, idx)}
-                                key={user.id}
+                                key={user._id}
                                 className="user flex"
                             >
                                 <span className="img-container"><img className=" user-img" src={user.imgUrl} alt="User Image" /></span>

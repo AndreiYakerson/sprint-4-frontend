@@ -145,3 +145,10 @@ svg {
     }
 }
 
+.now-con{
+    display: flex;
+    place-items: center;
+align-items: center;
+    padding: 20px;
+}
+

@@ -11,6 +11,8 @@ import person from "/icons/person.svg"
 import plus from "/icons/plus.svg"
 import { remove } from "lodash"
 import { useSelector } from "react-redux"
+import { SvgIcon } from "../../SvgIcon"
+import { showErrorMsg } from "../../../services/event-bus.service"
 
 export function MemberPicker({ info, onUpdate }) {
     const { label, members, propName, selectedMemberIds } = info
@@ -46,6 +48,7 @@ export function MemberPicker({ info, onUpdate }) {
     }
 
     function updateTaskMembers(memberIds) {
+        if (!memberIds) return showErrorMsg(' Did not update task members')
         setIsAnimation(true)
         setTimeout(() => setIsAnimation(false), 400)
         onUpdate(memberIds)
@@ -54,7 +57,7 @@ export function MemberPicker({ info, onUpdate }) {
     }
 
     const membersToShow = selectedMemberIds.map(memberId => {
-        return members.find(member => member.id === memberId)
+        return members.find(member => member._id === memberId)
     }).filter(Boolean)
 
     return (
@@ -65,7 +68,7 @@ export function MemberPicker({ info, onUpdate }) {
                         if (membersToShow.length <= 2 || idx === 0) {
                             return (
                                 <div
-                                    key={member.id}
+                                    key={member._id}
                                     className={`img-wrapper ${isAnimation ? 'heartbeat ' : ''}`}
                                     onMouseLeave={onClearHover}
                                     onMouseOver={(ev) => onSetHoveredUser(member, ev.currentTarget)}
@@ -87,14 +90,10 @@ export function MemberPicker({ info, onUpdate }) {
                     })}
                 </div>
                 :
-                <span className="user-img">
-                    <img src={plus} className="icon big plus" alt="plus icon" />
-                    <img
-                        src={person}
-                        className="user-img "
-                        alt="person icon"
-                    />
-                </span>
+                <div className="user-img">
+                    <SvgIcon iconName="plus" size={14} className='plus-blue' colorName='whiteText' />
+                    <SvgIcon iconName="person" className="person" colorName='grayPerson' size={30}/>
+                </div>
             }
 
             {
@@ -117,6 +116,7 @@ export function MemberPicker({ info, onUpdate }) {
                     centeredX={true}
                     showTriangle={true}
                     enforceLimit={true}
+                    
                 >
                     <MemberTaskSelect
                         onRemove={onRemoveMember}
