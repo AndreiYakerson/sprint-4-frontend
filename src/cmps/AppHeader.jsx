@@ -41,8 +41,19 @@ export function AppHeader() {
 	return (
 		<header className="app-header full">
 			<Link to="/board" className='app-logo'>
-				<img className='logo-img' src={headerLogo} alt="logo-img" />
-				<div className='app-name'>OneBay</div>
+
+				<div className='flower-logo-container'>
+					<SvgIcon
+						iconName="flower"
+						size={25}
+					/>
+				</div>
+
+				<div className='logo-text-container'>
+					<span className='app-name'>OneBay</span>
+					<span className='work-management'>work management</span>
+				</div>
+
 			</Link>
 
 			<section className='main-nav'>

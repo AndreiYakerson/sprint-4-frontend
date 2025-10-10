@@ -126,9 +126,11 @@
   /* font-weight: 700 / 300 */
   --logo-font-size: 16px;
 
+
   /* app header avatar */
   --avatar-image-size: 32px;
   --avatar-background: rgba(255, 255, 255, 0.5);
+  --font-weight-light: 300;
 
   /* aside menu */
 

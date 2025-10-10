@@ -20,7 +20,7 @@
         grid-area: app-header;
         height: 48px;
         max-height: 48px;
-        padding-inline-start: var(--spacing-medium);
+        margin-inline-start: 12px;
         padding-inline-end: var(--spacing-large);
     }
 

@@ -1,21 +1,39 @@
 .app-header {
     display: flex;
+    
 
     .app-logo {
 
         display: flex;
-        justify-content: center;
         align-items: center;
-
+        padding: 8px;
         font-family: var(--title-font-family);
 
         margin-block: 4px;
-        padding-inline: 8px;
         font-weight: 700;
         font-size: 1.14285714286em;
 
+        .flower-logo-container {
+            display: flex;
+            align-items: center;
+            height: 33px;
+            width: 33px;
+        }
+
+        .logo-text-container {
+            display: flex;
+            align-items: center;
+            height: 100%;
+
+            .work-management {
+                font-weight: var(--font-weight-light);
+            }
+
+        }
+
         &:hover {
             background-color: var(--primary-background-hover-color);
+            border-radius: var(--border-radius-small);
         }
 
         .logo-img {
@@ -25,7 +43,7 @@
         }
 
         .app-name {
-            margin-inline-start: 4px;
+            margin-inline: 4px;
         }
     }
 
