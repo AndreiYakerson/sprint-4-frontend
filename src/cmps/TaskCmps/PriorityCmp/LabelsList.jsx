@@ -1,7 +1,8 @@
 import { makeId } from '../../../services/util.service'
+import { SvgIcon } from '../../SvgIcon'
 import editPen from '/icons/edit-pen.svg'
 
-export function LabelsList({ labels, switchEditMode, onSaveLabel}) {
+export function LabelsList({ labels, switchEditMode, onSaveLabel }) {
 
     return (
         <>
@@ -20,8 +21,12 @@ export function LabelsList({ labels, switchEditMode, onSaveLabel}) {
                     Default Label
                 </li>
             </ul>
-            <button onClick={switchEditMode} className='edit-labels-btn'>
-                <img className='icon big' src={editPen} alt="Edit Icon" /> Edit Labels</button>
+
+            <section className="actions">
+                <button onClick={switchEditMode} className='edit-labels-btn'>
+                    <SvgIcon iconName={editPen} size={20} />
+                    Edit Labels</button>
+            </section>
         </>
     )
 }

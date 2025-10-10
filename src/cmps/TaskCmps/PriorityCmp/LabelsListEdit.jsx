@@ -17,7 +17,7 @@ export function LabelsListEdit({ labels, onUpdateLabels, onClose }) {
     const [anchorEl, setAnchorEl] = useState()
     const [colorAnchorEl, setColorAnchorEl] = useState()
     const [labelsToUpdate, setLabelsToUpdate] = useState(labels)
-    const [editingLabel, setEditingLabel] = useState(labels)
+    const [editingLabel, setEditingLabel] = useState()
     const bgColors = getVarColors()
 
     useEffect(() => {
@@ -47,17 +47,26 @@ export function LabelsListEdit({ labels, onUpdateLabels, onClose }) {
     }
     function handelColorChange(color, id) {
         setEditingLabel(prevLabel => ({ ...prevLabel, cssVar: color }))
-        // setLabelsToUpdate(prevLabels => {
-        // return prevLabels.map(label => label.id === id ? { ...label, cssVar: color } : label)
-        // })
+        setLabelsToUpdate(prevLabels => {
+            return prevLabels.map(label => label.id === id ? { ...label, cssVar: color } : label)
+        })
         setColorAnchorEl(null)
     }
 
-    function changeLabelColor(ev, label) {
-        setEditingLabel(label)
+    function changeLabelColor(ev, id) {
+        setEditingLabel(labelsToUpdate.find(label => label.id === id))
         setColorAnchorEl(ev.currentTarget)
     }
 
+    function onOpenMenu(ev, id) {
+        setAnchorEl(ev.currentTarget)
+        setEditingLabel(labelsToUpdate.find(label => label.id === id))
+    }
+
+    function onCloseMenu(ev, id) {
+        setAnchorEl(null)
+        setEditingLabel(null)
+    }
 
     function onRemoveLabel(id) {
         setLabelsToUpdate(prev => {
@@ -82,26 +91,23 @@ export function LabelsListEdit({ labels, onUpdateLabels, onClose }) {
     return (
         <>
             <ul className='label-list edit'>
-                {labelsToUpdate.map(l => (
-                    <li key={l.id} className="label-list-edit-container flex">
-                        <span className="drag-icon">
-                            <img className='icon' src={editPen} alt="icon color" />
-                        </span>
-
+                {labelsToUpdate.map(label => (
+                    <li key={label.id} className="label-list-edit-container flex">
+                        <SvgIcon iconName='dragBox' size={16} className='drag-icon' />
                         <section className='label edit'>
                             <span
                                 className="color-icon-container"
-                                onClick={(ev) => changeLabelColor(ev, l)}
-                                style={{ backgroundColor: `var(${l.cssVar})` }}
+                                onClick={(ev) => changeLabelColor(ev, label.id)}
+                                style={{ backgroundColor: `var(${label.cssVar})` }}
                             >
                                 <SvgIcon iconName='bucket' size={16} colorName='whiteText' />
                             </span>
 
 
-                            {colorAnchorEl && editingLabel?.id === l.id && (
+                            {colorAnchorEl && editingLabel?.id === label.id && (
                                 <FloatingContainerCmp
                                     anchorEl={colorAnchorEl}
-                                    onClose={() => setColorAnchorEl(null)}
+                                    onClose={onCloseMenu}
                                 >
                                     <div className='color-option-container'>
                                         {bgColors.map(color => (
@@ -109,7 +115,7 @@ export function LabelsListEdit({ labels, onUpdateLabels, onClose }) {
                                                 key={color}
                                                 className='color-option'
                                                 style={{ background: `var(${color})` }}
-                                                onClick={() => handelColorChange(color, l.id)}
+                                                onClick={() => handelColorChange(color, label.id)}
                                             />
                                         ))}
                                     </div>
@@ -119,51 +125,63 @@ export function LabelsListEdit({ labels, onUpdateLabels, onClose }) {
                             <input
                                 name='title'
                                 type="text"
-                                value={l.txt}
+                                value={label.txt}
                                 onBlur={updateLabel}
-                                onKeyDown={ev => ev.key === 'Enter' && handelChange(ev, l.id)}
-                                onChange={(ev) => handelChange(ev, l.id)}
+                                onKeyDown={ev => ev.key === 'Enter' && handelChange(ev, label.id)}
+                                onChange={(ev) => handelChange(ev, label.id)}
                             />
                         </section>
 
-                        <span className="more-icon" onClick={(ev) => setAnchorEl(ev.currentTarget)}>
+                        <span className="more-icon" onClick={(ev) => onOpenMenu(ev, label.id)}>
                             <SvgIcon iconName='dots' size={16} />
                         </span>
 
                         {anchorEl && (
-                            <FloatingContainerCmp anchorEl={anchorEl} onClose={() => setAnchorEl(null)}>
-                                <button class='now-con' onClick={() => onRemoveLabel(l.id)}>
-                                    <SvgIcon iconName='trash' size={20}  />
+                            <FloatingContainerCmp anchorEl={anchorEl} onClose={onCloseMenu}>
+                                <button class='now-con' onClick={() => onRemoveLabel(editingLabel.id)}>
+                                    <SvgIcon iconName='trash' size={20} />
                                 </button>
-
-                                {/* <button onClick={() => onRemoveLabel(l.id)} className="delete">
-                                    <img className='icon big' src={xMark} alt='delete icon' /> Delete
-                                </button> */}
                             </FloatingContainerCmp>
                         )}
                     </li>
                 ))}
-                <li className='default label edit'>
-                    <span className="color-icon-container"
-                        style={{ backgroundColor: 'var(--group-title-clr18)' }}>
-                        <img className='icon ' src={editPen} alt="icon color" />
-                    </span>
-                    Default Label
-                </li>
-                <li className='new-label-container '>
-                    <div className="new label edit"
+                <li className='label-list-edit container ' style={{ pointerEvents: 'none' }}>
+                    <div className="label-list-edit-container flex" >
+                        <SvgIcon iconName='dragBox' size={16} className='drag-icon' />
+                        <section className='label default edit' >
+                            <span
+                                className="color-icon-container"
+                                style={{ backgroundColor: `var(--group-title-clr18)` }}
+                            >
+                                <SvgIcon iconName='bucket' size={16} colorName='whiteText' />
+                            </span>
+                            <SvgIcon iconName='editPen' colorName='grayPerson' size={16} />
+
+                        </section>
+                    </div>
+                </li >
+
+                <li className='label-list-edit container '>
+                    <div className="label-list-edit-container flex"
                         onClick={addNewLabel}>
-                        <span
-                            className="color-icon-container edit"
-                            style={{ backgroundColor: 'transparent' }}>
-                            <img className='icon' src={plus} alt="icon color" />
-                        </span>
-                        New Label
+                      <span style={{width:'16px'}}></span>
+                        <section className='label default edit' >
+                            <span
+                                className="color-icon-container"
+                                style={{ backgroundColor: 'transparent' }}>
+                                <SvgIcon iconName='plus' size={16} />
+                            </span>
+                            <input
+                                value={'New Label'}
+                            />
+                        </section>
                     </div>
                 </li>
             </ul>
-            <button onClick={updateLabel}
-                className='edit-apply-btn edit'> Apply </button>
+            <section className="actions">
+                <button onClick={updateLabel}
+                    className='edit-apply-btn edit'> Apply </button>
+            </section>
         </>
     )
 }

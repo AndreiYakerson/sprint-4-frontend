@@ -48,7 +48,7 @@ export function LabelSelect({ info, onUpdate }) {
 
   return (
     <div
-      className="priority-picker "
+      className="label-picker "
       style={{ background: `var(${labelToShow?.cssVar})` }}
       onClick={ev => setAnchorEl(ev.currentTarget)}
     >
@@ -59,8 +59,8 @@ export function LabelSelect({ info, onUpdate }) {
           anchorEl={anchorEl}
           onClose={onClose}
         >
-          <div className={`priority-container ${isEditOpen}`}>
-            <div className={`priority-select ${isEditOpen}`}>
+          <div className={`labels-container ${isEditOpen}`}>
+            <div className={`label-select ${isEditOpen}`}>
               {!isEditOpen ? (
                 <LabelsList
                   labels={labels}

@@ -49,7 +49,7 @@ export function StatusPicker({ info, onUpdate }) {
 
     const [anchorEl, setAnchorEl] = useState()
     return (
-        <div className={`priority-picker ${anchorEl ? "focus" : ""}`}
+        <div className={`label-picker ${anchorEl ? "focus" : ""}`}
             style={{ background: `var(${labelToShow?.cssVar})` }}
             onClick={(ev) => setAnchorEl(ev.currentTarget)}>
             {labelToShow?.txt}
@@ -64,8 +64,8 @@ export function StatusPicker({ info, onUpdate }) {
                     showTriangle={true}
                     enforceLimit={true}
                 >
-                    <div className={`priority-container ${isEditOpen}`}>
-                        <div className={`priority-select ${isEditOpen}`}>
+                    <div className={`labels-container ${isEditOpen}`}>
+                        <div className={`label-select ${isEditOpen}`}>
                             {!isEditOpen ?
                                 <LabelsList labels={labels} onSaveLabel={onSaveLabel} switchEditMode={() => setIsEditOpen(prev => prev = !prev)} />
                                 :

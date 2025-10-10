@@ -44,7 +44,7 @@
 @import "cmps/TaskCmps/DatePicker/Calendar.css";
 
 /* Priority */
-@import "cmps/TaskCmps/PriorityCmp/PriorityPicker.css";
+@import "cmps/TaskCmps/PriorityCmp/LabelPicker.css";
 
 /* Status */
 /* @import "cmps/TaskCmps/StatusCmp/StatusPicker.css"; */
