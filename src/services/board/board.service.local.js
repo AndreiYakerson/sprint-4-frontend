@@ -323,6 +323,7 @@ function _setBaordToSave({ title = 'New board', managingType = 'items', privacy 
                 id: makeId(),
                 title: 'Group 1',
                 createdAt: Date.now(),
+                isCollapsed: false,
                 tasks: [
 
                     {
@@ -354,6 +355,7 @@ function _getEmptyGroup() {
         id: makeId(),
         title: 'New group',
         createdAt: Date.now(),
+        isCollapsed: false,
         tasks: [],
         style: {
             '--group-color': getRandomGroupColor(),
