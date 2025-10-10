@@ -51,6 +51,7 @@
 
 /* sum */
 @import "cmps/TaskCmps//SumCmps/LabelSum.css";
+@import "cmps/TaskCmps//SumCmps/DateSum.css";
 
 
 @import "cmps/tasks/TaskList.css";

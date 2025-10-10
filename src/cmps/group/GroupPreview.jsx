@@ -10,6 +10,7 @@ import { GroupTitleEditor } from "./GroupTitleEditor.jsx";
 import { FloatingContainerCmp } from "../FloatingContainerCmp.jsx";
 import { ActionsMenu } from "../ActionsMenu.jsx";
 import { LabelSum } from "../TaskCmps/SumCmps/LabelSum.Jsx";
+import { DateSum } from "../TaskCmps/SumCmps/DateSum.jsx";
 
 export function GroupPreview({ group, groupsLength, managingType, TaskList,
     onRemoveGroup, onUpdateGroup, onAddTask, onAddGroup, onOpenGroupEditor }) {
@@ -81,6 +82,8 @@ export function GroupPreview({ group, groupsLength, managingType, TaskList,
         }
     })
 
+
+    const dates = group?.tasks.map(t => t?.dueDate?.date).filter(d => d).sort()
 
 
     return <div
@@ -193,7 +196,11 @@ export function GroupPreview({ group, groupsLength, managingType, TaskList,
 
             <div className="task-columns flex">
                 {demoColumns.map(colName => {
-                    if (colName === 'Status') {
+                    if (colName === 'Due Date') {
+                        return <div key={colName} className="column-cell">
+                            <DateSum dates={dates} />
+                        </div>
+                    } else if (colName === 'Status') {
                         return <div key={colName} className="column-cell">
                             <LabelSum labels={statuses} />
                         </div>
