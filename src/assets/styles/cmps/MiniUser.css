@@ -1,0 +1,33 @@
+.mini-user {
+    display: flex;
+
+    background-color: var(--avatar-background);
+    border-radius: 4px 20px 20px 4px;
+    width: 68px;
+    cursor: pointer;
+
+    &:hover {
+        background-color: var(--primary-background-hover-color)
+    }
+
+    .avatar-logo-container {
+        display: flex;
+        align-items: center;
+        margin: 0 6px;
+
+        .avatar-logo {
+            width: 24px;
+            height: 24px;
+            border-radius: 4px;
+            object-fit: contain;
+        }
+
+    }
+
+    .avatar-img {
+        width: var(--avatar-image-size);
+        height: var(--avatar-image-size);
+        border-radius: 50%;
+        object-fit: cover;
+    }
+}

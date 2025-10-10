@@ -13,6 +13,7 @@ import { SvgIcon } from './SvgIcon.jsx'
 
 // images
 import headerLogo from '/img/logo.png'
+import { MiniUser } from './MiniUser.jsx'
 
 // icons
 
@@ -65,8 +66,13 @@ export function AppHeader() {
 				<section className="main-mini-user">
 					{!user && <NavLink to="auth/login" className="login-link">Login</NavLink>}
 					{user && (
-							<button onClick={onLogout}>logout</button>
-						
+						<div className='member-info'>
+							{/* <button onClick={onLogout}>logout</button> */}
+							<MiniUser
+								user={user}
+							/>
+
+						</div>
 					)}
 
 				</section>

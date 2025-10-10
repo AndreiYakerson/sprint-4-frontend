@@ -28,9 +28,12 @@
 @import "cmps/ConfirmCmp.css";
 @import "cmps/hover-show.css";
 @import "cmps/LongTxt.css";
+@import "cmps/MiniUser.css";
 
 @import "cmps/group/GroupList.css";
 @import "cmps/group/GroupTitleEditor.css";
+
+
 
 /* Task-Cmps */
 /* Members */
