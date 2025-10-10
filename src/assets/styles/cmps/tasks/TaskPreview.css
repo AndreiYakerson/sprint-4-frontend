@@ -18,7 +18,7 @@
 
 
 
-       &:has(:focus, .focus) {
+       &:has(:focus, .focus):not(.table-header) {
            background-color: var(--primary-selected-color-rgb);
 
            .sticky-cell-wrapper {
@@ -203,7 +203,6 @@
        }
 
        &:has(:focus, .focus) {
-
            &>* {
                border: 1px solid var(--primary-color);
            }

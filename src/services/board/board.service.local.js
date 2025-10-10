@@ -323,6 +323,7 @@ function _setBaordToSave({ title = 'New board', managingType = 'items', privacy 
                 id: makeId(),
                 title: 'Group 1',
                 createdAt: Date.now(),
+                isCollapsed: false,
                 tasks: [
 
                     {
@@ -330,7 +331,7 @@ function _setBaordToSave({ title = 'New board', managingType = 'items', privacy 
                         title: 'Item 1',
                         createdAt: Date.now(),
                         memberIds: [],
-                        priority: { txt: 'Default Label', cssVar: '--group-title-clr18', id: makeId() },
+                        priority: { txt: 'Default Label', cssVar: '--group-title-clr18', id: 'Default' },
 
                     },
                     {
@@ -338,7 +339,7 @@ function _setBaordToSave({ title = 'New board', managingType = 'items', privacy 
                         title: 'Item 2',
                         createdAt: Date.now(),
                         memberIds: [],
-                        priority: { txt: 'Default Label', cssVar: '--group-title-clr18', id: makeId() }
+                        priority: { txt: 'Default Label', cssVar: '--group-title-clr18', id: 'Default' }
                     },
                 ],
                 style: {
@@ -354,6 +355,7 @@ function _getEmptyGroup() {
         id: makeId(),
         title: 'New group',
         createdAt: Date.now(),
+        isCollapsed: false,
         tasks: [],
         style: {
             '--group-color': getRandomGroupColor(),
@@ -367,6 +369,6 @@ function _getEmptyTask(title = 'New Task') {
         title: title,
         createdAt: Date.now(),
         memberIds: [],
-        priority: { txt: 'Default Label', cssVar: '--group-title-clr18', id: makeId() }
+        priority: { txt: 'Default Label', cssVar: '--group-title-clr18', id: 'Default' }
     }
 }
