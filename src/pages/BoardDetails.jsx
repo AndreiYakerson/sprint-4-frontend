@@ -11,7 +11,7 @@ import { GroupList } from '../cmps/group/GroupList.jsx'
 import { SortFilterCmp } from '../cmps/SortFilterCmp.jsx'
 import { TaskDetails } from '../cmps/Task/TaskDetails.jsx'
 import { SvgIcon } from '../cmps/SvgIcon.jsx'
-import { BoardRemovdMsg } from '../cmps/Board/BoardRemovdMsg.jsx'
+import { BoardRemovedMsg } from '../cmps/Board/BoardRemovedMsg.jsx'
 import { AppLoader } from '../cmps/AppLoader.jsx'
 
 
@@ -99,7 +99,7 @@ export function BoardDetails() {
 
 
   if (isAppLoading) return <AppLoader />
-  if (boardRemovedMsg && !board) return <BoardRemovdMsg removedMsg={boardRemovedMsg} />
+  if (boardRemovedMsg && !board) return <BoardRemovedMsg removedMsg={boardRemovedMsg} />
 
   return (
     <section className="board-details">

@@ -1,22 +1,23 @@
 
 // SERVICES
 import { useEffect, useState } from "react";
-import { updateBoard } from "../../store/actions/board.actions.js";
+import { updateBoard } from "../../../store/actions/board.actions.js";
 import { useSelector } from "react-redux";
 // COMPONENTS
-import { LabelsListEdit } from "./PriorityCmp/LabelsListEdit.jsx";
-import { LabelsList } from "./PriorityCmp//LabelsList";
-import { FloatingContainerCmp } from "../FloatingContainerCmp.jsx";
-import { StatusAnimation } from "../StatusAnimation.jsx";
+import { LabelsListEdit } from "../labels/LabelsListEdit.jsx";
+import { LabelsList } from "../labels/LabelsList.jsx";
+import { FloatingContainerCmp } from "../../FloatingContainerCmp.jsx";
+import { StatusAnimation } from "../../StatusAnimation.jsx";
 
 export function StatusPicker({ info, onUpdate }) {
     const { selectedStatus, statuses } = info
-    const [isEditOpen, setIsEditOpen] = useState(false)
-    const [selectedLabelId, setSelectedLabelId] = useState(selectedStatus?.id)
-    const [labels, setLabels] = useState(statuses)
     const board = useSelector(state => state.boardModule.board)
+    const [selectedLabelId, setSelectedLabelId] = useState(selectedStatus?.id)
+    const [isEditOpen, setIsEditOpen] = useState(false)
+    const [labels, setLabels] = useState(statuses)
+    const [anchorEl, setAnchorEl] = useState()
     const label = labels.find(l => l.id === selectedLabelId)
-
+    
     useEffect(() => {
         setLabels(statuses)
     }, [statuses])
@@ -45,11 +46,8 @@ export function StatusPicker({ info, onUpdate }) {
 
     const labelToShow = label ? label : labels.find(status => status.id === 'default')
 
-
-
-    const [anchorEl, setAnchorEl] = useState()
     return (
-        <div className={`label-picker ${anchorEl ? "focus" : ""}`}
+        <div className={`labels-select-container ${anchorEl ? "focus" : ""}`}
             style={{ background: `var(${labelToShow?.cssVar})` }}
             onClick={(ev) => setAnchorEl(ev.currentTarget)}>
             {labelToShow?.txt}

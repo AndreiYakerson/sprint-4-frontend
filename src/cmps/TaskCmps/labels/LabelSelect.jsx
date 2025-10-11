@@ -1,12 +1,12 @@
 // SERVICES
 import { useEffect, useState } from "react";
-import { updateBoard } from "../../store/actions/board.actions.js";
+import { updateBoard } from "../../../store/actions/board.actions.js";
 import { useSelector } from "react-redux";
 
 // COMPONENTS
-import { LabelsListEdit } from "./PriorityCmp/LabelsListEdit.jsx";
-import { LabelsList } from "./PriorityCmp/LabelsList.jsx";
-import { FloatingContainerCmp } from "../FloatingContainerCmp.jsx";
+import { LabelsListEdit } from "../labels/LabelsListEdit.jsx";
+import { LabelsList } from "../labels/LabelsList.jsx";
+import { FloatingContainerCmp } from "../../FloatingContainerCmp.jsx";
 
 export function LabelSelect({ info, onUpdate }) {
   // Detect label type automatically
@@ -48,7 +48,7 @@ export function LabelSelect({ info, onUpdate }) {
 
   return (
     <div
-      className="label-picker "
+      className="labels-select-container "
       style={{ background: `var(${labelToShow?.cssVar})` }}
       onClick={ev => setAnchorEl(ev.currentTarget)}
     >

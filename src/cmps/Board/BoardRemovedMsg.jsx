@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 import boardRemovedIcon from '/img/board-removed-icon.svg'
 
-export function BoardRemovdMsg({ removedMsg }) {
+export function BoardRemovedMsg({ removedMsg }) {
     return (
         <section className="board-removed-msg">
             <img src={boardRemovedIcon} alt="board removed trash" />

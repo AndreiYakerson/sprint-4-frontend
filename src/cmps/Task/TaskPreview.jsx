@@ -21,7 +21,7 @@ import { TitleEditor } from "./TitleEditor"
 import { DatePicker } from "../TaskCmps/DateCmp/DatePicker.jsx"
 import { PriorityPicker } from "../TaskCmps/PriorityCmp/PriorityPicker.jsx"
 import { MemberPicker } from "../TaskCmps/MembersCmp/MemberPicker.jsx"
-import { StatusPicker } from "../TaskCmps/StatusPicker.jsx"
+import { StatusPicker } from "../TaskCmps/StatusCmp/StatusPicker.jsx"
 
 
 export function TaskPreview({ task, groupId, taskIdx }) {

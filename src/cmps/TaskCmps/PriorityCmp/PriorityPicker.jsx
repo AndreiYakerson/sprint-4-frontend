@@ -6,8 +6,8 @@ import { updateBoard } from "../../../store/actions/board.actions";
 import { useSelector } from "react-redux";
 
 // COMPONENTS
-import { LabelsListEdit } from "./LabelsListEdit";
-import { LabelsList } from "./LabelsList";
+import { LabelsListEdit } from "../labels/LabelsListEdit.jsx";
+import { LabelsList } from "../labels/LabelsList.jsx";
 import { FloatingContainerCmp } from "../../FloatingContainerCmp";
 import { StatusAnimation } from "../../StatusAnimation";
 
@@ -50,7 +50,7 @@ export function PriorityPicker({ info, onUpdate }) {
 
     //FIXME  להפוך את זה לקומפוננטה אחת לבחירה של לייבלים
     return (
-        <div className={`label-picker ${anchorEl ? "focus" : ""}`}
+        <div className={`labels-select-container ${anchorEl ? "focus" : ""}`}
             style={{ background: `var(${labelToShow?.cssVar})` }}
             onClick={(ev) => setAnchorEl(ev.currentTarget)}>
             {labelToShow?.txt}

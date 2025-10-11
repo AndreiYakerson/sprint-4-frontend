@@ -15,14 +15,17 @@
 
 /* PAGES */
 @import "pages/AboutUs.css";
+@import "pages/BoardDetails.css";
+@import "pages/BoardIndex.css";
+@import "pages/HomePage.css";
+@import "pages/LoginSignup.css";
+@import "pages/UserDetails.css";
+@import "pages/Chat.css";
+
 
 /* CMPS */
 @import "cmps/SortFilterCmp.css";
 @import "cmps/SideBar/SideBar.css";
-@import "cmps/HomePage";
-@import "cmps/LoginSignup";
-@import "cmps/Chat";
-@import "cmps/UserDetails";
 @import "cmps/PopUp.css";
 @import "cmps/FloatingContainerCmp.css";
 @import "cmps/ConfirmCmp.css";
@@ -46,15 +49,15 @@
 @import "cmps/TaskCmps/DatePicker/DatePicker.css";
 @import "cmps/TaskCmps/DatePicker/Calendar.css";
 
-/* Priority */
-@import "cmps/TaskCmps/PriorityCmp/LabelPicker.css";
+/* Labels */
+@import "cmps/TaskCmps/PriorityCmp/labelsSelectContainer.css";
 
 /* Status */
 /* @import "cmps/TaskCmps/StatusCmp/StatusPicker.css"; */
 
 /* sum */
-@import "cmps/TaskCmps//SumCmps/LabelSum.css";
-@import "cmps/TaskCmps//SumCmps/DateSum.css";
+@import "cmps/TaskCmps/SumCmps/LabelSum.css";
+@import "cmps/TaskCmps/SumCmps/DateSum.css";
 
 
 @import "cmps/tasks/TaskList.css";
@@ -67,13 +70,12 @@
 @import "cmps/AppLoader";
 @import "cmps/ActionsMenu.css";
 
-@import "cmps/board/BoardIndex";
 @import "cmps/board/BoardList";
 @import "cmps/board/BoardFilter";
-@import "cmps/board/BoardDetails";
 @import "cmps/board/BoardPreview.css";
 @import "cmps/board/BoardEdit.css";
-@import "cmps/board/BoardRemovdMsg.css";
-
-
+@import "cmps/board/BoardRemovedMsg.css";
 @import "cmps/StatusAnimation.css";
+
+/* Pages */
+

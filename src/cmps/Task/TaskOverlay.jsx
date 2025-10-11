@@ -19,7 +19,7 @@ import { TitleEditor } from "./TitleEditor"
 // icon
 // import updateIcon from "/icons/update.svg"
 import { MemberPicker } from "../TaskCmps/MembersCmp/MemberPicker.jsx"
-import { StatusPicker } from "../TaskCmps/StatusPicker.jsx"
+import { StatusPicker } from "../TaskCmps/StatusCmp/StatusPicker.jsx"
 
 
 // import { FloatingContainerCmp } from "../FloatingContainerCmp.jsx"
