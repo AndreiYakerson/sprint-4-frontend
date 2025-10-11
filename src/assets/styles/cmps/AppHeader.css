@@ -1,6 +1,6 @@
 .app-header {
     display: flex;
-    
+
 
     .app-logo {
 
@@ -47,22 +47,12 @@
         }
     }
 
-    .icon-container {
-        gap: 2em;
-    }
-
-    .icon-container .icon {
-        cursor: pointer;
-        width: 20px;
-        height: 20px;
-    }
 
     & section {
         display: flex;
         margin-inline-start: auto;
         align-items: center;
-        gap: 1em;
-
+        gap: 5px;
         font-size: .8em;
 
         /* .active {} */
@@ -72,8 +62,33 @@
             margin-inline-start: auto;
         }
 
-        & button {
-            margin-inline-end: 0;
+        .main-nav-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            width: 40px;
+            height: 40px;
+
+            background-color: transparent;
+            border-radius: var(--border-radius-small);
+            border: none;
+            cursor: pointer;
+
+            .icon.undefined {
+                width: 20px;
+            }
+
+            &:hover {
+                background-color: var(--primary-background-hover-color);
+            }
+        }
+
+        .middle-line {
+            background-color: var(--layout-border-color);
+            height: 22px;
+            margin-right: var(--spacing-xs);
+            width: 1px;
         }
     }
 

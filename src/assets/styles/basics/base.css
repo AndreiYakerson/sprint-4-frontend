@@ -122,6 +122,7 @@ object {
 
 .svg-icon {
 
+
     &.plus-blue {
         place-self: center;
         background-color: var(--primary-color);

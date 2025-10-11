@@ -57,7 +57,8 @@ export function AppHeader() {
 			</Link>
 
 			<section className='main-nav'>
-				<div className='icon-container flex'>
+
+				<button className='main-nav-btn'>
 
 					<HoveredTextCmp
 						label="Notifications"
@@ -70,10 +71,132 @@ export function AppHeader() {
 							colorName={'primaryText'}
 						/>
 					</HoveredTextCmp>
+				</button>
 
-				</div>
-				{/* //FIXME לעצב את הקו המפריד בין הקונטיינרים */}
-				<span className='middle-line'>!</span>
+
+				<button className='main-nav-btn'>
+
+					<HoveredTextCmp
+						label="Update feed"
+						position="down"
+						onClick={(ev) => setAnchorEl(ev.currentTarget)}
+					>
+						<SvgIcon
+							iconName="updateFeed"
+							size={20}
+							colorName={'primaryText'}
+						/>
+					</HoveredTextCmp>
+				</button>
+
+				<button className='main-nav-btn'>
+
+					<HoveredTextCmp
+						label="Invite members"
+						position="down"
+						onClick={(ev) => setAnchorEl(ev.currentTarget)}
+					>
+						<SvgIcon
+							iconName="addMember"
+							size={20}
+							colorName={'primaryText'}
+						/>
+					</HoveredTextCmp>
+				</button>
+
+				<button className='main-nav-btn'>
+
+					<HoveredTextCmp
+						label="Monday marketplace"
+						position="down"
+						onClick={(ev) => setAnchorEl(ev.currentTarget)}
+					>
+						<SvgIcon
+							iconName="mondayMarketplace"
+							size={20}
+							colorName={'primaryText'}
+						/>
+					</HoveredTextCmp>
+				</button>
+
+				<button className='main-nav-btn'>
+
+					<HoveredTextCmp
+						label="Autopilot hub"
+						position="down"
+						onClick={(ev) => setAnchorEl(ev.currentTarget)}
+					>
+						<SvgIcon
+							iconName="autopilotHub"
+							size={20}
+							colorName={'primaryText'}
+						/>
+					</HoveredTextCmp>
+				</button>
+
+				<button className='main-nav-btn'>
+
+					<HoveredTextCmp
+						label="Search everything"
+						position="down"
+						onClick={(ev) => setAnchorEl(ev.currentTarget)}
+					>
+						<SvgIcon
+							iconName="searchGlass"
+							size={20}
+							colorName={'primaryText'}
+						/>
+					</HoveredTextCmp>
+				</button>
+
+				<button className='main-nav-btn'>
+
+					<HoveredTextCmp
+						label="Help"
+						position="down"
+						onClick={(ev) => setAnchorEl(ev.currentTarget)}
+					>
+						<SvgIcon
+							iconName="help"
+							size={20}
+							colorName={'primaryText'}
+						/>
+					</HoveredTextCmp>
+				</button>
+
+
+				<div className='middle-line'></div>
+
+				<button className='main-nav-btn'>
+
+					<HoveredTextCmp
+						label="oneDay vibe"
+						position="down"
+						onClick={(ev) => setAnchorEl(ev.currentTarget)}
+					>
+						<SvgIcon
+							iconName="mondayVibe"
+							size={20}
+							colorName={'primaryText'}
+						/>
+					</HoveredTextCmp>
+				</button>
+
+				<button className='main-nav-btn'>
+
+					<HoveredTextCmp
+						label="Products Switcher"
+						position="down"
+						onClick={(ev) => setAnchorEl(ev.currentTarget)}
+					>
+						<SvgIcon
+							iconName="productSwitcher"
+							size={20}
+							colorName={'primaryText'}
+						/>
+					</HoveredTextCmp>
+				</button>
+
 				<section className="main-mini-user">
 					{!user && <NavLink to="auth/login" className="login-link">Login</NavLink>}
 					{user && (
