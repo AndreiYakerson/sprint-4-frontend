@@ -1,76 +1,90 @@
-.member-Info article {
+.member-card-wrapper {
     display: flex;
-
+    flex-direction: column;
 
     width: 335px;
-    height: 145px;
-    padding-top: 8px;
 
-   
+    font-size: 14px;
+    border-radius: 8px;
 
-    .user-img {
-        display: grid;
-        place-content: justify;
-
-        width: 100px;
-        margin: 8px;
-
-    }
-
-    .info-list {
+    .member-card-content {
         display: flex;
         flex-direction: column;
 
-        place-content: space-evenly;
-        width: 100%;
+        gap: 15px;
+
+        padding: 16px 24px;
 
 
+        .card-info {
+
+            display: flex;
+
+            .user-img {
+                margin: 0;
+                width: 75px;
+                height: 75px;
+
+            }
+
+            .card-user-info {
+                display: flex;
+                flex-direction: column;
+                line-height: 22.5px;
+
+
+                margin-left: 16px;
+                padding-left: 4px;
+                flex: 1;
+
+                .user-name {
+                    font-size: 1.28rem;
+                }
+
+                .user-profession {
+                    margin-top: 6px;
+                    color: var(--secondary-text-color);
+                }
+
+
+                .date-time-container {
+                    display: flex;
+                    margin-top: 6px;
+                    align-items: center;
+                    color: var(--secondary-text-color);
+
+                    & img {
+                        width: 30px;
+                    }
+
+                }
+
+                .date-time-container>*:nth-child(1) {
+                    align-self: flex-start;
+                    margin-inline-end: 4px;
+                }
+
+                .user-member-tags-container {
+                    display: flex;
+                    margin-top: 6px;
+                    gap: 1rem;
+
+                }
+
+
+                .tag-label {
+                    padding: 2px 8px;
+                    border-radius: var(--border-radius-medium);
+                    background-color: var(--group-title-clr10);
+                }
+
+
+            }
+        }
     }
 
-    .info-list>* {
+    .card-info>* {
         margin-inline: 5px;
     }
-
-    .user-name-pro {
-        margin-top: 6px;
-
-        .user-name {
-            font-size: 1.28rem;
-        }
-    }
-
-    .date-time-container {
-        display: flex;
-
-        align-items: center;
-
-
-        & img {
-            width: 30px;
-        }
-
-    }
-
-    .date-time-container>*:nth-child(1) {
-        margin-inline-end: 1px;
-    }
-
-    .user-member-tags-container {
-        display: flex;
-        gap: 1rem;
-
-    }
-
-    /* img {
-       
-    } */
-     
-    .tag-label {
-        padding: 2px 8px;
-        border-radius: var(--border-radius-medium);
-        background-color: var(--group-title-clr10);
-    }
-
-
 
 }

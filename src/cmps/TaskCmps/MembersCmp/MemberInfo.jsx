@@ -1,3 +1,4 @@
+import { SvgIcon } from '../../SvgIcon'
 import person from '/icons/person.svg'
 
 export function MemberInfo({ user }) {
@@ -5,31 +6,31 @@ export function MemberInfo({ user }) {
     const curLocation = ' pardes-hana'
 
     return (
-        <div className="member-Info">
-            <article >
-                <span className="user-img"><img src={user.imgUrl} alt="Logo Icon" /></span>
-                <div className="info-list">
-
-                    <section className="user-name-pro">
-                        <span className="user-name">{user.fullname}</span>
-                        <br />
-                        {user.profession && <span className="user-profession">{user.profession}</span>}
-                    </section>
-
-                    <section className="date-time-container">
-                        <img src={person} alt="world Icon" />
-                        {timeNow},
-                        {curLocation}
-                    </section>
-
-                    <section className="user-member-tags-container">
-                        {user.tags?.map(tag => {
-                            return <span key={tag} className="tag-label">{tag}</span>
-                        })}
+        <div className="member-card-wrapper">
+            <article className='member-card-content'>
+                <div className="card-info">
+                    <img src={user.imgUrl} alt="User Image" className="user-img" />
+                    <section className="card-user-info">
+                        {/* <div className="user"> */}
+                            <div className="user-name text-overflow">{user.fullname}</div>
+                            {user.profession && <div className="user-profession text-overflow">{user.profession}</div>}
+                        {/* </div> */}
+                        <div className="date-time-container text-overflow">
+                            <SvgIcon iconName='world' size={16} colorName='secondaryText' />
+                            {/* <img src={person} alt="world Icon" /> */}
+                            {timeNow},
+                            {curLocation}
+                        </div>
+                        <div className="user-member-tags-container">
+                            {user.tags?.map(tag => {
+                                return <span key={tag} className="tag-label">{tag}</span>
+                            })}
+                        </div>
                     </section>
 
                 </div>
             </article>
+
         </div>
     )
 
