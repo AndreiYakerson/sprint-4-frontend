@@ -72,10 +72,7 @@ function _getIcon(iconName) {
         autopilotHub: <svg width="20" height="20" fill="currentColor" aria-hidden="true" className="icon_8913d3130d noFocusStyle_8be145f844" data-testid="icon" data-vibe="Icon" viewBox="0 0 20 20"><path fillRule="evenodd" d="M11.015 4.167a.75.75 0 1 0-1.5 0v1.409H6.667a2.75 2.75 0 0 0-2.75 2.75v.159h-.19a1.75 1.75 0 0 0-1.75 1.75v1.879c0 .966.784 1.75 1.75 1.75h.19v.159a2.75 2.75 0 0 0 2.75 2.75h6.666a2.75 2.75 0 0 0 2.75-2.75v-.16h.19a1.75 1.75 0 0 0 1.75-1.75v-1.878a1.75 1.75 0 0 0-1.75-1.75h-.19v-.16a2.75 2.75 0 0 0-2.75-2.75h-2.318zm3.568 8.947v.909c0 .69-.56 1.25-1.25 1.25H6.667c-.69 0-1.25-.56-1.25-1.25V8.325c0-.69.56-1.25 1.25-1.25h6.666c.69 0 1.25.56 1.25 1.25v4.789m1.69-.75h-.19v-2.38h.19a.25.25 0 0 1 .25.25v1.88a.25.25 0 0 1-.25.25m-12.356 0v-2.38h-.19a.25.25 0 0 0-.25.25v1.88c0 .138.112.25.25.25zm5.159-2.38a.75.75 0 1 0-1.5 0v1.41a.75.75 0 0 0 1.5 0zm3.128-.75a.75.75 0 0 1 .75.75v1.41a.75.75 0 0 1-1.5 0v-1.41a.75.75 0 0 1 .75-.75" clipRule="evenodd"/></svg>,
         mondayMarketplace: <svg width="20" height="20" fill="currentColor" aria-hidden="true" className="icon_8913d3130d noFocusStyle_8be145f844" data-testid="icon" data-vibe="Icon" viewBox="0 0 20 20"><path fillRule="evenodd" d="M5.658 4.88a2.88 2.88 0 1 1 5.76.046h1.632c1.117 0 2.023.906 2.023 2.023v1.634h.047a2.88 2.88 0 1 1-.047 5.76v1.634A2.023 2.023 0 0 1 13.05 18H4.023A2.023 2.023 0 0 1 2 15.977v-2.445a.686.686 0 0 1 .914-.646q.236.084.503.086a1.509 1.509 0 1 0-.503-2.932A.686.686 0 0 1 2 9.394V6.949c0-1.117.906-2.023 2.023-2.023h1.635zm2.88-1.509a1.508 1.508 0 0 0-1.423 2.012.686.686 0 0 1-.647.914H4.023a.65.65 0 0 0-.652.652v1.634h.046a2.88 2.88 0 1 1-.046 5.76v1.634c0 .36.292.652.652.652h9.027c.36 0 .652-.292.652-.652v-2.445a.686.686 0 0 1 .915-.646q.235.084.503.086a1.509 1.509 0 1 0-.503-2.932.686.686 0 0 1-.915-.646V6.949a.65.65 0 0 0-.652-.652h-2.443a.686.686 0 0 1-.647-.914q.085-.235.086-.503c0-.833-.675-1.509-1.508-1.509" clipRule="evenodd"/></svg>,
         updateFeed: <svg width="20" height="20" fill="currentColor" aria-hidden="true" className="icon_8913d3130d noFocusStyle_8be145f844" data-testid="icon" data-vibe="Icon" viewBox="0 0 20 20"><path fillRule="evenodd" d="M1.918 11.067q0-.13.042-.248l.882-.25.882-.252h3.727a.75.75 0 0 1 .75.75v.61c0 .224.205.468.525.468h2.87c.319 0 .525-.244.525-.469v-.61a.75.75 0 0 1 .75-.75h3.408l1.764.503q.041.117.042.248v2.266a2.75 2.75 0 0 1-2.75 2.75H4.668a2.75 2.75 0 0 1-2.75-2.75zm1.5.75v1.516c0 .69.56 1.25 1.25 1.25h10.667c.69 0 1.25-.56 1.25-1.25v-1.516h-2.97c-.074 1.046-.982 1.828-2.02 1.828h-2.87c-1.037 0-1.944-.782-2.02-1.828z" clipRule="evenodd"/><path fillRule="evenodd" d="M5.847 5.417a.58.58 0 0 0-.55.39l-1.573 4.51-.882.251-.882.252 1.92-5.506a2.08 2.08 0 0 1 1.967-1.397h8.309c.886 0 1.675.56 1.967 1.397l1.92 5.506-1.764-.503-1.572-4.51a.58.58 0 0 0-.551-.39z" clipRule="evenodd"/></svg>,
-
-
-
-
+        seePlans: <svg width="20" height="20" fill="currentColor" aria-hidden="true" class="icon_8913d3130d leftIcon_ac86dc6713 noFocusStyle_8be145f844" data-testid="icon" data-vibe="Icon" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5.72 3.229A.69.69 0 0 1 6.233 3h7.98c.21 0 .41.097.54.264l3.103 3.972a.686.686 0 0 1-.013.86l-7.314 8.827a.686.686 0 0 1-1.056 0L2.158 8.096a.686.686 0 0 1 .016-.895zm.237 1.795.652 1.948H4.217zm-1.813 3.32H7.04l1.448 5.242zm7.368 5.242 4.344-5.242H12.96zm.025-5.242L10 13.91 8.463 8.344zm1.958-1.372h2.414l-1.536-1.966zm-.34-2.6h-5.97l.87 2.6h3.938z" clip-rule="evenodd"/></svg>,
     }
     return icons[iconName]
 }
@@ -89,7 +86,8 @@ function _getColor(colorName) {
         starColor: 'var(--star-color)',
         positive: 'var(--positive-color)',
         negative: 'var(--negative-color)',
-        currentColor: 'currentColor'
+        primaryColor: 'var(--primary-color)',
+        currentColor: 'currentColor',
     }
     return colors[colorName]
 }

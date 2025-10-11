@@ -56,6 +56,15 @@ export function AppHeader() {
 
 			</Link>
 
+			<button className='see-plans-container'>
+				<SvgIcon
+					iconName="seePlans"
+					size={20}
+					colorName={'currentColor'}
+				/>
+				See plans
+			</button>
+
 			<section className='main-nav'>
 
 				<button className='main-nav-btn'>

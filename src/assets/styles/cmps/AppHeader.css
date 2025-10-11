@@ -1,6 +1,6 @@
 .app-header {
     display: flex;
-
+    align-items: center;
 
     .app-logo {
 
@@ -111,4 +111,29 @@
             border-radius: 50%;
         }
     }
+}
+
+.see-plans-container {
+    display: flex;
+    align-items: center;
+    height: 30px;
+
+    background-color: initial;
+    color: var(--primary-color);
+    border-color: var(--primary-color);
+
+    & :first-child {
+        margin-right: 8px;
+    }
+
+    &:hover {
+        background-color: var(--primary-hover-color);
+        border-color: var(--primary-hover-color);
+        color: #fff;
+
+        .svg {
+            color: #fff;
+        }
+    }
+
 }
