@@ -7,9 +7,6 @@ import { boardService } from '../../../services/board'
 import { FloatingContainerCmp } from '../../FloatingContainerCmp'
 //Icons
 
-import editPen from '/icons/edit-pen.svg'
-import plus from '/icons/plus.svg'
-import xMark from '/icons/x-mark.svg'
 import { SvgIcon } from '../../SvgIcon'
 import { getVarColors } from '../../../services/util.service'
 
@@ -32,9 +29,7 @@ export function LabelsListEdit({ labels, onUpdateLabels, onClose }) {
     }, [editingLabel])
 
 
-
     function updateLabel() {
-
         onUpdateLabels(labelsToUpdate)
         onClose()
     }

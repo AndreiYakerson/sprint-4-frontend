@@ -1,84 +1,84 @@
-// SERVICES
-import { useEffect, useState } from "react";
-import { updateBoard } from "../../../store/actions/board.actions.js";
-import { useSelector } from "react-redux";
+// COMPONENT: DynamicPicker.jsx
+import { useEffect, useState } from "react"
+import { FloatingContainerCmp } from "../../FloatingContainerCmp.jsx"
+import { StatusAnimation } from "../../StatusAnimation.jsx"
 
-// COMPONENTS
-import { LabelsListEdit } from "../labels/LabelsListEdit.jsx";
-import { LabelsList } from "../labels/LabelsList.jsx";
-import { FloatingContainerCmp } from "../../FloatingContainerCmp.jsx";
+export function LabelSelect({
+    info,               
+    onUpdate,     
+    onUpdateList,  
+    CmpList,           
+    CmpListEdit,       
+    bgVarKey = 'cssVar'
+}) {
+    const { selectedItem, items } = info
+    const [selectedId, setSelectedId] = useState(selectedItem?.id)
+    const [isEditOpen, setIsEditOpen] = useState(false)
+    const [list, setList] = useState(items)
+    const [anchorEl, setAnchorEl] = useState(null)
 
-export function LabelSelect({ info, onUpdate }) {
-  // Detect label type automatically
-  const isPriority = info.label === 'Priority:'
-  const labelsFromBoard = isPriority ? info.boardPriorities || info.priorities : info.statuses
-  const selectedLabel = isPriority ? info.taskPriority : info.selectedStatus
+    useEffect(() => setList(items), [items])
 
-  const [labels, setLabels] = useState(labelsFromBoard || [])
-  const [selectedLabelId, setSelectedLabelId] = useState(selectedLabel?.id)
-  const [isEditOpen, setIsEditOpen] = useState(false)
-  const [anchorEl, setAnchorEl] = useState(null)
-  const board = useSelector(state => state.boardModule.board)
-  const label = labels.find(l => l.id === selectedLabelId)
-  const labelType = isPriority ? 'priorities' : 'statuses'
+    const item = list.find(i => i.id === selectedId) || list.find(i => i.id === 'default')
 
-  // Sync when board updates
-  useEffect(() => {
-    setLabels(labelsFromBoard || [])
-  }, [labelsFromBoard])
+    function onSaveItem(item) {
+        const newItem = { ...item, updatedAt: Date.now() }
+        setSelectedId(newItem.id)
+        onUpdate(newItem)
+        onClose()
+    }
 
-  function onSaveLabel(label) {
-    setSelectedLabelId(label.id)
-    onUpdate(label)
-    onClose()
-  }
+    function onEditList(updatedList) {
+        setList(updatedList)
+        onUpdateList(updatedList)
+    }
 
-  function onUpdateLabels(updatedLabels) {
-    const newBoard = { ...board, [labelType]: updatedLabels }
-    updateBoard(newBoard)
-    setLabels(updatedLabels)
-  }
+    function onClose() {
+        setIsEditOpen(false)
+        setAnchorEl(null)
+    }
 
-  function onClose() {
-    setIsEditOpen(false)
-    setAnchorEl(null)
-  }
+    function switchEditMode() {
+        setIsEditOpen(prev => !prev)
+    }
 
-  const labelToShow = label || labels.find(l => l.id === 'default')
-
-  return (
-    <div
-      className="labels-select-container "
-      style={{ background: `var(${labelToShow?.cssVar})` }}
-      onClick={ev => setAnchorEl(ev.currentTarget)}
-    >
-      {labelToShow?.txt}
-
-      {anchorEl && (
-        <FloatingContainerCmp
-          anchorEl={anchorEl}
-          onClose={onClose}
+    return (
+        <div
+            className={`labels-select-container ${anchorEl ? "focus" : ""}`}
+            style={{ background: `var(${item?.[bgVarKey]})` }}
+            onClick={(ev) => setAnchorEl(ev.currentTarget)}
         >
-          <div className={`labels-container ${isEditOpen}`}>
-            <div className={`label-select ${isEditOpen}`}>
-              {!isEditOpen ? (
-                <LabelsList
-                  labels={labels}
-                  onSaveLabel={onSaveLabel}
-                  switchEditMode={() => setIsEditOpen(prev => !prev)}
-                />
-              ) : (
-                <LabelsListEdit
-                  labels={labels}
-                  onUpdateLabels={onUpdateLabels}
-                  onClose={onClose}
-                />
-              )}
-            </div>
-          </div>
-        </FloatingContainerCmp>
-      )
-      }
-    </div >
-  )
+            {item?.txt}
+            <StatusAnimation color={`var(${item?.[bgVarKey]})`} />
+
+            {anchorEl && (
+                <FloatingContainerCmp
+                    anchorEl={anchorEl}
+                    onClose={onClose}
+                    centeredX={true}
+                    showTriangle={true}
+                    enforceLimit={true}
+                >
+                    <div className={`labels-container ${isEditOpen}`}>
+                        <div className={`label-select ${isEditOpen}`}>
+                            {!isEditOpen ? (
+                                <CmpList
+                                    items={list}
+                                    onSaveItem={onSaveItem}
+                                    onSwitchEditMode={switchEditMode}
+                                />
+                            ) : (
+                                <CmpListEdit
+                                    items={list}
+                                    onUpdateList={onEditList}
+                                    onClose={onClose}
+                                    onSwitchEditMode={switchEditMode}
+                                />
+                            )}
+                        </div>
+                    </div>
+                </FloatingContainerCmp>
+            )}
+        </div>
+    )
 }

@@ -44,6 +44,13 @@ export function PriorityPicker({ info, onUpdate }) {
         setIsEditOpen(false)
         setAnchorEl(null)
     }
+
+    function switchEditMode() {        
+        setIsEditOpen(prev => prev = !prev)
+    }
+
+
+
     const editMode = !isEditOpen ? 'apply' : ''
 
     const labelToShow = label ? label : labels.find(label => label.id === 'default')
@@ -68,9 +75,9 @@ export function PriorityPicker({ info, onUpdate }) {
                     <div className={`labels-container ${isEditOpen}`}>
                         <div className={`label-select ${isEditOpen}`}>
                             {!isEditOpen ?
-                                <LabelsList labels={labels} onSaveLabel={onSaveLabel} switchEditMode={() => setIsEditOpen(prev => prev = !prev)} />
+                                <LabelsList labels={labels} onSaveLabel={onSaveLabel} onSwitchEditMode={switchEditMode} />
                                 :
-                                <LabelsListEdit labels={labels} onUpdateLabels={onUpdateLabels} onClose={onClose} />
+                                <LabelsListEdit labels={labels} onUpdateLabels={onUpdateLabels} onClose={onClose} onSwitchEditMode={switchEditMode} />
                             }
 
                         </div>

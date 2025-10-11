@@ -17,7 +17,7 @@ export function StatusPicker({ info, onUpdate }) {
     const [labels, setLabels] = useState(statuses)
     const [anchorEl, setAnchorEl] = useState()
     const label = labels.find(l => l.id === selectedLabelId)
-    
+
     useEffect(() => {
         setLabels(statuses)
     }, [statuses])
@@ -40,6 +40,10 @@ export function StatusPicker({ info, onUpdate }) {
     function onClose() {
         setIsEditOpen(false)
         setAnchorEl(null)
+    }
+
+    function switchEditMode() {
+        setIsEditOpen(prev => prev = !prev)
     }
 
     const editMode = !isEditOpen ? 'apply' : ''
@@ -65,9 +69,9 @@ export function StatusPicker({ info, onUpdate }) {
                     <div className={`labels-container ${isEditOpen}`}>
                         <div className={`label-select ${isEditOpen}`}>
                             {!isEditOpen ?
-                                <LabelsList labels={labels} onSaveLabel={onSaveLabel} switchEditMode={() => setIsEditOpen(prev => prev = !prev)} />
+                                <LabelsList labels={labels} onSaveLabel={onSaveLabel} onSwitchEditMode={switchEditMode} />
                                 :
-                                <LabelsListEdit labels={labels} onUpdateLabels={onUpdateLabels} onClose={onClose} />
+                                <LabelsListEdit labels={labels} onUpdateLabels={onUpdateLabels} onClose={onClose}  onSwitchEditMode={switchEditMode} />
                             }
 
                         </div>
