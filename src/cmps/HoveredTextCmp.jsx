@@ -1,7 +1,7 @@
 import { forwardRef } from "react";
 
-export const HoveredTextCmp = forwardRef(({ children, label, position, onClick, size }, ref) => {
-  const hoverShow = label ? 'hover-show' : '';
+export const HoveredTextCmp = forwardRef(({ children, label, position, onClick, size, style }, ref) => {
+  const hoverShow = label ? 'hover-show' : ''
 
   return (
     <div
@@ -9,12 +9,12 @@ export const HoveredTextCmp = forwardRef(({ children, label, position, onClick, 
       data-type={label}
       onClick={onClick}
       ref={ref}
-      style={{ cursor: onClick ? 'pointer' : 'default' }}
+      style={{ cursor: onClick ? 'pointer' : 'default', ...style }}
     >
       {children}
-    </div>
-  );
-});
+    </div >
+  )
+})
 
 
 // Pest function

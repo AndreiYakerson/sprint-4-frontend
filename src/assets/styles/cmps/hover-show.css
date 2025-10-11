@@ -1,6 +1,5 @@
 .hover-show {
     position: relative;
-    z-index: 1000;
 
     &::after {
         content: attr(data-type);
@@ -19,8 +18,8 @@
         color: var(--text-color-on-primary);
         background-color: #474747;
         transition:
-            opacity 0.1s ease-in-out 0.2s,
-            transform 0.1s ease-in-out 0.2s;
+            opacity 0s ease-in-out,
+            transform 0s ease-in-out;
     }
 
     &::before {
@@ -32,8 +31,8 @@
 
         border: 6px solid transparent;
         opacity: 0;
-        transition: opacity 0.1s ease-in-out 0.2s,
-            transform 0.1s ease-in-out 0.2s;
+        transition: opacity 0s ease-in-out,
+            transform 0s ease-in-out;
     }
 
     &.up::after {
@@ -57,11 +56,19 @@
     &:hover::after {
         opacity: 1;
         transform: translateX(-50%) scaleX(1);
+        z-index: 100000;
         /* grow smoothly */
+        transition:
+            opacity 0.1s ease-in-out 0.2s,
+            transform 0.1s ease-in-out 0.2s;
     }
 
     &:hover::before {
         opacity: 1;
+        z-index: 100000;
+        transition:
+            opacity 0.1s ease-in-out 0.2s,
+            transform 0.1s ease-in-out 0.2s;
         /* arrow just fades in */
     }
 }

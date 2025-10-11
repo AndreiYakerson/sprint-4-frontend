@@ -5,10 +5,12 @@
 
     .label-list {
         display: flex;
+        flex-direction: row;
         background-color: #c4c4c4;
         width: 100%;
         max-width: 130px;
         height: 70%;
+        font-size: 12px;
 
         &>* {
             transform: scale(1, 1);
@@ -22,7 +24,7 @@
 }
 
 
-.toolTip-title {
+/* .toolTip-title {
     position: relative;
     isolation: isolate;
     z-index: 30;
@@ -56,4 +58,4 @@
         }
     }
 
-}
+} */

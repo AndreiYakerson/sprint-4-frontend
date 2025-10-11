@@ -1,3 +1,5 @@
+import { HoveredTextCmp } from "../../HoveredTextCmp"
+
 export function LabelSum({ labels }) {
 
     function getLabelsStats(labels) {
@@ -27,13 +29,12 @@ export function LabelSum({ labels }) {
         <section className="labels-sum">
             <div className="label-list">
                 {getLabelsStats(labels).map((label) => {
-                    return <div
-                        className="label-block toolTip-title"
-                        data-tooltip={label.msg}
+                    return <HoveredTextCmp
+                        label={label.msg}
+                        position={'up'}
                         style={{ width: label.percentage + "%", backgroundColor: `var(${label.cssVar})` }}
-                        key={label.id}>
-                    </div>
-
+                    >
+                    </HoveredTextCmp>
                 })}
             </div>
         </section>

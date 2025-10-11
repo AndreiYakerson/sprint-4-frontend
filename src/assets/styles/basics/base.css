@@ -40,7 +40,7 @@ html {
 
 
 
-body{
+body {
     margin: 0 auto;
 
     font-family: Noto-Sans-Hebrew;
@@ -100,10 +100,9 @@ object {
     display: block;
 }
 
-.icon {
+/* .icon {
     width: 16px;
     aspect-ratio: 1/1;
-    z-index: 1000;
 
     &.big {
         width: 20px;
@@ -112,7 +111,7 @@ object {
     &.white {
         filter: invert(1);
     }
-}
+} */
 
 
 .test {
@@ -121,8 +120,6 @@ object {
 
 
 .svg-icon {
-
-
     &.plus-blue {
         place-self: center;
         background-color: var(--primary-color);
@@ -153,6 +150,6 @@ svg {
     padding: 20px;
 }
 
-button{
-    font:inherit !important;
+button {
+    font: inherit !important;
 }
