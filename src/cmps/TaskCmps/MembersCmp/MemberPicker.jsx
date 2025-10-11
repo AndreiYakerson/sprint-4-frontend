@@ -122,13 +122,11 @@ export function MemberPicker({ info, onUpdate }) {
                         onRemove={onRemoveMember}
                         selectedMemberIds={selectedMemberIds}
                         members={members}
-                        // groupId={ }
                         onClose={updateTaskMembers}
                     />
                 </FloatingContainerCmp>
             }
 
-            {/* </div> */}
 
         </article >
     )

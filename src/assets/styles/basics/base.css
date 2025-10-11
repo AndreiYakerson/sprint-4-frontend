@@ -40,7 +40,7 @@ html {
 
 
 
-body {
+body{
     margin: 0 auto;
 
     font-family: Noto-Sans-Hebrew;
@@ -145,10 +145,13 @@ svg {
     }
 }
 
-.now-con{
+.now-con {
     display: flex;
     place-items: center;
-align-items: center;
+    align-items: center;
     padding: 20px;
 }
 
+button{
+    font:inherit !important;
+}

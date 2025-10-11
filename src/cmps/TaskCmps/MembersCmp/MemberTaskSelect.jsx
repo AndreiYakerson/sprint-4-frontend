@@ -13,6 +13,12 @@ import { loadFromStorage, saveToStorage } from '../../../services/util.service'
 // COMPONENTS
 
 export function MemberTaskSelect({ selectedMemberIds, onClose, members, onRemove }) {
+    const [inputTxt, setInputTxt] = useState('')
+    const board = useSelector(state => state.boardModule.board)
+    const users = loadFromStorage('users')
+    const [anchorEl, setAnchorEl] = useState(false)
+    const [notBoardMembers, setNotBoardMembers] = useState(false)
+
     //Demo
     useEffect(() => {
         if (!loadFromStorage('users')) {
@@ -22,27 +28,27 @@ export function MemberTaskSelect({ selectedMemberIds, onClose, members, onRemove
         }
     }, [])
 
-    const board = useSelector(state => state.boardModule.board)
-
-
-    const users = loadFromStorage('users')
-
-
-    const [anchorEl, setAnchorEl] = useState(false)
-    const [notBoardMembers, setNotBoardMembers] = useState(false)
 
     function handelChange(ev) {
         const userToFind = ev.target.value
         if (userToFind.length === 0) {
-            setNotBoardMembers(false)
-            setAnchorEl(false)
+            onClearInput()
             return
         }
+
+        setInputTxt(userToFind)
         const regex = new RegExp('^' + userToFind, 'i')
         const notMembers = users.filter(user => regex.test(user.fullname)).filter(u => !members.some(m => m._id === u._id))
 
         if (!!notMembers.length) setNotBoardMembers(notMembers)
         setAnchorEl(ev.currentTarget)
+    }
+
+    function onClearInput() {
+        setNotBoardMembers(false)
+        setAnchorEl(false)
+        setInputTxt('')
+
     }
 
     function onSelectMember(member) {
@@ -63,42 +69,36 @@ export function MemberTaskSelect({ selectedMemberIds, onClose, members, onRemove
 
     const usersToShow = members.filter(member => !selectedMemberIds.includes(member._id));
     const existingUsers = members.filter(member => selectedMemberIds.includes(member._id));
-
+    const emptyInput = inputTxt ? true : false
     return (
         <div className='member-task-select-wrapper'>
             <ExistingMembers onRemove={onRemove} members={existingUsers} />
             <div className="member-task-select">
-                <div className="search-bar"
-                >
-                    <span className='search'>
-                        <img src={searchGalss}
-                            className='icon big search'
-                            alt="Search Icon"
+                <section className='search-bar-container'>
+                    <div className="search-bar">
+                        <SvgIcon iconName='searchGlass' size={16} className='search' />
+                        <input type="text"
+                            placeholder=' Search names '
+                            onChange={(ev) => handelChange(ev)}
+                            value={inputTxt}
                         />
-                    </span>
-                    <input type="text"
-                        placeholder=' Search names '
-                        onChange={(ev) => handelChange(ev)}
-                    />
-                    <span className='search'>
-                        <img
-                            src={xMark}
-                            className='icon big info'
-                            alt="Info Icon"
-                        />
-                    </span>
-                </div>
+                        <button className={`delete-btn ${emptyInput}`} onClick={onClearInput}>
+                            <SvgIcon iconName='xMark' size={16} colorName='secondaryText' />
+                        </button>
+                        <SvgIcon iconName='multipleSelect' size={16} className='hover-show1' data-type={' For multiple selection'} />
+                    </div>
+                </section>
                 <span className='suggested'>Suggested People</span>
-                <section className="user-list">
+                <section className="user-list " >
                     {usersToShow.map((member, idx) => {
                         return <button
                             onClick={() => onSelectMember(member, idx)}
                             key={member._id}
-                            className="user flex"
+                            className="user flex text-overflow"
                         >
                             <span className="img-container"><img className=" user-img" src={member.imgUrl} alt="User Image" /></span>
-                            <span className="user-name">{member.fullname}</span>
-                            <span className="profession">
+                            <span className="user-name ">{member.fullname}</span>
+                            <span className="profession ">
                                 ({member.profession})
                             </span>
 
@@ -116,23 +116,26 @@ export function MemberTaskSelect({ selectedMemberIds, onClose, members, onRemove
                     <FloatingContainerCmp
                         anchorEl={anchorEl}
                         onClose={onClose}>
-                        {notBoardMembers.map((user, idx) => {
-                            return <button
-                                onClick={() => onAddMemberToBoard(user, idx)}
-                                key={user._id}
-                                className="user flex"
-                            >
-                                <span className="img-container"><img className=" user-img" src={user.imgUrl} alt="User Image" /></span>
-                                {user.fullname}
-                                <span className="profession">
-                                    ({user.profession})
-                                </span>
+                        <div className='found-users-container'>
+                            {notBoardMembers.map((user, idx) => {
+                                return <button
+                                    onClick={() => onAddMemberToBoard(user, idx)}
+                                    key={user._id}
+                                    className="user flex text-overflow"
+                                >
+                                    <span className="img-container"><img className=" user-img" src={user.imgUrl} alt="User Image" /></span>
+                                    {user.fullname}
+                                    <span className="profession">
+                                        ({user.profession})
+                                    </span>
 
-                            </button>
-
-                        })}
+                                </button>
+                            })}
+                        </div>
                     </FloatingContainerCmp>
+
                 }
+
             </div>
 
         </div>
