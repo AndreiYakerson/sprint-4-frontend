@@ -127,9 +127,9 @@ export function LabelsListEdit({ labels, onUpdateLabels, onClose }) {
                             />
                         </section>
 
-                        <span className="more-icon" onClick={(ev) => onOpenMenu(ev, label.id)}>
+                        <button className="more-icon-btn" onClick={(ev) => onOpenMenu(ev, label.id)}>
                             <SvgIcon iconName='dots' size={16} />
-                        </span>
+                        </button>
 
                         {anchorEl && (
                             <FloatingContainerCmp anchorEl={anchorEl} onClose={onCloseMenu}>
@@ -140,7 +140,7 @@ export function LabelsListEdit({ labels, onUpdateLabels, onClose }) {
                         )}
                     </li>
                 ))}
-                <li className='label-list-edit container ' style={{ pointerEvents: 'none' }}>
+                <li className='label-list-edit container '>
                     <div className="label-list-edit-container flex" >
                         <SvgIcon iconName='dragBox' size={16} className='drag-icon' />
                         <section className='label default edit' >
@@ -151,15 +151,21 @@ export function LabelsListEdit({ labels, onUpdateLabels, onClose }) {
                                 <SvgIcon iconName='bucket' size={16} colorName='whiteText' />
                             </span>
                             <SvgIcon iconName='editPen' colorName='grayPerson' size={16} />
+                            <input
+                                value={'Default Label'}
+                            />
 
                         </section>
+                        <button className="more-icon-btn" onClick={(ev) => onOpenMenu(ev, label.id)}>
+                            <SvgIcon iconName='dots' size={16} />
+                        </button>
                     </div>
                 </li >
 
                 <li className='label-list-edit container '>
                     <div className="label-list-edit-container flex"
                         onClick={addNewLabel}>
-                      <span style={{width:'16px'}}></span>
+                        <span style={{ width: '16px' }}></span>
                         <section className='label default edit' >
                             <span
                                 className="color-icon-container"

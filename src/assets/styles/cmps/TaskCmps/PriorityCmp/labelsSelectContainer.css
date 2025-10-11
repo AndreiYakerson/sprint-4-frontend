@@ -32,9 +32,19 @@
         display: flex;
         place-items: center;
 
-        .more-icon {
+        .more-icon-btn {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            margin-left: 2px;
+
+            width: 16px;
+            height: 16px;
+
+            border-radius: var(--border-radius-small);
+            border: none;
             opacity: 0;
-            transition: opacity .5s ease;
         }
 
         .drag-icon {
@@ -123,7 +133,7 @@
         /* opacity: 1; */
     }
 
-    .label-list-edit-container:hover .more-icon {
+    .label-list-edit-container:hover .more-icon-btn {
         opacity: 1;
     }
 
