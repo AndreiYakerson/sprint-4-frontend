@@ -62,8 +62,23 @@ export function getRandomGroupColor() {
 export function getVarColors() {
     const colors = []
     for (let i = 0; i < 19; i++) {
-       colors.push(`--group-title-clr${i+1}`)
+        colors.push(`--group-title-clr${i + 1}`)
     }
-        return colors
+    return colors
 }
 
+
+export function getColumnType(colName) {
+    switch (colName) {
+        case 'Status':
+            return 'status'
+        case 'Priority':
+            return 'priority'
+        case 'Members':
+            return 'members'
+        case 'Due Date':
+            return 'due-Date'
+        default:
+            return ""
+    }
+}

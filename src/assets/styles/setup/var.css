@@ -112,6 +112,19 @@
   --space-80: 80px;
 
 
+  /* column-cell-width */
+  --item-column: 400px;
+  --owner-column: 98px;
+  --members-column: 98px;
+  --status-column: 140px;
+  --priority-column: 140px;
+  --date-column: 140px;
+  --due-date-column: 140px;
+  --text-column: 140px;
+  --numbers-column: 140px;
+  --files-column: 140px;
+
+
   /* fonnts */
   --font-family: Figtree, Roboto, Noto-Sans-Hebrew, sans-serif;
   --title-font-family: Poppins, Figtree, Roboto, Noto-Sans-Hebrew, sans-serif;

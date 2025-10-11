@@ -42,7 +42,7 @@ export function TaskPreview({ task, groupId, taskIdx }) {
     }
 
     const board = useSelector(state => state.boardModule.board)
-    const cmpsOrder = ['StatusPicker', 'PriorityPicker', 'MemberPicker', 'DatePicker']
+    const cmpsOrder = ['MemberPicker', 'StatusPicker', 'PriorityPicker', 'DatePicker']
     const [cmps, setCmps] = useState(
         [
             {
@@ -277,25 +277,25 @@ export function TaskPreview({ task, groupId, taskIdx }) {
 
                     if (colName === 'StatusPicker') {
                         var cmp = cmps.find(cmp => cmp?.type === 'StatusPicker')
-                        return <div className="column-cell" key={colName}>
+                        return <div className="column-cell status" key={colName}>
                             {DynamicCmp({ cmp, updateCmpInfo })}
                         </div>
                     }
                     if (colName === 'MemberPicker') {
                         var cmp = cmps.find(cmp => cmp?.type === 'MemberPicker')
-                        return <div className="column-cell" key={colName}>
+                        return <div className="column-cell members" key={colName}>
                             {DynamicCmp({ cmp, updateCmpInfo })}
                         </div>
                     }
                     if (colName === 'PriorityPicker') {
                         var cmp = cmps.find(cmp => cmp?.type === 'PriorityPicker')
-                        return <div className="column-cell" key={colName}>
+                        return <div className="column-cell priority" key={colName}>
                             {DynamicCmp({ cmp, updateCmpInfo })}
                         </div>
                     }
                     if (colName === 'DatePicker') {
                         var cmp = cmps.find(cmp => cmp?.type === 'DatePicker')
-                        return <div className="column-cell" key={colName}>
+                        return <div className="column-cell due-date " key={colName}>
                             {DynamicCmp({ cmp, updateCmpInfo })}
                         </div>
                     }

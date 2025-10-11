@@ -11,6 +11,7 @@ import { FloatingContainerCmp } from "../FloatingContainerCmp.jsx";
 import { ActionsMenu } from "../ActionsMenu.jsx";
 import { LabelSum } from "../TaskCmps/SumCmps/LabelSum.Jsx";
 import { DateSum } from "../TaskCmps/SumCmps/DateSum.jsx";
+import { getColumnType } from "../../services/util.service.js";
 
 export function GroupPreview({ group, groupsLength, managingType, TaskList,
     onRemoveGroup, onUpdateGroup, onAddTask, onAddGroup, onOpenGroupEditor }) {
@@ -53,7 +54,7 @@ export function GroupPreview({ group, groupsLength, managingType, TaskList,
     }
     // crudl
 
-    const demoColumns = ["Status", "Priority", "Members", "Due Date"];
+    const demoColumns = ["Members", "Status", "Priority", "Due Date"];
 
     const [groupInfoToEdit, setGroupInfoToEdit] = useState({
         groupId: group?.id,
@@ -179,22 +180,22 @@ export function GroupPreview({ group, groupsLength, managingType, TaskList,
                 <div className="task-columns flex">
                     {demoColumns.map(colName => {
                         if (colName === 'Due Date') {
-                            return <div key={colName} className="column-cell">
+                            return <div key={colName} className="column-cell due-Date">
                                 <div>{colName}</div>
                                 <DateSum dates={dates} />
                             </div>
                         } else if (colName === 'Status') {
-                            return <div key={colName} className="column-cell">
+                            return <div key={colName} className="column-cell status">
                                 <div>{colName}</div>
                                 <LabelSum labels={statuses} />
                             </div>
                         } else if (colName === 'Priority') {
-                            return <div key={colName} className="column-cell">
+                            return <div key={colName} className="column-cell priority">
                                 <div>{colName}</div>
                                 <LabelSum labels={priorities} />
                             </div>
                         } else {
-                            return <div key={colName} className="column-cell">
+                            return <div key={colName} className={`column-cell ${getColumnType(colName)}`}>
                                 <div>{colName}</div>
                                 <span></span>
                             </div>
@@ -284,7 +285,7 @@ export function GroupPreview({ group, groupsLength, managingType, TaskList,
                 <div className="task-columns flex">
                     {demoColumns.map((colName) => {
                         return (
-                            <div key={colName} className="column-cell">
+                            <div key={colName} className={`column-cell ${getColumnType(colName)}`} >
                                 <span>{colName}</span>
                             </div>
                         );
@@ -293,7 +294,7 @@ export function GroupPreview({ group, groupsLength, managingType, TaskList,
                 </div>
 
             </div>
-        </header>
+        </header >
 
         <TaskList tasks={group.tasks} groupId={group.id} />
 
@@ -324,19 +325,19 @@ export function GroupPreview({ group, groupsLength, managingType, TaskList,
             <div className="task-columns flex">
                 {demoColumns.map(colName => {
                     if (colName === 'Due Date') {
-                        return <div key={colName} className="column-cell">
+                        return <div key={colName} className="column-cell due-date">
                             <DateSum dates={dates} />
                         </div>
                     } else if (colName === 'Status') {
-                        return <div key={colName} className="column-cell">
+                        return <div key={colName} className="column-cell status">
                             <LabelSum labels={statuses} />
                         </div>
                     } else if (colName === 'Priority') {
-                        return <div key={colName} className="column-cell">
+                        return <div key={colName} className="column-cell priority">
                             <LabelSum labels={priorities} />
                         </div>
                     } else {
-                        return <div key={colName} className="column-cell">
+                        return <div key={colName} className={`column-cell ${getColumnType(colName)}`}>
                             <span></span>
                         </div>
                     }
@@ -346,5 +347,5 @@ export function GroupPreview({ group, groupsLength, managingType, TaskList,
             </div>
         </div>
 
-    </div>
+    </div >
 }

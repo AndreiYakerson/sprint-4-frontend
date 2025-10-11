@@ -185,7 +185,7 @@
 
    .column-cell {
        display: flex;
-       min-width: 150px;
+       min-width: 140px;
        max-height: 100%;
 
        border-block-end: 1px solid var(--layout-border-color);
@@ -193,8 +193,54 @@
 
        /* Will be changed later to something much better */
        &:not(.full) {
-           max-width: 150px;
+           max-width: 140px;
        }
+
+       &.owner {
+           min-width: var(--owner-column);
+           max-width: var(--owner-column);
+       }
+
+       &.members {
+           min-width: var(--members-column);
+           max-width: var(--members-column);
+       }
+
+       &.status {
+           min-width: var(--status-column);
+           max-width: var(--status-column);
+       }
+
+       &.priority {
+           min-width: var(--priority-column);
+           max-width: var(--priority-column);
+       }
+
+       &.date {
+           min-width: var(--date-column);
+           max-width: var(--date-column);
+       }
+
+       &.due-date {
+           min-width: var(--due-date-column);
+           max-width: var(--due-date-column);
+       }
+
+       &.text {
+           min-width: var(--text-column);
+           max-width: var(--text-column);
+       }
+
+       &.numbers {
+           min-width: var(--numbers-column);
+           max-width: var(--numbers-column);
+       }
+
+       &.files {
+           min-width: var(--files-column);
+           max-width: var(--files-column);
+       }
+
 
        &>* {
            text-align: center;

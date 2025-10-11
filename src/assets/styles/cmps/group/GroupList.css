@@ -1,8 +1,8 @@
 .group-list {
     display: grid;
-    grid-template-columns: 434px 1fr;
-    grid-auto-rows: max-content;
-    align-items: start;
+    grid-template-columns: var(--item-column) 1fr;
+    /* grid-auto-rows: max-content;
+    align-items: start; */
 
     .group-container {
         display: grid;
@@ -42,13 +42,13 @@
     .group-title-row {
         position: sticky;
         left: 0;
-        height: 40px;
+        /* height: 40px; */
         z-index: 50;
 
         display: grid;
         grid-template-columns: 36px 32px max-content 1fr;
         align-items: center;
-        justify-content: start;
+        /* justify-content: start; */
         background-color: var(--primary-background-color);
 
         &:hover {
@@ -66,6 +66,7 @@
             color: var(--group-color);
             justify-content: center;
             justify-self: end;
+            margin-inline-end: 2px;
         }
 
         .group-menu-wrapper {
@@ -77,8 +78,8 @@
                 aspect-ratio: 1/1;
                 padding: 0;
                 margin-inline-end: 4px;
-                opacity: 0;
                 margin-block-start: 10px;
+                opacity: 0;
             }
 
             .group-menu {
@@ -222,7 +223,6 @@
         .table-border {
             border-radius: 0 0 0 6px;
             background-color: color-mix(in srgb, var(--group-color) 50%, white 50%);
-            /* background-color: var(--group-color); */
         }
     }
 
@@ -235,10 +235,6 @@
                 padding-inline-start: 0;
                 margin-inline: 0;
             }
-
-            input {
-                padding-inline-start: 32px;
-            }
         }
 
         &>* {
@@ -250,7 +246,6 @@
             &:hover {
                 outline: 1px solid var(--layout-border-color);
                 border-radius: 4px;
-                width: 300%;
             }
         }
     }
@@ -336,6 +331,7 @@
                         position: absolute;
                         top: 0;
                         left: -36px;
+                        background-color: var(--primary-background-color);
 
                         display: grid;
                         align-content: start;
@@ -354,6 +350,7 @@
                     padding-block-start: 8px;
                     justify-items: center;
                     align-content: center;
+                    margin-inline-end: 0px;
                 }
 
                 .group-title-wrapper {
