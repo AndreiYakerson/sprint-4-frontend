@@ -1,5 +1,4 @@
 import { SvgIcon } from '../../SvgIcon'
-import person from '/icons/person.svg'
 
 export function MemberInfo({ user }) {
     const timeNow = new Date().toLocaleTimeString()
@@ -11,13 +10,10 @@ export function MemberInfo({ user }) {
                 <div className="card-info">
                     <img src={user.imgUrl} alt="User Image" className="user-img" />
                     <section className="card-user-info">
-                        {/* <div className="user"> */}
                             <div className="user-name text-overflow">{user.fullname}</div>
                             {user.profession && <div className="user-profession text-overflow">{user.profession}</div>}
-                        {/* </div> */}
                         <div className="date-time-container text-overflow">
                             <SvgIcon iconName='world' size={16} colorName='secondaryText' />
-                            {/* <img src={person} alt="world Icon" /> */}
                             {timeNow},
                             {curLocation}
                         </div>
@@ -30,7 +26,6 @@ export function MemberInfo({ user }) {
 
                 </div>
             </article>
-
         </div>
     )
 
