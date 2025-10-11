@@ -50,7 +50,7 @@ export function AppHeader() {
 				</div>
 
 				<div className='logo-text-container'>
-					<span className='app-name'>OneBay</span>
+					<span className='app-name'>oneDay</span>
 					<span className='work-management'>work management</span>
 				</div>
 
