@@ -70,14 +70,14 @@ export function getVarColors() {
 
 export function getColumnType(colName) {
     switch (colName) {
-        case 'Status':
+        case 'status':
             return 'status'
-        case 'Priority':
+        case 'priority':
             return 'priority'
-        case 'Members':
+        case 'members':
             return 'members'
-        case 'Due Date':
-            return 'due-Date'
+        case 'due date':
+            return 'due-date'
         default:
             return ""
     }

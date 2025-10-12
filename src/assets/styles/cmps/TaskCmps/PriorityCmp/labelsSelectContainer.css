@@ -24,6 +24,12 @@
     gap: 8px;
 }
 
+.label-txt {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding-inline: 8px;
+}
+
 .label-select {
     display: grid;
     /* gap: 9px; */

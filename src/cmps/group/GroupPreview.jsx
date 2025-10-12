@@ -1,5 +1,5 @@
 // dnd kit
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 
@@ -54,7 +54,7 @@ export function GroupPreview({ group, groupsLength, managingType, TaskList,
     }
     // crudl
 
-    const demoColumns = ["Members", "Status", "Priority", "Due Date"];
+    const demoColumns = ["members", "status", "priority", "due date"];
 
     const [groupInfoToEdit, setGroupInfoToEdit] = useState({
         groupId: group?.id,
@@ -97,6 +97,61 @@ export function GroupPreview({ group, groupsLength, managingType, TaskList,
     })
 
     const dates = group?.tasks.map(t => t?.dueDate?.date).filter(d => d).sort()
+
+
+    /// resize columns
+
+    const isResizing = useRef(false)
+    const startX = useRef(0)
+    const startWidth = useRef(0)
+    const currentColName = useRef("")
+
+    useEffect(() => {
+        return (() => {
+            document.removeEventListener("mousemove", handleMouseMove)
+            document.removeEventListener("mouseup", handleMouseUp)
+        })
+    }, [])
+
+    function handleMouseDown(e, colName) {
+        isResizing.current = true
+        startX.current = e.pageX
+        currentColName.current = colName === 'due date' ? 'due-date' : colName
+
+        document.querySelectorAll(`.column-cell.${currentColName.current}`)
+            .forEach(el => el.classList.add("highlight"));
+
+        const colElement = e.target.parentElement
+        startWidth.current = colElement.offsetWidth
+
+        document.addEventListener("mousemove", handleMouseMove)
+        document.addEventListener("mouseup", handleMouseUp)
+    }
+
+    function handleMouseMove(e) {
+        if (!isResizing.current) return
+
+        const root = document.documentElement
+        const newWidth = startWidth.current + (e.pageX - startX.current)
+        const varName = `--${currentColName.current}-column`
+        console.log('newWidth:', newWidth)
+        if (newWidth <= 60) {
+            console.log('stop:')
+            return
+        }
+
+        root.style.setProperty(varName, `${newWidth}px`)
+    }
+
+    function handleMouseUp() {
+        isResizing.current = false
+        document.querySelectorAll(`.column-cell.${currentColName.current}`)
+            .forEach(el => el.classList.remove("highlight"))
+
+        document.removeEventListener("mousemove", handleMouseMove)
+        document.removeEventListener("mouseup", handleMouseUp)
+    }
+
 
 
     /////  Collapsed group /////
@@ -179,17 +234,17 @@ export function GroupPreview({ group, groupsLength, managingType, TaskList,
 
                 <div className="task-columns flex">
                     {demoColumns.map(colName => {
-                        if (colName === 'Due Date') {
-                            return <div key={colName} className="column-cell due-Date">
+                        if (colName === 'due date') {
+                            return <div key={colName} className="column-cell due-date">
                                 <div>{colName}</div>
                                 <DateSum dates={dates} />
                             </div>
-                        } else if (colName === 'Status') {
+                        } else if (colName === 'status') {
                             return <div key={colName} className="column-cell status">
                                 <div>{colName}</div>
                                 <LabelSum labels={statuses} />
                             </div>
-                        } else if (colName === 'Priority') {
+                        } else if (colName === 'priority') {
                             return <div key={colName} className="column-cell priority">
                                 <div>{colName}</div>
                                 <LabelSum labels={priorities} />
@@ -283,13 +338,15 @@ export function GroupPreview({ group, groupsLength, managingType, TaskList,
                 </div>
 
                 <div className="task-columns flex">
-                    {demoColumns.map((colName) => {
-                        return (
-                            <div key={colName} className={`column-cell ${getColumnType(colName)}`} >
-                                <span>{colName}</span>
-                            </div>
-                        );
-                    })}
+                    {demoColumns.map((colName) => (
+                        <div key={colName} className={`column-cell ${getColumnType(colName)}`}>
+                            <span>{colName}</span>
+                            <div
+                                className="resize-btn"
+                                onMouseDown={(ev) => handleMouseDown(ev, colName)}
+                            ></div>
+                        </div>
+                    ))}
                     <div className="column-cell full"></div>
                 </div>
 
@@ -324,15 +381,15 @@ export function GroupPreview({ group, groupsLength, managingType, TaskList,
 
             <div className="task-columns flex">
                 {demoColumns.map(colName => {
-                    if (colName === 'Due Date') {
+                    if (colName === 'due date') {
                         return <div key={colName} className="column-cell due-date">
                             <DateSum dates={dates} />
                         </div>
-                    } else if (colName === 'Status') {
+                    } else if (colName === 'status') {
                         return <div key={colName} className="column-cell status">
                             <LabelSum labels={statuses} />
                         </div>
-                    } else if (colName === 'Priority') {
+                    } else if (colName === 'priority') {
                         return <div key={colName} className="column-cell priority">
                             <LabelSum labels={priorities} />
                         </div>

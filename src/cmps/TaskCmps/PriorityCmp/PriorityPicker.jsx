@@ -45,7 +45,7 @@ export function PriorityPicker({ info, onUpdate }) {
         setAnchorEl(null)
     }
 
-    function switchEditMode() {        
+    function switchEditMode() {
         setIsEditOpen(prev => prev = !prev)
     }
 
@@ -60,7 +60,7 @@ export function PriorityPicker({ info, onUpdate }) {
         <div className={`labels-select-container ${anchorEl ? "focus" : ""}`}
             style={{ background: `var(${labelToShow?.cssVar})` }}
             onClick={(ev) => setAnchorEl(ev.currentTarget)}>
-            {labelToShow?.txt}
+            <div className="label-txt">{labelToShow?.txt}</div>
             <StatusAnimation color={`var(${labelToShow?.cssVar})`} />
 
 

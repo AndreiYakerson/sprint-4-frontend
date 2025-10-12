@@ -141,9 +141,9 @@
     /* Refers to columns in the group header */
 
     &.table-header {
+        text-transform: capitalize;
 
         .sticky-cell-wrapper {
-            text-transform: capitalize;
 
             &>*:not(.table-border, .task-menu-wrapper) {
                 border-block-start: 1px solid var(--layout-border-color);
@@ -156,8 +156,49 @@
 
         .task-title,
         .column-cell {
+            position: relative;
             place-content: center;
             text-align: center;
+        }
+
+        .column-cell {
+            span {
+                margin-inline: 5px;
+            }
+
+            &.highlight {
+                .resize-btn {
+                    opacity: 1;
+                    background-color: var(--primary-color);
+                    z-index: 4;
+                }
+            }
+
+            &:hover {
+                background-color: var(--primary-background-hover-color);
+
+                .resize-btn {
+                    opacity: 1;
+                }
+            }
+
+            .resize-btn {
+                position: absolute;
+                top: 0;
+                right: -3px;
+                content: "";
+                width: 6px;
+                height: 100%;
+                background-color: var(--layout-border-color);
+                cursor: col-resize;
+                opacity: 0;
+                border-radius: 4px;
+
+                &:hover {
+                    background-color: var(--primary-color);
+                    z-index: 4;
+                }
+            }
         }
 
         .column-cell {

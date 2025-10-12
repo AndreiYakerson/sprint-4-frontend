@@ -2,8 +2,10 @@
     display: grid;
     justify-content: center;
 
+
     .dates-container {
-        width: 130px;
+        width: calc(var(--due-date-column) - 10px);
+
 
         background-color: rgb(196, 196, 196);
         color: white;

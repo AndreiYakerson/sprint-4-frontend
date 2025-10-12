@@ -12,7 +12,7 @@
         border-radius: 4px;
 
         justify-self: center;
-        width: 130px;
+        width: 90%;
     }
 
     &:hover {
@@ -30,7 +30,7 @@
 
     .date-to-edit {
         justify-self: center;
-        width: 130px;
+        width: 90%;
         position: relative;
         align-content: center;
 

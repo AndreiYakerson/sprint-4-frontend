@@ -54,7 +54,7 @@ export function StatusPicker({ info, onUpdate }) {
         <div className={`labels-select-container ${anchorEl ? "focus" : ""}`}
             style={{ background: `var(${labelToShow?.cssVar})` }}
             onClick={(ev) => setAnchorEl(ev.currentTarget)}>
-            {labelToShow?.txt}
+            <div className="label-txt">{labelToShow?.txt}</div>
             <StatusAnimation color={`var(${labelToShow?.cssVar})`} />
 
             {anchorEl &&
@@ -71,7 +71,7 @@ export function StatusPicker({ info, onUpdate }) {
                             {!isEditOpen ?
                                 <LabelsList labels={labels} onSaveLabel={onSaveLabel} onSwitchEditMode={switchEditMode} />
                                 :
-                                <LabelsListEdit labels={labels} onUpdateLabels={onUpdateLabels} onClose={onClose}  onSwitchEditMode={switchEditMode} />
+                                <LabelsListEdit labels={labels} onUpdateLabels={onUpdateLabels} onClose={onClose} onSwitchEditMode={switchEditMode} />
                             }
 
                         </div>

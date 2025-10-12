@@ -188,16 +188,25 @@
        min-width: 140px;
        max-height: 100%;
 
+       white-space: nowrap;
+       text-overflow: ellipsis;
+
        border-block-end: 1px solid var(--layout-border-color);
        border-inline-end: 1px solid var(--layout-border-color);
 
-       /* Will be changed later to something much better */
+       &>* {
+           overflow: hidden;
+           white-space: nowrap;
+           text-overflow: ellipsis;
+       }
+
+
        &:not(.full) {
            max-width: 140px;
        }
 
        &.owner {
-           min-width: var(--owner-column);
+           width: var(--owner-column);
            max-width: var(--owner-column);
        }
 
@@ -239,6 +248,10 @@
        &.files {
            min-width: var(--files-column);
            max-width: var(--files-column);
+       }
+
+       &.highlight {
+           border-inline-end: 1px solid blue;
        }
 
 
