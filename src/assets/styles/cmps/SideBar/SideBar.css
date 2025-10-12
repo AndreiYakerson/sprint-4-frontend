@@ -74,12 +74,15 @@
 
         min-height: 100px;
         padding-inline: 16px;
+        margin-block-end: 8px;
 
         a {
             display: flex;
             align-items: center;
             gap: 12px;
             padding-inline-start: 8px;
+            min-height: 32px;
+            line-height: 1.42857142857;
 
             color: var(--secondary-text-color);
             white-space: nowrap;
@@ -133,11 +136,22 @@
     transition: opacity 0.4s ease;
 }
 
+.small-nav-tab {
+    font-size: 12px;
+    font-weight: 600;
+    min-height: 32px;
+    border-radius: 4px;
+    width: 100%;
+    padding-inline-start: 8px;
+    margin-block: 4px;
+}
+
 .scrollable-content {
     flex: 1 1;
     overflow: auto;
     height: 100%;
     padding-inline: 16px;
+
 
     .favorites-tab-container {
         position: sticky;
@@ -145,18 +159,13 @@
         background: linear-gradient(135deg, var(--primary-background-color)5%, var(--surface-color)200%);
         height: 38px;
 
-        font-size: 12px;
-        font-weight: 700;
-
         z-index: 10;
 
         .favorites-tab {
-            height: 30px;
-            border-radius: 4px;
-            width: 100%;
-            align-content: center;
-            padding-inline-start: 8px;
-            margin-block-end: 8px;
+            display: flex;
+            gap: 4px;
+            align-items: center;
+            margin-block: 6px;
             cursor: pointer;
 
             &:hover {
@@ -175,11 +184,21 @@
 
         &.open {
             grid-template-rows: 1fr;
+
+            .board-list {
+                opacity: 1;
+            }
         }
 
         &>* {
             overflow: hidden;
 
+        }
+
+        .board-list {
+            opacity: 0;
+            margin-block-end: 16px;
+            transition: opacity 800ms;
         }
     }
 
@@ -215,18 +234,27 @@
         position: sticky;
         top: 38px;
         margin-block-end: 4px;
-        gap: 4px;
         z-index: 10;
         background: linear-gradient(135deg, var(--primary-background-color)5%, var(--surface-color)200%);
+        margin-inline-end: 6px;
+
+        .Workspaces-tab-btns {
+            display: flex;
+            gap: 8px;
+            margin-inline-end: 4px;
+        }
 
         .boards-title {
             border-radius: 4px;
             border: 1px solid var(--ui-border-color);
-            height: 100%;
-            padding: 4px;
+            min-height: 30px;
+            padding-inline: 4px;
             flex: 1;
             font-size: 16px;
             font-weight: 600;
+            margin-inline-start: 6px;
+            margin-inline-end: 4px;
+            place-content: center;
         }
     }
 }

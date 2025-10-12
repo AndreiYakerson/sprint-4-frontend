@@ -70,12 +70,14 @@ export function SideBar() {
 
                 <nav className="side-nav-list">
                     <NavLink to="/board" end><HoveredTextCmp><SvgIcon iconName="home" size={16} colorName="currentColor" /></HoveredTextCmp>Home</NavLink>
+                    <NavLink to="/" end onClick={(ev) => ev.preventDefault()}><HoveredTextCmp><SvgIcon iconName="myWork" size={16} colorName="currentColor" /></HoveredTextCmp>My work</NavLink>
+                    <NavLink to="/" end onClick={(ev) => ev.preventDefault()}><HoveredTextCmp><SvgIcon iconName="more" size={16} colorName="currentColor" /></HoveredTextCmp>More</NavLink>
                 </nav>
 
                 <div className="scrollable-content">
 
                     <div className="favorites-tab-container">
-                        <div className="favorites-tab flex align-center"
+                        <div className="favorites-tab small-nav-tab flex align-center"
                             onClick={toggleIsFavoritesTabOpen}>
                             <span>Favorites</span>
                             <SvgIcon
@@ -87,7 +89,9 @@ export function SideBar() {
                     </div>
                     <div className={`favorites-boards ${isFavoritesTabOpen ? "open" : ''}`}>
                         {favoritesBoards?.length > 0
-                            ? <BoardList boards={favoritesBoards} isSideBarDispaly={true} />
+                            ? <div>
+                                <BoardList boards={favoritesBoards} isSideBarDispaly={true} />
+                            </div>
 
                             : <div>
                                 <div className="no-fav-board-msg">
@@ -100,11 +104,24 @@ export function SideBar() {
                     </div>
 
 
-                    <div className="boards-title-tab flex align-center ">
-                        <span className="boards-title">Boards</span>
-                        <button className="blue square" onClick={() => setIsBoardEditorOpen(true)}>
-                            <SvgIcon iconName="plus" size={20} colorName="whiteText" />
-                        </button>
+                    <div className="boards-title-tab">
+                        <div className="small-nav-tab flex align-center justify-between">
+                            <span> Workspaces</span>
+                            <div className="Workspaces-tab-btns">
+                                <button className={`transparent board-menu-btn`}>
+                                    <SvgIcon iconName="dots" size={16} colorName="secondaryText" />
+                                </button>
+                                <button className={`transparent board-menu-btn`}  >
+                                    <SvgIcon iconName="searchGlass" size={16} colorName="secondaryText" />
+                                </button>
+                            </div>
+                        </div>
+                        <div className="flex align-center">
+                            <span className="boards-title">Boards</span>
+                            <button className="blue square" onClick={() => setIsBoardEditorOpen(true)}>
+                                <SvgIcon iconName="plus" size={18} colorName="whiteText" />
+                            </button>
+                        </div>
                     </div>
 
                     <BoardList boards={boards} isSideBarDispaly={true} />

@@ -20,6 +20,12 @@
 
 @font-face {
     font-family: Poppins;
+    src: url('/src/assets//typography/Poppins/Poppins-SemiBold.ttf');
+    font-weight: 600;
+}
+
+@font-face {
+    font-family: Poppins;
     src: url('/src/assets//typography/Poppins/Poppins-Bold.ttf');
     font-weight: 700;
 }
@@ -43,6 +49,12 @@
     font-family: Figtree;
     src: url('/src/assets//typography/Figtree/Figtree-Medium.ttf');
     font-weight: 500;
+}
+
+@font-face {
+    font-family: Figtree;
+    src: url('/src/assets//typography/Figtree/Figtree-SemiBold.ttf');
+    font-weight: 600;
 }
 
 @font-face {
