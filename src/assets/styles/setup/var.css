@@ -131,9 +131,15 @@
 
 
   /* font sizes */
+  --font-size-small: 14px;
+  --font-size-medium: 16px;
+  --font-size-big: 20px;
 
   /* font-weight:400 */
   --site-font-size: 14px;
+  --font-weight-small: 400;
+  --font-weight-medium: 500;
+  --font-weight-big: 600;
 
   /* logo */
   /* font-weight: 700 / 300 */

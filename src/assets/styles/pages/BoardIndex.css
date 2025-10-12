@@ -8,12 +8,43 @@
         align-items: center;
         justify-content: space-between;
 
-        min-height: 75px;
+        height: 75px;
 
         padding-inline: 20px;
-        padding-block-start: 20px;
+        /* padding-block-start: 20px; */
         box-shadow: 0px 3px 12px var(--application-border-color);
         margin-block-end: 16px;
+
+        & .blue {
+            padding: var(--spacing-small) var(--spacing-medium);
+            height: 40px;
+        }
+
+        .welcome-notice {
+            display: inline-flex;
+            flex-direction: column;
+            justify-content: center;
+            margin-right: 12px;
+
+
+            .morning {
+                display: flex;
+                flex-direction: row;
+                flex-grow: 1;
+                height: 100%;
+                
+                .user-name{
+                    margin-left: 2px;
+                    text-transform:capitalize;
+                }
+            }
+
+            .text {
+                font-size: var(--font-size-medium);
+                font-weight: var(--font-weight-medium);
+                align-items: right;
+            }
+        }
     }
 
     & h2 {
