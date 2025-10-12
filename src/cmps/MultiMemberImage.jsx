@@ -1,5 +1,6 @@
 export function MultiMemberImage({ members, className = '' }) {
 
+    if (!members) return null
     return (
         <div className={`multi-member-cmp ${className}`}>
             {members.map((member, idx) => {

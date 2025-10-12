@@ -111,15 +111,52 @@ export function BoardDetails() {
         <header className='board-details-header'>
 
           <div className='action-nav'>
-            <button className='activity-log'>{
-              <HoveredTextCmp
-                label="Board Members"
+
+
+
+            <div className='activity-log'>
+
+              <button className='activity-log btn'>
+                {
+                  <HoveredTextCmp
+                    label="Board Members"
+                    position="down"
+                    onClick={(ev) => setAnchorEl(ev.currentTarget)}
+                  >
+                    <MultiMemberImage members={board?.members} className='multi-members-img' />
+                  </HoveredTextCmp>
+                }
+              </button>
+            </div>
+
+            <div className='invite-users'
+            >
+              <button className='invite'>
+                {` Invite / ${board?.members.length}`}
+              </button>
+
+              <span className='copy-link'>
+
+                {<HoveredTextCmp
+                  label="Copy Link"
+                  position="down"
+                  onClick={(ev) => setAnchorEl(ev.currentTarget)}>
+
+                  <SvgIcon iconName='sink' className='icon' size={20} />
+
+                </HoveredTextCmp>}
+              </span>
+
+            </div>
+
+            <button className='more-btn'>
+              {<HoveredTextCmp
+                label="Options"
                 position="down"
-                onClick={(ev) => setAnchorEl(ev.currentTarget)}
-              >
-                <MultiMemberImage members={board?.members} className='multi-members-img'/>
-              </HoveredTextCmp>
-            }</button>
+                onClick={(ev) => setAnchorEl(ev.currentTarget)}>
+                <SvgIcon iconName='dots' size={24} />
+              </HoveredTextCmp>}
+            </button>
           </div>
 
           <div className='board-title'>{board?.title}</div>

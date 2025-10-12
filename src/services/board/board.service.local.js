@@ -317,7 +317,7 @@ function _setBaordToSave({ title = 'New board', managingType = 'items', privacy 
         priorities: DefaultPriorities,
         statuses: DefaultStatuses,
         // Demo Members
-        members: userService.createDemoUsersForBoard(5),
+        members: [],
         groups: [
             {
                 id: makeId(),

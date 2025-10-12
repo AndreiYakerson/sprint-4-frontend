@@ -69,7 +69,13 @@
 
             .action-nav {
                 grid-area: action;
+
+                display: flex;
+                align-items: center;
+
                 justify-self: end;
+                gap: var(--spacing-small);
+
                 height: var(--space-32);
 
                 .activity-log {
@@ -85,7 +91,44 @@
                             background-color: var(--primary-background-hover-color);
                         }
                     }
+                }
 
+                .invite-users {
+                    display: flex;
+                    align-items: stretch;
+
+                    color: var(--primary-text-color);
+                    background-color: transparent;
+
+                    .invite {
+                        line-height: 22px;
+                        border-color: var(--ui-border-color);
+                        border-bottom-right-radius: 0%;
+                        border-top-right-radius: 0%;
+
+                    }
+
+                    .copy-link {
+                        display: flex;
+                        place-items: center;
+                        width: 30px;
+                        border-bottom-right-radius: var(--border-radius-small);
+                        border-top-right-radius: var(--border-radius-small);
+                        border: 1px solid;
+                        border-left: none;
+                        border-color: var(--ui-border-color);
+
+                        & .icon {
+                            display: flex;
+                            place-content: center;
+                            width: 100%;
+                        }
+                    }
+                }
+
+                .more-btn {
+                    width: 32px;
+                    height: 32px;border: none;
                 }
             }
 
