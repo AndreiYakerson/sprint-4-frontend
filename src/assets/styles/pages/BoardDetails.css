@@ -118,19 +118,30 @@
                         border-left: none;
                         border-color: var(--ui-border-color);
 
+
+
                         & .icon {
                             display: flex;
                             place-content: center;
                             width: 100%;
                         }
+
+                    }
+
+                    .copy-link:hover {
+                        background-color: var(--primary-background-hover-color);
                     }
                 }
 
                 .more-btn {
                     width: 32px;
-                    height: 32px;border: none;
+                    height: 32px;
+                    border: none;
+
                 }
             }
+
+
 
             .board-nav {
                 display: flex;
