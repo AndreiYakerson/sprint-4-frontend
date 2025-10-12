@@ -1,4 +1,5 @@
 .app-header {
+
     display: flex;
     align-items: center;
     gap: 5px;
@@ -47,6 +48,7 @@
             margin-inline: 4px;
         }
     }
+
 
 
     & section {
@@ -112,6 +114,13 @@
             border-radius: 50%;
         }
     }
+
+
+
+    * {
+        cursor: default !important;
+    }
+
 }
 
 .see-plans-container {

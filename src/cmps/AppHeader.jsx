@@ -112,7 +112,7 @@ export function AppHeader() {
 						/>
 					</HoveredTextCmp>
 				</button>
-
+{/* 
 				<button className='main-nav-btn'>
 
 					<HoveredTextCmp
@@ -171,7 +171,7 @@ export function AppHeader() {
 							colorName={'primaryText'}
 						/>
 					</HoveredTextCmp>
-				</button>
+				</button> */}
 
 
 				<div className='middle-line'></div>

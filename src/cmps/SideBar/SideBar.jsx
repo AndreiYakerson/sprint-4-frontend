@@ -69,9 +69,25 @@ export function SideBar() {
             <div className="side-bar-content">
 
                 <nav className="side-nav-list">
-                    <NavLink to="/board" end><HoveredTextCmp><SvgIcon iconName="home" size={16} colorName="currentColor" /></HoveredTextCmp>Home</NavLink>
-                    <NavLink to="/" end onClick={(ev) => ev.preventDefault()}><HoveredTextCmp><SvgIcon iconName="myWork" size={16} colorName="currentColor" /></HoveredTextCmp>My work</NavLink>
-                    <NavLink to="/" end onClick={(ev) => ev.preventDefault()}><HoveredTextCmp><SvgIcon iconName="more" size={16} colorName="currentColor" /></HoveredTextCmp>More</NavLink>
+                    <NavLink to="/board" end>
+                        <HoveredTextCmp>
+                            <SvgIcon iconName="home" size={16} colorName="currentColor" />
+                        </HoveredTextCmp>Home
+                    </NavLink>
+
+                    <NavLink to="/" end style={{cursor:'default'}}
+                        onClick={(ev) => ev.preventDefault()}>
+                        <HoveredTextCmp>
+                            <SvgIcon iconName="myWork" size={16} colorName="currentColor" />
+                        </HoveredTextCmp>My work
+                    </NavLink>
+
+                    <NavLink to="/" end  style={{cursor:'default'}}
+                        onClick={(ev) => ev.preventDefault()}>
+                        <HoveredTextCmp>
+                            <SvgIcon iconName="more" size={16} colorName="currentColor"  />
+                        </HoveredTextCmp>More
+                    </NavLink>
                 </nav>
 
                 <div className="scrollable-content">
