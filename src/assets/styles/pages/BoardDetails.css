@@ -69,7 +69,6 @@
 
             .action-nav {
                 grid-area: action;
-
                 display: flex;
                 align-items: center;
 
@@ -86,6 +85,7 @@
 
                     & .multi-members-img {
                         padding: var(--space-4) var(--space-8);
+                        border-radius: var(--border-radius-small);
 
                         &:hover {
                             background-color: var(--primary-background-hover-color);
@@ -118,8 +118,6 @@
                         border-left: none;
                         border-color: var(--ui-border-color);
 
-
-
                         & .icon {
                             display: flex;
                             place-content: center;
@@ -139,8 +137,12 @@
                     border: none;
 
                 }
-            }
 
+                * {
+                    cursor: default !important;
+                }
+
+            }
 
 
             .board-nav {
