@@ -25,6 +25,17 @@
                background-color: var(--primary-selected-color-rgb);
            }
 
+           &:hover {
+               .column-cell {
+                   &.status {
+                       filter: brightness(1.05);
+                   }
+
+                   &.priority {
+                       filter: brightness(1.05);
+                   }
+               }
+           }
        }
 
 
@@ -34,10 +45,20 @@
                box-shadow: 4px 3px 6px -3px var(--ui-border-color);
 
                /* make bug - bark the layout - need to find solution */
-               /* z-index: 3; */
+               z-index: 50;
 
                .sticky-cell-wrapper {
                    background-color: var(--pulse-background-color-rgb);
+               }
+
+               .column-cell {
+                   &.status {
+                       filter: brightness(1.05);
+                   }
+
+                   &.priority {
+                       filter: brightness(1.05);
+                   }
                }
            }
 
@@ -195,6 +216,7 @@
        border-inline-end: 1px solid var(--layout-border-color);
 
        &>* {
+           /* Creates problems with tooltip, go to advanced portal to resolve the issue */
            overflow: hidden;
            white-space: nowrap;
            text-overflow: ellipsis;
@@ -251,7 +273,7 @@
        }
 
        &.highlight {
-           border-inline-end: 1px solid blue;
+           border-inline-end: 2px solid var(--primary-color);
        }
 
 
