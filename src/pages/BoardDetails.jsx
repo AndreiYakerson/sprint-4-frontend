@@ -13,9 +13,12 @@ import { TaskDetails } from '../cmps/Task/TaskDetails.jsx'
 import { SvgIcon } from '../cmps/SvgIcon.jsx'
 import { BoardRemovedMsg } from '../cmps/Board/BoardRemovedMsg.jsx'
 import { AppLoader } from '../cmps/AppLoader.jsx'
+import { MultiMemberImage } from '../cmps/MultiMemberImage.jsx'
+import { HoveredTextCmp } from '../cmps/HoveredTextCmp.jsx'
 
 
 export function BoardDetails() {
+  const [anchorEl, setAnchorEl] = useState(false)
   const navigate = useNavigate()
 
   const { boardId, taskId } = useParams()
@@ -107,7 +110,20 @@ export function BoardDetails() {
 
         <header className='board-details-header'>
 
-          <h2 className='board-title'>{board?.title}</h2>
+          <div className='action-nav'>
+            <button className='activity-log'>{
+              <HoveredTextCmp
+                label="Board Members"
+                position="down"
+                onClick={(ev) => setAnchorEl(ev.currentTarget)}
+              >
+                <MultiMemberImage members={board?.members} className='multi-members-img'/>
+              </HoveredTextCmp>
+            }</button>
+          </div>
+
+          <div className='board-title'>{board?.title}</div>
+
           <div className='board-nav'>
             <div>Main Table</div>
           </div>

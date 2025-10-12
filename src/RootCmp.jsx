@@ -27,7 +27,7 @@ export function RootCmp() {
             </aside>
             <main className='app-main-content'>
                 <Routes>
-                    <Route path="" element={<HomePage />} />
+                    <Route path="" element={<BoardIndex />} />
                     <Route path="about" element={<AboutUs />} />
                     <Route path="board" element={<BoardIndex />} />
                     <Route path="board/:boardId" element={<BoardDetails />} />
