@@ -2,12 +2,15 @@ import { useEffect, useState } from "react"
 import { showErrorMsg } from "../../services/event-bus.service"
 import { useSelector } from "react-redux"
 import { setNewTaskIdToEdit } from "../../store/actions/board.actions"
+import { HighlightText } from "../HighlightText"
 
 export function TitleEditor({ info, onUpdate, onSetRenameBoard }) {
 
     const [nameToEdit, setNameToEdit] = useState(info?.currTitle || '')
     const [isEditing, setIsEditing] = useState(false)
     const newTaskIdToEdit = useSelector(storeState => storeState.boardModule.newTaskIdToEdit)
+    const txtToHighLight = useSelector(state => state.systemModule.txtToHighLight)
+
 
 
     useEffect(() => {
@@ -62,7 +65,8 @@ export function TitleEditor({ info, onUpdate, onSetRenameBoard }) {
                     onClick={(ev) => ev.stopPropagation()}
                 />
                 : <span className="task-name" onClick={() => setIsEditing(true)}>
-                    {info?.placeholder && !info?.currTitle ? info?.placeholder : info?.currTitle}
+                    {<HighlightText text={(info?.placeholder && !info?.currTitle) ? info?.placeholder : info?.currTitle}
+                        query={txtToHighLight} />}
                 </span>
             }
         </>

@@ -82,3 +82,5 @@ export function getColumnType(colName) {
             return ""
     }
 }
+
+
