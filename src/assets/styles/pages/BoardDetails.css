@@ -160,7 +160,58 @@
 
             .board-actions {
                 grid-area: contextualAction;
+                display: flex;
                 padding-block: 16px;
+
+                .board-action-btn {
+                    display: flex;
+                    font-size: 15px;
+
+                    & .search-btn {
+                        margin-left: 10px;
+                        margin-right: 6px;
+                        height: 32px;
+                        width: 100%;
+
+                        & .txt {
+                            padding: 1px 0px 1px 5px;
+                        }
+                    }
+
+                    & .person-btn {
+                        margin-right: 6px;
+
+                        .icon {
+                            display: flex;
+                            place-content: center;
+                            align-items: center;
+                            margin-right: 6px;
+                            overflow: hidden;
+                        }
+                    }
+
+                    & .sort-btn {
+                        margin-right: 6px;
+
+                        .icon {
+                            display: flex;
+                            place-content: center;
+                            align-items: center;
+                            margin-right: 6px;
+                            overflow: hidden;
+                        }
+
+
+                    }
+                }
+
+                .board-action-btn>* {
+                    display: flex;
+                    place-items: center;
+                    /* margin-right: 6px; */
+                    border: none !important;
+                }
+
             }
         }
     }
