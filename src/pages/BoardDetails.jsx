@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 
@@ -15,6 +15,8 @@ import { BoardRemovedMsg } from '../cmps/Board/BoardRemovedMsg.jsx'
 import { AppLoader } from '../cmps/AppLoader.jsx'
 import { MultiMemberImage } from '../cmps/MultiMemberImage.jsx'
 import { HoveredTextCmp } from '../cmps/HoveredTextCmp.jsx'
+import { FloatingContainerCmp } from '../cmps/FloatingContainerCmp.jsx'
+import { onSetHighLightedTxt } from '../store/actions/system.actions.js'
 
 
 export function BoardDetails() {
@@ -25,8 +27,20 @@ export function BoardDetails() {
   const isAppLoading = useSelector(state => state.systemModule.isAppLoading)
   const board = useSelector(storeState => storeState.boardModule.board)
   const boardRemovedMsg = useSelector(storeState => storeState.boardModule.boardRemovedMsg)
-
+  const [searchAnchor, setSearchAnchor] = useState()
+  const [isSearchOpen, setIsSearchOpen] = useState(false)
+  const [inputValue, setInputValue] = useState('')
   const [task, setTask] = useState(null)
+  const inputRef = useRef(null)
+
+
+  useEffect(() => {
+    if (inputValue) {
+      onSetHighLightedTxt(inputValue)
+    }
+    return () => onSetHighLightedTxt('')
+  }, [inputValue])
+
 
   useEffect(() => {
     if (!board || board?._id !== boardId) {
@@ -75,6 +89,45 @@ export function BoardDetails() {
     navigate(`/board/${boardId}`)
   }
 
+  function onCloseMenu() {
+    setSearchAnchor(false)
+  }
+
+  function handelChange(ev) {
+    const titleToSearch = ev.target.value
+    requestAnimationFrame(() => inputRef.current?.focus())
+    setInputValue(titleToSearch)
+    //  Preparation for Search on board. 
+    // const regex = new RegExp('^' + titleToSearch, 'i')
+    // const matchingGroups = board.groups
+    //   .map(group => ({
+    //     ...group,
+    //     tasks: group.tasks.filter(task => regex.test(task.title))
+    //   }))
+    //   .filter(group => group.tasks.length > 0)
+
+    // // if (!!matchingGroups.length) 
+    // setSearchValues(matchingGroups)
+    setAnchorEl(ev.currentTarget)
+  }
+
+  function onClearInput() {
+    setInputValue('')
+    setIsSearchOpen(false)
+    setSearchValues('')
+  }
+
+  function onOpenSearchBar() {
+    requestAnimationFrame(() => inputRef.current?.focus())
+    setIsSearchOpen(true)
+  }
+
+  function isSearching() {
+    if (!inputValue) {
+      onClearInput()
+    }
+  }
+
   // Groups
 
   async function onAddGroup() {
@@ -100,10 +153,8 @@ export function BoardDetails() {
     }
   }
 
-
   if (isAppLoading) return <AppLoader />
   if (boardRemovedMsg && !board) return <BoardRemovedMsg removedMsg={boardRemovedMsg} />
-
   return (
     <section className="board-details">
       <div className="board-details-container" >
@@ -112,25 +163,20 @@ export function BoardDetails() {
 
           <div className='action-nav'>
 
-
-
             <div className='activity-log'>
 
               <button className='activity-log btn'>
-                {
-                  <HoveredTextCmp
-                    label="Board Members"
-                    position="down"
-                    onClick={(ev) => setAnchorEl(ev.currentTarget)}
-                  >
-                    <MultiMemberImage members={board?.members} className='multi-members-img' />
-                  </HoveredTextCmp>
-                }
+                {<HoveredTextCmp
+                  label="Board Members"
+                  position="down"
+                  onClick={(ev) => setAnchorEl(ev.currentTarget)}
+                >
+                  <MultiMemberImage members={board?.members} className='multi-members-img' />
+                </HoveredTextCmp>}
               </button>
             </div>
 
-            <div className='invite-users'
-            >
+            <div className='invite-users'>
               <button className='invite'>
                 {` Invite / ${board?.members.length}`}
               </button>
@@ -167,24 +213,50 @@ export function BoardDetails() {
           <div className='board-actions'>
             <button
               onClick={() => onAddTask(board?.groups[0]?.id, `New ${board?.managingType}`, 'unshift')}
-              className='blue'> New {board?.managingType}
+              className='blue add-btn'> New {board?.managingType}
             </button>
             <section className='board-action-btn'>
-              <button className="search-btn">
+
+              <button className={`search-btn ${isSearchOpen} ${!!inputValue.length ? 'hasValue' : ''}`} onClick={onOpenSearchBar}>
                 <span className="icon">
-                  <SvgIcon iconName='searchGlass' size={20} />
+                  <SvgIcon iconName='searchGlass' size={20} colorName='secondaryText' />
                 </span>
-                <span className='txt'>Search</span>
+
+                {!isSearchOpen ?
+                  <span className='txt'>Search</span>
+                  :
+                  <>
+                    <input type="text"
+                      className='search-txt'
+                      placeholder='Search This Board'
+                      onChange={(ev) => handelChange(ev)}
+                      onBlur={isSearching}
+                      ref={inputRef}
+                      value={inputValue}
+                    />
+
+                    <button
+                      className={`delete-btn hover-show up ${inputValue ? true : false}`}
+                      data-type={' Clear Search'}
+                      onClick={onClearInput}>
+                      <SvgIcon iconName='xMark' size={16} colorName='secondaryText' />
+                    </button>
+                    <button className='search-option-btn hover-show up' data-type={'Search Options'} >
+                      <SvgIcon iconName='searchOptions' size={16} colorName='secondaryText' />
+                    </button>
+                  </>
+                }
               </button>
+
               <button className="person-btn hover-show up" data-type={'Filter board by Person'}>
                 <span className="icon">
-                  <SvgIcon iconName='person' size={20} />
+                  <SvgIcon iconName='person' size={20} colorName='secondaryText' />
                 </span>
                 <span className='txt'>Person</span>
               </button>
               <button className="sort-btn hover-show up" data-type={'Sort board by Any Column'}>
                 <span className="icon">
-                  <SvgIcon iconName='sortArrows' size={20} />
+                  <SvgIcon iconName='sortArrows' size={20} colorName='secondaryText' />
                 </span>
                 <span className='txt'>Sort</span>
               </button>
