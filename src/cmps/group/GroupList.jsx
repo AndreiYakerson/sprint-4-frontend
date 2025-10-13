@@ -17,6 +17,7 @@ import { GroupPreview } from "./GroupPreview";
 import { GroupCollapsed } from "./GroupCollapsed";
 import { closestCorners, DndContext, DragOverlay, MouseSensor, useSensor, useSensors } from "@dnd-kit/core";
 import { arrayMove, SortableContext, verticalListSortingStrategy } from "@dnd-kit/sortable";
+import { GroupOverlay } from "./GroupOverlay";
 
 
 export function GroupList({ groups, managingType }) {
@@ -100,12 +101,14 @@ export function GroupList({ groups, managingType }) {
 
 
     function onDragStart(event) {
+        const { active } = event;
+        setActiveId(active.id);
         setIsDragging(true)
     }
 
     function onDragEnd(event) {
         const { active, over } = event;
-
+        setActiveId(null);
         setIsDragging(false)
 
         if (!over || active.id === over.id) {
@@ -174,6 +177,15 @@ export function GroupList({ groups, managingType }) {
                 </SortableContext>
 
             </section>
+            <DragOverlay>
+
+                {activeId ? (
+                    <GroupOverlay
+                        group={localGroups.find(group => group.id === activeId)}
+                        groupsLength={localGroups.length}
+                    />
+                ) : null}
+            </DragOverlay>
 
 
         </DndContext>

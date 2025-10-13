@@ -33,11 +33,9 @@ export function TaskPreview({ task, groupId, taskIdx }) {
     const style = {
         transition,
         transform: CSS.Transform.toString(transform),
-        // zIndex: isDragging ? 999 : 'auto',
-        opacity: isDragging ? 0 : 1, // Fade the original item while dragging
-        border: isDragging ? '1px dashed #000' : 'none',
-        backgroundColor: isDragging ? '#f0f0f0' : 'transparent',
-        border: isDragging ? "2px dashed #000" : "none", // Dashed border when dragging
+        opacity: isDragging ? 0 : 1, 
+        border: isDragging ? '1px dashed transparent' : '',
+
 
     }
 

@@ -14,8 +14,9 @@
            rotate: 1deg;
            opacity: 0.8;
            background-color: rgb(19, 157, 203);
-       }
-
+           
+        }
+        
 
 
        &:has(:focus, .focus):not(.table-header) {

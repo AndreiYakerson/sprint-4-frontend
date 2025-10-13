@@ -26,6 +26,8 @@
         cursor: grabbing;
     }
 
+
+
 }
 
 /* header of ther group */
@@ -458,4 +460,35 @@
         }
 
     }
+
+
+
+
+}
+
+.group-overlay {
+    display: flex;
+    align-items: center;
+    ;
+    border-left: 6px solid;
+    border-left-color: var(--group-color);
+    height: 40px;
+    width: calc(100vw - 350px);
+
+    translate: 50px;
+    rotate: 1deg;
+    opacity: .8;
+    background-color: rgba(223, 209, 209, 0.276);
+    box-shadow: 2px 2px 0 rgb(191 199 197 / 79%);
+
+    .collapse-group-toggle {
+        color: var(--group-color);
+    }
+
+    .group-title-wrapper {
+        color: var(--group-color);
+        font-size: 1.2em;
+    }
+
+
 }

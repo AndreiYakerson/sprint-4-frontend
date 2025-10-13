@@ -11,15 +11,21 @@ export function GroupCollapsed({ group, groupsLength }) {
         transform: CSS.Transform.toString(transform),
     }
 
+    
+
     return <div
         className="group-collapsed"
         ref={setNodeRef}
         {...attributes}
         style={{
             ...style,
-            ...group.style,
-            // opacity: isDragging ? 0.5 : 1,
+            // ...group.style,
+            // opacity: isDragging ? 0 : 1,
+            backgroundColor: isDragging ? 'transparent' : '',
+            color: isDragging ? 'transparent' : group.style['--group-color'],
             zIndex: isDragging ? 10 : 'auto',
+            border: isDragging ? '1px dashed #999' : '1px solid rgb(208, 212, 228)',
+            borderLeft: isDragging ? '1px dashed #999' : `6px solid ${group.style['--group-color']}`,
         }}
     >
         <div className="group-collapsed-content">
