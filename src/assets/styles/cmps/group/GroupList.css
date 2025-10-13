@@ -472,10 +472,10 @@
     ;
     border-left: 6px solid;
     border-left-color: var(--group-color);
-    height: 40px;
+    height: 35px;
     width: calc(100vw - 350px);
 
-    translate: 50px;
+    translate: 30px;
     rotate: 1deg;
     opacity: .8;
     background-color: rgba(223, 209, 209, 0.276);
@@ -487,7 +487,7 @@
 
     .group-title-wrapper {
         color: var(--group-color);
-        font-size: 1.2em;
+        font-size: 1.5em;
     }
 
 
