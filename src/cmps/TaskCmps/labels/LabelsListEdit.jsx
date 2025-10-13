@@ -58,7 +58,7 @@ export function LabelsListEdit({ labels, onUpdateLabels, onClose }) {
         setEditingLabel(labelsToUpdate.find(label => label.id === id))
     }
 
-    function onCloseMenu(ev, id) {
+    function onCloseMenu() {
         setAnchorEl(null)
         setEditingLabel(null)
     }

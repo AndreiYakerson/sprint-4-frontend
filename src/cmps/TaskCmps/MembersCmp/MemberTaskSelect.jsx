@@ -13,7 +13,7 @@ import { loadFromStorage, saveToStorage } from '../../../services/util.service'
 // COMPONENTS
 
 export function MemberTaskSelect({ selectedMemberIds, onClose, members, onRemove }) {
-    const [inputTxt, setInputTxt] = useState('')
+    const [inputValue, setInputValue] = useState('')
     const board = useSelector(state => state.boardModule.board)
     const users = loadFromStorage('users')
     const [anchorEl, setAnchorEl] = useState(false)
@@ -36,7 +36,7 @@ export function MemberTaskSelect({ selectedMemberIds, onClose, members, onRemove
             return
         }
 
-        setInputTxt(userToFind)
+        setInputValue(userToFind)
         const regex = new RegExp('^' + userToFind, 'i')
         const notMembers = users.filter(user => regex.test(user.fullname)).filter(u => !members.some(m => m._id === u._id))
 
@@ -47,7 +47,7 @@ export function MemberTaskSelect({ selectedMemberIds, onClose, members, onRemove
     function onClearInput() {
         setNotBoardMembers(false)
         setAnchorEl(false)
-        setInputTxt('')
+        setInputValue('')
 
     }
 
@@ -69,7 +69,7 @@ export function MemberTaskSelect({ selectedMemberIds, onClose, members, onRemove
 
     const usersToShow = members.filter(member => !selectedMemberIds.includes(member._id));
     const existingUsers = members.filter(member => selectedMemberIds.includes(member._id));
-    const emptyInput = inputTxt ? true : false
+    const emptyInput = inputValue ? true : false
     return (
         <div className='member-task-select-wrapper'>
             <ExistingMembers onRemove={onRemove} members={existingUsers} />
@@ -80,7 +80,7 @@ export function MemberTaskSelect({ selectedMemberIds, onClose, members, onRemove
                         <input type="text"
                             placeholder=' Search names '
                             onChange={(ev) => handelChange(ev)}
-                            value={inputTxt}
+                            value={inputValue}
                         />
                         <button className={`delete-btn ${emptyInput}`} onClick={onClearInput}>
                             <SvgIcon iconName='xMark' size={16} colorName='secondaryText' />
