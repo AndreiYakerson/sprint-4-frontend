@@ -110,22 +110,28 @@ export function DatePicker({ info, onUpdate }) {
         >
 
             {dateToEdit?.date && <div
-                className="date-to-edit"
+                className="date-to-edit flex align-center"
                 onClick={() => setIsEditing(true)} >
 
-                <div className="flex align-center">
-                    <HoveredTextCmp
-                        label={titleMsg}
-                        position="up"
-                    >
-                        <SvgIcon iconName={statusIcon} size={iconSize} colorName={statusColor} />
-                    </HoveredTextCmp>
+                <HoveredTextCmp
+                    label={titleMsg}
+                    position="up"
+                >
+                    <SvgIcon
+                        iconName={statusIcon}
+                        size={iconSize}
+                        colorName={statusColor}
+                        className='time-icon'
+                    />
+                </HoveredTextCmp>
 
-                    <div className={`selected-time ${info?.selectedStatus?.id === 'done' ? "done" : ""}`}>
+                <div className={`selected-time ${info?.selectedStatus?.id === 'done' ? "done" : ""}`}>
+                    <div>
                         {setDate(dateToEdit?.date)}
                         {dateToEdit?.isTimeShow && <span>, {setTime(dateToEdit?.date)}</span>}
                     </div>
                 </div>
+
 
                 <button
                     className="remove-date"
@@ -134,8 +140,11 @@ export function DatePicker({ info, onUpdate }) {
                 </button>
             </div>}
 
+
+
+
             {!isEditing && !dateToEdit?.date &&
-                <div className="select">
+                <div className="select-date">
                     <SvgIcon iconName="plus" size={15} className='plus-blue' colorName='whiteText' />
                     <SvgIcon iconName="calendar" size={20} />
                 </div>
