@@ -111,18 +111,6 @@ export function TaskList({ tasks, groupId }) {
 
                     })}
                 </SortableContext>
-
-                    {/* <DragOverlay>
-                        {activeId ? (
-                            <div className="table-row drag-preview">
-                                <TaskPreview
-                                    task={localTasks.find(task => task.id === activeId)}
-                                    groupId={groupId}
-                                    isDragPreview
-                                />
-                            </div>
-                        ) : null}
-                    </DragOverlay> */}
                     
                     <DragOverlay>
                         {activeId ? (

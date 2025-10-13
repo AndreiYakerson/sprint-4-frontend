@@ -41,23 +41,10 @@ import { constant } from "lodash"
 
 
 export function TaskOverlay({ task, groupId, }) {
-    const navigate = useNavigate()
-    const isFloatingOpen = useSelector(state => state.systemModule.isFloatingOpen)
     const board = useSelector(state => state.boardModule.board)
 
     const [membersSelectEl, setMembersSelectEl] = useState(null)
     const [memberEl, setMemberEl] = useState(null)
-
-   const {attributes, listeners, setNodeRef, transform, transition, isDragging} = useSortable({ id: task.id })
-   const style = {
-        transition,
-        transform: CSS.Transform.toString(transform),
-        zIndex: isDragging ? 999 : 'auto',
-        opacity: isDragging ? 0.5 : 1, // Fade the original item while dragging
-        border: isDragging ? '1px dashed #000' : 'none',
-        backgroundColor: isDragging ? '#f0f0f0' : 'transparent',
-
-   }
 
 
     const { boardId, taskId } = useParams()
@@ -211,12 +198,8 @@ export function TaskOverlay({ task, groupId, }) {
 
     return (
 
-            <div className="task-preview" style={style} ref={setNodeRef} {...attributes} {...listeners} >
-
-
+            <div className="task-preview">
                 <div className="sticky-cell-wrapper" >
-
-
                     <div className="table-border"></div>
                     <div className="task-select"></div>
                     <div className="task-title flex align-center">
