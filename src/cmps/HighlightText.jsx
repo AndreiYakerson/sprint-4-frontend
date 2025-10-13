@@ -1,15 +1,18 @@
 export function HighlightText({ text, query }) {
   if (!query) return text
 
-  const regex = new RegExp(query, 'gi')
-  const parts = text.split(regex)
+  const regex = new RegExp(query, 'i') // only first, case-insensitive
+  const match = text.match(regex)
+  if (!match) return text
 
-  return parts.reduce((acc, part, i) => {
-    acc.push(part)
-    if (i < parts.length - 1) {
-      const match = text.match(regex)[i]
-      acc.push(<span key={i} className="Highlighted-text">{match}</span>)
-    }
-    return acc
-  }, [])
+  const start = match.index
+  const end = start + match[0].length
+
+  return (
+    <>
+      {text.slice(0, start)}
+      <span className="Highlighted-text">{text.slice(start, end)}</span>
+      {text.slice(end)}
+    </>
+  )
 }
