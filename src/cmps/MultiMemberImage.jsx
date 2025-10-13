@@ -18,7 +18,7 @@ export function MultiMemberImage({ members, className = '' }) {
                 if (idx === 2) {
                     return (
                         <div key="more-users" className={`img-wrapper more white`}>
-                            <span className="more-count">+{members.length - 1}</span>
+                            <span className="more-count">+{members.length - 2}</span>
                         </div>
                     )
                 }
