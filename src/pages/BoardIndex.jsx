@@ -56,7 +56,7 @@ export function BoardIndex({ setIsSideBarOpen }) {
         <section className="board-index">
             <header className='board-index-header'>
                 <div className="welcome-notice">
-                    <span className='morning'>Good morning, {<span className="user-name">{user.fullname}</span>}!</span>
+                    <span className='morning'>Good morning, {<span className="user-name">{user?.fullname}</span>}!</span>
                     <span className='text'>Quickly access your recent boards, Inbox and workspaces</span>
                 </div>
                 <button className='blue' onClick={() => setIsBoardEditorOpen(true)}>Add New Board</button>
