@@ -75,6 +75,44 @@ export function BoardDetails() {
     navigate(`/board/${boardId}`)
   }
 
+  function onCloseMenu() {
+    setSearchAnchor(false)
+  }
+
+  function handelChange(ev) {
+    const titleToSearch = ev.target.value
+    requestAnimationFrame(() => inputRef.current?.focus())
+    setInputValue(titleToSearch)
+    //  Preparation for Search on board. 
+    // const regex = new RegExp('^' + titleToSearch, 'i')
+    // const matchingGroups = board.groups
+    //   .map(group => ({
+    //     ...group,
+    //     tasks: group.tasks.filter(task => regex.test(task.title))
+    //   }))
+    //   .filter(group => group.tasks.length > 0)
+
+    // // if (!!matchingGroups.length) 
+    // setSearchValues(matchingGroups)
+    setAnchorEl(ev.currentTarget)
+  }
+
+  function onClearInput() {
+    setInputValue('')
+    setIsSearchOpen(false)
+  }
+
+  function onOpenSearchBar() {
+    requestAnimationFrame(() => inputRef.current?.focus())
+    setIsSearchOpen(true)
+  }
+
+  function isSearching() {
+    if (!inputValue) {
+      onClearInput()
+    }
+  }
+
   // Groups
 
   async function onAddGroup() {

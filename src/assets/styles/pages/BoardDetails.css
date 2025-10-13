@@ -172,12 +172,65 @@
                         margin-left: 10px;
                         margin-right: 6px;
                         height: 32px;
-                        width: 100%;
+                        width: 89px;
+
+                        scale: none !important;
+
+                        & .search-option-btn {
+                            width: 24px;
+                            border: none;
+                            cursor: default !important;
+                            background-color: inherit;
+
+                            &:hover {
+                                background-color: var(--primary-background-hover-color);
+                            }
+                        }
 
                         & .txt {
                             padding: 1px 0px 1px 5px;
                         }
+
+                        &.true {
+                            width: 265px;
+                            background: transparent;
+                            outline: 1px solid transparent;
+
+                            input {
+                                border: none;
+                                background-color: inherit;
+                            }
+
+                        }
+
                     }
+
+                    .search-btn.true:focus-within {
+                        outline: 1px solid var(--primary-color);
+
+                    }
+
+                    & .hasValue {
+
+                        background-color: var(--primary-selected-color-rgb) !important;
+                    }
+
+                    & .delete-btn {
+                        width: 24px;
+                        border: none;
+                        opacity: 0;
+                        color: var(--secondary-text-color);
+                        background-color: inherit;
+
+                        &.true {
+                            opacity: 1;
+                        }
+
+                        &:hover {
+                            background-color: var(--primary-background-hover-color);
+                        }
+                    }
+
 
                     & .person-btn {
                         margin-right: 6px;
