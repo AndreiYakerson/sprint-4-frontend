@@ -1,5 +1,6 @@
 import { useSortable } from "@dnd-kit/sortable"
 import { CSS } from "@dnd-kit/utilities"
+import { SvgIcon } from "../SvgIcon"
 
 export function GroupCollapsed({ group, groupsLength }) {
 
@@ -17,14 +18,22 @@ export function GroupCollapsed({ group, groupsLength }) {
         style={{
             ...style,
             ...group.style,
-            opacity: isDragging ? 0.5 : 1,
+            // opacity: isDragging ? 0.5 : 1,
             zIndex: isDragging ? 10 : 'auto',
         }}
     >
         <div className="group-collapsed-content">
-            {/* <div className="fold-icon">{'>'}</div> */}
-            <div className="group-title-wrapper">{group.title}</div>
-            <div>{!group.tasks.length ? 'No' : group.tasks.length} Tasks</div>
+            <div className="collapse-group-toggle">
+                <SvgIcon
+                    iconName="chevronRight"
+                    size={22}
+                    colorName={'currentColor'}
+                />
+            </div>
+            <div className="group-info">
+                <div className="group-title-wrapper">{group.title}</div>
+                <div>{!group.tasks.length ? 'No' : group.tasks.length} Tasks</div>
+            </div>
         </div>
     </div>
 }
