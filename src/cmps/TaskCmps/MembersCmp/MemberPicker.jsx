@@ -10,6 +10,7 @@ import { MemberTaskSelect } from "./MemberTaskSelect"
 import { useSelector } from "react-redux"
 import { SvgIcon } from "../../SvgIcon"
 import { showErrorMsg } from "../../../services/event-bus.service"
+import { MultiMembersPreview } from "./MultiMembersPreview"
 
 export function MemberPicker({ info, onUpdate }) {
     const { label, members, propName, selectedMemberIds } = info
@@ -60,36 +61,11 @@ export function MemberPicker({ info, onUpdate }) {
     return (
         <article className={`member-picker ${membersSelectEl ? "focus" : ""}`} onClick={(ev) => setMembersSelectEl(ev.currentTarget)}>
             {!!membersToShow.length ?
-                <div className="cmp-img">
-                    {membersToShow.map((member, idx) => {
-                        if (membersToShow.length <= 2 || idx === 0) {
-                            return (
-                                <div
-                                    key={member._id}
-                                    className={`img-wrapper ${isAnimation ? 'heartbeat ' : ''}`}
-                                    onMouseLeave={onClearHover}
-                                    onMouseOver={(ev) => onSetHoveredUser(member, ev.currentTarget)}
-                                >
-                                    <img src={member.imgUrl} alt={member.fullname} className="user-img" />
-                                </div>
-                            )
-                        }
-
-                        if (idx === 1 && membersToShow.length > 2) {
-                            return (
-                                <div key="more-users" className={`img-wrapper more ${isAnimation ? 'heartbeat ' : ''}`}>
-                                    <span className="more-count">+{membersToShow.length - 1}</span>
-                                </div>
-                            )
-                        }
-
-                        return null
-                    })}
-                </div>
+                <MultiMembersPreview members={membersToShow} onSetHoveredUser={onSetHoveredUser} onClearHover={onClearHover} isAnimation={isAnimation} />
                 :
                 <div className="user-img">
                     <SvgIcon iconName="plus" size={14} className='plus-blue' colorName='whiteText' />
-                    <SvgIcon iconName="person" className="person" colorName='grayPerson' size={30}/>
+                    <SvgIcon iconName="person" className="person" colorName='grayPerson' size={30} />
                 </div>
             }
 
@@ -113,7 +89,7 @@ export function MemberPicker({ info, onUpdate }) {
                     centeredX={true}
                     showTriangle={true}
                     enforceLimit={true}
-                    
+
                 >
                     <MemberTaskSelect
                         onRemove={onRemoveMember}
@@ -123,8 +99,6 @@ export function MemberPicker({ info, onUpdate }) {
                     />
                 </FloatingContainerCmp>
             }
-
-
         </article >
     )
 }

@@ -1,5 +1,6 @@
 .hover-show {
     position: relative;
+    font-size: 15px;
 
     &::after {
         content: attr(data-type);
@@ -72,3 +73,4 @@
         /* arrow just fades in */
     }
 }
+

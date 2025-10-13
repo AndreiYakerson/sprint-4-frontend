@@ -10,6 +10,7 @@ import { boardService } from '../services/board'
 import { BoardList } from '../cmps/Board/BoardList'
 import { SvgIcon } from '../cmps/SvgIcon'
 import { AppLoader } from '../cmps/AppLoader'
+import { userService } from '../services/user'
 
 
 export function BoardIndex({ setIsSideBarOpen }) {
@@ -18,7 +19,7 @@ export function BoardIndex({ setIsSideBarOpen }) {
     const boards = useSelector(storeState => storeState.boardModule.boards)
     const [filterBy, setFilterBy] = useState(boardService.getDefaultFilter())
     const [isCollapse, setIsCollapse] = useState(false)
-
+    const user = userService.getLoggedinUser()
 
     useEffect(() => {
         loadBoards(filterBy)
@@ -54,8 +55,11 @@ export function BoardIndex({ setIsSideBarOpen }) {
     return (
         <section className="board-index">
             <header className='board-index-header'>
-                <h2> Board Index</h2>
-                <button className='blue  ' onClick={() => setIsBoardEditorOpen(true)}>Add New Board</button>
+                <div className="welcome-notice">
+                    <span className='morning'>Good morning, {<span className="user-name">{user.fullname}</span>}!</span>
+                    <span className='text'>Quickly access your recent boards, Inbox and workspaces</span>
+                </div>
+                <button className='blue' onClick={() => setIsBoardEditorOpen(true)}>Add New Board</button>
             </header>
             {/* <BoardFilter filterBy={filterBy} setFilterBy={setFilterBy} /> */}
 

@@ -13,9 +13,12 @@ import { TaskDetails } from '../cmps/Task/TaskDetails.jsx'
 import { SvgIcon } from '../cmps/SvgIcon.jsx'
 import { BoardRemovedMsg } from '../cmps/Board/BoardRemovedMsg.jsx'
 import { AppLoader } from '../cmps/AppLoader.jsx'
+import { MultiMemberImage } from '../cmps/MultiMemberImage.jsx'
+import { HoveredTextCmp } from '../cmps/HoveredTextCmp.jsx'
 
 
 export function BoardDetails() {
+  const [anchorEl, setAnchorEl] = useState(false)
   const navigate = useNavigate()
 
   const { boardId, taskId } = useParams()
@@ -107,14 +110,85 @@ export function BoardDetails() {
 
         <header className='board-details-header'>
 
-          <h2 className='board-title'>{board?.title}</h2>
+          <div className='action-nav'>
+
+
+
+            <div className='activity-log'>
+
+              <button className='activity-log btn'>
+                {
+                  <HoveredTextCmp
+                    label="Board Members"
+                    position="down"
+                    onClick={(ev) => setAnchorEl(ev.currentTarget)}
+                  >
+                    <MultiMemberImage members={board?.members} className='multi-members-img' />
+                  </HoveredTextCmp>
+                }
+              </button>
+            </div>
+
+            <div className='invite-users'
+            >
+              <button className='invite'>
+                {` Invite / ${board?.members.length}`}
+              </button>
+
+              <span className='copy-link'>
+
+                {<HoveredTextCmp
+                  label="Copy Link"
+                  position="down"
+                  onClick={(ev) => setAnchorEl(ev.currentTarget)}>
+
+                  <SvgIcon iconName='sink' className='icon' size={20} />
+
+                </HoveredTextCmp>}
+              </span>
+
+            </div>
+
+            <button className='more-btn'>
+              {<HoveredTextCmp
+                label="Options"
+                position="down"
+                onClick={(ev) => setAnchorEl(ev.currentTarget)}>
+                <SvgIcon iconName='dots' size={24} />
+              </HoveredTextCmp>}
+            </button>
+          </div>
+
+          <div className='board-title'>{board?.title}</div>
+
           <div className='board-nav'>
             <div>Main Table</div>
           </div>
           <div className='board-actions'>
             <button
               onClick={() => onAddTask(board?.groups[0]?.id, `New ${board?.managingType}`, 'unshift')}
-              className='blue'> New {board?.managingType}</button>
+              className='blue'> New {board?.managingType}
+            </button>
+            <section className='board-action-btn'>
+              <button className="search-btn">
+                <span className="icon">
+                  <SvgIcon iconName='searchGlass' size={20} />
+                </span>
+                <span className='txt'>Search</span>
+              </button>
+              <button className="person-btn hover-show up" data-type={'Filter board by Person'}>
+                <span className="icon">
+                  <SvgIcon iconName='person' size={20} />
+                </span>
+                <span className='txt'>Person</span>
+              </button>
+              <button className="sort-btn hover-show up" data-type={'Sort board by Any Column'}>
+                <span className="icon">
+                  <SvgIcon iconName='sortArrows' size={20} />
+                </span>
+                <span className='txt'>Sort</span>
+              </button>
+            </section>
           </div>
 
           {/* <SortFilterCmp /> */}

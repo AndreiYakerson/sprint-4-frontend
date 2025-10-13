@@ -40,7 +40,7 @@
 
             display: grid;
             grid-template-areas:
-                "title title title"
+                "title title action"
                 "navigation navigation navigation"
                 "contextualAction contextualAction contextualAction";
             grid-template-columns: fit-content(800px) 1fr;
@@ -58,7 +58,93 @@
                 overflow: hidden;
                 text-overflow: ellipsis;
                 white-space: nowrap;
+
+                &:hover {
+                    background-color: var(--primary-background-hover-color);
+                    cursor: pointer;
+                    border-radius: var(--border-radius-small);
+                }
             }
+
+
+
+            .action-nav {
+                grid-area: action;
+                display: flex;
+                align-items: center;
+
+                justify-self: end;
+                gap: var(--spacing-small);
+
+                height: var(--space-32);
+
+                .activity-log {
+                    display: flex;
+
+                    border: none;
+                    background-color: transparent;
+
+                    & .multi-members-img {
+                        padding: var(--space-4) var(--space-8);
+                        border-radius: var(--border-radius-small);
+
+                        &:hover {
+                            background-color: var(--primary-background-hover-color);
+                        }
+                    }
+                }
+
+                .invite-users {
+                    display: flex;
+                    align-items: stretch;
+
+                    color: var(--primary-text-color);
+                    background-color: transparent;
+
+                    .invite {
+                        line-height: 22px;
+                        border-color: var(--ui-border-color);
+                        border-bottom-right-radius: 0%;
+                        border-top-right-radius: 0%;
+
+                    }
+
+                    .copy-link {
+                        display: flex;
+                        place-items: center;
+                        width: 30px;
+                        border-bottom-right-radius: var(--border-radius-small);
+                        border-top-right-radius: var(--border-radius-small);
+                        border: 1px solid;
+                        border-left: none;
+                        border-color: var(--ui-border-color);
+
+                        & .icon {
+                            display: flex;
+                            place-content: center;
+                            width: 100%;
+                        }
+
+                    }
+
+                    .copy-link:hover {
+                        background-color: var(--primary-background-hover-color);
+                    }
+                }
+
+                .more-btn {
+                    width: 32px;
+                    height: 32px;
+                    border: none;
+
+                }
+
+                * {
+                    cursor: default !important;
+                }
+
+            }
+
 
             .board-nav {
                 display: flex;
@@ -75,7 +161,58 @@
 
             .board-actions {
                 grid-area: contextualAction;
+                display: flex;
                 padding-block: 16px;
+
+                .board-action-btn {
+                    display: flex;
+                    font-size: 15px;
+
+                    & .search-btn {
+                        margin-left: 10px;
+                        margin-right: 6px;
+                        height: 32px;
+                        width: 100%;
+
+                        & .txt {
+                            padding: 1px 0px 1px 5px;
+                        }
+                    }
+
+                    & .person-btn {
+                        margin-right: 6px;
+
+                        .icon {
+                            display: flex;
+                            place-content: center;
+                            align-items: center;
+                            margin-right: 6px;
+                            overflow: hidden;
+                        }
+                    }
+
+                    & .sort-btn {
+                        margin-right: 6px;
+
+                        .icon {
+                            display: flex;
+                            place-content: center;
+                            align-items: center;
+                            margin-right: 6px;
+                            overflow: hidden;
+                        }
+
+
+                    }
+                }
+
+                .board-action-btn>* {
+                    display: flex;
+                    place-items: center;
+                    /* margin-right: 6px; */
+                    border: none !important;
+                }
+
             }
         }
     }
