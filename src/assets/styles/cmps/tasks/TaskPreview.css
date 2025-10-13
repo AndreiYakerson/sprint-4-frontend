@@ -45,7 +45,7 @@
                box-shadow: 4px 3px 6px -3px var(--ui-border-color);
 
                /* make bug - bark the layout - need to find solution */
-               z-index: 50;
+               z-index: 40;
 
                .sticky-cell-wrapper {
                    background-color: var(--pulse-background-color-rgb);
@@ -82,6 +82,7 @@
        display: grid;
        grid-template-columns: 6px 36px 1fr;
 
+
        &>*:not(.table-border, .task-menu-wrapper) {
            border-block-end: 1px solid var(--layout-border-color);
        }
@@ -93,12 +94,17 @@
 
        &:has(:focus, .focus):not(:has(.add-task-cell)) {
 
-           &>*:not(.table-border, .task-menu-wrapper) {
-               border-block: 1px solid var(--primary-color);
-           }
-
-           .task-title {
-               border-inline-end: 1px solid var(--primary-color);
+           &::after {
+               position: absolute;
+               content: "";
+               pointer-events: none;
+               top: 0;
+               right: 0;
+               width: calc(100% - 6px);
+               height: 100%;
+               border-color: var(--primary-color) !important;
+               border-block: solid 1px;
+               border-inline-end: solid 1px;
            }
 
        }
@@ -159,7 +165,6 @@
        .task-title {
            justify-content: space-between;
            align-content: center;
-           gap: 8px;
 
            &>:first-child {
                margin-inline-start: 36px;
