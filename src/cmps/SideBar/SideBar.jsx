@@ -142,7 +142,7 @@ export function SideBar() {
                     <BoardList boards={boards} isSideBarDispaly={true} />
                 </div>
             </div>
-{/* {// QUESTION לא הצלחתי להבין מה מגדיר פה שהפופ אפ נפתח ?!} */}
+
             <PopUp showCloseBtn={true}>
                 <BoardEdit />
             </PopUp>
