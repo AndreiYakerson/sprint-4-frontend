@@ -8,7 +8,8 @@
   /* hover background-color  */
   --primary-background-hover-color: rgba(103, 104, 121, 0.1);
   /* active selected background-color: ; */
-  --primary-selected-color: rgba(194, 213, 255, 0.40);
+  /* --primary-selected-color: rgba(194, 213, 255, 0.40); */
+  --primary-selected-color: #cce5ff;
 
   /* text color -  icon use this colors  */
   --primary-text-color: rgb(50, 51, 56);

@@ -1,28 +1,37 @@
-import { useEffect, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import { DateTime, Info, Interval } from "luxon"
 
 // cmps
 import { SvgIcon } from "../../SvgIcon.jsx"
+import { CustomSelect } from "../../CustomSelect.jsx"
 
 export function Calendar({ dateInfo, onUpDate, onSetIsEditing }) {
     const today = DateTime.local().setLocale("en")
     const weekDays = Info.weekdays("short", { locale: "en" })
     const months = Info.months("long", { locale: "en" })
-    const monthsShort = Info.months("short", { locale: "en" })
     const years = Array.from({ length: 50 }, (_, i) => today.year - 25 + i)
 
+    /// Think of a better way to avoid lots of renderings of the hours over and over again
+    const times = useMemo(() => {
+        const arr = []
+        for (let h = 0; h < 24; h++) {
+            for (let m of [0, 30]) {
+                arr.push(DateTime.fromObject({ hour: h, minute: m }).toFormat("hh:mm a"))
+            }
+        }
+        return arr
+    }, [])
 
     const [firstDayOfMonth, setFirstDayOfMonth] = useState(today.startOf('month'))
     const [activeDay, setActiveDay] = useState(null)
     const [inputDate, setInputDate] = useState(today.toFormat("MM/dd/yyyy"))
-    const [inputTime, setInputTime] = useState(today.toFormat("HH:mm"))
+    const [inputTime, setInputTime] = useState(today.toFormat("hh:mm a"))
     const [isTimeShow, setIsTimeShow] = useState(false)
 
     const daysOfMonth = Interval.fromDateTimes(
         firstDayOfMonth.startOf('week'),
         firstDayOfMonth.endOf('month').endOf('week')
     ).splitBy({ day: 1 }).map(day => day.start)
-
 
     useEffect(() => {
 
@@ -32,7 +41,7 @@ export function Calendar({ dateInfo, onUpDate, onSetIsEditing }) {
             setActiveDay(parsedDate.startOf("day"))
             setFirstDayOfMonth(parsedDate.startOf("month"))
             setInputDate(parsedDate.toFormat("MM/dd/yyyy"))
-            setInputTime(parsedDate.toFormat("HH:mm"))
+            setInputTime(parsedDate.toFormat("hh:mm a"))
             setIsTimeShow(dateInfo?.isTimeShow)
         }
     }, [])
@@ -48,22 +57,24 @@ export function Calendar({ dateInfo, onUpDate, onSetIsEditing }) {
         setFirstDayOfMonth(today.startOf("month"))
         setActiveDay(today.startOf("day"))
         setInputDate(today.toFormat("MM/dd/yyyy"))
-        setInputTime(today.toFormat("HH:mm"))
     }
 
-    function onSelectMonth(ev) {
-        const monthIndex = parseInt(ev.target.value)
-        setFirstDayOfMonth(firstDayOfMonth.set({ month: monthIndex + 1 }))
-    }
-
-    function onSelectYear(ev) {
-        const year = parseInt(ev.target.value)
+    function onSelectYear(selectedYear) {
+        const year = parseInt(selectedYear)
         setFirstDayOfMonth(firstDayOfMonth.set({ year }))
     }
 
+    function onSelectMonth(selectedMonth) {
+        const monthIndex = parseInt(selectedMonth)
+        setFirstDayOfMonth(firstDayOfMonth.set({ month: monthIndex + 1 }))
+    }
+
     function onSetActiveDay(dayOfMonth) {
-        const [hour, minute] = inputTime.split(":").map(Number)
-        const newDate = dayOfMonth.set({ hour, minute })
+        const parsedTime = DateTime.fromFormat(inputTime, "hh:mm a")
+        const newDate = dayOfMonth.set({
+            hour: parsedTime.hour,
+            minute: parsedTime.minute
+        })
 
         setActiveDay(newDate)
         setInputDate(newDate.toFormat("MM/dd/yyyy"))
@@ -72,8 +83,11 @@ export function Calendar({ dateInfo, onUpDate, onSetIsEditing }) {
     }
 
     function onSaveDate() {
-        const [hour, minute] = inputTime.split(":").map(Number)
-        const newDate = activeDay.set({ hour, minute })
+        const parsedTime = DateTime.fromFormat(inputTime, "hh:mm a")
+        const newDate = activeDay.set({
+            hour: parsedTime.hour,
+            minute: parsedTime.minute
+        })
 
         onUpDate({ date: newDate.ts, isTimeShow })
         onSetIsEditing(false)
@@ -114,34 +128,42 @@ export function Calendar({ dateInfo, onUpDate, onSetIsEditing }) {
                         if (e.key === "Enter") onSaveDate()
                     }}
                 />
-                {isTimeShow &&
-                    < input
-                        type="time"
-                        name="time-input"
-                        className="time-input"
-                        value={inputTime}
-                        onChange={(ev) => setInputTime(ev.target.value)}
-                        onKeyDown={(e) => {
-                            if (e.key === "Enter") onSaveDate()
+
+                {isTimeShow && (
+                    <CustomSelect
+                        labelsInfo={{
+                            selectedLabel: inputTime,
+                            options: times,
+                            type: "times"
                         }}
-                    />}
+                        onSaveLabels={(val) => setInputTime(val)}
+                    />
+                )}
             </div>
 
 
             <div className="calendar-table-date-select flex justify-between">
 
                 <div className="flex">
-                    <select value={firstDayOfMonth.month - 1} name="month-select" onChange={onSelectMonth}>
-                        {monthsShort.map((month, idx) => (
-                            <option key={idx} value={idx}>{month}</option>
-                        ))}
-                    </select>
+                    <CustomSelect
+                        labelsInfo={
+                            {
+                                selectedLabel: firstDayOfMonth.month - 1,
+                                options: months,
+                                type: 'months'
+                            }}
+                        onSaveLabels={(month) => onSelectMonth(month)}
+                    />
 
-                    <select value={firstDayOfMonth.year} onChange={onSelectYear} name="year-select" className="year-select">
-                        {years.map((year, idx) => (
-                            <option key={idx} value={year}>{year}</option>
-                        ))}
-                    </select>
+                    <CustomSelect
+                        labelsInfo={
+                            {
+                                selectedLabel: firstDayOfMonth.year,
+                                options: years,
+                                type: 'years'
+                            }}
+                        onSaveLabels={(year) => onSelectYear(year)}
+                    />
                 </div>
 
                 <div>

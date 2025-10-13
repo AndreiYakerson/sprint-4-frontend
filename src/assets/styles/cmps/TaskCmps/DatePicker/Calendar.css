@@ -2,7 +2,7 @@
     cursor: auto;
     background-color: var(--primary-background-color);
 
-    width: 280px;
+    width: 264px;
 
     font-size: 14px;
     font-weight: 400;
@@ -13,7 +13,7 @@
     }
 
     .btns-actions {
-        margin: var(--spacing-small) 0;
+        margin-block-end: var(--spacing-small);
     }
 
     .date-time-input {

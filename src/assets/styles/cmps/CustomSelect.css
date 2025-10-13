@@ -1,0 +1,107 @@
+.custom-select {
+    position: relative;
+
+    &:has(.box-open):not(:has(.times)) {
+        .label-prev {
+            background-color: var(--primary-selected-color);
+        }
+    }
+
+    .label-prev {
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        max-width: 100%;
+
+        &.times {
+            border-left: 1px solid #c5c7d0;
+            padding: 0 var(--spacing-small);
+            border-radius: 0;
+            height: 100%;
+
+            &:hover {
+                background-color: var(--primary-background-color);
+            }
+        }
+
+        span {
+            display: block;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            text-transform: capitalize;
+        }
+
+    }
+
+    .label-selection-wrapper {
+
+        position: absolute;
+
+
+        width: 120px;
+        height: 200px;
+
+        box-shadow: var(--box-shadow-medium);
+        /* border-radius: var(--border-radius-medium); */
+        overflow: hidden;
+        z-index: 2;
+
+        padding: 8px;
+        padding-inline-start: 10px;
+
+        opacity: 0;
+        pointer-events: none;
+
+        transition: 200ms ease-in-out;
+
+        background-color: var(--primary-background-color);
+
+        &.box-open {
+            opacity: 1;
+            pointer-events: visible;
+        }
+
+        &.up {
+            bottom: 100%;
+        }
+
+        &.down {
+            top: 100%;
+        }
+
+        .label-selection-box {
+
+            display: grid;
+            overflow: auto;
+            height: 100%;
+
+            label {
+                cursor: pointer;
+                text-transform: capitalize;
+                padding: 4px;
+                padding-inline-start: 8px;
+
+
+                &:hover {
+                    background-color: var(--primary-background-hover-color);
+                }
+
+                &.selected {
+                    background-color: var(--primary-selected-color);
+                }
+
+                input {
+                    display: none;
+                }
+            }
+        }
+    }
+
+
+}

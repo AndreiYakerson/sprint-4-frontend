@@ -129,7 +129,7 @@ input {
 	}
 } */
 
-
+.select,
 select {
 	outline: none;
 	border: 0;
