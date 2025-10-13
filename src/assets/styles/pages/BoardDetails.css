@@ -181,6 +181,8 @@
                         height: 32px;
                         width: 89px;
 
+                        scale: none !important;
+
                         & .search-option-btn {
                             width: 24px;
                             border: none;
@@ -191,8 +193,6 @@
                                 background-color: var(--primary-background-hover-color);
                             }
                         }
-
-                        transition: width 0.3s ease;
 
                         & .txt {
                             padding: 1px 0px 1px 5px;
@@ -218,7 +218,7 @@
                     }
 
                     & .hasValue {
-                        scale: none !important;
+
                         background-color: var(--primary-selected-color-rgb) !important;
                     }
 

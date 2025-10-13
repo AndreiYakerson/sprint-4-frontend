@@ -114,7 +114,6 @@ export function BoardDetails() {
   function onClearInput() {
     setInputValue('')
     setIsSearchOpen(false)
-    setSearchValues('')
   }
 
   function onOpenSearchBar() {
