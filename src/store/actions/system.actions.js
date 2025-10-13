@@ -1,5 +1,5 @@
 
-import { IS_FLOATING_OPEN, IS_POPUP_ON, SET_IS_APP_LOADING, SET_SIDE_BAR_OPEN, SET_TXT_HIGH_LIGHT } from '../reducers/system.reducer.js'
+import { IS_FLOATING_OPEN, IS_POPUP_ON, SET_IS_APP_LOADING, SET_SIDE_BAR_OPEN } from '../reducers/system.reducer.js'
 import { store } from '../store'
 
 
@@ -26,15 +26,6 @@ export async function onSetFloatingIsOpen(value) {
         store.dispatch({ type: IS_FLOATING_OPEN, value })
     } catch (err) {
         console.log('Cannot Close floating cmp', err)
-        throw err
-    }
-}
-
-export async function onSetHighLightedTxt(txt) {
-    try {
-        store.dispatch({ type: SET_TXT_HIGH_LIGHT, txt })
-    } catch (err) {
-        console.log('Cannot Set Txt To High-Light', err)
         throw err
     }
 }
