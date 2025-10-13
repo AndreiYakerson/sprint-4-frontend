@@ -164,11 +164,6 @@
                 display: flex;
                 padding-block: 16px;
 
-                .add-btn {
-                    width: 77px;
-                    margin: 0;
-                }
-
                 .board-action-btn {
                     display: flex;
                     font-size: 15px;
@@ -178,9 +173,10 @@
                     & .search-btn {
                         margin-left: 10px;
                         margin-right: 6px;
-
                         height: 32px;
                         width: 89px;
+
+                        scale: none !important;
 
                         & .search-option-btn {
                             width: 24px;
@@ -267,7 +263,7 @@
                 .board-action-btn>* {
                     display: flex;
                     place-items: center;
-                    /* color: var(--secondary-text-color); */
+                    /* margin-right: 6px; */
                     border: none !important;
                 }
 
