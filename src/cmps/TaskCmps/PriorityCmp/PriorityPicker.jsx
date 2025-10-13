@@ -55,7 +55,6 @@ export function PriorityPicker({ info, onUpdate }) {
 
     const labelToShow = label ? label : labels.find(label => label.id === 'default')
 
-    //FIXME  להפוך את זה לקומפוננטה אחת לבחירה של לייבלים
     return (
         <div className={`labels-select-container ${anchorEl ? "focus" : ""}`}
             style={{ background: `var(${labelToShow?.cssVar})` }}

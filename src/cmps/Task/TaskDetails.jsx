@@ -6,7 +6,6 @@ export function TaskDetails({ task, onCloseTaskDetails }) {
             <button onClick={onCloseTaskDetails}>X</button>
             <h2>{task?.title}</h2>
             {
-                //TODO <DynamicCmp />
             }
         </div>
     )

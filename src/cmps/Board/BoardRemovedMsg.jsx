@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
 
 // images
-//QUESTION האם אפשר להחליף פה ל svgicon
 
 import boardRemovedIcon from '/img/board-removed-icon.svg'
 

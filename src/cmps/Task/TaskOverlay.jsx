@@ -112,8 +112,7 @@ export function TaskOverlay({ task, groupId, }) {
             },
         ]
     )
-    //QUESTION  Updates the view on change to task and board
-    // אני חושש שזה גורם לרינדור מיותר 
+
     useEffect(() => {
         setCmps([
 
