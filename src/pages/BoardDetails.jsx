@@ -167,7 +167,28 @@ export function BoardDetails() {
           <div className='board-actions'>
             <button
               onClick={() => onAddTask(board?.groups[0]?.id, `New ${board?.managingType}`, 'unshift')}
-              className='blue'> New {board?.managingType}</button>
+              className='blue'> New {board?.managingType}
+            </button>
+            <section className='board-action-btn'>
+              <button className="search-btn">
+                <span className="icon">
+                  <SvgIcon iconName='searchGlass' size={20} />
+                </span>
+                <span className='txt'>Search</span>
+              </button>
+              <button className="person-btn hover-show up" data-type={'Filter board by Person'}>
+                <span className="icon">
+                  <SvgIcon iconName='person' size={20} />
+                </span>
+                <span className='txt'>Person</span>
+              </button>
+              <button className="sort-btn hover-show up" data-type={'Sort board by Any Column'}>
+                <span className="icon">
+                  <SvgIcon iconName='sortArrows' size={20} />
+                </span>
+                <span className='txt'>Sort</span>
+              </button>
+            </section>
           </div>
 
           {/* <SortFilterCmp /> */}
