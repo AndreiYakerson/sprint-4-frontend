@@ -255,22 +255,22 @@ async function removeTask(boardId, groupId, taskId) {
 
 const DefaultPriorities = [
     {
-        id: makeId(),
+        id: 'critical',
         txt: 'Critical'
         , cssVar: '--primary-text-color'
     },
     {
-        id: makeId(),
+        id: 'high',
         txt: 'High'
         , cssVar: '--group-title-clr7'
     },
     {
-        id: makeId(),
-        txt: 'medium'
+        id: 'medium',
+        txt: 'Medium'
         , cssVar: '--group-title-clr8'
     },
     {
-        id: makeId(),
+        id: 'low',
         txt: 'Low'
         , cssVar: '--group-title-clr9'
     },
@@ -288,12 +288,12 @@ const DefaultStatuses = [
         , cssVar: '--group-title-clr2'
     },
     {
-        id: makeId(),
+        id: 'working',
         txt: 'Working on it'
         , cssVar: ' --group-title-clr16'
     },
     {
-        id: makeId(),
+        id: 'stuck',
         txt: 'Stuck'
         , cssVar: '--group-title-clr12'
     },

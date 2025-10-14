@@ -154,7 +154,7 @@ export function GroupPreview({ group, groupsLength, managingType, TaskList,
 
 
 
-    /////  Collapsed group /////
+    ///////////////////////////////////  Collapsed group ///////////////////////////////
 
     if (isCollapsed) return <section
         className="group-container individual-collapse"
@@ -241,17 +241,14 @@ export function GroupPreview({ group, groupsLength, managingType, TaskList,
                             </div>
                         } else if (colName === 'status') {
                             return <div key={colName} className="column-cell status">
-                                <div>{colName}</div>
-                                <LabelSum labels={statuses} />
+                                <LabelSum info={{ labels: statuses, type: 'status' }} />
                             </div>
                         } else if (colName === 'priority') {
                             return <div key={colName} className="column-cell priority">
-                                <div>{colName}</div>
-                                <LabelSum labels={priorities} />
+                                <LabelSum info={{ labels: priorities, type: 'priority' }} />
                             </div>
                         } else {
                             return <div key={colName} className={`column-cell ${getColumnType(colName)}`}>
-                                <div>{colName}</div>
                                 <span></span>
                             </div>
                         }
@@ -263,7 +260,7 @@ export function GroupPreview({ group, groupsLength, managingType, TaskList,
         </header>
     </section >
 
-    /////  group  /////
+    ///////////////////////////////  group  /////////////////////////////////
 
     return <div
         className="group-container"
@@ -387,11 +384,11 @@ export function GroupPreview({ group, groupsLength, managingType, TaskList,
                         </div>
                     } else if (colName === 'status') {
                         return <div key={colName} className="column-cell status">
-                            <LabelSum labels={statuses} />
+                            <LabelSum info={{ labels: statuses, type: 'status' }} />
                         </div>
                     } else if (colName === 'priority') {
                         return <div key={colName} className="column-cell priority">
-                            <LabelSum labels={priorities} />
+                            <LabelSum info={{ labels: priorities, type: 'priority' }} />
                         </div>
                     } else {
                         return <div key={colName} className={`column-cell ${getColumnType(colName)}`}>
