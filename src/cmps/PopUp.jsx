@@ -4,7 +4,7 @@ import { onSetPopUpIsOpen } from "../store/actions/system.actions.js"
 import { createPortal } from "react-dom"
 import { setIsBoardEditorOpen } from "../store/actions/board.actions.js"
 
-export function PopUp({ children = false, showCloseBtn = false }) {
+export function PopUp({ children = false, onClose = false }) {
   const isPopUpOpen = useSelector(state => state.systemModule.isPopUpOpen)
   // Specific to the case of adding a board
   const isBoardEditorOpen = useSelector(state => state.boardModule.isBoardEditorOpen)
@@ -15,8 +15,12 @@ export function PopUp({ children = false, showCloseBtn = false }) {
     const popupEl = popupRef.current
     if (!popupEl) return
     const clickedInside = e.target.closest('.popup-container')
-    if (!clickedInside) onSetPopUpIsOpen(false)
+    if (!clickedInside) {
+      if (onClose) onClose()
+      onSetPopUpIsOpen(false)
+    }
     if (isBoardEditorOpen && !clickedInside) setIsBoardEditorOpen(false)
+
   }
 
   useEffect(() => {
