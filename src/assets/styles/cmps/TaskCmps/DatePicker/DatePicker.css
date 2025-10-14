@@ -42,6 +42,7 @@
 
         .time-icon {
             margin-inline-start: 6px;
+            min-width: 18px;
         }
 
         &:hover {

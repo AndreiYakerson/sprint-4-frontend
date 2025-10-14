@@ -93,6 +93,7 @@ export function TaskPreview({ task, groupId, taskIdx }) {
         ]
     )
 
+
     // useEffect(() => {
     //     setCmps([
 
@@ -163,13 +164,19 @@ export function TaskPreview({ task, groupId, taskIdx }) {
 
     async function updateCmpInfo(cmp, cmpInfoPropName, data, activityTitle) {
 
+        console.log('data:', data)
+
         const taskPropName = cmp.info.propName
         console.log(`Updating: ${taskPropName} to: `, data)
 
         // Update cmps in local state
         const updatedCmp = structuredClone(cmp)
         updatedCmp.info[cmpInfoPropName] = data
-        setCmps(cmps.map(currCmp => (currCmp.info.propName !== cmp.info.propName) ? currCmp : updatedCmp))
+        setCmps(prevCmps =>
+            prevCmps.map(currCmp =>
+                currCmp.info.propName !== cmp.info.propName ? currCmp : updatedCmp
+            )
+        )
 
         // Update the task
         const updatedTask = structuredClone(task)
@@ -190,8 +197,13 @@ export function TaskPreview({ task, groupId, taskIdx }) {
     }
 
     function setStatusInDatePickerCmp(status) {
-        setCmps(cmps.map(currCmp => (currCmp.info.propName !== 'dueDate')
-            ? currCmp : { ...currCmp, info: { ...currCmp.info, selectedStatus: status } }))
+        setCmps(prevCmps =>
+            prevCmps.map(currCmp =>
+                currCmp.info.propName !== 'dueDate'
+                    ? currCmp
+                    : { ...currCmp, info: { ...currCmp.info, selectedStatus: status } }
+            )
+        )
     }
 
     async function onRemoveTask() {
@@ -329,7 +341,7 @@ export function TaskPreview({ task, groupId, taskIdx }) {
                 }} />
             case 'PriorityPicker':
                 return <PriorityPicker info={cmp?.info} onUpdate={(data) => {
-                    updateCmpInfo(cmp, 'selectedPriority', data, `Changed due priority to ${data}`)
+                    updateCmpInfo(cmp, 'taskPriority', data, `Changed due priority to ${data}`)
                 }} />
             case 'MemberPicker':
                 return <MemberPicker info={cmp.info} onUpdate={(data) => {
