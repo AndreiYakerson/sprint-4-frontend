@@ -33,7 +33,7 @@ export function TaskPreview({ task, groupId, taskIdx }) {
     const style = {
         transition,
         transform: CSS.Transform.toString(transform),
-        opacity: isDragging ? 0 : 1, 
+        opacity: isDragging ? 0 : 1,
         border: isDragging ? '1px dashed transparent' : '',
 
 
@@ -93,58 +93,57 @@ export function TaskPreview({ task, groupId, taskIdx }) {
         ]
     )
 
-    useEffect(() => {
-        setCmps([
+    // useEffect(() => {
+    //     setCmps([
 
-            {
-                type: 'StatusPicker',
-                info: {
-                    label: 'Status:',
-                    propName: 'status',
-                    selectedStatus: task.status,
-                    statuses: board.statuses,
-                }
-            },
-            {
-                type: 'MemberPicker',
-                info: {
-                    label: 'Members:',
-                    propName: 'memberIds',
-                    selectedMemberIds: task.memberIds || [],
-                    members: board.members,
-                }
-            },
-            {
-                type: 'PriorityPicker',
-                info: {
-                    label: 'priority:',
-                    propName: 'priority',
-                    taskPriority: task.priority,
-                    boardPriorities: board.priorities,
-                    boardId: board._id
-                }
-            },
-            {
-                type: 'DatePicker',
-                info: {
-                    label: 'Due date:',
-                    propName: 'dueDate',
-                    selectedDate: task?.dueDate,
-                    selectedStatus: task.status,
-                }
-            },
-            {
-                type: 'TitleEditor',
-                info: {
-                    taskId: task?.id,
-                    label: 'Title:',
-                    propName: 'title',
-                    currTitle: task?.title,
-                }
-            },
-        ])
-    }, [task, board])
-
+    //         {
+    //             type: 'StatusPicker',
+    //             info: {
+    //                 label: 'Status:',
+    //                 propName: 'status',
+    //                 selectedStatus: task.status,
+    //                 statuses: board.statuses,
+    //             }
+    //         },
+    //         {
+    //             type: 'MemberPicker',
+    //             info: {
+    //                 label: 'Members:',
+    //                 propName: 'memberIds',
+    //                 selectedMemberIds: task.memberIds || [],
+    //                 members: board.members,
+    //             }
+    //         },
+    //         {
+    //             type: 'PriorityPicker',
+    //             info: {
+    //                 label: 'priority:',
+    //                 propName: 'priority',
+    //                 taskPriority: task.priority,
+    //                 boardPriorities: board.priorities,
+    //                 boardId: board._id
+    //             }
+    //         },
+    //         {
+    //             type: 'DatePicker',
+    //             info: {
+    //                 label: 'Due date:',
+    //                 propName: 'dueDate',
+    //                 selectedDate: task?.dueDate,
+    //                 selectedStatus: task.status,
+    //             }
+    //         },
+    //         {
+    //             type: 'TitleEditor',
+    //             info: {
+    //                 taskId: task?.id,
+    //                 label: 'Title:',
+    //                 propName: 'title',
+    //                 currTitle: task?.title,
+    //             }
+    //         },
+    //     ])
+    // }, [task, board])
 
     const [isMenuOpen, setIsMenuOpen] = useState(false)
 
@@ -179,12 +178,21 @@ export function TaskPreview({ task, groupId, taskIdx }) {
         try {
             await updateTask(boardId, groupId, updatedTask, activityTitle)
             showSuccessMsg(`Task updated`)
+
+            //If the status was updated successfully, in order to synchronize the status with the due date, 
+            // this function updates the status data in the due date component.
+            if (taskPropName === 'status') setStatusInDatePickerCmp(data)
+
         } catch (err) {
             console.log('err:', err)
             showErrorMsg('Cannot update task')
         }
     }
 
+    function setStatusInDatePickerCmp(status) {
+        setCmps(cmps.map(currCmp => (currCmp.info.propName !== 'dueDate')
+            ? currCmp : { ...currCmp, info: { ...currCmp.info, selectedStatus: status } }))
+    }
 
     async function onRemoveTask() {
         try {
@@ -276,25 +284,26 @@ export function TaskPreview({ task, groupId, taskIdx }) {
                     if (colName === 'StatusPicker') {
                         var cmp = cmps.find(cmp => cmp?.type === 'StatusPicker')
                         return <div className="column-cell status" key={colName}>
-                            {DynamicCmp({ cmp, updateCmpInfo })}
+                            <DynamicCmp cmp={cmp} />
+
                         </div>
                     }
                     if (colName === 'MemberPicker') {
                         var cmp = cmps.find(cmp => cmp?.type === 'MemberPicker')
                         return <div className="column-cell members" key={colName}>
-                            {DynamicCmp({ cmp, updateCmpInfo })}
+                            <DynamicCmp cmp={cmp} />
                         </div>
                     }
                     if (colName === 'PriorityPicker') {
                         var cmp = cmps.find(cmp => cmp?.type === 'PriorityPicker')
                         return <div className="column-cell priority" key={colName}>
-                            {DynamicCmp({ cmp, updateCmpInfo })}
+                            <DynamicCmp cmp={cmp} />
                         </div>
                     }
                     if (colName === 'DatePicker') {
                         var cmp = cmps.find(cmp => cmp?.type === 'DatePicker')
                         return <div className="column-cell due-date " key={colName}>
-                            {DynamicCmp({ cmp, updateCmpInfo })}
+                            <DynamicCmp cmp={cmp} />
                         </div>
                     }
                     else {
@@ -306,30 +315,32 @@ export function TaskPreview({ task, groupId, taskIdx }) {
             </div >
         </div>
     )
-}
 
 
-
-function DynamicCmp({ cmp, updateCmpInfo }) {
-    switch (cmp?.type) {
-        case 'StatusPicker':
-            return <StatusPicker info={cmp.info} onUpdate={(data) => {
-                updateCmpInfo(cmp, 'selectedStatus', data, `Changed Status to ${data}`)
-            }} />
-        case 'DatePicker':
-            return <DatePicker info={cmp?.info} onUpdate={(data) => {
-                updateCmpInfo(cmp, 'selectedDate', data, `Changed due date to ${data}`)
-            }} />
-        case 'PriorityPicker':
-            return <PriorityPicker info={cmp?.info} onUpdate={(data) => {
-                updateCmpInfo(cmp, 'selectedPriority', data, `Changed due priority to ${data}`)
-            }} />
-        case 'MemberPicker':
-            return <MemberPicker info={cmp.info} onUpdate={(data) => {
-                updateCmpInfo(cmp, 'selectedMemberIds', data, `Changed members`)
-            }} />
-        default:
-            return <p>{cmp?.type}</p>
+    function DynamicCmp({ cmp }) {
+        switch (cmp?.type) {
+            case 'StatusPicker':
+                return <StatusPicker info={cmp.info} onUpdate={(data) => {
+                    updateCmpInfo(cmp, 'selectedStatus', data, `Changed Status to ${data}`)
+                }} />
+            case 'DatePicker':
+                return <DatePicker info={cmp?.info} onUpdate={(data) => {
+                    updateCmpInfo(cmp, 'selectedDate', data, `Changed due date to ${data}`)
+                }} />
+            case 'PriorityPicker':
+                return <PriorityPicker info={cmp?.info} onUpdate={(data) => {
+                    updateCmpInfo(cmp, 'selectedPriority', data, `Changed due priority to ${data}`)
+                }} />
+            case 'MemberPicker':
+                return <MemberPicker info={cmp.info} onUpdate={(data) => {
+                    updateCmpInfo(cmp, 'selectedMemberIds', data, `Changed members`)
+                }} />
+            default:
+                return <p>{cmp?.type}</p>
+        }
     }
+
 }
+
+
 
