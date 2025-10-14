@@ -241,10 +241,10 @@ export function TaskPreview({ task, groupId, taskIdx }) {
 
     return (
 
-        <div className="task-preview" style={style} ref={setNodeRef} {...attributes} {...listeners} >
+        <div className="task-preview" style={style} ref={setNodeRef} {...attributes}  >
 
 
-            <div className="sticky-cell-wrapper" >
+            <div className="sticky-cell-wrapper" {...listeners}>
                 <div className="task-menu-wrapper">
                     <button
                         onClick={toggleIsMenuOpen}
