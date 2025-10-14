@@ -15,7 +15,7 @@ import { getColumnType } from "../../services/util.service.js";
 import { useSelector } from "react-redux";
 
 export function GroupPreview({ group, groupsLength, managingType, TaskList,
-    onRemoveGroup, onUpdateGroup, onAddTask, onAddGroup, onOpenGroupEditor }) {
+    onRemoveGroup, onUpdateGroup, onAddTask, onAddGroup, onOpenGroupEditor, onAddColumn }) {
 
     // dnd kit
     const { attributes, listeners, setNodeRef,
@@ -347,7 +347,16 @@ export function GroupPreview({ group, groupsLength, managingType, TaskList,
                             ></div>
                         </div>
                     ))}
-                    <div className="column-cell full"></div>
+                    
+                    <div className="column-cell full last-column">
+                        <button className="add-column" onClick={onAddColumn}>
+                            <SvgIcon 
+                                iconName="plus" 
+                                size={18} 
+                                colorName={'secondaryText'}
+                            />
+                        </button>
+                    </div>
                 </div>
 
             </div>

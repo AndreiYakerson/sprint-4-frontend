@@ -75,6 +75,10 @@ export function GroupList({ groups, managingType }) {
         }
     }
 
+    function onAddColumn() {
+        console.log('onAddColumn')
+    }
+
     // This needs to be improved, add the group's IDX, and add the new one below it.
 
     async function onAddTask(groupId, title) {
@@ -169,6 +173,7 @@ export function GroupList({ groups, managingType }) {
                                 groupsLength={localGroups.length}
                                 onAddGroup={onAddGroup}
                                 onOpenGroupEditor={onOpenGroupEditor}
+                                onAddColumn={onAddColumn}
                             />
 
                     })}

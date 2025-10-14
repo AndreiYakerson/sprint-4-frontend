@@ -11,6 +11,8 @@
   /* --primary-selected-color: rgba(194, 213, 255, 0.40); */
   --primary-selected-color: #cce5ff;
 
+  --secondary-text-color: #676879;
+
   /* text color -  icon use this colors  */
   --primary-text-color: rgb(50, 51, 56);
   --secondary-text-color: rgb(103, 104, 121);
@@ -152,7 +154,9 @@
   --avatar-image-size: 32px;
   --avatar-background: rgba(255, 255, 255, 0.5);
   --font-weight-light: 300;
+  
 
+  
   /* aside menu */
 
 
@@ -178,7 +182,6 @@
   /* --surface-color: #edf1fc;
   --primary-background-color: #ffffff; */
 
-  /* --secondary-text-color: #676879; */
   /* hover */
   /* --primary-background-hover-color: rgba(103, 104, 121, 0.1);
   --primary-text-color: #323338; */
