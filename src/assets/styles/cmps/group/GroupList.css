@@ -495,6 +495,10 @@
     display: grid;
     place-content: center start;
 
+    &:hover {
+        background-color: inherit;
+    }
+
     .add-column {
         display: grid;
         place-content: center;
