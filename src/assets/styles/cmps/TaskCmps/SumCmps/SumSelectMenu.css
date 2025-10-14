@@ -1,0 +1,16 @@
+.sum-slelect-menu {
+    width: 238px;
+    position: relative;
+    padding: 10px;
+    pointer-events: all;
+    border-radius: 8px;
+    background-color: var(--secondary-background-color);
+    color: var(--primary-text-color);
+    box-shadow: 0 4px 17px 6px rgba(0, 0, 0, .1);
+    padding: 16px;
+
+    label {
+        gap: 8px;
+        cursor: pointer;
+    }
+}

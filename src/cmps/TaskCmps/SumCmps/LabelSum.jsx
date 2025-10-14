@@ -1,14 +1,35 @@
 import { useEffect, useState } from "react"
 import { HoveredTextCmp } from "../../HoveredTextCmp"
+import { FloatingContainerCmp } from "../../FloatingContainerCmp"
+import { SumSelectMenu } from "./SumSelectMenu"
+import { useRef } from "react"
 
 export function LabelSum({ info }) {
 
     const [labels, setLabels] = useState(info?.labels)
+    const [isLabelsFilterd, setIsLabelsFilterd] = useState(false)
+    const [isMenuOpen, setIsMenuOpen] = useState(false)
+
+    const listRef = useRef(null)
+
+
+
+    function toggleIsMenuOpen(ev) {
+        ev.stopPropagation()
+        setIsMenuOpen(!isMenuOpen)
+    }
+
+    function onCloseMenu() {
+        setIsMenuOpen(false)
+    }
 
     useEffect(() => {
         setLabels(info?.labels)
     }, [info])
 
+    function onSetIsLabelsFilterd(isFilterd) {
+        setIsLabelsFilterd(isFilterd)
+    }
 
     function getLabelsStats(labels) {
 
@@ -33,7 +54,9 @@ export function LabelSum({ info }) {
     }
 
     function sortLabels(statuses) {
-        const order = info?.type === 'status' ? ['done', 'working', 'stuck'] : ['critical', 'high', 'medium', 'low']
+        const order = info?.type === 'status'
+            ? ['done', 'working', 'stuck']
+            : ['critical', 'high', 'medium', 'low']
 
         const sorted = statuses.sort((a, b) => {
             const aIndex = order.indexOf(a.id)
@@ -54,18 +77,47 @@ export function LabelSum({ info }) {
         return sorted
     }
 
+
+
     return (
         <section className="labels-sum">
-            <div className="label-list">
+            <div className="label-list" ref={listRef} onClick={toggleIsMenuOpen}>
                 {labels?.length > 0 && getLabelsStats(labels).map((label) => {
-                    return <HoveredTextCmp
-                        label={label.msg}
-                        position={'up'}
-                        style={{ width: label.percentage + "%", backgroundColor: `var(${label.cssVar})` }}
-                    >
-                    </HoveredTextCmp>
+                    if (isLabelsFilterd) {
+                        if (label.id === 'done' || label.id === 'critical') {
+                            return <HoveredTextCmp
+                                label={label.msg}
+                                position={'up'}
+                                style={{ width: label.percentage + "%", backgroundColor: `var(${label.cssVar})` }}
+                            >
+                            </HoveredTextCmp>
+                        }
+                    } else {
+                        return <HoveredTextCmp
+                            label={label.msg}
+                            position={'up'}
+                            style={{ width: label.percentage + "%", backgroundColor: `var(${label.cssVar})` }}
+                        >
+                        </HoveredTextCmp>
+                    }
                 })}
             </div>
-        </section>
+
+            {
+                isMenuOpen && <FloatingContainerCmp
+                    anchorEl={listRef.current}
+                    onClose={onCloseMenu}
+                    offsetX={-listRef?.current?.getBoundingClientRect().width * 2}
+                    offsetY={listRef?.current?.getBoundingClientRect().height + 10}
+                >
+                    <SumSelectMenu
+                        isLabelsFilterd={isLabelsFilterd}
+                        type={info?.type}
+                        onSetIsLabelsFilterd={onSetIsLabelsFilterd}
+                    />
+                </FloatingContainerCmp>
+            }
+
+        </section >
     )
 }
