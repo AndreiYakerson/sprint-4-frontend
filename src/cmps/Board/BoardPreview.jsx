@@ -18,7 +18,7 @@ import boardItemLogo from '/img/board-item-img.svg'
 
 
 
-export function BoardPreview({ board, isSideBarDispaly }) {
+export function BoardPreview({ board, isSideBarDisplay }) {
     const location = useLocation()
 
     const [isStarred, setIsStarred] = useState(board?.isStarred)
@@ -118,11 +118,11 @@ export function BoardPreview({ board, isSideBarDispaly }) {
             <div className='board-info-items'>
                 <SvgIcon
                     iconName="board"
-                    size={isSideBarDispaly ? 16 : 22}
-                    colorName={isSideBarDispaly ? "currentColor" : ''}
+                    size={isSideBarDisplay ? 16 : 22}
+                    colorName={isSideBarDisplay ? "currentColor" : ''}
                 />
 
-                {isSideBarDispaly
+                {isSideBarDisplay
                     ? <div className='board-title'>
                         {toRenameBoard ? <TitleEditor
                             info={{ currTitle: boardTitleToEdit, toRenameBoard: toRenameBoard }}
@@ -136,7 +136,7 @@ export function BoardPreview({ board, isSideBarDispaly }) {
                 }
 
 
-                {isSideBarDispaly
+                {isSideBarDisplay
                     ? <>
                         <button
                             className={`transparent board-menu-btn ${isMenuOpen ? "menu-open" : ""}`}

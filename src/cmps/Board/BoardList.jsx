@@ -6,7 +6,7 @@ import { BoardPreview } from './BoardPreview'
 import { setBoard } from '../../store/actions/board.actions'
 import { boardService } from '../../services/board'
 
-export function BoardList({ boards, isSideBarDispaly = false }) {
+export function BoardList({ boards, isSideBarDisplay = false }) {
     const navigate = useNavigate()
 
     const location = useLocation()
@@ -32,13 +32,13 @@ export function BoardList({ boards, isSideBarDispaly = false }) {
     }
 
 
-    return <ul className={`board-list ${isSideBarDispaly ? "side-bar-dispaly" : ""}`}>
+    return <ul className={`board-list ${isSideBarDisplay ? "side-bar-dispaly" : ""}`}>
         {boards.map(board => {
             return <li key={board._id}
                 className={`board-item ${location.pathname.includes(board._id) ? "active" : ""}`}
                 onClick={() => onNavigateToBoard(board?._id)}
             >
-                <BoardPreview board={board} isSideBarDispaly={isSideBarDispaly} />
+                <BoardPreview board={board} isSideBarDisplay={isSideBarDisplay} />
             </li>
         })
         }
