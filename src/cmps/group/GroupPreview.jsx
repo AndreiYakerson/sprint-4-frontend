@@ -12,6 +12,7 @@ import { ActionsMenu } from "../ActionsMenu.jsx";
 import { LabelSum } from "../TaskCmps/SumCmps/LabelSum.Jsx";
 import { DateSum } from "../TaskCmps/SumCmps/DateSum.jsx";
 import { getColumnType } from "../../services/util.service.js";
+import { useSelector } from "react-redux";
 
 export function GroupPreview({ group, groupsLength, managingType, TaskList,
     onRemoveGroup, onUpdateGroup, onAddTask, onAddGroup, onOpenGroupEditor }) {
@@ -54,7 +55,9 @@ export function GroupPreview({ group, groupsLength, managingType, TaskList,
     }
     // crudl
 
-    const demoColumns = ["members", "status", "priority", "due date"];
+    const board = useSelector(state => state.boardModule.board)
+    
+    const cmpOrder = board.cmpOrder
 
     const [groupInfoToEdit, setGroupInfoToEdit] = useState({
         groupId: group?.id,
@@ -233,7 +236,7 @@ export function GroupPreview({ group, groupsLength, managingType, TaskList,
                 </div>
 
                 <div className="task-columns flex">
-                    {demoColumns.map(colName => {
+                    {cmpOrder.map(colName => {
                         if (colName === 'due date') {
                             return <div key={colName} className="column-cell due-date">
                                 <div>{colName}</div>
@@ -335,7 +338,7 @@ export function GroupPreview({ group, groupsLength, managingType, TaskList,
                 </div>
 
                 <div className="task-columns flex">
-                    {demoColumns.map((colName) => (
+                    {cmpOrder.map((colName) => (
                         <div key={colName} className={`column-cell ${getColumnType(colName)}`}>
                             <span>{colName}</span>
                             <div
@@ -377,7 +380,7 @@ export function GroupPreview({ group, groupsLength, managingType, TaskList,
             </div>
 
             <div className="task-columns flex">
-                {demoColumns.map(colName => {
+                {cmpOrder.map(colName => {
                     if (colName === 'due date') {
                         return <div key={colName} className="column-cell due-date">
                             <DateSum dates={dates} />

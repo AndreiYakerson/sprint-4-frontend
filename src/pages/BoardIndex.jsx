@@ -17,6 +17,7 @@ export function BoardIndex({ setIsSideBarOpen }) {
 
     const isAppLoading = useSelector(state => state.systemModule.isAppLoading)
     const boards = useSelector(storeState => storeState.boardModule.boards)
+    
     const [filterBy, setFilterBy] = useState(boardService.getDefaultFilter())
     const [isCollapse, setIsCollapse] = useState(false)
     const user = userService.getLoggedinUser()

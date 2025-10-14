@@ -40,7 +40,7 @@ export function TaskPreview({ task, groupId, taskIdx }) {
     }
 
     const board = useSelector(state => state.boardModule.board)
-    const cmpsOrder = ['MemberPicker', 'StatusPicker', 'PriorityPicker', 'DatePicker']
+    const cmpOrder = board?.cmpOrder || []
     const [cmps, setCmps] = useState(
         [
             {
@@ -291,28 +291,28 @@ export function TaskPreview({ task, groupId, taskIdx }) {
             </div >
 
             <div className="task-columns flex">
-                {cmpsOrder.map((colName, idx) => {
+                {cmpOrder.map((colName, idx) => {
 
-                    if (colName === 'StatusPicker') {
+                    if (colName === 'status') {
                         var cmp = cmps.find(cmp => cmp?.type === 'StatusPicker')
                         return <div className="column-cell status" key={colName}>
                             <DynamicCmp cmp={cmp} />
 
                         </div>
                     }
-                    if (colName === 'MemberPicker') {
+                    if (colName === 'members') {
                         var cmp = cmps.find(cmp => cmp?.type === 'MemberPicker')
                         return <div className="column-cell members" key={colName}>
                             <DynamicCmp cmp={cmp} />
                         </div>
                     }
-                    if (colName === 'PriorityPicker') {
+                    if (colName === 'priority') {
                         var cmp = cmps.find(cmp => cmp?.type === 'PriorityPicker')
                         return <div className="column-cell priority" key={colName}>
                             <DynamicCmp cmp={cmp} />
                         </div>
                     }
-                    if (colName === 'DatePicker') {
+                    if (colName === 'due date') {
                         var cmp = cmps.find(cmp => cmp?.type === 'DatePicker')
                         return <div className="column-cell due-date " key={colName}>
                             <DynamicCmp cmp={cmp} />

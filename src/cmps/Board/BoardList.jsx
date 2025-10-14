@@ -8,6 +8,7 @@ import { boardService } from '../../services/board'
 
 export function BoardList({ boards, isSideBarDisplay = false }) {
     const navigate = useNavigate()
+    
 
     const location = useLocation()
     // function shouldShowActionBtns(board) {

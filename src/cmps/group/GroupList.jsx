@@ -22,7 +22,7 @@ import { GroupOverlay } from "./GroupOverlay";
 
 export function GroupList({ groups, managingType }) {
     const { boardId } = useParams()
-
+    
     const [localGroups, setLocalGroups] = useState(groups)
     const [isDragging, setIsDragging] = useState(false)
     const [activeId, setActiveId] = useState(null);
