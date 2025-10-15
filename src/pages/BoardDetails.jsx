@@ -22,7 +22,7 @@ import { FilterBy } from '../cmps/Board/filterCmps/FilterBy.jsx'
 import { boardService } from '../services/board/index.js'
 
 // img
-import noResults from '../../public/img/no-results.svg'
+import noResults from '/img/no-results.svg'
 
 
 export function BoardDetails() {
@@ -314,7 +314,7 @@ export function BoardDetails() {
                     />
                     : <div className='no-results-msg'>
                         <img src={noResults} alt="no-results" />
-                        <div class="no-results-title">No results were found</div>
+                        <div className="no-results-title">No results were found</div>
                     </div>
                 }
 
