@@ -109,7 +109,7 @@ export function SideBar() {
                     <div className={`favorites-boards ${isFavoritesTabOpen ? "open" : ''}`}>
                         {favoritesBoards?.length > 0
                             ? <div>
-                                <BoardList boards={favoritesBoards} isSideBarDispaly={true} />
+                                <BoardList boards={favoritesBoards} isSideBarDisplay={true} />
                             </div>
 
                             : <div>
@@ -143,7 +143,7 @@ export function SideBar() {
                         </div>
                     </div>
 
-                    <BoardList boards={boards} isSideBarDispaly={true} />
+                    <BoardList boards={boards} isSideBarDisplay={true} />
                 </div>
             </div>
 
