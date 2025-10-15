@@ -139,7 +139,7 @@
         width: 16px;
     }
 
-    .actions {
+    .btns-actions {
         justify-content: flex-end;
 
         :first-child {
