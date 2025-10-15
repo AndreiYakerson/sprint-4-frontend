@@ -18,6 +18,8 @@ import { MultiMemberImage } from '../cmps/MultiMemberImage.jsx'
 import { HoveredTextCmp } from '../cmps/HoveredTextCmp.jsx'
 import { FloatingContainerCmp } from '../cmps/FloatingContainerCmp.jsx'
 import { onSetHighLightedTxt } from '../store/actions/system.actions.js'
+import { FilterBy } from '../cmps/Board/filterCmps/FilterBy.jsx'
+import { boardService } from '../services/board/index.js'
 
 
 export function BoardDetails() {
@@ -25,13 +27,16 @@ export function BoardDetails() {
     const navigate = useNavigate()
 
     const { boardId, taskId } = useParams()
+
     const isAppLoading = useSelector(state => state.systemModule.isAppLoading)
     const board = useSelector(storeState => storeState.boardModule.board)
     const boardRemovedMsg = useSelector(storeState => storeState.boardModule.boardRemovedMsg)
+
     const [searchAnchor, setSearchAnchor] = useState()
     const [isSearchOpen, setIsSearchOpen] = useState(false)
     const [inputValue, setInputValue] = useState('')
     const [task, setTask] = useState(null)
+    const [filterBy, setFilterBy] = useState(boardService.getDefaultFilterBoardDetails())
     const inputRef = useRef(null)
 
 
@@ -44,21 +49,21 @@ export function BoardDetails() {
 
 
     useEffect(() => {
-        if (!board || board?._id !== boardId) {
-            onLoadBoard(boardId, taskId)
-        } else if (taskId && taskId !== task?.id) {
+        if (taskId && taskId !== task?.id && board) {
             setTaskForDetails(taskId, board)
         } else if (!taskId && task) {
             setTask(null)
+        } else {
+            onLoadBoard(boardId, taskId, filterBy)
         }
 
-    }, [boardId, taskId])
+    }, [boardId, taskId, filterBy])
 
-    async function onLoadBoard(boardId, taskId) {
+    async function onLoadBoard(boardId, taskId, filterBy) {
         try {
             if (boardRemovedMsg) setBoardRemovedMsg('')
 
-            await loadBoard(boardId)
+            await loadBoard(boardId, filterBy)
 
             if (taskId && board) setTaskForDetails(taskId, board)
             else if (task) setTask(null)
@@ -84,6 +89,10 @@ export function BoardDetails() {
         if (foundTask) {
             setTask(foundTask)
         }
+    }
+
+    function onSetFilterBy(filterBy) {
+        setFilterBy(filterBy)
     }
 
     function onCloseTaskDetails() {
@@ -266,6 +275,8 @@ export function BoardDetails() {
                     {/* <SortFilterCmp /> */}
                 </header>
 
+                {board && <FilterBy board={board} filterBy={filterBy} onSetFilterBy={onSetFilterBy} />}
+
                 {board?.groups?.length > 0 &&
                     < GroupList
                         groups={board.groups}
@@ -276,6 +287,8 @@ export function BoardDetails() {
                     onClick={() => onAddGroup(board?._id)}
                     className='add-group flex'> <SvgIcon iconName="plus" size={20} /> <span>Add new group</span>
                 </button>
+
+
 
             </div>
 
