@@ -397,6 +397,7 @@ function _setBaordToSave({ title = 'New board', managingType = 'items', privacy 
         createdAt: Date.now(),
         priorities: DefaultPriorities,
         statuses: DefaultStatuses,
+        cmpOrder: ['members', 'status', 'priority', 'due date'],
         // Demo Members
         members: [],
         groups: [
