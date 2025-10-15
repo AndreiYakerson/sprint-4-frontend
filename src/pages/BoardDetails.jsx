@@ -347,7 +347,7 @@ export function BoardDetails() {
                     />
                     : <div className='no-results-msg'>
                         <img src={noResults} alt="no-results" />
-                        <div class="no-results-title">No results were found</div>
+                        <div className="no-results-title">No results were found</div>
                     </div>
                 }
 
