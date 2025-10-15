@@ -86,6 +86,7 @@ export function LabelSum({ info }) {
                     if (isLabelsFilterd) {
                         if (label.id === 'done' || label.id === 'critical') {
                             return <HoveredTextCmp
+                                key={label.id}
                                 label={label.msg}
                                 position={'up'}
                                 style={{ width: label.percentage + "%", backgroundColor: `var(${label.cssVar})` }}
@@ -94,6 +95,7 @@ export function LabelSum({ info }) {
                         }
                     } else {
                         return <HoveredTextCmp
+                            key={label.id}
                             label={label.msg}
                             position={'up'}
                             style={{ width: label.percentage + "%", backgroundColor: `var(${label.cssVar})` }}

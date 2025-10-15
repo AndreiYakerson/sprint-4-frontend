@@ -9,7 +9,7 @@ export function SumSelectMenu({ isLabelsFilterd, type, onSetIsLabelsFilterd }) {
                     name="filterLabels"
                     id="filter"
                     checked={isLabelsFilterd === false}
-                    onClick={() => onSetIsLabelsFilterd(false)}
+                    onChange={() => onSetIsLabelsFilterd(false)}
                 />
                 <span>All Labels</span>
             </label>
@@ -20,7 +20,7 @@ export function SumSelectMenu({ isLabelsFilterd, type, onSetIsLabelsFilterd }) {
                     name="filterLabels"
                     id="nofilter"
                     checked={isLabelsFilterd === true}
-                    onClick={() => onSetIsLabelsFilterd(true)}
+                    onChange={() => onSetIsLabelsFilterd(true)}
 
                 />
                 <span>What's {type === 'status' ? 'Done' : 'Critical'}</span>
