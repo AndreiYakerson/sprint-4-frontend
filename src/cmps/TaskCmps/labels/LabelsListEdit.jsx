@@ -17,16 +17,18 @@ export function LabelsListEdit({ labels, onUpdateLabels, onClose }) {
     const [editingLabel, setEditingLabel] = useState()
     const bgColors = getVarColors()
 
-    useEffect(() => {
-        if (editingLabel) {
-            setLabelsToUpdate(prevLabels => {
-                let labels = prevLabels.map(label => label.id === editingLabel.id ? { ...label, cssVar: editingLabel.cssVar } : label)
-                onUpdateLabels(labels)
-                return labels
-            })
-        }
 
-    }, [editingLabel])
+    ///// fix this
+    // useEffect(() => {
+    //     if (editingLabel) {
+    //         setLabelsToUpdate(prevLabels => {
+    //             let labels = prevLabels.map(label => label.id === editingLabel.id ? { ...label, cssVar: editingLabel.cssVar } : label)
+    //             onUpdateLabels(labels)
+    //             return labels
+    //         })
+    //     }
+
+    // }, [editingLabel])
 
 
     function updateLabel() {
