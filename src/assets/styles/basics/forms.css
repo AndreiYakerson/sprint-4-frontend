@@ -49,7 +49,7 @@ button {
 		background-color: var(--primary-background-hover-color);
 
 		&.active {
-			background-color: var(--primary-selected-color)
+			background-color: var(--primary-selected-color-btn)
 		}
 	}
 
@@ -95,6 +95,25 @@ button {
 
 			svg {
 				justify-self: center;
+			}
+		}
+	}
+
+	&.person-btn {
+		.selected-person {
+			border-radius: 50%;
+			height: 28px;
+			width: 28px;
+			margin-inline-end: 4px;
+		}
+
+		.mini-x {
+			background-color: black;
+			border-radius: 50%;
+			margin-inline-start: 12px;
+
+			svg {
+				color: var(--primary-selected-hover-color);
 			}
 		}
 	}

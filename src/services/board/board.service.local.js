@@ -157,6 +157,15 @@ async function getById(boardId, filterBy) {
             })
     }
 
+    /// Filter by specific user as opposed to a list of users ids from person filter
+
+    if (filterBy?.byPerson) {
+        board.groups = board.groups.filter(g => {
+            g.tasks = g.tasks.filter(t => t?.memberIds.includes(filterBy.byPerson))
+            return g?.tasks?.length > 0
+        })
+    }
+
 
     return board
 }

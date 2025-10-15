@@ -80,6 +80,7 @@
 
 /* filter cmps */
 @import "cmps/board/filterCmps/FilterBy.css";
+@import "cmps/board/filterCmps/PersonFilter.css";
 
 
 @import "cmps/StatusAnimation.css";

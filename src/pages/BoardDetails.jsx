@@ -22,7 +22,8 @@ import { FilterBy } from '../cmps/Board/filterCmps/FilterBy.jsx'
 import { boardService } from '../services/board/index.js'
 
 // img
-import noResults from '/img/no-results.svg'
+import noResults from '../../public/img/no-results.svg'
+import { PersonFilter } from '../cmps/Board/filterCmps/PersonFilter.jsx'
 
 
 export function BoardDetails() {
@@ -41,9 +42,11 @@ export function BoardDetails() {
     const [task, setTask] = useState(null)
     const [filterBy, setFilterBy] = useState(boardService.getDefaultFilterBoardDetails())
     const [isFilterOpen, setIsFilterOpen] = useState(false)
+    const [isPersonFilterOpen, setIsPersonFilterOpen] = useState(false)
 
     const inputRef = useRef(null)
     const filterBtnRef = useRef(null)
+    const personBtnRef = useRef(null)
 
     useEffect(() => {
         if (inputValue) {
@@ -107,7 +110,7 @@ export function BoardDetails() {
 
     /// filter fncs
     function onSetFilterBy(filterBy) {
-        setFilterBy(filterBy)
+        setFilterBy(prevFilter => ({ ...prevFilter, ...filterBy }))
     }
 
 
@@ -121,6 +124,15 @@ export function BoardDetails() {
 
     const filterByNum = Object.values(filterBy).filter(arr => Array.isArray(arr) && arr.length > 0)?.length
 
+    /// person
+
+    function toggleIsPersonFilterOpen() {
+        setIsPersonFilterOpen(!isPersonFilterOpen)
+    }
+
+    function onClosePersonFilter() {
+        setIsPersonFilterOpen(false)
+    }
     ///
 
     function handelChange(ev) {
@@ -184,6 +196,9 @@ export function BoardDetails() {
 
     if (isAppLoading) return <AppLoader />
     if (boardRemovedMsg && !board) return <BoardRemovedMsg removedMsg={boardRemovedMsg} />
+
+    const { byGroups, byNames, byStatuses, byPriorities, byMembers, byDueDateOp, byPerson } = filterBy
+
     return (
         <section className="board-details">
             <div className="board-details-container" >
@@ -277,11 +292,29 @@ export function BoardDetails() {
                                 }
                             </button>
 
-                            <button className="person-btn hover-show up" data-type={'Filter board by Person'}>
-                                <span className="icon">
-                                    <SvgIcon iconName='person' size={20} colorName='secondaryText' />
-                                </span>
+                            <button className={`person-btn hover-show up ${isPersonFilterOpen || byPerson ? "active" : ""}`} data-type='Filter board by Person'
+                                ref={personBtnRef} onClick={toggleIsPersonFilterOpen}
+                            >
+                                {byPerson
+                                    ? <img src={board?.members?.find(m => m._id === byPerson)?.imgUrl || ''}
+                                        alt="selected person" className='selected-person' />
+                                    : <span className="icon">
+                                        <SvgIcon iconName='person' size={20} colorName={`secondaryText`} />
+                                    </span>
+                                }
                                 <span className='txt'>Person</span>
+                                {byPerson &&
+                                    <div onClick={(ev) => {
+                                        ev.stopPropagation(),
+                                            onSetFilterBy({ byPerson: '' }),
+                                            onClosePersonFilter()
+                                    }}>
+                                        <SvgIcon
+                                            iconName='xMark' size={12}
+                                            colorName={`currentColor`}
+                                            className='mini-x' />
+                                    </div>
+                                }
                             </button>
 
                             <button className="sort-btn hover-show up" data-type={'Sort board by Any Column'}>
@@ -337,11 +370,28 @@ export function BoardDetails() {
                 />}
             </div>
 
+
+            {board && isPersonFilterOpen && <FloatingContainerCmp
+                anchorEl={personBtnRef.current}
+                onClose={onClosePersonFilter}
+            >
+                <PersonFilter
+                    members={board?.members}
+                    filterBy={{ byPerson }}
+                    onSetFilterBy={onSetFilterBy}
+                />
+
+            </FloatingContainerCmp>}
+
             {board && isFilterOpen && <FloatingContainerCmp
                 anchorEl={filterBtnRef.current}
                 onClose={onCloseFilter}
             >
-                <FilterBy board={board} filterBy={filterBy} onSetFilterBy={onSetFilterBy} />
+                <FilterBy
+                    board={board}
+                    filterBy={{ byGroups, byNames, byStatuses, byPriorities, byMembers, byDueDateOp }}
+                    onSetFilterBy={onSetFilterBy}
+                />
 
             </FloatingContainerCmp>}
 

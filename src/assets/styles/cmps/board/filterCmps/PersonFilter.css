@@ -1,0 +1,103 @@
+.person-filter {
+    padding: 16px;
+    max-width: 404px;
+    min-width: 220px;
+    max-height: 500px;
+    overflow: auto;
+
+    .person-filter-header {
+        margin-block-end: 16px;
+        font-size: 15px;
+        font-weight: 500;
+    }
+
+    .person-list {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        padding-block-end: 8px;
+
+
+        .person-item {
+            position: relative;
+            flex: 0 0 40px;
+            width: 40px;
+            height: 40px;
+            vertical-align: top;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            &.selected {
+                background-color: var(--card-selected-background-color);
+            }
+
+            &.selected-animation {
+                animation: selectPerson 1s 1 ease-out;
+
+                &::before {
+                    content: "";
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 40px;
+                    height: 40px;
+                    padding: 10px;
+                    border-radius: 50%;
+                    background:
+                        linear-gradient(rgba(255, 255, 255, 0), rgba(255, 255, 255, 0)) padding-box,
+                        linear-gradient(to right, rgba(0, 0, 0, 0) 50%, rgb(0, 0, 0, 0.5) 50%) border-box;
+
+                    animation: spin 1s 1 ease-out;
+                    opacity: 0;
+                }
+            }
+
+
+            img {
+                position: relative;
+                width: 30px;
+                height: 30px;
+                border-radius: 50%;
+            }
+
+
+        }
+    }
+}
+
+@keyframes selectPerson {
+    0% {
+        scale: 1
+    }
+
+    50% {
+        scale: 0.85
+    }
+
+    100% {
+        scale: 1
+    }
+}
+
+@keyframes spin {
+    0% {
+        opacity: 0;
+        transform: rotate(0deg);
+    }
+
+    20% {
+        opacity: 1;
+    }
+
+    70% {
+        opacity: 1;
+    }
+
+    100% {
+        transform: rotate(800deg);
+        opacity: 0;
+    }
+}
