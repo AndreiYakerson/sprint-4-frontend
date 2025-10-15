@@ -56,7 +56,7 @@ export function GroupPreview({ group, groupsLength, managingType, TaskList,
     // crudl
 
     const board = useSelector(state => state.boardModule.board)
-    
+
     const cmpOrder = board.cmpOrder
 
     const [groupInfoToEdit, setGroupInfoToEdit] = useState({
@@ -347,12 +347,12 @@ export function GroupPreview({ group, groupsLength, managingType, TaskList,
                             ></div>
                         </div>
                     ))}
-                    
+
                     <div className="column-cell full last-column">
                         <button className="add-column" onClick={onAddColumn}>
-                            <SvgIcon 
-                                iconName="plus" 
-                                size={18} 
+                            <SvgIcon
+                                iconName="plus"
+                                size={18}
                                 colorName={'secondaryText'}
                             />
                         </button>

@@ -3,16 +3,18 @@ import { HoveredTextCmp } from "../../HoveredTextCmp"
 import { FloatingContainerCmp } from "../../FloatingContainerCmp"
 import { SumSelectMenu } from "./SumSelectMenu"
 import { useRef } from "react"
+import { useSelector } from "react-redux"
 
 export function LabelSum({ info }) {
+
+    const board = useSelector(storeState => storeState.boardModule.board)
 
     const [labels, setLabels] = useState(info?.labels)
     const [isLabelsFilterd, setIsLabelsFilterd] = useState(false)
     const [isMenuOpen, setIsMenuOpen] = useState(false)
 
+
     const listRef = useRef(null)
-
-
 
     function toggleIsMenuOpen(ev) {
         ev.stopPropagation()
@@ -40,8 +42,13 @@ export function LabelSum({ info }) {
         }, {})
 
 
+        var currLabels = info?.type === 'status' ? board?.statuses : board?.priorities
+
         var filterdLabelsData = Object.keys(labelsCountMap).map(labelId => {
-            var label = labels.find(l => l.id === labelId)
+            var label = currLabels.find(l => l.id === labelId)
+
+            if (!label) return { txt: 'Default Label', cssVar: '--group-title-clr18', id: labelId, count: 0, percentage: 0, msg: '' }
+
             label.count = labelsCountMap[labelId]
             label.percentage = parseFloat(((labelsCountMap[labelId] / labels.length) * 100).toFixed(1))
             label.msg = `${label?.txt} ${label?.count}/${labels?.length} ${label?.percentage}%`

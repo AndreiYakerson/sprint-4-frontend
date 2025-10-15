@@ -420,7 +420,7 @@ function _setBaordToSave({ title = 'New board', managingType = 'items', privacy 
                         title: 'Item 1',
                         createdAt: Date.now(),
                         memberIds: [],
-                        priority: { txt: 'Default Label', cssVar: '--group-title-clr18', id: 'Default' },
+                        priority: { txt: 'Default Label', cssVar: '--group-title-clr18', id: 'default' },
                         status: { id: 'default', txt: 'Not Started', cssVar: '--group-title-clr18' },
 
                     },
@@ -429,7 +429,7 @@ function _setBaordToSave({ title = 'New board', managingType = 'items', privacy 
                         title: 'Item 2',
                         createdAt: Date.now(),
                         memberIds: [],
-                        priority: { txt: 'Default Label', cssVar: '--group-title-clr18', id: 'Default' },
+                        priority: { txt: 'Default Label', cssVar: '--group-title-clr18', id: 'default' },
                         status: { id: 'default', txt: 'Not Started', cssVar: '--group-title-clr18' },
                     },
                 ],
@@ -460,7 +460,7 @@ function _getEmptyTask(title = 'New Task') {
         title: title,
         createdAt: Date.now(),
         memberIds: [],
-        priority: { txt: 'Default Label', cssVar: '--group-title-clr18', id: 'Default' },
+        priority: { txt: 'Default Label', cssVar: '--group-title-clr18', id: 'default' },
         status: { id: 'default', txt: 'Not Started', cssVar: '--group-title-clr18' },
     }
 }
