@@ -22,7 +22,7 @@ import { FilterBy } from '../cmps/Board/filterCmps/FilterBy.jsx'
 import { boardService } from '../services/board/index.js'
 
 // img
-import noResults from '../../public/img/no-results.svg'
+import noResults from '/img/no-results.svg'
 import { PersonFilter } from '../cmps/Board/filterCmps/PersonFilter.jsx'
 
 
