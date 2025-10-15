@@ -16,9 +16,13 @@ export function FloatingContainerCmp({
     const popupRef = useRef(null)
 
     useEffect(() => {
-        if (isPopUpOpen) return
+        // if (isPopUpOpen) return
         onSetFloatingIsOpen(true)
-        return () => onSetFloatingIsOpen(false)
+        console.log('open')
+        
+        return () =>{
+             console.log('close')
+            onSetFloatingIsOpen(false)}
     }, [])
 
     useEffect(() => {
@@ -143,7 +147,7 @@ export function FloatingContainerCmp({
         }
     }, [anchorEl])
 
-    if (!anchorEl) return null
+    // if (!anchorEl) return null
 
     useLayoutEffect(() => {
         setStyle(prev => ({
@@ -156,15 +160,17 @@ export function FloatingContainerCmp({
 
 
     return createPortal(
-        <div
-            className={`fcc-container ${showTriangle ? "triangle" : ""} ${showTriangle ? trianglePos : ""}`}
-            ref={popupRef}
-            style={style}
-            onClick={e => e.stopPropagation()}
-        >
-            {children}
-        </div>,
-        document.getElementById('portal-root')
-    )
+ anchorEl ? (
+    <div
+      className={`fcc-container ${showTriangle ? "triangle" : ""} ${showTriangle ? trianglePos : ""}`}
+      ref={popupRef}
+      style={style}
+      onClick={e => e.stopPropagation()}
+    >
+      {children}
+    </div>
+  ) : null,
+  document.getElementById('portal-root')
+)
 }
 

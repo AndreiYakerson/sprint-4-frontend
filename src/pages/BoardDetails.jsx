@@ -297,7 +297,7 @@ export function BoardDetails() {
 
             {showPopUP &&
                 <PopUp onClose={() => setShowPopUP(false)}>
-                    <InviteByMail />
+                    <InviteByMail  onClose={() => setShowPopUP(false)}/>
                 </PopUp>
             }
         </section>
