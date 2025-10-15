@@ -85,8 +85,6 @@ async function updateGroupsOrder(orderedGroups, boardId) {
 async function getById(boardId, filterBy) {
     var board = await storageService.get(STORAGE_KEY, boardId)
 
-    console.log('filterBy: servics', filterBy)
-
     if (filterBy?.byGroups?.length > 0) {
         board.groups = board.groups.filter(g => filterBy.byGroups.includes(g.id))
     }

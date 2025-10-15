@@ -85,7 +85,6 @@ export async function removeBoard(boardId) {
 
 
 export async function loadBoard(boardId, filterBy) {
-    console.log('filterBy:', filterBy)
     try {
         const board = await boardService.getById(boardId, filterBy)
         store.dispatch({ type: SET_BOARD, board })
