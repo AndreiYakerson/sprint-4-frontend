@@ -1,0 +1,19 @@
+.invite-by-mail {
+    display: grid;
+    place-content: center;
+
+
+
+    header {
+        padding-bottom: var(--spacing-large);
+        padding-top: var(--spacing-small);
+        width: 605px;
+        padding-inline: var(--spacing-xl);
+    }
+
+    .section {
+        display: flex;
+        flex: 1;
+        flex-direction: column;
+    }
+}

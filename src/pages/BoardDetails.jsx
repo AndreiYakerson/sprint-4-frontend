@@ -17,7 +17,9 @@ import { AppLoader } from '../cmps/AppLoader.jsx'
 import { MultiMemberImage } from '../cmps/MultiMemberImage.jsx'
 import { HoveredTextCmp } from '../cmps/HoveredTextCmp.jsx'
 import { FloatingContainerCmp } from '../cmps/FloatingContainerCmp.jsx'
-import { onSetHighLightedTxt } from '../store/actions/system.actions.js'
+import { onSetHighLightedTxt, onSetPopUpIsOpen } from '../store/actions/system.actions.js'
+import { PopUp } from '../cmps/PopUp.jsx'
+import { InviteByMail } from '../cmps/BoardActionsNav/InviteByMail.jsx'
 
 
 export function BoardDetails() {
@@ -31,6 +33,7 @@ export function BoardDetails() {
     const [searchAnchor, setSearchAnchor] = useState()
     const [isSearchOpen, setIsSearchOpen] = useState(false)
     const [inputValue, setInputValue] = useState('')
+    const [showPopUP, setShowPopUP] = useState(false)
     const [task, setTask] = useState(null)
     const inputRef = useRef(null)
 
@@ -122,6 +125,11 @@ export function BoardDetails() {
         setIsSearchOpen(true)
     }
 
+    function _onShowPopUp(value) {
+        setShowPopUP(value)
+        onSetPopUpIsOpen(value)
+    }
+
     function isSearching() {
         if (!inputValue) {
             onClearInput()
@@ -177,7 +185,7 @@ export function BoardDetails() {
                         </div>
 
                         <div className='invite-users'>
-                            <button className='invite'>
+                            <button className='invite' onClick={() => _onShowPopUp(true)}>
                                 {` Invite / ${board?.members.length}`}
                             </button>
 
@@ -287,7 +295,11 @@ export function BoardDetails() {
                 />}
             </div>
 
-
+            {showPopUP &&
+                <PopUp onClose={() => setShowPopUP(false)}>
+                    <InviteByMail />
+                </PopUp>
+            }
         </section>
     )
 }

@@ -48,7 +48,7 @@ export function SideBar() {
     function toggleIsFavoritesTabOpen() {
         setIsFavoritesTabOpen(!isFavoritesTabOpen)
     }
-    function onShowPopUp(value) {
+    function _onShowPopUp(value) {
         setShowPopUP(value)
         onSetPopUpIsOpen(value)
     }
@@ -137,7 +137,7 @@ export function SideBar() {
                         </div>
                         <div className="flex align-center">
                             <span className="boards-title">Boards</span>
-                            <button className="blue square" onClick={() => onShowPopUp(true)}>
+                            <button className="blue square" onClick={() => _onShowPopUp(true)}>
                                 <SvgIcon iconName="plus" size={18} colorName="whiteText" />
                             </button>
                         </div>

@@ -91,7 +91,7 @@ export function BoardEdit(props) {
                     })}
                 </ul>
 
-                <div>{privacyMsg(boardToEdit.privacy)}</div>
+                <div className="privacy-note">{privacyMsg(boardToEdit.privacy)}</div>
 
                 <div className="sections-divider"></div>
 
