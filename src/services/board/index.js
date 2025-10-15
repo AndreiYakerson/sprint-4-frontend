@@ -29,6 +29,7 @@ function getDefaultFilterBoardDetails() {
         byPriorities: [],
         byMembers: [],
         byDueDateOp: [],
+        byPerson: ''
     }
 }
 
