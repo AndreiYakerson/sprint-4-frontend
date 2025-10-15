@@ -1,9 +1,11 @@
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
+import { boardService } from "../../../services/board/index.js"
 
 export function FilterBy({ board, filterBy, onSetFilterBy }) {
 
     const [boardData, setBoardData] = useState(board)
     const [filterToEdit, setFilterToEdit] = useState(filterBy)
+    const restFiltersRef = useRef(boardService.getDefaultFilterBoardDetails())
 
     useEffect(() => {
         onSetFilterBy(filterToEdit)
@@ -23,21 +25,27 @@ export function FilterBy({ board, filterBy, onSetFilterBy }) {
 
     }
 
+    function onRestFilters() {
+        setFilterToEdit(restFiltersRef.current)
+    }
+
+    const isAllEmpty = Object.values(filterBy).every(arr => Array.isArray(arr) && arr.length === 0)
+
     return (
         <section className="filter-by-board-details">
-            <header>
-                <h2>filters</h2>
-                <button>clear all</button>
+            <header className="filter-header flex align-center justify-between">
+                <span className="filter-title">Filters</span>
+                <button className="white" onClick={onRestFilters} disabled={isAllEmpty}>Clear all</button>
             </header>
 
             <section className="filters-container flex">
 
-                <div>
-                    <span className="option-title">
+                <div className="option-containe">
+                    <div className="option-title">
                         Groups
                         {filterToEdit?.byGroups?.length > 0 &&
                             ` / ${filterToEdit?.byGroups?.length}`}
-                    </span>
+                    </div>
                     <ul className="options-list">
                         {boardData.groups.map(group => {
                             return <li
@@ -52,11 +60,11 @@ export function FilterBy({ board, filterBy, onSetFilterBy }) {
                     </ul>
                 </div>
 
-                <div>
-                    <span className="option-title">
+                <div className="option-containe">
+                    <div className="option-title">
                         Name
                         {filterToEdit?.byNames?.length > 0 && ` / ${filterToEdit?.byNames?.length}`}
-                    </span>
+                    </div>
                     <ul className="options-list">
                         {boardData.groups.map(group => {
                             return group?.tasks.map(task => {
@@ -65,18 +73,18 @@ export function FilterBy({ board, filterBy, onSetFilterBy }) {
                                     key={task.title}
                                     onClick={() => hendelchange(task?.title, 'byNames')}
                                 >
-                                    {task?.title}
+                                    <span>{task?.title}</span>
                                 </li>
                             })
                         })}
                     </ul>
                 </div>
 
-                <div>
-                    <span className="option-title">
+                <div className="option-containe">
+                    <div className="option-title">
                         Status
                         {filterToEdit?.byStatuses?.length > 0 && ` / ${filterToEdit?.byStatuses?.length}`}
-                    </span>
+                    </div>
                     <ul className="options-list">
                         {boardData.statuses.map(s => {
                             return <li
@@ -85,17 +93,17 @@ export function FilterBy({ board, filterBy, onSetFilterBy }) {
                                 onClick={() => hendelchange(s.id, 'byStatuses')}
                             >
                                 <div className="item-color" style={{ backgroundColor: `var(${s?.cssVar})` }}></div>
-                                {s?.txt}
+                                <span>{s?.txt}</span>
                             </li>
                         })}
                     </ul>
                 </div>
 
-                <div>
-                    <span className="option-title">
+                <div className="option-containe">
+                    <div className="option-title">
                         Priority
                         {filterToEdit?.byPriorities?.length > 0 && ` / ${filterToEdit?.byPriorities?.length}`}
-                    </span>
+                    </div>
                     <ul className="options-list">
                         {boardData.priorities.map(p => {
                             return <li
@@ -104,17 +112,17 @@ export function FilterBy({ board, filterBy, onSetFilterBy }) {
                                 onClick={() => hendelchange(p.id, 'byPriorities')}
                             >
                                 <div className="item-color" style={{ backgroundColor: `var(${p?.cssVar})` }}></div>
-                                {p?.txt}
+                                <span>{p?.txt}</span>
                             </li>
                         })}
                     </ul>
                 </div>
 
-                <div>
-                    <span className="option-title">
+                <div className="option-containe">
+                    <div className="option-title">
                         Member
                         {filterToEdit?.byMembers?.length > 0 && ` / ${filterToEdit?.byMembers?.length}`}
-                    </span>
+                    </div>
                     <ul className="options-list">
                         {boardData.members.map(m => {
                             return <li
@@ -123,25 +131,25 @@ export function FilterBy({ board, filterBy, onSetFilterBy }) {
                                 onClick={() => hendelchange(m?._id, 'byMembers')}
                             >
                                 <img src={m?.imgUrl} alt="user-imgUrl" className="member-icon" />
-                                {m?.fullname}
+                                <span>{m?.fullname}</span>
                             </li>
                         })}
                     </ul>
                 </div>
 
-                <div>
-                    <span className="option-title">
+                <div className="option-containe">
+                    <div className="option-title">
                         Due Date
                         {filterToEdit?.byDueDateOp?.length > 0 && ` / ${filterToEdit?.byDueDateOp?.length}`}
-                    </span>
-                    <ul className="options-list">
+                    </div>
+                    <ul className="options-list date-ops">
                         {dateFilterOptions.map((dateOption, idx) => {
                             return <li
                                 key={idx}
                                 className={`option-item ${filterToEdit?.byDueDateOp?.includes(dateOption) ? "active" : ""}`}
                                 onClick={() => hendelchange(dateOption, 'byDueDateOp')}
                             >
-                                {dateOption}
+                                <span>{dateOption}</span>
                             </li>
                         })}
                     </ul>

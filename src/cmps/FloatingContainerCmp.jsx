@@ -70,7 +70,12 @@ export function FloatingContainerCmp({
     useLayoutEffect(() => {
         if (!anchorEl || !popupRef.current) return
 
-        const updatePosition = () => {
+        const updatePosition = (ev) => {
+            // Ignore scroll events that originate inside anchorEl
+            if (ev) {
+                if (popupRef.current.contains(ev.target) || anchorEl.contains(ev.target)) return
+            }
+
             const anchorRect = anchorEl.getBoundingClientRect()
             const popupEl = popupRef.current
             const popupHeight = popupEl.offsetHeight

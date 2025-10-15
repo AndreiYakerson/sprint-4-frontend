@@ -1,39 +1,67 @@
 .filter-by-board-details {
-    display: grid;
-    grid-template-columns: subgrid;
-    grid-column: 1/-1;
-    box-shadow: 10px 10px 10px black;
-
-
-    header {
+    .filter-header {
+        width: 100%;
         padding: 16px 24px 0;
+
+        .filter-title {
+            font-weight: 500;
+            font-size: 16px;
+            margin-inline-end: var(--spacing-small);
+        }
     }
 
     .filters-container {
-        padding: 8px 24px 24px 24px;
+        display: flex;
+
+        margin: 8px 24px 24px 24px;
         overflow-y: hidden;
         overflow-x: auto;
         width: 752px;
         height: 276px;
     }
 
+    .option-containe {
+        height: 100%;
+        min-width: 166px;
+        padding-block-end: 8px;
+
+        .option-title {
+            color: var(--secondary-text-color);
+            font-weight: 400;
+            margin-block-start: 30px;
+            margin-block-end: 8px;
+        }
+    }
+
     .options-list {
         display: flex;
         flex-direction: column;
         gap: 6px;
-        /* max-height: 188px; */
+        max-height: 188px;
+        width: 150px;
+        overflow-y: auto;
+        overflow-x: hidden;
+        height: 100%;
 
+        &.date-ops {
+            text-transform: capitalize;
+        }
 
         .option-item {
             display: flex;
             align-items: center;
             padding: 0 12px;
             margin-right: 4px;
-            height: 32px;
+            min-height: 32px;
             cursor: pointer;
             border-radius: 4px;
             background-color: var(--pulse-background-color);
             order: 2;
+
+            width: 100%;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
 
             &:hover {
                 background-color: var(--primary-background-hover-color);
@@ -67,6 +95,13 @@
                 height: 20px;
                 flex-shrink: 0;
                 margin-inline-end: 8px;
+            }
+
+            span {
+                width: 100%;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                overflow: hidden;
             }
 
         }

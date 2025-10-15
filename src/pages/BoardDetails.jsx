@@ -37,8 +37,10 @@ export function BoardDetails() {
     const [inputValue, setInputValue] = useState('')
     const [task, setTask] = useState(null)
     const [filterBy, setFilterBy] = useState(boardService.getDefaultFilterBoardDetails())
-    const inputRef = useRef(null)
+    const [isFilterOpen, setIsFilterOpen] = useState(false)
 
+    const inputRef = useRef(null)
+    const filterBtnRef = useRef(null)
 
     useEffect(() => {
         if (inputValue) {
@@ -91,10 +93,6 @@ export function BoardDetails() {
         }
     }
 
-    function onSetFilterBy(filterBy) {
-        setFilterBy(filterBy)
-    }
-
     function onCloseTaskDetails() {
         navigate(`/board/${boardId}`)
     }
@@ -102,6 +100,25 @@ export function BoardDetails() {
     function onCloseMenu() {
         setSearchAnchor(false)
     }
+
+
+    /// filter fncs
+    function onSetFilterBy(filterBy) {
+        setFilterBy(filterBy)
+    }
+
+
+    function toggleIsFilterOpen() {
+        setIsFilterOpen(!isFilterOpen)
+    }
+
+    function onCloseFilter() {
+        setIsFilterOpen(false)
+    }
+
+    const filterByNum = Object.values(filterBy).filter(arr => Array.isArray(arr) && arr.length > 0)?.length
+
+    ///
 
     function handelChange(ev) {
         const titleToSearch = ev.target.value
@@ -263,19 +280,29 @@ export function BoardDetails() {
                                 </span>
                                 <span className='txt'>Person</span>
                             </button>
+
                             <button className="sort-btn hover-show up" data-type={'Sort board by Any Column'}>
                                 <span className="icon">
                                     <SvgIcon iconName='sortArrows' size={20} colorName='secondaryText' />
                                 </span>
                                 <span className='txt'>Sort</span>
                             </button>
+
+                            <button className={`filter-btn hover-show up ${isFilterOpen ? "active" : ""}`}
+                                data-type={'filter board by Anything'}
+                                ref={filterBtnRef} onClick={toggleIsFilterOpen}
+                            >
+                                <span className="icon">
+                                    <SvgIcon iconName='filter' size={20} colorName='secondaryText' />
+                                </span>
+                                <span className='txt'>Filter {filterByNum ? `/ ${filterByNum}` : ""}</span>
+                            </button>
+
                         </section>
                     </div>
 
                     {/* <SortFilterCmp /> */}
                 </header>
-
-                {board && <FilterBy board={board} filterBy={filterBy} onSetFilterBy={onSetFilterBy} />}
 
                 {board?.groups?.length > 0 &&
                     < GroupList
@@ -285,7 +312,9 @@ export function BoardDetails() {
 
                 <button
                     onClick={() => onAddGroup(board?._id)}
-                    className='add-group flex'> <SvgIcon iconName="plus" size={20} /> <span>Add new group</span>
+                    className='add-group flex'>
+                    <SvgIcon iconName="plus" size={20} />
+                    <span>Add new group</span>
                 </button>
 
 
@@ -300,6 +329,13 @@ export function BoardDetails() {
                 />}
             </div>
 
+            {board && isFilterOpen && <FloatingContainerCmp
+                anchorEl={filterBtnRef.current}
+                onClose={onCloseFilter}
+            >
+                <FilterBy board={board} filterBy={filterBy} onSetFilterBy={onSetFilterBy} />
+
+            </FloatingContainerCmp>}
 
         </section>
     )

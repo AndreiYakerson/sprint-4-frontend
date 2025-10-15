@@ -12,6 +12,10 @@ button {
 
 	transition: 100ms ease-in-out;
 
+	&:disabled {
+		cursor: auto;
+	}
+
 	&:has(.svg-icon) {
 		justify-items: center;
 	}
@@ -41,7 +45,7 @@ button {
 		background-color: var(--primary-selected-color)
 	}
 
-	&:hover {
+	&:hover:not(:disabled) {
 		background-color: var(--primary-background-hover-color);
 
 		&.active {
@@ -49,8 +53,8 @@ button {
 		}
 	}
 
-	&:active {
-		scale: 0.8;
+	&:active:not(:disabled) {
+		scale: 0.90;
 	}
 
 
@@ -83,6 +87,16 @@ button {
 		align-items: center;
 
 		gap: 4px;
+	}
+
+	&.filter-btn {
+		.svg-icon {
+			min-width: 24px;
+
+			svg {
+				justify-self: center;
+			}
+		}
 	}
 }
 
