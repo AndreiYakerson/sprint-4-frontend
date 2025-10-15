@@ -21,6 +21,9 @@ import { onSetHighLightedTxt } from '../store/actions/system.actions.js'
 import { FilterBy } from '../cmps/Board/filterCmps/FilterBy.jsx'
 import { boardService } from '../services/board/index.js'
 
+// img
+import noResults from '../../public/img/no-results.svg'
+
 
 export function BoardDetails() {
     const [anchorEl, setAnchorEl] = useState(false)
@@ -288,7 +291,7 @@ export function BoardDetails() {
                                 <span className='txt'>Sort</span>
                             </button>
 
-                            <button className={`filter-btn hover-show up ${isFilterOpen ? "active" : ""}`}
+                            <button className={`filter-btn hover-show up ${isFilterOpen || filterByNum > 0 ? "active" : ""}`}
                                 data-type={'filter board by Anything'}
                                 ref={filterBtnRef} onClick={toggleIsFilterOpen}
                             >
@@ -304,20 +307,25 @@ export function BoardDetails() {
                     {/* <SortFilterCmp /> */}
                 </header>
 
-                {board?.groups?.length > 0 &&
-                    < GroupList
+                {board?.groups?.length > 0
+                    ? < GroupList
                         groups={board.groups}
                         managingType={board?.managingType}
-                    />}
-
-                <button
-                    onClick={() => onAddGroup(board?._id)}
-                    className='add-group flex'>
-                    <SvgIcon iconName="plus" size={20} />
-                    <span>Add new group</span>
-                </button>
+                    />
+                    : <div className='no-results-msg'>
+                        <img src={noResults} alt="no-results" />
+                        <div class="no-results-title">No results were found</div>
+                    </div>
+                }
 
 
+                {board?.groups?.length > 0 &&
+                    <button
+                        onClick={() => onAddGroup(board?._id)}
+                        className='add-group flex'>
+                        <SvgIcon iconName="plus" size={20} />
+                        <span>Add new group</span>
+                    </button>}
 
             </div>
 
