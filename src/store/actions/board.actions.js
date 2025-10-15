@@ -214,6 +214,15 @@ export function setBoardRemovedMsg(msg) {
     store.dispatch({ type: SET_BOARD_REMOVED_MSG, msg })
 }
 
+// Columns  ///////////////////////////////////////////////////////////////
+
+export function addColumn(boardId, columnType) {
+    return boardService.addColumn(boardId, columnType)
+}
+
+
+
+
 
 
 // // Command Creators:

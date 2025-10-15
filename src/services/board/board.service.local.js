@@ -20,6 +20,8 @@ export const boardService = {
     updateGroup,
     removeGroup,
     updateGroupsOrder,
+    //column
+    addColumn,
     //task 
     addTask,
     removeTask,
@@ -227,6 +229,23 @@ async function removeGroup(boardId, groupId) {
         board.groups = board.groups.filter(group => group.id !== groupId)
 
         return await save(board)
+
+    } catch (err) {
+        throw err
+    }
+}
+
+// column functions
+async function addColumn(boardId, columnType) {
+
+    try {
+        const board = await getById(boardId)
+        if (!board) throw new Error(`Board ${boardId} not found`);
+
+        board.cmpOrder.push(columnType)
+        await save(board)
+
+        return columnType
 
     } catch (err) {
         throw err

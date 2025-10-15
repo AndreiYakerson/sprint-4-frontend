@@ -27,6 +27,10 @@ export const ADD_BOARD_MSG = 'ADD_BOARD_MSG'
 export const SET_IS_BOARD_EDITOR_OPEN = 'SET_IS_BOARD_EDITOR_OPEN'
 export const SET_BOARD_REMOVED_MSG = 'SET_BOARD_REMOVED_MSG'
 
+export const ADD_COLUMN = 'ADD_COLUMN'
+export const REMOVE_COLUMN = 'REMOVE_COLUMN'
+
+
 
 
 const initialState = {
