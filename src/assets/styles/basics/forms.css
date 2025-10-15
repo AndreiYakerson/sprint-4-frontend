@@ -42,7 +42,7 @@ button {
 	}
 
 	&.active {
-		background-color: var(--primary-selected-color)
+		background-color: var(--primary-selected-color-btn)
 	}
 
 	&:hover:not(:disabled) {

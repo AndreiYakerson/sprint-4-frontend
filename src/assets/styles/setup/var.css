@@ -10,8 +10,8 @@
   /* hover background-color  */
   --primary-background-hover-color: rgba(103, 104, 121, 0.1);
   /* active selected background-color: ; */
-  /* --primary-selected-color: rgba(194, 213, 255, 0.40); */
-  --primary-selected-color: #cce5ff;
+  --primary-selected-color: rgba(194, 213, 255, 0.40);
+  --primary-selected-color-btn: #cce5ff;
   --primary-selected-hover-color: #aed4fc;
 
   --secondary-text-color: #676879;
@@ -157,9 +157,9 @@
   --avatar-image-size: 32px;
   --avatar-background: rgba(255, 255, 255, 0.5);
   --font-weight-light: 300;
-  
 
-  
+
+
   /* aside menu */
 
 

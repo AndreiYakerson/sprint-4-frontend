@@ -20,7 +20,7 @@
         padding: 0;
         box-shadow: none;
         border-radius: 0;
-
+        padding-inline: 16px;
 
         .board-item {
             border: 0;
