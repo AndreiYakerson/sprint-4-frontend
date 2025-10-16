@@ -10,11 +10,10 @@ import { FloatingContainerCmp } from "../../FloatingContainerCmp.jsx";
 import { StatusAnimation } from "../../StatusAnimation.jsx";
 
 export function StatusPicker({ info, onUpdate }) {
-    const { selectedStatus, statuses } = info
     const board = useSelector(state => state.boardModule.board)
-    const [selectedLabelId, setSelectedLabelId] = useState(selectedStatus?.id)
+    const [selectedLabelId, setSelectedLabelId] = useState(info.selectedStatus?.id)
     const [isEditOpen, setIsEditOpen] = useState(false)
-    const [labels, setLabels] = useState(statuses)
+    const [labels, setLabels] = useState(board.statuses)
     const [anchorEl, setAnchorEl] = useState()
     const label = labels.find(l => l.id === selectedLabelId)
 
@@ -25,7 +24,6 @@ export function StatusPicker({ info, onUpdate }) {
 
     function onSaveLabel(label) {
         const newLabel = ({ ...label, updatedAt: Date.now() })
-        console.log("🚀 ~ onSaveLabel ~ newLabel:", newLabel)
         setSelectedLabelId(newLabel.id)
         onUpdate(newLabel)
         onClose()

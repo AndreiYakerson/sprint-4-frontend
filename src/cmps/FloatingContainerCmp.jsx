@@ -18,10 +18,8 @@ export function FloatingContainerCmp({
     useEffect(() => {
         // if (isPopUpOpen) return
         onSetFloatingIsOpen(true)
-        console.log('open')
         
         return () =>{
-             console.log('close')
             onSetFloatingIsOpen(false)}
     }, [])
 

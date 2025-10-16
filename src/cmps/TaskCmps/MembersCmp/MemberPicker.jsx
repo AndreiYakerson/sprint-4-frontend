@@ -13,12 +13,13 @@ import { showErrorMsg } from "../../../services/event-bus.service"
 import { MultiMembersPreview } from "./MultiMembersPreview"
 
 export function MemberPicker({ info, onUpdate }) {
-    const { label, members, propName, selectedMemberIds } = info
+    const {selectedMemberIds} = info
 
     const [memberEl, setMemberEl] = useState(null)
     const [membersSelectEl, setMembersSelectEl] = useState(null)
     const [isAnimation, setIsAnimation] = useState(false)
     const [hoveredUser, setHoveredUser] = useState(null)
+    const board = useSelector(state => state.boardModule.board)
     const isFloatingOpen = useSelector(state => state.systemModule.isFloatingOpen)
 
 
@@ -55,7 +56,7 @@ export function MemberPicker({ info, onUpdate }) {
     }
 
     const membersToShow = selectedMemberIds.map(memberId => {
-        return members.find(member => member._id === memberId)
+        return board.members?.find(member => member._id === memberId)
     }).filter(Boolean)
 
     return (
@@ -94,7 +95,7 @@ export function MemberPicker({ info, onUpdate }) {
                     <MemberTaskSelect
                         onRemove={onRemoveMember}
                         selectedMemberIds={selectedMemberIds}
-                        members={members}
+                        members={board.members}
                         onClose={updateTaskMembers}
                     />
                 </FloatingContainerCmp>

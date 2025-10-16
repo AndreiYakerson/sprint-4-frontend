@@ -49,7 +49,7 @@ export function TaskPreview({ task, groupId, taskIdx }) {
                     label: 'Status:',
                     propName: 'status',
                     selectedStatus: task.status,
-                    statuses: board.statuses,
+                    // statuses: board.statuses,
                 }
             },
             {
@@ -58,7 +58,7 @@ export function TaskPreview({ task, groupId, taskIdx }) {
                     label: 'Members:',
                     propName: 'memberIds',
                     selectedMemberIds: task.memberIds || [],
-                    members: board.members,
+                    // members: board.members,
                 }
             },
             {
@@ -68,7 +68,7 @@ export function TaskPreview({ task, groupId, taskIdx }) {
                     propName: 'priority',
                     taskPriority: task.priority,
                     boardPriorities: board.priorities,
-                    boardId: board._id
+                    // boardId: board._id
                 }
             },
             {
