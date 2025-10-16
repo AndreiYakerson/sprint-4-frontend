@@ -36,7 +36,9 @@ export function FloatingContainerCmp({
             const isOffScreen = rect.bottom < 0 || rect.top > window.innerHeight
 
             if (isBelowHeader || isOffScreen) {
-                onClose()
+                setTimeout(() => {
+                    onClose()
+                }, 0)
             }
         }
 
@@ -64,8 +66,8 @@ export function FloatingContainerCmp({
                 }, 0)
         }
 
-        document.addEventListener('mousedown', handleClickOutside)
-        return () => document.removeEventListener('mousedown', handleClickOutside)
+        document.addEventListener('click', handleClickOutside)
+        return () => document.removeEventListener('click', handleClickOutside)
     }, [anchorEl, onClose])
 
 

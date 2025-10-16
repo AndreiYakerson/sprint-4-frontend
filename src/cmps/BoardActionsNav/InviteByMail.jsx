@@ -5,7 +5,7 @@ import { useEffect, useState } from "react"
 import { FloatingContainerCmp } from "../FloatingContainerCmp"
 import { loadFromStorage } from "../../services/util.service"
 
-export function InviteByMail({ onClose }) {
+export function InviteByMail({onClose}) {
     // const users = useSelector(state => state.userModule.users)
     const user = useSelector(state => state.userModule.user)
     const board = useSelector(state => state.boardModule.board)
@@ -113,7 +113,6 @@ export function InviteByMail({ onClose }) {
                         anchorEl={anchorEl}
                         onClose={onCloseMenu}
                     >
-                        df
                         <div>hello</div>
                     </FloatingContainerCmp>}
             </div>

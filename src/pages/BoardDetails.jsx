@@ -17,13 +17,15 @@ import { AppLoader } from '../cmps/AppLoader.jsx'
 import { MultiMemberImage } from '../cmps/MultiMemberImage.jsx'
 import { HoveredTextCmp } from '../cmps/HoveredTextCmp.jsx'
 import { FloatingContainerCmp } from '../cmps/FloatingContainerCmp.jsx'
-import { onSetHighLightedTxt } from '../store/actions/system.actions.js'
+import { onSetHighLightedTxt, onSetPopUpIsOpen } from '../store/actions/system.actions.js'
 import { FilterBy } from '../cmps/Board/filterCmps/FilterBy.jsx'
 import { boardService } from '../services/board/index.js'
 
 // img
 import noResults from '/img/no-results.svg'
 import { PersonFilter } from '../cmps/Board/filterCmps/PersonFilter.jsx'
+import { InviteByMail } from '../cmps/BoardActionsNav/InviteByMail.jsx'
+import { PopUp } from '../cmps/PopUp.jsx'
 
 
 export function BoardDetails() {
@@ -106,6 +108,7 @@ export function BoardDetails() {
 
     function onCloseMenu() {
         setSearchAnchor(false)
+        setShowPopUP(false)
     }
 
 
@@ -400,7 +403,9 @@ export function BoardDetails() {
                 />
 
             </FloatingContainerCmp>}
-
+          {showPopUP &&  <PopUp onClose={onCloseMenu}>
+                <InviteByMail onClose={onCloseMenu} />
+            </PopUp>}
         </section>
     )
 }
