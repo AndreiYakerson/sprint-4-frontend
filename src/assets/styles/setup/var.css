@@ -157,7 +157,9 @@
   --avatar-image-size: 32px;
   --avatar-background: rgba(255, 255, 255, 0.5);
   --font-weight-light: 300;
-
+  
+/* popup container */
+      --font-h2-medium: 600 24px / 30px var(--title-font-family);
 
 
   /* aside menu */

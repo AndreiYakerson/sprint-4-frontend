@@ -35,18 +35,13 @@ export function onSetIsApploading(isLoading) {
     store.dispatch({ type: SET_IS_APP_LOADING, isLoading })
 }
 
+
 export async function onSetHighLightedTxt(txt) {
-
     try {
-
         store.dispatch({ type: SET_TXT_HIGH_LIGHT, txt })
-
     } catch (err) {
-
         console.log('Cannot Set Txt To High-Light', err)
-
         throw err
-
     }
 
 }

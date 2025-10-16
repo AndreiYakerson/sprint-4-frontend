@@ -1,0 +1,109 @@
+.invite-by-mail-wrapper {
+    width: 605px;
+    /* height: 650px; */
+
+    .invite-by-mail {
+        display: flex;
+        position: relative;
+        flex-direction: column;
+        /* padding-block: var(--spacing-large); */
+        padding-inline: var(--spacing-xl);
+        border-radius: var(--border-radius-big);
+        background-color: var(--secondary-background-color);
+
+
+        header {
+            justify-content: space-between;
+            align-items: center;
+
+            padding-bottom: var(--spacing-large);
+            padding-top: var(--spacing-small);
+            /* padding-inline: var(--spacing-xl); */
+            margin-block-start: var(--spacing-medium);
+
+
+            font: var(--font-h2-medium);
+            letter-spacing: var(--letter-spacing-h2-medium);
+            -webkit-font-smoothing: var(--font-smoothing-webkit);
+
+            .header-btns {
+                display: flex;
+                gap: 10px;
+
+                button {
+                    justify-content: center;
+                    align-items: center;
+                    padding: 0px;
+                    width: 32px;
+                    height: 32px;
+                    border: none;
+                }
+            }
+        }
+
+        .search-input {
+            position: relative;
+            vertical-align: top;
+            background-color: transparent;
+
+
+        }
+
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+            flex: 1;
+
+            /* max-height: 400px; */
+            .build-txt {
+                gap: 8px;
+            }
+
+            .user {
+                cursor: default;
+                gap: 8px;
+                padding: 8px;
+                justify-content: space-between;
+
+                .user-container {
+                    display: flex;
+                    cursor: pointer;
+                    align-items: center;
+                    gap: 8px;
+
+                    img {
+                        width: 32px;
+                    }
+
+                    .user-name-and-pro {
+                        display: grid;
+                        text-align: justify;
+
+                        .user-profession{
+                            color: var(--secondary-text-color);
+                        }
+                    }
+                }
+
+                & .user-actions {
+                    display: flex;
+                    gap: 8px;
+
+                    &.owner {
+                        button {
+                            cursor: pointer;
+                            border: none;
+                        }
+                    }
+
+                    button {
+                        cursor: default;
+                        border: none;
+                        background-color: transparent;
+                    }
+                }
+            }
+        }
+    }
+}

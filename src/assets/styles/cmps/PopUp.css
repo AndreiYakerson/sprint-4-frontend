@@ -14,7 +14,7 @@
     /* background-color: var(--react-modal-background); */
 
 
-    &:has(.board-edit) {
+    &:has(.board-edit, .invite-by-mail) {
         background-color: var(--react-modal-background);
     }
 
@@ -29,7 +29,8 @@
     flex-direction: column;
     place-items: center;
 
-    max-width: 500px;
+    width: fit-content;
+    /* max-width: 600px; */
     max-height: 90vh;
 
     overflow-y: auto;
@@ -38,33 +39,36 @@
     background-color: var(--primary-background-color);
     box-shadow: var(--box-shadow-large);
 
-    z-index: 100000;
-    padding: 1rem;
-    overflow-y: auto;
-    flex: 1;
-
-
-
-    .popup-close-btn {
+    /* z-index: 100000; */
+    /* padding: 1rem; */
+    /* overflow-y: auto;
+    flex: 1; */
+    /* .popup-close-btn {
         position: absolute;
         right: 16px;
         top: 16px;
         z-index: 1000000;
-    }
+    } */
 }
 
-.popup-header {
+.popup-container::-webkit-scrollbar-thumb {
+    border-top: 30px solid transparent;
+    /* shortens top */
+    border-bottom: 30px solid transparent;
+    /* shortens bottom */
+}
+
+/* .popup-header {
     padding: 0.5rem;
     border-bottom: 1px solid var(--primary-background-color);
     font-weight: bold;
-}
+} */
 
-.popup-main {
-}
+.popup-main {}
 
-.popup-footer {
+/* .popup-footer {
     padding: 0.5rem;
     border-top: 1px solid var(--primary-background-color);
     display: flex;
     justify-content: center;
-}
+} */

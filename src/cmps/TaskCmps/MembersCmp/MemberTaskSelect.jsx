@@ -17,7 +17,7 @@ export function MemberTaskSelect({ selectedMemberIds, onClose, members, onRemove
     const board = useSelector(state => state.boardModule.board)
     const users = loadFromStorage('users')
     const [anchorEl, setAnchorEl] = useState(false)
-    const [notBoardMembers, setNotBoardMembers] = useState(false)
+    const [membersToShow, setMembersToShow] = useState([])
 
     //Demo
     useEffect(() => {
@@ -37,15 +37,17 @@ export function MemberTaskSelect({ selectedMemberIds, onClose, members, onRemove
         }
 
         setInputValue(userToFind)
-        const regex = new RegExp('^' + userToFind, 'i')
-        const notMembers = users.filter(user => regex.test(user.fullname)).filter(u => !members.some(m => m._id === u._id))
 
-        if (!!notMembers.length) setNotBoardMembers(notMembers)
+        const regex = new RegExp( userToFind, 'i')
+        const filteredMembers = members
+            .filter(m => regex.test(m.fullname) || regex.test(m.profession))
+
+        if (!!filteredMembers.length) setMembersToShow(filteredMembers)
         setAnchorEl(ev.currentTarget)
     }
 
     function onClearInput() {
-        setNotBoardMembers(false)
+        setMembersToShow(false)
         setAnchorEl(false)
         setInputValue('')
 
@@ -67,7 +69,7 @@ export function MemberTaskSelect({ selectedMemberIds, onClose, members, onRemove
         }
     }
 
-    const usersToShow = members.filter(member => !selectedMemberIds.includes(member._id));
+    const usersToShow = !!membersToShow.length ? membersToShow : members.filter(member => !selectedMemberIds.includes(member._id));
     const existingUsers = members.filter(member => selectedMemberIds.includes(member._id));
     const emptyInput = inputValue ? true : false
     return (
@@ -112,12 +114,12 @@ export function MemberTaskSelect({ selectedMemberIds, onClose, members, onRemove
                         {' Invite a new member by email'}
                     </button> */}
                 </section>
-                {anchorEl && notBoardMembers &&
+                {/* {anchorEl && membersToShow &&
                     <FloatingContainerCmp
                         anchorEl={anchorEl}
                         onClose={onClose}>
                         <div className='found-users-container'>
-                            {notBoardMembers.map((user, idx) => {
+                            {membersToShow.map((user, idx) => {
                                 return <button
                                     onClick={() => onAddMemberToBoard(user, idx)}
                                     key={user._id}
@@ -134,7 +136,7 @@ export function MemberTaskSelect({ selectedMemberIds, onClose, members, onRemove
                         </div>
                     </FloatingContainerCmp>
 
-                }
+                } */}
 
             </div>
 

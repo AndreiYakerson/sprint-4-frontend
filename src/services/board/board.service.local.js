@@ -406,7 +406,7 @@ function _setBaordToSave({ title = 'New board', managingType = 'items', privacy 
         statuses: DefaultStatuses,
         cmpOrder: ['members', 'status', 'priority', 'due date'],
         // Demo Members
-        members: [],
+        members: userService.createDemoUsersForBoard(5),
         groups: [
             {
                 id: makeId(),

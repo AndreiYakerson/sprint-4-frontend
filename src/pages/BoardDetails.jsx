@@ -17,13 +17,15 @@ import { AppLoader } from '../cmps/AppLoader.jsx'
 import { MultiMemberImage } from '../cmps/MultiMemberImage.jsx'
 import { HoveredTextCmp } from '../cmps/HoveredTextCmp.jsx'
 import { FloatingContainerCmp } from '../cmps/FloatingContainerCmp.jsx'
-import { onSetHighLightedTxt } from '../store/actions/system.actions.js'
+import { onSetHighLightedTxt, onSetPopUpIsOpen } from '../store/actions/system.actions.js'
 import { FilterBy } from '../cmps/Board/filterCmps/FilterBy.jsx'
 import { boardService } from '../services/board/index.js'
 
 // img
 import noResults from '/img/no-results.svg'
 import { PersonFilter } from '../cmps/Board/filterCmps/PersonFilter.jsx'
+import { InviteByMail } from '../cmps/BoardActionsNav/InviteByMail.jsx'
+import { PopUp } from '../cmps/PopUp.jsx'
 
 
 export function BoardDetails() {
@@ -39,6 +41,7 @@ export function BoardDetails() {
     const [searchAnchor, setSearchAnchor] = useState()
     const [isSearchOpen, setIsSearchOpen] = useState(false)
     const [inputValue, setInputValue] = useState('')
+    const [showPopUP, setShowPopUP] = useState(false)
     const [task, setTask] = useState(null)
     const [filterBy, setFilterBy] = useState(boardService.getDefaultFilterBoardDetails())
     const [isFilterOpen, setIsFilterOpen] = useState(false)
@@ -105,6 +108,7 @@ export function BoardDetails() {
 
     function onCloseMenu() {
         setSearchAnchor(false)
+        setShowPopUP(false)
     }
 
 
@@ -161,6 +165,11 @@ export function BoardDetails() {
     function onOpenSearchBar() {
         requestAnimationFrame(() => inputRef.current?.focus())
         setIsSearchOpen(true)
+    }
+
+    function _onShowPopUp(value) {
+        setShowPopUP(value)
+        onSetPopUpIsOpen(value)
     }
 
     function isSearching() {
@@ -221,7 +230,7 @@ export function BoardDetails() {
                         </div>
 
                         <div className='invite-users'>
-                            <button className='invite'>
+                            <button className='invite' onClick={() => _onShowPopUp(true)}>
                                 {` Invite / ${board?.members.length}`}
                             </button>
 
@@ -394,7 +403,9 @@ export function BoardDetails() {
                 />
 
             </FloatingContainerCmp>}
-
+          {showPopUP &&  <PopUp onClose={onCloseMenu}>
+                <InviteByMail onClose={onCloseMenu} />
+            </PopUp>}
         </section>
     )
 }
