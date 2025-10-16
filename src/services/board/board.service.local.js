@@ -2,6 +2,10 @@
 import { storageService } from '../async-storage.service'
 import { userService } from '../user'
 import { getRandomGroupColor, makeId } from '../util.service'
+
+/// for filter date
+import { DateTime } from "luxon"
+
 // import { userService } from '../user'
 
 const STORAGE_KEY = 'board'
@@ -78,8 +82,92 @@ async function updateGroupsOrder(orderedGroups, boardId) {
     }
 }
 
-function getById(boardId) {
-    return storageService.get(STORAGE_KEY, boardId)
+async function getById(boardId, filterBy) {
+    var board = await storageService.get(STORAGE_KEY, boardId)
+
+    if (filterBy?.byGroups?.length > 0) {
+        board.groups = board.groups.filter(g => filterBy.byGroups.includes(g.id))
+    }
+
+    if (filterBy?.byNames?.length > 0) {
+        board.groups = board.groups.filter(g => {
+            g.tasks = g.tasks.filter(t => filterBy.byNames.includes(t.title))
+            return g?.tasks?.length > 0
+        })
+    }
+
+
+    if (filterBy?.byStatuses?.length > 0) {
+        board.groups = board.groups.filter(g => {
+            g.tasks = g.tasks.filter(t => filterBy.byStatuses.includes(t?.status?.id))
+            return g?.tasks?.length > 0
+        })
+    }
+
+    if (filterBy?.byPriorities?.length > 0) {
+        board.groups = board.groups.filter(g => {
+            g.tasks = g.tasks.filter(t => filterBy.byPriorities.includes(t?.priority?.id))
+            return g?.tasks?.length > 0
+        })
+    }
+
+    if (filterBy?.byMembers?.length > 0) {
+        board.groups = board.groups.filter(g => {
+            g.tasks = g.tasks.filter(t => {
+                return filterBy.byMembers.some(m => t?.memberIds.includes(m))
+            })
+            return g?.tasks?.length > 0
+        })
+    }
+
+    if (filterBy?.byDueDateOp?.length > 0) {
+        const now = DateTime.local()
+        const ops = filterBy.byDueDateOp
+
+        board.groups = board.groups
+            .filter(g => {
+                g.tasks = g.tasks.filter(t => {
+                    if (!t?.dueDate?.date) return false
+
+                    const dueDate = DateTime.fromMillis(t.dueDate.date)
+                    const isDone = t?.status?.id === "done"
+                    const updatedAt = t?.status?.updatedAt
+                        ? DateTime.fromMillis(t.status.updatedAt)
+                        : null
+
+                    return (
+                        (ops.includes("today") && dueDate.hasSame(now, "day")) ||
+                        (ops.includes("tomorrow") && dueDate.hasSame(now.plus({ days: 1 }), "day")) ||
+                        (ops.includes("yesterday") && dueDate.hasSame(now.minus({ days: 1 }), "day")) ||
+
+                        (ops.includes("this week") && dueDate.hasSame(now, "week")) ||
+                        (ops.includes("last week") && dueDate.hasSame(now.minus({ weeks: 1 }), "week")) ||
+                        (ops.includes("next week") && dueDate.hasSame(now.plus({ weeks: 1 }), "week")) ||
+
+                        (ops.includes("this month") && dueDate.hasSame(now, "month")) ||
+                        (ops.includes("last month") && dueDate.hasSame(now.minus({ months: 1 }), "month")) ||
+                        (ops.includes("next month") && dueDate.hasSame(now.plus({ months: 1 }), "month")) ||
+
+                        (ops.includes("overdue") && !isDone && dueDate.startOf("day") < now.startOf("day")) ||
+                        (ops.includes("done on time") && isDone && updatedAt && updatedAt <= dueDate) ||
+                        (ops.includes("done overdue") && isDone && updatedAt && updatedAt > dueDate)
+                    )
+                })
+                return g => g.tasks.length > 0
+            })
+    }
+
+    /// Filter by specific user as opposed to a list of users ids from person filter
+
+    if (filterBy?.byPerson) {
+        board.groups = board.groups.filter(g => {
+            g.tasks = g.tasks.filter(t => t?.memberIds.includes(filterBy.byPerson))
+            return g?.tasks?.length > 0
+        })
+    }
+
+
+    return board
 }
 
 async function remove(boardId) {
@@ -333,6 +421,7 @@ function _setBaordToSave({ title = 'New board', managingType = 'items', privacy 
                         createdAt: Date.now(),
                         memberIds: [],
                         priority: { txt: 'Default Label', cssVar: '--group-title-clr18', id: 'Default' },
+                        status: { id: 'default', txt: 'Not Started', cssVar: '--group-title-clr18' },
 
                     },
                     {
@@ -340,7 +429,8 @@ function _setBaordToSave({ title = 'New board', managingType = 'items', privacy 
                         title: 'Item 2',
                         createdAt: Date.now(),
                         memberIds: [],
-                        priority: { txt: 'Default Label', cssVar: '--group-title-clr18', id: 'Default' }
+                        priority: { txt: 'Default Label', cssVar: '--group-title-clr18', id: 'Default' },
+                        status: { id: 'default', txt: 'Not Started', cssVar: '--group-title-clr18' },
                     },
                 ],
                 style: {
@@ -370,6 +460,7 @@ function _getEmptyTask(title = 'New Task') {
         title: title,
         createdAt: Date.now(),
         memberIds: [],
-        priority: { txt: 'Default Label', cssVar: '--group-title-clr18', id: 'Default' }
+        priority: { txt: 'Default Label', cssVar: '--group-title-clr18', id: 'Default' },
+        status: { id: 'default', txt: 'Not Started', cssVar: '--group-title-clr18' },
     }
 }

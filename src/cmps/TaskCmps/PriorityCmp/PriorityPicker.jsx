@@ -22,8 +22,8 @@ export function PriorityPicker({ info, onUpdate }) {
 
 
     useEffect(() => {
-        setLabels(boardPriorities)
-    }, [boardPriorities])
+        setLabels(board.priorities)
+    }, [board.priorities])
 
 
     function onSaveLabel(label) {

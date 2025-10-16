@@ -53,7 +53,6 @@ export function SideBar() {
         onSetPopUpIsOpen(value)
     }
 
-
     const favoritesBoards = boards.filter(b => b.isStarred)
 
     return (

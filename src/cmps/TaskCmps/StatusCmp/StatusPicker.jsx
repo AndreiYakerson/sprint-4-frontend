@@ -19,8 +19,8 @@ export function StatusPicker({ info, onUpdate }) {
     const label = labels.find(l => l.id === selectedLabelId)
 
     useEffect(() => {
-        setLabels(statuses)
-    }, [statuses])
+        setLabels(board.statuses)
+    }, [board.statuses])
 
 
     function onSaveLabel(label) {

@@ -4,14 +4,17 @@
   --primary-background-color: rgb(255, 255, 255);
   /* popup backdrop */
   --react-modal-background: rgba(41, 47, 76, 0.7);
+  /* filter options */
+  --pulse-background-color: #f5f6f8;
+  --card-selected-background-color: #d9f0ff;
 
   /* hover background-color  */
   --primary-background-hover-color: rgba(103, 104, 121, 0.1);
   /* active selected background-color: ; */
-  /* --primary-selected-color: rgba(194, 213, 255, 0.40); */
-  --primary-selected-color: #cce5ff;
+  --primary-selected-color: rgba(194, 213, 255, 0.40);
+  --primary-selected-color-btn: #cce5ff;
+  --primary-selected-hover-color: #aed4fc;
 
-  --secondary-text-color: #676879;
 
   /* text color -  icon use this colors  */
   --primary-text-color: rgb(50, 51, 56);
@@ -158,7 +161,7 @@
 /* popup container */
       --font-h2-medium: 600 24px / 30px var(--title-font-family);
 
-  
+
   /* aside menu */
 
 

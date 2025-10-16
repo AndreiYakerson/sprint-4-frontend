@@ -84,9 +84,9 @@ export async function removeBoard(boardId) {
 // BOARD ACTIONS
 
 
-export async function loadBoard(boardId) {
+export async function loadBoard(boardId, filterBy) {
     try {
-        const board = await boardService.getById(boardId)
+        const board = await boardService.getById(boardId, filterBy)
         store.dispatch({ type: SET_BOARD, board })
     } catch (err) {
         console.log('Cannot load board', err)

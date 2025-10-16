@@ -134,7 +134,7 @@ export function BoardEdit(props) {
                     </li>
                 </ul>
 
-                <div className="actions flex">
+                <div className="btns-actions flex">
                     <button type="button"
                         className="white"
                         onClick={() => setIsBoardEditorOpen(false)}>Cancel</button>

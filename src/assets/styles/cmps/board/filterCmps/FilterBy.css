@@ -1,0 +1,109 @@
+.filter-by-board-details {
+    .filter-header {
+        width: 100%;
+        padding: 16px 24px 0;
+
+        .filter-title {
+            font-weight: 500;
+            font-size: 16px;
+            margin-inline-end: var(--spacing-small);
+        }
+    }
+
+    .filters-container {
+        display: flex;
+
+        margin: 8px 24px 24px 24px;
+        overflow-y: hidden;
+        overflow-x: auto;
+        width: 752px;
+        height: 276px;
+    }
+
+    .option-containe {
+        height: 100%;
+        min-width: 166px;
+        padding-block-end: 8px;
+
+        .option-title {
+            color: var(--secondary-text-color);
+            font-weight: 400;
+            margin-block-start: 30px;
+            margin-block-end: 8px;
+        }
+    }
+
+    .options-list {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        max-height: 188px;
+        width: 150px;
+        overflow-y: auto;
+        overflow-x: hidden;
+        height: 100%;
+
+        &.date-ops {
+            text-transform: capitalize;
+        }
+
+        .option-item {
+            display: flex;
+            align-items: center;
+            padding: 0 12px;
+            margin-right: 4px;
+            min-height: 32px;
+            cursor: pointer;
+            border-radius: 4px;
+            background-color: var(--pulse-background-color);
+            order: 2;
+
+            width: 100%;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
+
+            &:hover {
+                background-color: var(--primary-background-hover-color);
+                color: var(--primary-text-color);
+            }
+
+            &.active {
+                background-color: var(--primary-selected-color);
+                order: 1;
+
+                &:hover {
+                    background-color: var(--primary-selected-hover-color);
+
+                }
+            }
+
+            .item-color {
+                display: inline-block;
+                width: 10px;
+                height: 10px;
+                border-radius: 50%;
+                margin-right: 5px;
+                flex: 0 0 auto;
+            }
+
+            .member-icon {
+                position: relative;
+                display: flex;
+                border-radius: 50%;
+                width: 20px;
+                height: 20px;
+                flex-shrink: 0;
+                margin-inline-end: 8px;
+            }
+
+            span {
+                width: 100%;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                overflow: hidden;
+            }
+
+        }
+    }
+}

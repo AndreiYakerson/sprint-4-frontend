@@ -479,6 +479,8 @@
     background-color: rgba(223, 209, 209, 0.276);
     box-shadow: 2px 2px 0 rgb(191 199 197 / 79%);
 
+    cursor: grabbing;
+
     .collapse-group-toggle {
         color: var(--group-color);
     }

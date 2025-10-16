@@ -24,7 +24,7 @@ export function LabelsList({ labels, onSwitchEditMode, onSaveLabel }) {
 
             <section className="actions">
                 <button onClick={onSwitchEditMode} className='edit-labels-btn'>
-                    <SvgIcon iconName={editPen} size={20} />
+                    <SvgIcon iconName='pen' size={20} />
                     Edit Labels</button>
             </section>
         </>

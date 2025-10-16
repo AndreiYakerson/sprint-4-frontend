@@ -17,9 +17,13 @@ import { AppLoader } from '../cmps/AppLoader.jsx'
 import { MultiMemberImage } from '../cmps/MultiMemberImage.jsx'
 import { HoveredTextCmp } from '../cmps/HoveredTextCmp.jsx'
 import { FloatingContainerCmp } from '../cmps/FloatingContainerCmp.jsx'
-import { onSetHighLightedTxt, onSetPopUpIsOpen } from '../store/actions/system.actions.js'
-import { PopUp } from '../cmps/PopUp.jsx'
-import { InviteByMail } from '../cmps/BoardActionsNav/InviteByMail.jsx'
+import { onSetHighLightedTxt } from '../store/actions/system.actions.js'
+import { FilterBy } from '../cmps/Board/filterCmps/FilterBy.jsx'
+import { boardService } from '../services/board/index.js'
+
+// img
+import noResults from '/img/no-results.svg'
+import { PersonFilter } from '../cmps/Board/filterCmps/PersonFilter.jsx'
 
 
 export function BoardDetails() {
@@ -27,16 +31,23 @@ export function BoardDetails() {
     const navigate = useNavigate()
 
     const { boardId, taskId } = useParams()
+
     const isAppLoading = useSelector(state => state.systemModule.isAppLoading)
     const board = useSelector(storeState => storeState.boardModule.board)
     const boardRemovedMsg = useSelector(storeState => storeState.boardModule.boardRemovedMsg)
+
     const [searchAnchor, setSearchAnchor] = useState()
     const [isSearchOpen, setIsSearchOpen] = useState(false)
     const [inputValue, setInputValue] = useState('')
     const [showPopUP, setShowPopUP] = useState(false)
     const [task, setTask] = useState(null)
-    const inputRef = useRef(null)
+    const [filterBy, setFilterBy] = useState(boardService.getDefaultFilterBoardDetails())
+    const [isFilterOpen, setIsFilterOpen] = useState(false)
+    const [isPersonFilterOpen, setIsPersonFilterOpen] = useState(false)
 
+    const inputRef = useRef(null)
+    const filterBtnRef = useRef(null)
+    const personBtnRef = useRef(null)
 
     useEffect(() => {
         if (inputValue) {
@@ -47,21 +58,21 @@ export function BoardDetails() {
 
 
     useEffect(() => {
-        if (!board || board?._id !== boardId) {
-            onLoadBoard(boardId, taskId)
-        } else if (taskId && taskId !== task?.id) {
+        if (taskId && taskId !== task?.id && board) {
             setTaskForDetails(taskId, board)
         } else if (!taskId && task) {
             setTask(null)
+        } else {
+            onLoadBoard(boardId, taskId, filterBy)
         }
 
-    }, [boardId, taskId])
+    }, [boardId, taskId, filterBy])
 
-    async function onLoadBoard(boardId, taskId) {
+    async function onLoadBoard(boardId, taskId, filterBy) {
         try {
             if (boardRemovedMsg) setBoardRemovedMsg('')
 
-            await loadBoard(boardId)
+            await loadBoard(boardId, filterBy)
 
             if (taskId && board) setTaskForDetails(taskId, board)
             else if (task) setTask(null)
@@ -96,6 +107,34 @@ export function BoardDetails() {
     function onCloseMenu() {
         setSearchAnchor(false)
     }
+
+
+    /// filter fncs
+    function onSetFilterBy(filterBy) {
+        setFilterBy(prevFilter => ({ ...prevFilter, ...filterBy }))
+    }
+
+
+    function toggleIsFilterOpen() {
+        setIsFilterOpen(!isFilterOpen)
+    }
+
+    function onCloseFilter() {
+        setIsFilterOpen(false)
+    }
+
+    const filterByNum = Object.values(filterBy).filter(arr => Array.isArray(arr) && arr.length > 0)?.length
+
+    /// person
+
+    function toggleIsPersonFilterOpen() {
+        setIsPersonFilterOpen(!isPersonFilterOpen)
+    }
+
+    function onClosePersonFilter() {
+        setIsPersonFilterOpen(false)
+    }
+    ///
 
     function handelChange(ev) {
         const titleToSearch = ev.target.value
@@ -163,6 +202,9 @@ export function BoardDetails() {
 
     if (isAppLoading) return <AppLoader />
     if (boardRemovedMsg && !board) return <BoardRemovedMsg removedMsg={boardRemovedMsg} />
+
+    const { byGroups, byNames, byStatuses, byPriorities, byMembers, byDueDateOp, byPerson } = filterBy
+
     return (
         <section className="board-details">
             <div className="board-details-container" >
@@ -256,34 +298,73 @@ export function BoardDetails() {
                                 }
                             </button>
 
-                            <button className="person-btn hover-show up" data-type={'Filter board by Person'}>
-                                <span className="icon">
-                                    <SvgIcon iconName='person' size={20} colorName='secondaryText' />
-                                </span>
+                            <button className={`person-btn hover-show up ${isPersonFilterOpen || byPerson ? "active" : ""}`} data-type='Filter board by Person'
+                                ref={personBtnRef} onClick={toggleIsPersonFilterOpen}
+                            >
+                                {byPerson
+                                    ? <img src={board?.members?.find(m => m._id === byPerson)?.imgUrl || ''}
+                                        alt="selected person" className='selected-person' />
+                                    : <span className="icon">
+                                        <SvgIcon iconName='person' size={20} colorName={`secondaryText`} />
+                                    </span>
+                                }
                                 <span className='txt'>Person</span>
+                                {byPerson &&
+                                    <div onClick={(ev) => {
+                                        ev.stopPropagation(),
+                                            onSetFilterBy({ byPerson: '' }),
+                                            onClosePersonFilter()
+                                    }}>
+                                        <SvgIcon
+                                            iconName='xMark' size={12}
+                                            colorName={`currentColor`}
+                                            className='mini-x' />
+                                    </div>
+                                }
                             </button>
+
                             <button className="sort-btn hover-show up" data-type={'Sort board by Any Column'}>
                                 <span className="icon">
                                     <SvgIcon iconName='sortArrows' size={20} colorName='secondaryText' />
                                 </span>
                                 <span className='txt'>Sort</span>
                             </button>
+
+                            <button className={`filter-btn hover-show up ${isFilterOpen || filterByNum > 0 ? "active" : ""}`}
+                                data-type={'filter board by Anything'}
+                                ref={filterBtnRef} onClick={toggleIsFilterOpen}
+                            >
+                                <span className="icon">
+                                    <SvgIcon iconName='filter' size={20} colorName='secondaryText' />
+                                </span>
+                                <span className='txt'>Filter {filterByNum ? `/ ${filterByNum}` : ""}</span>
+                            </button>
+
                         </section>
                     </div>
 
                     {/* <SortFilterCmp /> */}
                 </header>
 
-                {board?.groups?.length > 0 &&
-                    < GroupList
+                {board?.groups?.length > 0
+                    ? < GroupList
                         groups={board.groups}
                         managingType={board?.managingType}
-                    />}
+                    />
+                    : <div className='no-results-msg'>
+                        <img src={noResults} alt="no-results" />
+                        <div className="no-results-title">No results were found</div>
+                    </div>
+                }
 
-                <button
-                    onClick={() => onAddGroup(board?._id)}
-                    className='add-group flex'> <SvgIcon iconName="plus" size={20} /> <span>Add new group</span>
-                </button>
+
+                {board?.groups?.length > 0 &&
+                    <button
+                        onClick={() => onAddGroup(board?._id)}
+                        className='add-group flex'>
+                        <SvgIcon iconName="plus" size={20} />
+                        <span>Add new group</span>
+                    </button>}
 
             </div>
 
@@ -295,11 +376,31 @@ export function BoardDetails() {
                 />}
             </div>
 
-            {showPopUP &&
-                <PopUp onClose={() => setShowPopUP(false)}>
-                    <InviteByMail  onClose={() => setShowPopUP(false)}/>
-                </PopUp>
-            }
+
+            {board && isPersonFilterOpen && <FloatingContainerCmp
+                anchorEl={personBtnRef.current}
+                onClose={onClosePersonFilter}
+            >
+                <PersonFilter
+                    members={board?.members}
+                    filterBy={{ byPerson }}
+                    onSetFilterBy={onSetFilterBy}
+                />
+
+            </FloatingContainerCmp>}
+
+            {board && isFilterOpen && <FloatingContainerCmp
+                anchorEl={filterBtnRef.current}
+                onClose={onCloseFilter}
+            >
+                <FilterBy
+                    board={board}
+                    filterBy={{ byGroups, byNames, byStatuses, byPriorities, byMembers, byDueDateOp }}
+                    onSetFilterBy={onSetFilterBy}
+                />
+
+            </FloatingContainerCmp>}
+
         </section>
     )
 }

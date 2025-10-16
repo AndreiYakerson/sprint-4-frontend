@@ -54,6 +54,9 @@ export function BoardPreview({ board, isSideBarDisplay }) {
         if (board?.isStarred !== isStarred) {
             setIsStarred(board?.isStarred)
         }
+        if (board?.title !== boardTitleToEdit) {
+            setoardTitleToEdit(board.title)
+        }
     }, [board])
 
 

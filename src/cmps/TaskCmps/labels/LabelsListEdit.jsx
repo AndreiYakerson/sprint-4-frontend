@@ -17,16 +17,18 @@ export function LabelsListEdit({ labels, onUpdateLabels, onClose }) {
     const [editingLabel, setEditingLabel] = useState()
     const bgColors = getVarColors()
 
-    useEffect(() => {
-        if (editingLabel) {
-            setLabelsToUpdate(prevLabels => {
-                let labels = prevLabels.map(label => label.id === editingLabel.id ? { ...label, cssVar: editingLabel.cssVar } : label)
-                onUpdateLabels(labels)
-                return labels
-            })
-        }
 
-    }, [editingLabel])
+    ///// fix this
+    // useEffect(() => {
+    //     if (editingLabel) {
+    //         setLabelsToUpdate(prevLabels => {
+    //             let labels = prevLabels.map(label => label.id === editingLabel.id ? { ...label, cssVar: editingLabel.cssVar } : label)
+    //             onUpdateLabels(labels)
+    //             return labels
+    //         })
+    //     }
+
+    // }, [editingLabel])
 
 
     function updateLabel() {
@@ -133,7 +135,7 @@ export function LabelsListEdit({ labels, onUpdateLabels, onClose }) {
 
                         {anchorEl && (
                             <FloatingContainerCmp anchorEl={anchorEl} onClose={onCloseMenu}>
-                                <button class='now-con' onClick={() => onRemoveLabel(editingLabel.id)}>
+                                <button className='now-con' onClick={() => onRemoveLabel(editingLabel.id)}>
                                     <SvgIcon iconName='trash' size={20} />
                                 </button>
                             </FloatingContainerCmp>
@@ -150,9 +152,9 @@ export function LabelsListEdit({ labels, onUpdateLabels, onClose }) {
                             >
                                 <SvgIcon iconName='bucket' size={16} colorName='whiteText' />
                             </span>
-                            <SvgIcon iconName='editPen' colorName='grayPerson' size={16} />
+                            <SvgIcon iconName='pen' colorName='grayPerson' size={16} />
                             <input
-                                value={'Default Label'}
+                                placeholder={'Default Label'}
                             />
 
                         </section>
@@ -173,7 +175,7 @@ export function LabelsListEdit({ labels, onUpdateLabels, onClose }) {
                                 <SvgIcon iconName='plus' size={16} />
                             </span>
                             <input
-                                value={'New Label'}
+                                placeholder={'New Label'}
                             />
                         </section>
                     </div>
