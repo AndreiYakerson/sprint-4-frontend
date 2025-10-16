@@ -10,7 +10,7 @@ import { FloatingContainerCmp } from '../../FloatingContainerCmp'
 import { SvgIcon } from '../../SvgIcon'
 import { getVarColors } from '../../../services/util.service'
 
-export function LabelsListEdit({ labels, onUpdateLabels, onClose }) {
+export function LabelsListEdit({ labels, onUpdateLabels, onSwitchEditMode }) {
     const [anchorEl, setAnchorEl] = useState()
     const [colorAnchorEl, setColorAnchorEl] = useState()
     const [labelsToUpdate, setLabelsToUpdate] = useState(labels)
@@ -18,23 +18,6 @@ export function LabelsListEdit({ labels, onUpdateLabels, onClose }) {
     const bgColors = getVarColors()
 
 
-    ///// fix this
-    // useEffect(() => {
-    //     if (editingLabel) {
-    //         setLabelsToUpdate(prevLabels => {
-    //             let labels = prevLabels.map(label => label.id === editingLabel.id ? { ...label, cssVar: editingLabel.cssVar } : label)
-    //             onUpdateLabels(labels)
-    //             return labels
-    //         })
-    //     }
-
-    // }, [editingLabel])
-
-
-    function updateLabel() {
-        onUpdateLabels(labelsToUpdate)
-        onClose()
-    }
 
     function handelChange(ev, id) {
         const value = ev.target.value
@@ -42,16 +25,21 @@ export function LabelsListEdit({ labels, onUpdateLabels, onClose }) {
             return prevLabels.map(label => label.id === id ? { ...label, txt: value } : label)
         })
     }
+
+
     function handelColorChange(color, id) {
         setEditingLabel(prevLabel => ({ ...prevLabel, cssVar: color }))
         setLabelsToUpdate(prevLabels => {
-            return prevLabels.map(label => label.id === id ? { ...label, cssVar: color } : label)
+            let labels = prevLabels.map(label => label.id === id ? { ...label, cssVar: color } : label)
+            onUpdateLabels(labels)
+            setColorAnchorEl(null)
+            return labels
         })
-        setColorAnchorEl(null)
     }
 
     function changeLabelColor(ev, id) {
-        setEditingLabel(labelsToUpdate.find(label => label.id === id))
+        const label = labelsToUpdate.find(label => label.id === id)
+        setEditingLabel(label)
         setColorAnchorEl(ev.currentTarget)
     }
 
@@ -71,7 +59,7 @@ export function LabelsListEdit({ labels, onUpdateLabels, onClose }) {
             onUpdateLabels(labels)
             return labels
         })
-        showSuccessMsg(' Priority label removed')
+        showSuccessMsg(' label removed')
         setAnchorEl(null)
     }
 
@@ -82,7 +70,12 @@ export function LabelsListEdit({ labels, onUpdateLabels, onClose }) {
             onUpdateLabels(labels)
             return labels
         })
-        showSuccessMsg('new Priority label added')
+        showSuccessMsg('new label added')
+    }
+
+    function onApply() {
+        onUpdateLabels(labelsToUpdate)
+        onSwitchEditMode()
     }
 
     return (
@@ -123,7 +116,7 @@ export function LabelsListEdit({ labels, onUpdateLabels, onClose }) {
                                 name='title'
                                 type="text"
                                 value={label.txt}
-                                onBlur={updateLabel}
+                                onBlur={() => onUpdateLabels(labelsToUpdate)}
                                 onKeyDown={ev => ev.key === 'Enter' && handelChange(ev, label.id)}
                                 onChange={(ev) => handelChange(ev, label.id)}
                             />
@@ -152,7 +145,6 @@ export function LabelsListEdit({ labels, onUpdateLabels, onClose }) {
                             >
                                 <SvgIcon iconName='bucket' size={16} colorName='whiteText' />
                             </span>
-                            <SvgIcon iconName='pen' colorName='grayPerson' size={16} />
                             <input
                                 placeholder={'Default Label'}
                             />
@@ -164,25 +156,23 @@ export function LabelsListEdit({ labels, onUpdateLabels, onClose }) {
                     </div>
                 </li >
 
-                <li className='label-list-edit container '>
+                <li className='label-list-edit-container '>
                     <div className="label-list-edit-container flex"
                         onClick={addNewLabel}>
                         <span style={{ width: '16px' }}></span>
-                        <section className='label default edit' >
+                        <section className='label new edit' >
                             <span
                                 className="color-icon-container"
                                 style={{ backgroundColor: 'transparent' }}>
                                 <SvgIcon iconName='plus' size={16} />
                             </span>
-                            <input
-                                placeholder={'New Label'}
-                            />
+                            <span className='new-label-tab'>New Label</span>
                         </section>
                     </div>
                 </li>
             </ul>
             <section className="actions">
-                <button onClick={updateLabel}
+                <button onClick={onApply}
                     className='edit-apply-btn edit'> Apply </button>
             </section>
         </>
