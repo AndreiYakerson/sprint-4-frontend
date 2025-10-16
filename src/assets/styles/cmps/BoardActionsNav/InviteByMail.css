@@ -53,6 +53,9 @@
             display: flex;
             flex-direction: column;
             gap: 24px;
+            /* //for demo purposes */
+            min-height: 250px;
+            /* // */
             flex: 1;
 
             /* max-height: 400px; */
@@ -80,7 +83,7 @@
                         display: grid;
                         text-align: justify;
 
-                        .user-profession{
+                        .user-profession {
                             color: var(--secondary-text-color);
                         }
                     }
@@ -89,6 +92,7 @@
                 & .user-actions {
                     display: flex;
                     gap: 8px;
+                   
 
                     &.owner {
                         button {

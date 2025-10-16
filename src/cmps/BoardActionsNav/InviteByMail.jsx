@@ -1,20 +1,18 @@
 import { useSelector } from "react-redux"
 import { SvgIcon } from "../SvgIcon"
 import { MemberTaskSelect } from "../TaskCmps/MembersCmp/MemberTaskSelect"
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { FloatingContainerCmp } from "../FloatingContainerCmp"
 import { loadFromStorage } from "../../services/util.service"
 
-export function InviteByMail({onClose}) {
-    // const users = useSelector(state => state.userModule.users)
+export function InviteByMail({ onClose }) {
     const user = useSelector(state => state.userModule.user)
     const board = useSelector(state => state.boardModule.board)
     const [users, setUsers] = useState()
     const [anchorEl, setAnchorEl] = useState(false)
     const [searchValues, setSearchValues] = useState([])
-    console.log("🚀 ~ InviteByMail ~ searchValues:", searchValues)
     const [inputValue, setInputValue] = useState('')
-
+    
     //demo logged users
     useEffect(() => {
         if (!users) {
@@ -27,29 +25,19 @@ export function InviteByMail({onClose}) {
 
     function handelChange(ev) {
         const UserToSearch = ev.target.value
-        // requestAnimationFrame(() => inputRef.current?.focus())
         setInputValue(UserToSearch)
-        //  Preparation for Search on board. 
         const regex = new RegExp(UserToSearch, 'i')
         const foundUsers = users.filter(user => regex.test(user.fullname) || regex.test(user.profession))
-        // const matchingGroups = board.groups
-        // .map(group => ({
-        //     ...group,
-        //     tasks: group.tasks.filter(task => regex.test(task.title))
-        // }))
-        // .filter(group => group.tasks.length > 0)
 
-        if (!!foundUsers.length) setSearchValues(foundUsers)
-
+        if (!UserToSearch) setSearchValues([])
+        else setSearchValues(foundUsers)
         setAnchorEl(ev.currentTarget)
     }
 
     function onCloseMenu() {
         console.log('variable')
-
         setAnchorEl(false)
     }
-
 
     return (
 
@@ -69,14 +57,14 @@ export function InviteByMail({onClose}) {
                     <span className="search-input">
                         <input
                             type="text"
-                            placeholder=" Search by name, team or email address"
+                            placeholder="Search by name or profession"
                             value={inputValue}
                             onChange={(ev) => handelChange(ev)}
                         />
                     </span>
                     <span className="build-txt flex"> <SvgIcon iconName='Building' size={20} colorName="secondaryText" />
-                        {`Anyone at ${user.fullname}'s Team can access this board`}</span>
-                    {board.members.map((member, idx) => {
+                        {`Anyone at ${user?.fullname}'s Team can access this board`}</span>
+                    {searchValues?.map((member, idx) => {
                         return <button
                             onClick={() => onSelectMember(member, idx)}
                             key={member._id}
@@ -95,26 +83,27 @@ export function InviteByMail({onClose}) {
                                 </section>
                             </div>
 
-                            <section className={`user-actions ${(member._id === board.owner?.id) ? '' : 'owner'}`}>
+                            {/* {// This needs arrangement before. Waiting for board owner. People.} */}
+                            <section className={`user-actions ${(member._id === board.owner?.id) ? 'owner' : ''}`}>
                                 <button>
                                     <SvgIcon iconName="crown" size={20} colorName={(member._id === board.owner?.id) ? '' : 'disabled'} />
                                 </button>
                                 <button>
                                     <SvgIcon iconName="xMark" size={20} colorName={(member._id === board.owner?.id) ? '' : 'disabled'} />
+
                                 </button>
                             </section>
                         </button>
                     })}
                 </section>
 
-                {console.log("🚀 ~ !!searchValues.length:", !!searchValues.length)}
-                {!!searchValues.length &&
+                {/* {!!searchValues.length &&
                     <FloatingContainerCmp
                         anchorEl={anchorEl}
                         onClose={onCloseMenu}
                     >
                         <div>hello</div>
-                    </FloatingContainerCmp>}
+                    </FloatingContainerCmp>} */}
             </div>
         </div>
     )
