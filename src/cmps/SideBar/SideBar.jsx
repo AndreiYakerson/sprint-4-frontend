@@ -147,8 +147,8 @@ export function SideBar() {
             </div>
 
             {showPopUP &&
-                <PopUp onClose={() => setShowPopUP(false)}>
-                    <BoardEdit />
+                <PopUp onClose={() => _onShowPopUp(false)}>
+                    <BoardEdit onClose={() => _onShowPopUp(false)} />
                 </PopUp>}
         </div>
     )

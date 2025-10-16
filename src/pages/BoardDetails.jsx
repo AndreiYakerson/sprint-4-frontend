@@ -40,6 +40,7 @@ export function BoardDetails() {
 
     const [searchAnchor, setSearchAnchor] = useState()
     const [isSearchOpen, setIsSearchOpen] = useState(false)
+    const [searchValues, setSearchValues] = useState(false)
     const [inputValue, setInputValue] = useState('')
     const [showPopUP, setShowPopUP] = useState(false)
     const [task, setTask] = useState(null)
@@ -143,17 +144,17 @@ export function BoardDetails() {
         const titleToSearch = ev.target.value
         requestAnimationFrame(() => inputRef.current?.focus())
         setInputValue(titleToSearch)
-        //  Preparation for Search on board. 
-        // const regex = new RegExp('^' + titleToSearch, 'i')
-        // const matchingGroups = board.groups
-        //   .map(group => ({
-        //     ...group,
-        //     tasks: group.tasks.filter(task => regex.test(task.title))
-        //   }))
-        //   .filter(group => group.tasks.length > 0)
+        const regex = new RegExp(titleToSearch, 'i')
+        const matchingGroups = board.groups
+            .map(group => ({
+                ...group,
+                tasks: group.tasks.filter(task => regex.test(task.title))
+            }))
+            .filter(group => group.tasks.length > 0)
 
-        // // if (!!matchingGroups.length) 
-        // setSearchValues(matchingGroups)
+        // if (!!matchingGroups.length) 
+        setSearchValues(matchingGroups)
+
         setAnchorEl(ev.currentTarget)
     }
 
@@ -207,6 +208,8 @@ export function BoardDetails() {
     if (boardRemovedMsg && !board) return <BoardRemovedMsg removedMsg={boardRemovedMsg} />
 
     const { byGroups, byNames, byStatuses, byPriorities, byMembers, byDueDateOp, byPerson } = filterBy
+    
+    const boardGroupsToShow = !!inputValue.length ? searchValues : board?.groups
 
     return (
         <section className="board-details">
@@ -275,29 +278,33 @@ export function BoardDetails() {
                                     <SvgIcon iconName='searchGlass' size={20} colorName='secondaryText' />
                                 </span>
 
-                                {!isSearchOpen ?
-                                    <span className='txt'>Search</span>
-                                    :
-                                    <>
-                                        <input type="text"
-                                            className='search-txt'
-                                            placeholder='Search This Board'
-                                            onChange={(ev) => handelChange(ev)}
-                                            onBlur={isSearching}
-                                            ref={inputRef}
-                                            value={inputValue}
-                                        />
+                                {
+                                    !isSearchOpen ?
+                                        <span className='txt'>Search</span>
+                                        :
+                                        <>
+                                            <div className='open-search'>
+                                                <input type="text"
+                                                    className='search-txt'
+                                                    placeholder='Search This Board'
+                                                    onChange={(ev) => handelChange(ev)}
+                                                    onBlur={isSearching}
+                                                    ref={inputRef}
+                                                    value={inputValue}
+                                                />
 
-                                        <button
-                                            className={`delete-btn hover-show up ${inputValue ? true : false}`}
-                                            data-type={' Clear Search'}
-                                            onClick={onClearInput}>
-                                            <SvgIcon iconName='xMark' size={16} colorName='secondaryText' />
-                                        </button>
-                                        <button className='search-option-btn hover-show up' data-type={'Search Options'} >
-                                            <SvgIcon iconName='searchOptions' size={16} colorName='secondaryText' />
-                                        </button>
-                                    </>
+                                                <button
+                                                    className={`delete-btn hover-show up ${inputValue ? true : false}`}
+                                                    data-type={' Clear Search'}
+                                                    onClick={onClearInput}>
+                                                    <SvgIcon iconName='xMark' size={16} colorName='secondaryText' />
+                                                </button>
+
+                                                <button className='search-option-btn hover-show up' data-type={'Search Options'} >
+                                                    <SvgIcon iconName='searchOptions' size={16} colorName='secondaryText' />
+                                                </button>
+                                            </div>
+                                        </>
                                 }
                             </button>
 
@@ -346,12 +353,10 @@ export function BoardDetails() {
                         </section>
                     </div>
 
-                    {/* <SortFilterCmp /> */}
                 </header>
-
-                {board?.groups?.length > 0
+                {boardGroupsToShow.length > 0 
                     ? < GroupList
-                        groups={board.groups}
+                        groups={boardGroupsToShow}
                         managingType={board?.managingType}
                     />
                     : <div className='no-results-msg'>
@@ -403,7 +408,8 @@ export function BoardDetails() {
                 />
 
             </FloatingContainerCmp>}
-          {showPopUP &&  <PopUp onClose={onCloseMenu}>
+
+            {showPopUP && <PopUp onClose={onCloseMenu}>
                 <InviteByMail onClose={onCloseMenu} />
             </PopUp>}
         </section>

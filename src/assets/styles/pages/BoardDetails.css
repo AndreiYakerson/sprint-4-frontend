@@ -172,6 +172,7 @@
                     max-height: 32px;
                     scale: none !important;
 
+
                     & .search-btn {
                         margin-left: 10px;
                         margin-right: 6px;
@@ -218,19 +219,23 @@
                         background-color: var(--primary-selected-color-rgb) !important;
                     }
 
-                    & .delete-btn {
-                        width: 24px;
-                        border: none;
-                        opacity: 0;
-                        color: var(--secondary-text-color);
-                        background-color: inherit;
+                    & .open-search {
+                        display: flex;
 
-                        &.true {
-                            opacity: 1;
-                        }
+                        & .delete-btn {
+                            width: 24px;
+                            border: none;
+                            opacity: 0;
+                            color: var(--secondary-text-color);
+                            background-color: inherit;
 
-                        &:hover {
-                            background-color: var(--primary-background-hover-color);
+                            &.true {
+                                opacity: 1;
+                            }
+
+                            &:hover {
+                                background-color: var(--primary-background-hover-color);
+                            }
                         }
                     }
 
