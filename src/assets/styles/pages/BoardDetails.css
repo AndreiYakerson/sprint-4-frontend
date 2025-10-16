@@ -174,11 +174,11 @@
 
 
                     & .search-btn {
+                        display: flex;
                         margin-left: 10px;
                         margin-right: 6px;
                         height: 32px;
                         width: 89px;
-
                         scale: none !important;
 
                         & .search-option-btn {
@@ -204,6 +204,7 @@
                             input {
                                 border: none;
                                 background-color: inherit;
+
                             }
 
                         }
@@ -222,19 +223,28 @@
                     & .open-search {
                         display: flex;
 
-                        & .delete-btn {
-                            width: 24px;
-                            border: none;
-                            opacity: 0;
-                            color: var(--secondary-text-color);
-                            background-color: inherit;
+                        .actions {
+                            display: flex;
+                            flex-direction: row;
+                            justify-content: flex-end;
+                            align-items: center;
+                            width: 72px;
+                            margin: 0;
 
-                            &.true {
-                                opacity: 1;
-                            }
+                            & .delete-btn {
+                                width: 24px;
+                                border: none;
+                                opacity: 0;
+                                color: var(--secondary-text-color);
+                                background-color: inherit;
 
-                            &:hover {
-                                background-color: var(--primary-background-hover-color);
+                                &.true {
+                                    opacity: 1;
+                                }
+
+                                &:hover {
+                                    background-color: var(--primary-background-hover-color);
+                                }
                             }
                         }
                     }

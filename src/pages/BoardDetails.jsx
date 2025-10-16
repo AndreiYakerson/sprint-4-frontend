@@ -208,8 +208,8 @@ export function BoardDetails() {
     if (boardRemovedMsg && !board) return <BoardRemovedMsg removedMsg={boardRemovedMsg} />
 
     const { byGroups, byNames, byStatuses, byPriorities, byMembers, byDueDateOp, byPerson } = filterBy
-    
     const boardGroupsToShow = !!inputValue.length ? searchValues : board?.groups
+    // if (boardGroupsToShow) return <BoardRemovedMsg removedMsg={boardRemovedMsg} />
 
     return (
         <section className="board-details">
@@ -273,16 +273,16 @@ export function BoardDetails() {
                         </button>
                         <section className='board-action-btn'>
 
-                            <button className={`search-btn ${isSearchOpen} ${!!inputValue.length ? 'hasValue' : ''}`} onClick={onOpenSearchBar}>
+                            <div className={`search-btn btn ${isSearchOpen} ${!!inputValue.length ? 'hasValue' : ''}`} onClick={onOpenSearchBar}>
                                 <span className="icon">
                                     <SvgIcon iconName='searchGlass' size={20} colorName='secondaryText' />
                                 </span>
 
-                                {
-                                    !isSearchOpen ?
+                                
+                                   { !isSearchOpen ?
                                         <span className='txt'>Search</span>
                                         :
-                                        <>
+                                      
                                             <div className='open-search'>
                                                 <input type="text"
                                                     className='search-txt'
@@ -292,21 +292,22 @@ export function BoardDetails() {
                                                     ref={inputRef}
                                                     value={inputValue}
                                                 />
+                                                <section className="actions">
+                                                    <button
+                                                        className={`delete-btn hover-show up ${inputValue ? true : false}`}
+                                                        data-type={' Clear Search'}
+                                                        onClick={onClearInput}>
+                                                        <SvgIcon iconName='xMark' size={16} colorName='secondaryText' />
+                                                    </button>
 
-                                                <button
-                                                    className={`delete-btn hover-show up ${inputValue ? true : false}`}
-                                                    data-type={' Clear Search'}
-                                                    onClick={onClearInput}>
-                                                    <SvgIcon iconName='xMark' size={16} colorName='secondaryText' />
-                                                </button>
-
-                                                <button className='search-option-btn hover-show up' data-type={'Search Options'} >
-                                                    <SvgIcon iconName='searchOptions' size={16} colorName='secondaryText' />
-                                                </button>
+                                                    <button className='search-option-btn hover-show up' data-type={'Search Options'} >
+                                                        <SvgIcon iconName='searchOptions' size={16} colorName='secondaryText' />
+                                                    </button>
+                                                </section>
                                             </div>
-                                        </>
-                                }
-                            </button>
+                                        }
+                                
+                            </div>
 
                             <button className={`person-btn hover-show up ${isPersonFilterOpen || byPerson ? "active" : ""}`} data-type='Filter board by Person'
                                 ref={personBtnRef} onClick={toggleIsPersonFilterOpen}
@@ -354,7 +355,7 @@ export function BoardDetails() {
                     </div>
 
                 </header>
-                {boardGroupsToShow.length > 0 
+                {boardGroupsToShow?.length > 0
                     ? < GroupList
                         groups={boardGroupsToShow}
                         managingType={board?.managingType}
