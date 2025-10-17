@@ -5,7 +5,11 @@ export function FilterBy({ board, filterOptions, filterBy, onSetFilterBy }) {
 
     const [boardData, setBoardData] = useState(board)
     const [filterToEdit, setFilterToEdit] = useState(filterBy)
-    const restFiltersRef = useRef(boardService.getDefaultFilterBoardDetails())
+
+    const restFiltersRef = useRef({
+        byGroups: [], byNames: [], byStatuses: [],
+        byPriorities: [], byMembers: [], byDueDateOp: []
+    })
 
     useEffect(() => {
         onSetFilterBy(filterToEdit)
