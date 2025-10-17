@@ -34,6 +34,23 @@ function getDefaultFilterBoardDetails() {
     }
 }
 
+
+function getFilterFromSearchParams(searchParams) {
+    const defaultFilter = getDefaultFilterBoardDetails()
+    const filterBy = {}
+
+    for (const field in defaultFilter) {
+        if (Array.isArray(defaultFilter[field])) {
+            filterBy[field] = searchParams.getAll(field) || defaultFilter[field]
+        } else {
+            filterBy[field] = searchParams.get(field) || defaultFilter[field]
+        }
+    }
+
+    return filterBy
+}
+
+
 function getGroupColors() {
     return ["#17804d", "#27c977", "#9dd435", "#c8b649", "#fccb29", "#794acf", "#9d4edb", "#1e7eb3",
         "#5f9bf9", "#6fccfd", "#b83055", "#db2a4d", "#fa0080", "#fb57c3", "#fa6237", "#f9aa47", "#7d5348", "#c4c4c4", "#757575"
@@ -75,7 +92,7 @@ function getBoardComposeData() {
 const service = (VITE_LOCAL === 'true') ? local : remote
 export const boardService = {
     getEmptyPriorityLabel, getEmptyBoard, getDefaultFilter, getGroupColors,
-    getBoardComposeData, getDefaultFilterBoardDetails, ...service
+    getBoardComposeData, getDefaultFilterBoardDetails, getFilterFromSearchParams, ...service
 }
 
 // Easy access to this service from the dev tools console

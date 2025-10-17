@@ -82,3 +82,20 @@ export function getColumnType(colName) {
             return ""
     }
 }
+
+
+export function cleanSearchParams(searchParams) {
+
+    const cleanedParams = {}
+
+    for (const field in searchParams) {
+        if (Array.isArray(searchParams[field]) && searchParams[field]?.length > 0) {
+            cleanedParams[field] = searchParams[field]
+        } else if (searchParams[field]) {
+            cleanedParams[field] = searchParams[field]
+        }
+    }
+
+    return cleanedParams
+}
+

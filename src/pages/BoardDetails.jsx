@@ -1,6 +1,6 @@
 
 import { useEffect, useRef, useState } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 
 // services
@@ -20,13 +20,15 @@ import { FloatingContainerCmp } from '../cmps/FloatingContainerCmp.jsx'
 import { onSetHighLightedTxt, onSetPopUpIsOpen } from '../store/actions/system.actions.js'
 import { FilterBy } from '../cmps/Board/filterCmps/FilterBy.jsx'
 import { boardService } from '../services/board/index.js'
-
-// img
-import noResults from '/img/no-results.svg'
 import { PersonFilter } from '../cmps/Board/filterCmps/PersonFilter.jsx'
 import { InviteByMail } from '../cmps/BoardActionsNav/InviteByMail.jsx'
 import { PopUp } from '../cmps/PopUp.jsx'
 import { SortBy } from '../cmps/Board/filterCmps/SortBy.jsx'
+import { cleanSearchParams } from '../services/util.service.js'
+
+// img
+import noResults from '/img/no-results.svg'
+
 
 
 export function BoardDetails() {
@@ -46,7 +48,8 @@ export function BoardDetails() {
     const [inputValue, setInputValue] = useState('')
     const [showPopUP, setShowPopUP] = useState(false)
     const [task, setTask] = useState(null)
-    const [filterBy, setFilterBy] = useState(boardService.getDefaultFilterBoardDetails())
+    const [searchParams, setSearchParams] = useSearchParams()
+    const [filterBy, setFilterBy] = useState(boardService.getFilterFromSearchParams(searchParams))
     const [isFilterOpen, setIsFilterOpen] = useState(false)
     const [isSortOpen, setIsSortOpen] = useState(false)
     const [isPersonFilterOpen, setIsPersonFilterOpen] = useState(false)
@@ -70,10 +73,16 @@ export function BoardDetails() {
         } else if (!taskId && task) {
             setTask(null)
         } else {
+            setFilterBy(boardService.getFilterFromSearchParams(searchParams))
             onLoadBoard(boardId, taskId, filterBy)
         }
 
-    }, [boardId, taskId, filterBy])
+    }, [boardId, taskId])
+
+    useEffect(() => {
+        setSearchParams(cleanSearchParams(filterBy))
+        onLoadBoard(boardId, null, filterBy)
+    }, [filterBy])
 
     async function onLoadBoard(boardId, taskId, filterBy) {
         try {
@@ -152,8 +161,6 @@ export function BoardDetails() {
     function onCloseSortBy() {
         setIsSortOpen(false)
     }
-
-    console.log('isSortOpen:', isSortOpen && board?.cmpOrder)
 
     //
 
