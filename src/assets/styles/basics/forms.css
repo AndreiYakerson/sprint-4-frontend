@@ -90,6 +90,8 @@ button {
 	}
 
 	&.filter-btn {
+		margin-inline-end: 6px;
+
 		.svg-icon {
 			min-width: 24px;
 

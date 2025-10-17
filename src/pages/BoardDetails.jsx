@@ -366,6 +366,16 @@ export function BoardDetails() {
                                 }
                             </button>
 
+                            <button className={`filter-btn hover-show up ${isFilterOpen || filterByNum > 0 ? "active" : ""}`}
+                                data-type={'filter board by Anything'}
+                                ref={filterBtnRef} onClick={toggleIsFilterOpen}
+                            >
+                                <span className="icon">
+                                    <SvgIcon iconName='filter' size={20} colorName='secondaryText' />
+                                </span>
+                                <span className='txt'>Filter {filterByNum ? `/ ${filterByNum}` : ""}</span>
+                            </button>
+
                             <button
                                 className={`sort-btn hover-show up ${isSortOpen || sortBy ? "active" : ""}`}
                                 data-type={'Sort board by Any Column'}
@@ -377,15 +387,6 @@ export function BoardDetails() {
                                 <span className='txt'>Sort {sortBy ? ' / 1' : ""}</span>
                             </button>
 
-                            <button className={`filter-btn hover-show up ${isFilterOpen || filterByNum > 0 ? "active" : ""}`}
-                                data-type={'filter board by Anything'}
-                                ref={filterBtnRef} onClick={toggleIsFilterOpen}
-                            >
-                                <span className="icon">
-                                    <SvgIcon iconName='filter' size={20} colorName='secondaryText' />
-                                </span>
-                                <span className='txt'>Filter {filterByNum ? `/ ${filterByNum}` : ""}</span>
-                            </button>
 
                         </section>
                     </div>
