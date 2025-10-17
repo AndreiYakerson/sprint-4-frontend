@@ -18,9 +18,10 @@ export function FloatingContainerCmp({
     useEffect(() => {
         // if (isPopUpOpen) return
         onSetFloatingIsOpen(true)
-        
-        return () =>{
-            onSetFloatingIsOpen(false)}
+
+        return () => {
+            onSetFloatingIsOpen(false)
+        }
     }, [])
 
     useEffect(() => {
@@ -34,9 +35,7 @@ export function FloatingContainerCmp({
             const isOffScreen = rect.bottom < 0 || rect.top > window.innerHeight
 
             if (isBelowHeader || isOffScreen) {
-                setTimeout(() => {
                     onClose()
-                }, 0)
             }
         }
 
@@ -64,8 +63,8 @@ export function FloatingContainerCmp({
                 }, 0)
         }
 
-        document.addEventListener('click', handleClickOutside)
-        return () => document.removeEventListener('click', handleClickOutside)
+        document.addEventListener('mousedown', handleClickOutside)
+        return () => document.removeEventListener('mousedown', handleClickOutside)
     }, [anchorEl, onClose])
 
 
@@ -165,17 +164,17 @@ export function FloatingContainerCmp({
 
 
     return createPortal(
- anchorEl ? (
-    <div
-      className={`fcc-container ${showTriangle ? "triangle" : ""} ${showTriangle ? trianglePos : ""}`}
-      ref={popupRef}
-      style={style}
-      onClick={e => e.stopPropagation()}
-    >
-      {children}
-    </div>
-  ) : null,
-  document.getElementById('portal-root')
-)
+        anchorEl ? (
+            <div
+                className={`fcc-container ${showTriangle ? "triangle" : ""} ${showTriangle ? trianglePos : ""}`}
+                ref={popupRef}
+                style={style}
+                onClick={e => e.stopPropagation()}
+            >
+                {children}
+            </div>
+        ) : null,
+        document.getElementById('portal-root')
+    )
 }
 

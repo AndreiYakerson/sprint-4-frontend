@@ -19,11 +19,12 @@ export function CustomSelect({ labelsInfo, onSaveLabels }) {
 
 
     // for if filter reset
-    // useEffect(() => {
-    //     if (labelsInfo.selectedLabel !== selectedlabel) {
-    //         setSelectedLabel(labelsInfo.selectedLabel)
-    //     }
-    // }, [labelsInfo.selectedLabel])
+    useEffect(() => {
+        if (labelsInfo.selectedLabel !== selectedlabel &&
+            labelsInfo.type === 'sortBy') {
+            setSelectedLabel(labelsInfo.selectedLabel)
+        }
+    }, [labelsInfo.selectedLabel])
 
     useEffect(() => {
         if (isLabelsBoxOpen && selectedOptionRef.current) {
@@ -97,15 +98,30 @@ export function CustomSelect({ labelsInfo, onSaveLabels }) {
             ${labelsInfo?.type === 'times' ? "times" : ""}`}
                 onClick={toggleIsLabelsBoxOpen} ref={labelInputRef}>
 
-                <span>
-                    {labelsInfo?.type === 'months'
-                        ? labelsInfo?.options[selectedlabel]?.substring(0, 3)
-                        : selectedlabel
+                <div className='flex align-center '>
+                    {labelsInfo?.valueType === 'column' && selectedlabel &&
+                        <SvgIcon
+                            iconName={`${selectedlabel === 'due date' ? 'dueDate' : selectedlabel}Column`}
+                            size={20}
+                            colorName={'primaryText'}
+                            className={'selected-icon'}
+                        />
                     }
-                </span>
+
+                    {(() => {
+                        if (labelsInfo?.type === 'months') {
+                            return labelsInfo?.options[selectedlabel]?.substring(0, 3)
+                        } else if (labelsInfo?.type === 'sortBy') {
+                            return selectedlabel ? selectedlabel : 'Choose Column'
+                        } else {
+                            return selectedlabel
+                        }
+                    })()}
+
+                </div>
 
                 {labelsInfo?.type !== 'times' && <SvgIcon
-                    iconName="chevronDown"
+                    iconName={isLabelsBoxOpen ? "chevronUp" : "chevronDown"}
                     size={20}
                     colorName={'primaryText'}
                 />}
@@ -146,7 +162,15 @@ export function CustomSelect({ labelsInfo, onSaveLabels }) {
                                     checked={label === labelsInfo.selectedLabel}
                                     onChange={handleChange}
                                 />
-                                {label}
+                                {labelsInfo?.valueType === 'column' &&
+                                    <SvgIcon
+                                        iconName={`${label === 'due date' ? 'dueDate' : label}Column`}
+                                        size={20}
+                                        colorName={'primaryText'}
+                                        className={'selected-icon'}
+                                    />
+                                }
+                                <span> {label}</span>
                             </label>
                         )
                     })}

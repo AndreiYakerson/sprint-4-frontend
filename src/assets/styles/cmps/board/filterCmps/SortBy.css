@@ -1,0 +1,55 @@
+.sort-by-board-details {
+    padding: 16px;
+    width: 556px;
+
+    .sort-by-header {
+        font-size: 15px;
+        font-weight: 500;
+        margin-block-end: 16px;
+    }
+
+    .sort-select {
+        display: grid;
+        grid-template-columns: 1fr 230px max-content;
+        gap: 8px;
+        margin-block-end: 16px;
+
+        .custom-select {
+            border: 1px solid var(--ui-border-color);
+            border-radius: 4px;
+            height: 40px;
+            text-transform: capitalize;
+
+            &:hover {
+                border-color: black;
+            }
+
+            &:has(.box-open) {
+                border-color: var(--primary-color);
+            }
+
+            &>* {
+                height: 100%;
+            }
+
+            .label-selection-wrapper {
+                width: 100%;
+                height: max-content;
+                border-radius: 8px;
+            }
+
+            .label-prev {
+                justify-content: space-between;
+            }
+
+            label {
+                display: flex;
+                align-items: center;
+            }
+
+            .selected-icon {
+                margin-inline-end: 8px;
+            }
+        }
+    }
+}

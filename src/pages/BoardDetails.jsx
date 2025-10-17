@@ -26,6 +26,7 @@ import noResults from '/img/no-results.svg'
 import { PersonFilter } from '../cmps/Board/filterCmps/PersonFilter.jsx'
 import { InviteByMail } from '../cmps/BoardActionsNav/InviteByMail.jsx'
 import { PopUp } from '../cmps/PopUp.jsx'
+import { SortBy } from '../cmps/Board/filterCmps/SortBy.jsx'
 
 
 export function BoardDetails() {
@@ -46,11 +47,13 @@ export function BoardDetails() {
     const [task, setTask] = useState(null)
     const [filterBy, setFilterBy] = useState(boardService.getDefaultFilterBoardDetails())
     const [isFilterOpen, setIsFilterOpen] = useState(false)
+    const [isSortOpen, setIsSortOpen] = useState(false)
     const [isPersonFilterOpen, setIsPersonFilterOpen] = useState(false)
 
     const inputRef = useRef(null)
     const filterBtnRef = useRef(null)
     const personBtnRef = useRef(null)
+    const sortByRef = useRef(null)
 
     useEffect(() => {
         if (inputValue) {
@@ -138,7 +141,20 @@ export function BoardDetails() {
     function onClosePersonFilter() {
         setIsPersonFilterOpen(false)
     }
-    ///
+
+    /// sort by
+
+    function toggleIsSortOpen() {
+        setIsSortOpen(!isSortOpen)
+    }
+
+    function onCloseSortBy() {
+        setIsSortOpen(false)
+    }
+
+    console.log('isSortOpen:', isSortOpen && board?.cmpOrder)
+
+    //
 
     function handelChange(ev) {
         const titleToSearch = ev.target.value
@@ -204,12 +220,15 @@ export function BoardDetails() {
         }
     }
 
+
     if (isAppLoading) return <AppLoader />
     if (boardRemovedMsg && !board) return <BoardRemovedMsg removedMsg={boardRemovedMsg} />
 
-    const { byGroups, byNames, byStatuses, byPriorities, byMembers, byDueDateOp, byPerson } = filterBy
+    const { byGroups, byNames, byStatuses, byPriorities, byMembers, byDueDateOp, byPerson, sortBy } = filterBy
     const boardGroupsToShow = !!inputValue.length ? searchValues : board?.groups
     // if (boardGroupsToShow) return <BoardRemovedMsg removedMsg={boardRemovedMsg} />
+
+
 
     return (
         <section className="board-details">
@@ -278,38 +297,40 @@ export function BoardDetails() {
                                     <SvgIcon iconName='searchGlass' size={20} colorName='secondaryText' />
                                 </span>
 
-                                
-                                   { !isSearchOpen ?
-                                        <span className='txt'>Search</span>
-                                        :
-                                      
-                                            <div className='open-search'>
-                                                <input type="text"
-                                                    className='search-txt'
-                                                    placeholder='Search This Board'
-                                                    onChange={(ev) => handelChange(ev)}
-                                                    onBlur={isSearching}
-                                                    ref={inputRef}
-                                                    value={inputValue}
-                                                />
-                                                <section className="actions">
-                                                    <button
-                                                        className={`delete-btn hover-show up ${inputValue ? true : false}`}
-                                                        data-type={' Clear Search'}
-                                                        onClick={onClearInput}>
-                                                        <SvgIcon iconName='xMark' size={16} colorName='secondaryText' />
-                                                    </button>
 
-                                                    <button className='search-option-btn hover-show up' data-type={'Search Options'} >
-                                                        <SvgIcon iconName='searchOptions' size={16} colorName='secondaryText' />
-                                                    </button>
-                                                </section>
-                                            </div>
-                                        }
-                                
+                                {!isSearchOpen ?
+                                    <span className='txt'>Search</span>
+                                    :
+
+                                    <div className='open-search'>
+                                        <input type="text"
+                                            className='search-txt'
+                                            placeholder='Search This Board'
+                                            onChange={(ev) => handelChange(ev)}
+                                            onBlur={isSearching}
+                                            ref={inputRef}
+                                            value={inputValue}
+                                        />
+                                        <section className="actions">
+                                            <button
+                                                className={`delete-btn hover-show up ${inputValue ? true : false}`}
+                                                data-type={' Clear Search'}
+                                                onClick={onClearInput}>
+                                                <SvgIcon iconName='xMark' size={16} colorName='secondaryText' />
+                                            </button>
+
+                                            <button className='search-option-btn hover-show up' data-type={'Search Options'} >
+                                                <SvgIcon iconName='searchOptions' size={16} colorName='secondaryText' />
+                                            </button>
+                                        </section>
+                                    </div>
+                                }
+
                             </div>
 
-                            <button className={`person-btn hover-show up ${isPersonFilterOpen || byPerson ? "active" : ""}`} data-type='Filter board by Person'
+                            <button
+                                className={`person-btn hover-show up ${isPersonFilterOpen || byPerson ? "active" : ""}`}
+                                data-type='Filter board by Person'
                                 ref={personBtnRef} onClick={toggleIsPersonFilterOpen}
                             >
                                 {byPerson
@@ -334,11 +355,15 @@ export function BoardDetails() {
                                 }
                             </button>
 
-                            <button className="sort-btn hover-show up" data-type={'Sort board by Any Column'}>
+                            <button
+                                className={`sort-btn hover-show up ${isSortOpen || sortBy?.column ? "active" : ""}`}
+                                data-type={'Sort board by Any Column'}
+                                ref={sortByRef} onClick={toggleIsSortOpen}
+                            >
                                 <span className="icon">
                                     <SvgIcon iconName='sortArrows' size={20} colorName='secondaryText' />
                                 </span>
-                                <span className='txt'>Sort</span>
+                                <span className='txt'>Sort {sortBy?.column ? ' / 1' : ""}</span>
                             </button>
 
                             <button className={`filter-btn hover-show up ${isFilterOpen || filterByNum > 0 ? "active" : ""}`}
@@ -410,9 +435,25 @@ export function BoardDetails() {
 
             </FloatingContainerCmp>}
 
+
+
+            {board?.cmpOrder && isSortOpen && <FloatingContainerCmp
+                anchorEl={sortByRef.current}
+                onClose={onCloseSortBy}
+            >
+                <SortBy
+                    sortOptions={board?.cmpOrder}
+                    sortBy={sortBy}
+                    onSetFilterBy={onSetFilterBy}
+                />
+
+            </FloatingContainerCmp>}
+
             {showPopUP && <PopUp onClose={onCloseMenu}>
                 <InviteByMail onClose={onCloseMenu} />
             </PopUp>}
+
+
         </section>
     )
 }
