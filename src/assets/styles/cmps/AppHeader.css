@@ -3,6 +3,7 @@
     display: flex;
     align-items: center;
     gap: 5px;
+    text-wrap: nowrap;
 
     .app-logo {
 
@@ -127,6 +128,7 @@
     display: flex;
     align-items: center;
     height: 30px;
+    text-wrap: nowrap;
 
     background-color: initial;
     color: var(--primary-color);
