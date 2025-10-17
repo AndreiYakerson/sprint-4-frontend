@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 // COMPONENTS
 import { LabelsListEdit } from "../labels/LabelsListEdit.jsx";
 import { LabelsList } from "../labels/LabelsList.jsx";
-import { FloatingContainerCmp } from "../../FloatingContainerCmp.jsx";
+import { FloatingContainerCmp } from "../../FloatingContainerCmp";
 import { StatusAnimation } from "../../StatusAnimation.jsx";
 
 export function StatusPicker({ info, onUpdate }) {

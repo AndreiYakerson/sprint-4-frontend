@@ -1,5 +1,5 @@
 
-import { CLOSE_POPUP, IS_FLOATING_OPEN, IS_POPUP_ON, SET_IS_APP_LOADING, SET_POPUP, SET_SIDE_BAR_OPEN, SET_TXT_HIGH_LIGHT } from '../reducers/system.reducer.js'
+import { CLOSE_FLOATING, CLOSE_POPUP, IS_FLOATING_OPEN, SET_FLOATING, SET_IS_APP_LOADING, SET_POPUP, SET_SIDE_BAR_OPEN, SET_TXT_HIGH_LIGHT } from '../reducers/system.reducer.js'
 import { store } from '../store'
 
 
@@ -32,9 +32,27 @@ export async function onSetPopUp(content) {
 
 export function onClosePopUp() {
     try {
-        store.dispatch({ type: CLOSE_POPUP})
+        store.dispatch({ type: CLOSE_POPUP })
     } catch (err) {
         console.log('Cannot Close PopUp ', err)
+        throw err
+    }
+
+}
+export async function onSetFloating(content, anchor) {
+    try {
+        store.dispatch({ type: SET_FLOATING, content, anchor })
+    } catch (err) {
+        console.log('Cannot set floating', err)
+        throw err
+    }
+}
+
+export function onCloseFloating() {
+    try {
+        store.dispatch({ type: CLOSE_FLOATING })
+    } catch (err) {
+        console.log('Cannot Close floating ', err)
         throw err
     }
 

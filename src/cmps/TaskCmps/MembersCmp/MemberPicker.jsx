@@ -11,7 +11,7 @@ import { useSelector } from "react-redux"
 import { SvgIcon } from "../../SvgIcon"
 import { showErrorMsg } from "../../../services/event-bus.service"
 import { MultiMembersPreview } from "./MultiMembersPreview"
-import { onSetFloatingIsOpen, onSetPopUp } from "../../../store/actions/system.actions"
+import { onCloseFloating, onSetFloating, onSetFloatingIsOpen, onSetPopUp } from "../../../store/actions/system.actions"
 import { InviteByMail } from "../../BoardActionsNav/InviteByMail"
 
 export function MemberPicker({ info, onUpdate }) {
@@ -21,18 +21,34 @@ export function MemberPicker({ info, onUpdate }) {
     const [isAnimation, setIsAnimation] = useState(false)
     const [hoveredUser, setHoveredUser] = useState(null)
     const board = useSelector(state => state.boardModule.board)
-    const isFloatingOpen = useSelector(state => state.systemModule.isFloatingOpen)
+    const floating = useSelector(state => state.systemModule.floating)
 
 
-    function onSetHoveredUser(user, target) {
-        if (isFloatingOpen) return
-        setHoveredUser(user);
-        setMemberEl(target)
+    // All right, so right now I've got it working using the dispatch. It seems I just need to.
+    //  Set on the clear hover. That it will. Set floating. Close. And right now it seems like it's always.
+    //  It's just switching from container to container and it doesn't have something that tells it. If it's open.
+    //  Not to open another one.
+
+    function onSetHoveredUser(user, ev) {
+        const content = <MemberInfo
+            user={user} />
+
+        onSetFloating(content, ev)
+        // setHoveredUser(user);
+        // setMemberEl(target)
     }
 
     function openMemberSelect(ev) {
-        setMembersSelectEl(ev.currentTarget)
-        setMemberEl(null)
+        const content = <MemberTaskSelect
+            onRemove={onRemoveMember}
+            selectedMemberIds={selectedMemberIds}
+            members={board.members}
+            onClose={updateTaskMembers}
+            onInvite={_onShowPopUp}
+        />
+        onSetFloating(content, ev.currentTarget)
+        // setMembersSelectEl(ev.currentTarget)
+        // setMemberEl(null)
     }
 
     function closeMemberSelect() {
@@ -43,9 +59,9 @@ export function MemberPicker({ info, onUpdate }) {
 
     function onClearHover() {
         if (membersSelectEl) return
-        setMemberEl(null)
-        onSetFloatingIsOpen(false)
-        setHoveredUser(null);
+        // setMemberEl(null)
+        // onSetFloatingIsOpen(false)
+        // setHoveredUser(null);
     }
 
     function onRemoveMember(memberId) {
@@ -60,6 +76,7 @@ export function MemberPicker({ info, onUpdate }) {
         onUpdate(memberIds)
         setMembersSelectEl(null)
         onClearHover()
+        onCloseFloating()
     }
 
 
@@ -76,7 +93,7 @@ export function MemberPicker({ info, onUpdate }) {
     }).filter(Boolean)
 
     return (
-        <article className={`member-picker ${membersSelectEl ? "focus" : ""}`} onClick={openMemberSelect}>
+        <article className={`member-picker ${membersSelectEl ? "focus" : ""}`} onClick={ev => openMemberSelect(ev)}>
             {!!membersToShow.length ?
                 <MultiMembersPreview members={membersToShow} onSetHoveredUser={onSetHoveredUser} onClearHover={onClearHover} isAnimation={isAnimation} />
                 :
@@ -86,7 +103,7 @@ export function MemberPicker({ info, onUpdate }) {
                 </div>
             }
 
-            {
+            {/* {
                 memberEl && < FloatingContainerCmp
                     anchorEl={memberEl}
                     onClose={onClearHover}
@@ -97,9 +114,9 @@ export function MemberPicker({ info, onUpdate }) {
                         user={hoveredUser}
                     />
                 </FloatingContainerCmp>
-            }
+            } */}
 
-            {
+            {/* {
                 membersSelectEl && < FloatingContainerCmp
                     anchorEl={membersSelectEl}
                     onClose={closeMemberSelect}
@@ -115,7 +132,7 @@ export function MemberPicker({ info, onUpdate }) {
                         onInvite={_onShowPopUp}
                     />
                 </FloatingContainerCmp>
-            }
+            } */}
 
         </article >
     )
