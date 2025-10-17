@@ -48,9 +48,9 @@
         height: 200px;
 
         box-shadow: var(--box-shadow-medium);
-        /* border-radius: var(--border-radius-medium); */
+        border-radius: var(--border-radius-medium);
         overflow: hidden;
-        z-index: 2;
+        z-index: var(--zIndex-Layer-2);
 
         padding: 8px;
         padding-inline-start: 10px;

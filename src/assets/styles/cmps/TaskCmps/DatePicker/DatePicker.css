@@ -19,7 +19,7 @@
             border-color: var(--ui-border-color);
             border-radius: 4px;
             pointer-events: none;
-            z-index: 1;
+            /* z-index: var(--zIndex-Layer-1); */
         }
     }
 

@@ -12,32 +12,35 @@ import { FloatingContainerCmp } from "../../FloatingContainerCmp";
 import { StatusAnimation } from "../../StatusAnimation";
 
 export function PriorityPicker({ info, onUpdate }) {
-    const { boardPriorities, taskPriority } = info
+    const {taskPriority } = info
+    const board = useSelector(state => state.boardModule.board)
     const [anchorEl, setAnchorEl] = useState()
     const [isEditOpen, setIsEditOpen] = useState(false)
-    const [labels, setLabels] = useState(boardPriorities)
+    const [labels, setLabels] = useState(board.priorities)
     const [selectedLabelId, setSelectedLabelId] = useState(taskPriority?.id)
-    const board = useSelector(state => state.boardModule.board)
     const label = labels.find(l => l.id === selectedLabelId)
 
 
     useEffect(() => {
-        setLabels(boardPriorities)
-    }, [boardPriorities])
+        setLabels(board.priorities)
+    }, [board.priorities])
 
 
     function onSaveLabel(label) {
         const newLabel = ({ ...label, updatedAt: Date.now() })
-        console.log("🚀 ~ onSaveLabel ~ newLabel:", newLabel)
         setSelectedLabelId(newLabel.id)
         onUpdate(newLabel)
         onClose()
     }
 
-    function onUpdateLabels(labels) {
+    async function onUpdateLabels(labels) {
         const newBoard = { ...board, priorities: labels }
-        updateBoard(newBoard)
-        setLabels(labels)
+       try {
+         updateBoard(newBoard)
+         setLabels(labels)
+       } catch (error) {
+        
+       }
     }
 
     function onClose() {

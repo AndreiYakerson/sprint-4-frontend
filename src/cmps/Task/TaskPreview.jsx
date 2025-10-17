@@ -49,7 +49,7 @@ export function TaskPreview({ task, groupId, taskIdx }) {
                     label: 'Status:',
                     propName: 'status',
                     selectedStatus: task.status,
-                    statuses: board.statuses,
+                    // statuses: board.statuses,
                 }
             },
             {
@@ -58,7 +58,7 @@ export function TaskPreview({ task, groupId, taskIdx }) {
                     label: 'Members:',
                     propName: 'memberIds',
                     selectedMemberIds: task.memberIds || [],
-                    members: board.members,
+                    // members: board.members,
                 }
             },
             {
@@ -68,7 +68,7 @@ export function TaskPreview({ task, groupId, taskIdx }) {
                     propName: 'priority',
                     taskPriority: task.priority,
                     boardPriorities: board.priorities,
-                    boardId: board._id
+                    // boardId: board._id
                 }
             },
             {
@@ -92,7 +92,6 @@ export function TaskPreview({ task, groupId, taskIdx }) {
             },
         ]
     )
-
 
     // useEffect(() => {
     //     setCmps([
@@ -296,26 +295,26 @@ export function TaskPreview({ task, groupId, taskIdx }) {
                     if (colName === 'status') {
                         var cmp = cmps.find(cmp => cmp?.type === 'StatusPicker')
                         return <div className="column-cell status" key={colName}>
-                            <DynamicCmp cmp={cmp} />
+                            <DynamicCmp cmp={cmp} updateCmpInfo={updateCmpInfo} />
 
                         </div>
                     }
                     if (colName === 'members') {
                         var cmp = cmps.find(cmp => cmp?.type === 'MemberPicker')
                         return <div className="column-cell members" key={colName}>
-                            <DynamicCmp cmp={cmp} />
+                            <DynamicCmp cmp={cmp} updateCmpInfo={updateCmpInfo} />
                         </div>
                     }
                     if (colName === 'priority') {
                         var cmp = cmps.find(cmp => cmp?.type === 'PriorityPicker')
                         return <div className="column-cell priority" key={colName}>
-                            <DynamicCmp cmp={cmp} />
+                            <DynamicCmp cmp={cmp} updateCmpInfo={updateCmpInfo} />
                         </div>
                     }
                     if (colName === 'due date') {
                         var cmp = cmps.find(cmp => cmp?.type === 'DatePicker')
                         return <div className="column-cell due-date " key={colName}>
-                            <DynamicCmp cmp={cmp} />
+                            <DynamicCmp cmp={cmp} updateCmpInfo={updateCmpInfo} />
                         </div>
                     }
                     else {
@@ -328,31 +327,30 @@ export function TaskPreview({ task, groupId, taskIdx }) {
         </div>
     )
 
-
-    function DynamicCmp({ cmp }) {
-        switch (cmp?.type) {
-            case 'StatusPicker':
-                return <StatusPicker info={cmp.info} onUpdate={(data) => {
-                    updateCmpInfo(cmp, 'selectedStatus', data, `Changed Status to ${data}`)
-                }} />
-            case 'DatePicker':
-                return <DatePicker info={cmp?.info} onUpdate={(data) => {
-                    updateCmpInfo(cmp, 'selectedDate', data, `Changed due date to ${data}`)
-                }} />
-            case 'PriorityPicker':
-                return <PriorityPicker info={cmp?.info} onUpdate={(data) => {
-                    updateCmpInfo(cmp, 'taskPriority', data, `Changed due priority to ${data}`)
-                }} />
-            case 'MemberPicker':
-                return <MemberPicker info={cmp.info} onUpdate={(data) => {
-                    updateCmpInfo(cmp, 'selectedMemberIds', data, `Changed members`)
-                }} />
-            default:
-                return <p>{cmp?.type}</p>
-        }
-    }
-
 }
 
 
+
+function DynamicCmp({ cmp, updateCmpInfo }) {
+    switch (cmp?.type) {
+        case 'StatusPicker':
+            return <StatusPicker info={cmp.info} onUpdate={(data) => {
+                updateCmpInfo(cmp, 'selectedStatus', data, `Changed Status to ${data}`)
+            }} />
+        case 'DatePicker':
+            return <DatePicker info={cmp?.info} onUpdate={(data) => {
+                updateCmpInfo(cmp, 'selectedDate', data, `Changed due date to ${data}`)
+            }} />
+        case 'PriorityPicker':
+            return <PriorityPicker info={cmp?.info} onUpdate={(data) => {
+                updateCmpInfo(cmp, 'taskPriority', data, `Changed due priority to ${data}`)
+            }} />
+        case 'MemberPicker':
+            return <MemberPicker info={cmp.info} onUpdate={(data) => {
+                updateCmpInfo(cmp, 'selectedMemberIds', data, `Changed members`)
+            }} />
+        default:
+            return <p>{cmp?.type}</p>
+    }
+}
 

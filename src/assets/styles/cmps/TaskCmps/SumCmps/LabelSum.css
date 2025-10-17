@@ -27,7 +27,7 @@
 /* .toolTip-title {
     position: relative;
     isolation: isolate;
-    z-index: 30;
+    z-index: var(--zIndex-Layer-30);
 
     &::before {
         position: absolute;

@@ -51,9 +51,10 @@ export function DatePicker({ info, onUpdate }) {
     function calculateDateStatus(statusInfo) {
         const diffInMs = Math.abs(dateToEdit.date - statusInfo.updatedAt)
         const diffInDays = Math.floor(diffInMs / (1000 * 60 * 60 * 24))
+        const now = Date.now()
 
         if (statusInfo.updatedAt > dateToEdit.date && dateToEdit.isTimeShow ||
-            statusInfo.updatedAt > dateToEdit.date
+            statusInfo.updatedAt > dateToEdit.date || !statusInfo?.updatedAt && now > dateToEdit.date
         ) {
             const msg = statusInfo.id === 'done' ?
                 `Done ${diffInDays} ${diffInDays > 1 ? "days" : "day"} after deadline` :

@@ -1,11 +1,15 @@
 import { useEffect, useRef, useState } from "react"
 import { boardService } from "../../../services/board/index.js"
 
-export function FilterBy({ board, filterBy, onSetFilterBy }) {
+export function FilterBy({ board, filterOptions, filterBy, onSetFilterBy }) {
 
     const [boardData, setBoardData] = useState(board)
     const [filterToEdit, setFilterToEdit] = useState(filterBy)
-    const restFiltersRef = useRef(boardService.getDefaultFilterBoardDetails())
+
+    const restFiltersRef = useRef({
+        byGroups: [], byNames: [], byStatuses: [],
+        byPriorities: [], byMembers: [], byDueDateOp: []
+    })
 
     useEffect(() => {
         onSetFilterBy(filterToEdit)
@@ -47,13 +51,13 @@ export function FilterBy({ board, filterBy, onSetFilterBy }) {
                             ` / ${filterToEdit?.byGroups?.length}`}
                     </div>
                     <ul className="options-list">
-                        {boardData.groups.map(group => {
+                        {filterOptions.groups.map(group => {
                             return <li
                                 className={`option-item ${filterToEdit?.byGroups?.includes(group.id) ? "active" : ""}`}
                                 key={group.id}
                                 onClick={() => hendelchange(group.id, 'byGroups')}
                             >
-                                <div className="item-color" style={{ backgroundColor: group?.style['--group-color'] }}></div>
+                                <div className="item-color" style={{ backgroundColor: group?.color }}></div>
                                 <span>{group?.title}</span>
                             </li>
                         })}
@@ -66,16 +70,14 @@ export function FilterBy({ board, filterBy, onSetFilterBy }) {
                         {filterToEdit?.byNames?.length > 0 && ` / ${filterToEdit?.byNames?.length}`}
                     </div>
                     <ul className="options-list">
-                        {boardData.groups.map(group => {
-                            return group?.tasks.map(task => {
-                                return <li
-                                    className={`option-item ${filterToEdit?.byNames?.includes(task.title) ? "active" : ""}`}
-                                    key={task.title}
-                                    onClick={() => hendelchange(task?.title, 'byNames')}
-                                >
-                                    <span>{task?.title}</span>
-                                </li>
-                            })
+                        {filterOptions?.names?.map(nameData => {
+                            return <li
+                                className={`option-item ${filterToEdit?.byNames?.includes(nameData?.name) ? "active" : ""}`}
+                                key={nameData?.name}
+                                onClick={() => hendelchange(nameData?.name, 'byNames')}
+                            >
+                                <span>{nameData?.name}</span>
+                            </li>
                         })}
                     </ul>
                 </div>

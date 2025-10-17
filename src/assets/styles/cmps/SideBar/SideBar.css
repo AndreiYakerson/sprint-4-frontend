@@ -33,7 +33,7 @@
         height: 30px;
         border-radius: var(--border-radius-big);
         padding: 0;
-        z-index: 10000;
+        z-index: var( --zIndex-icons);
         cursor: pointer;
 
         .svg-icon {
@@ -158,7 +158,7 @@
         height: 48px;
         padding-inline: 16px;
         padding-block-start: 6px;
-        z-index: 10;
+        z-index: var(--zIndex--Layer-10);
 
         .favorites-tab {
             display: flex;
@@ -233,7 +233,7 @@
         position: sticky;
         top: 48px;
         margin-block-end: 4px;
-        z-index: 10;
+        z-index: var(--zIndex-Layer-10);
         background: linear-gradient(135deg, var(--primary-background-color)5%, var(--surface-color)200%);
         margin-inline-end: 6px;
         padding-inline: 16px;

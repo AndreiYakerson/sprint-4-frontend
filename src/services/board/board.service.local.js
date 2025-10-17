@@ -53,39 +53,12 @@ async function query(filterBy = { txt: '' }) {
     return boards
 }
 
-async function updateTasksOrder(orderedTasks, boardId, groupId) {
-    try {
-        const board = await getById(boardId)
-        if (!board) throw new Error(`Board ${boardId} not found`);
-
-        const idx = board.groups.findIndex(group => group.id === groupId)
-        if (idx === -1) throw new Error(`Board ${groupId} not found`);
-
-        board.groups[idx].tasks = orderedTasks
-
-        return await save(board)
-
-    } catch (err) {
-        throw err
-    }
-}
-
-async function updateGroupsOrder(orderedGroups, boardId) {
-    try {
-        const board = await getById(boardId)
-        if (!board) throw new Error(`Board ${boardId} not found`);
-
-        board.groups = orderedGroups
-
-        return await save(board)
-
-    } catch (err) {
-        throw err
-    }
-}
-
 async function getById(boardId, filterBy) {
     var board = await storageService.get(STORAGE_KEY, boardId)
+
+    if (!board) return null
+
+    const filterOptions = getFilterOptions(board)
 
     if (filterBy?.byGroups?.length > 0) {
         board.groups = board.groups.filter(g => filterBy.byGroups.includes(g.id))
@@ -159,8 +132,79 @@ async function getById(boardId, filterBy) {
             })
     }
 
+    /// Filter by specific user as opposed to a list of users ids from person filter
 
-    return board
+    if (filterBy?.byPerson) {
+        board.groups = board.groups.filter(g => {
+            g.tasks = g.tasks.filter(t => t?.memberIds.includes(filterBy.byPerson))
+            return g?.tasks?.length > 0
+        })
+    }
+
+    /// sort by 
+
+    if (filterBy?.sortBy && filterBy?.dir) {
+        if (filterBy?.sortBy === 'name') {
+            board.groups = board.groups.map(g => {
+                g.tasks = g.tasks.sort((t1, t2) => (t1?.title.localeCompare(t2?.title)) * filterBy?.dir)
+                return g
+            })
+        } else if (filterBy?.sortBy === 'due date') {
+            board.groups = board.groups.map(g => {
+                g.tasks = g.tasks.sort((t1, t2) => (t1?.dueDate?.date - t2?.dueDate?.date) * filterBy?.dir)
+                return g
+            })
+        } else if (filterBy?.sortBy === 'status') {
+            board.groups = board.groups.map(g => {
+                g.tasks = g.tasks.sort((t1, t2) => (t1?.status?.txt.localeCompare(t2?.status?.txt)) * filterBy?.dir)
+                return g
+            })
+        } else if (filterBy?.sortBy === 'priority') {
+            board.groups = board.groups.map(g => {
+                g.tasks = g.tasks.sort((t1, t2) => (t1?.priority?.txt.localeCompare(t2?.priority?.txt)) * filterBy?.dir)
+                return g
+            })
+        } else if (filterBy?.sortBy === 'members') {
+            board.groups = board.groups.map(g => {
+
+                g.tasks = g.tasks.sort((t1, t2) => {
+
+                    const member1 = board.members.find(m => m._id === t1.memberIds[0])?.fullname || ''
+                    const member2 = board.members.find(m => m._id === t2.memberIds[0])?.fullname || ''
+
+                    return (member1.localeCompare(member2)) * filterBy?.dir
+                })
+                return g
+            })
+        }
+    }
+
+    return { board, filterOptions }
+}
+
+
+function getFilterOptions(board) {
+    const filterOptions = {}
+
+    filterOptions.groups = board.groups.map(g => {
+        return { id: g.id, title: g.title, color: g.style['--group-color'], taskSum: g?.tasks?.length }
+    })
+
+
+    const nameCounts = board.groups.reduce((acc, g) => {
+        g.tasks.forEach(t => {
+            if (acc[t.title]) acc[t.title] += 1
+            else acc[t.title] = 1
+        })
+
+        return acc
+    }, {})
+
+    filterOptions.names = Object.entries(nameCounts).map(([name, count]) => {
+        return { name, count }
+    })
+
+    return filterOptions
 }
 
 async function remove(boardId) {
@@ -180,10 +224,24 @@ async function save(board) {
 
 // group functions 
 
+async function updateGroupsOrder(orderedGroups, boardId) {
+    try {
+        const { board } = await getById(boardId)
+        if (!board) throw new Error(`Board ${boardId} not found`);
+
+        board.groups = orderedGroups
+
+        return await save(board)
+
+    } catch (err) {
+        throw err
+    }
+}
+
 async function addGroup(boardId) {
 
     try {
-        const board = await getById(boardId)
+        const { board } = await getById(boardId)
         if (!board) throw new Error(`Board ${boardId} not found`);
 
         const newGroupToAdd = _getEmptyGroup()
@@ -202,7 +260,7 @@ async function addGroup(boardId) {
 async function updateGroup(boardId, groupToUpdate) {
 
     try {
-        const board = await getById(boardId)
+        const { board } = await getById(boardId)
         if (!board) throw new Error(`Board ${boardId} not found`);
 
         const idx = board.groups.findIndex(group => group.id === groupToUpdate.id)
@@ -223,7 +281,7 @@ async function updateGroup(boardId, groupToUpdate) {
 async function removeGroup(boardId, groupId) {
 
     try {
-        const board = await getById(boardId)
+        const { board } = await getById(boardId)
         if (!board) throw new Error(`Board ${boardId} not found`);
 
         board.groups = board.groups.filter(group => group.id !== groupId)
@@ -254,10 +312,27 @@ async function addColumn(boardId, columnType) {
 
 //  task functions
 
+async function updateTasksOrder(orderedTasks, boardId, groupId) {
+    try {
+        const { board } = await getById(boardId)
+        if (!board) throw new Error(`Board ${boardId} not found`);
+
+        const idx = board.groups.findIndex(group => group.id === groupId)
+        if (idx === -1) throw new Error(`Board ${groupId} not found`);
+
+        board.groups[idx].tasks = orderedTasks
+
+        return await save(board)
+
+    } catch (err) {
+        throw err
+    }
+}
+
 async function addTask(boardId, groupId, title, method) {
 
     try {
-        const board = await getById(boardId)
+        const { board } = await getById(boardId)
         if (!board) throw new Error(`Board ${boardId} not found`);
 
         const idx = board.groups.findIndex(group => group.id === groupId)
@@ -284,7 +359,7 @@ async function addTask(boardId, groupId, title, method) {
 async function updateTask(boardId, groupId, taskToUpdate) {
 
     try {
-        const board = await getById(boardId)
+        const { board } = await getById(boardId)
         if (!board) throw new Error(`Board ${boardId} not found`)
 
         const group = board.groups.find(g => g.id === groupId)
@@ -309,7 +384,7 @@ async function updateTask(boardId, groupId, taskToUpdate) {
 async function duplicateTask(boardId, groupId, taskCopy, TaskCopyIdx) {
 
     try {
-        const board = await getById(boardId)
+        const { board } = await getById(boardId)
         if (!board) throw new Error(`Board ${boardId} not found`);
 
         const idx = board.groups.findIndex(group => group.id === groupId)
@@ -335,7 +410,7 @@ async function duplicateTask(boardId, groupId, taskCopy, TaskCopyIdx) {
 async function removeTask(boardId, groupId, taskId) {
 
     try {
-        const board = await getById(boardId)
+        const { board } = await getById(boardId)
         if (!board) throw new Error(`Board ${boardId} not found`);
 
         const idx = board.groups.findIndex(group => group.id === groupId)
@@ -416,7 +491,7 @@ function _setBaordToSave({ title = 'New board', managingType = 'items', privacy 
         statuses: DefaultStatuses,
         cmpOrder: ['members', 'status', 'priority', 'due date'],
         // Demo Members
-        members: [],
+        members: userService.createDemoUsersForBoard(5),
         groups: [
             {
                 id: makeId(),
@@ -430,7 +505,7 @@ function _setBaordToSave({ title = 'New board', managingType = 'items', privacy 
                         title: 'Item 1',
                         createdAt: Date.now(),
                         memberIds: [],
-                        priority: { txt: 'Default Label', cssVar: '--group-title-clr18', id: 'Default' },
+                        priority: { txt: 'Default Label', cssVar: '--group-title-clr18', id: 'default' },
                         status: { id: 'default', txt: 'Not Started', cssVar: '--group-title-clr18' },
 
                     },
@@ -439,7 +514,7 @@ function _setBaordToSave({ title = 'New board', managingType = 'items', privacy 
                         title: 'Item 2',
                         createdAt: Date.now(),
                         memberIds: [],
-                        priority: { txt: 'Default Label', cssVar: '--group-title-clr18', id: 'Default' },
+                        priority: { txt: 'Default Label', cssVar: '--group-title-clr18', id: 'default' },
                         status: { id: 'default', txt: 'Not Started', cssVar: '--group-title-clr18' },
                     },
                 ],
@@ -470,7 +545,7 @@ function _getEmptyTask(title = 'New Task') {
         title: title,
         createdAt: Date.now(),
         memberIds: [],
-        priority: { txt: 'Default Label', cssVar: '--group-title-clr18', id: 'Default' },
+        priority: { txt: 'Default Label', cssVar: '--group-title-clr18', id: 'default' },
         status: { id: 'default', txt: 'Not Started', cssVar: '--group-title-clr18' },
     }
 }

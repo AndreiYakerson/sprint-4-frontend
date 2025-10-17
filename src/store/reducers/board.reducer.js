@@ -31,7 +31,8 @@ export const ADD_COLUMN = 'ADD_COLUMN'
 export const REMOVE_COLUMN = 'REMOVE_COLUMN'
 
 
-
+/// filter
+export const SET_FILTER_OPTIONS = 'SET_FILTER_OPTIONS'
 
 const initialState = {
     boards: [],
@@ -40,6 +41,7 @@ const initialState = {
     newTaskIdToEdit: null,
     isBoardEditorOpen: false,
     boardRemovedMsg: '',
+    filterOptions: [],
 }
 
 export function boardReducer(state = initialState, action = {}) {
@@ -182,6 +184,10 @@ export function boardReducer(state = initialState, action = {}) {
 
         case SET_BOARD_REMOVED_MSG:
             newState = { ...state, boardRemovedMsg: action.msg }
+            break
+
+        case SET_FILTER_OPTIONS:
+            newState = { ...state, filterOptions: action.filterOptions }
             break
 
         default:

@@ -1,6 +1,7 @@
 .member-task-select-wrapper {
-
+    display: grid;
     width: 344px;
+
 
     .member-task-select {
         display: flex;
@@ -11,7 +12,6 @@
 
         gap: 8px;
         padding: 16px;
-
 
         .search-bar-container {
             /* display: flex; */
@@ -53,6 +53,7 @@
 
             }
 
+
         }
 
 
@@ -61,14 +62,10 @@
 
 }
 
-.found-users-container {
-    padding: 16px;
-    max-width: 312px;
-}
 
 .user {
     width: 100%;
-    padding-inline: 8px;
+    padding: 6px 8px;
     font-size: inherit !important;
 
     align-items: center;
@@ -76,10 +73,21 @@
     gap: 9px;
     border-color: transparent;
 
-    &.invite {
-        .addMember {
+    &.invite-btn {
+
+        display: flex;
+    gap: 8px;
+
+        & .icon {
             margin-inline: 6px;
         }
+
+        & .txt {
+            align-self: center;
+        }
+
+        /* .addMember { */
+        /* } */
     }
 
     .user-img {

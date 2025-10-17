@@ -55,6 +55,11 @@
         .drag-icon {
             opacity: 0;
         }
+
+        & .new {
+            display: flex;
+            place-content: center;
+        }
     }
 
 

@@ -77,12 +77,17 @@
 @import "cmps/board/BoardPreview.css";
 @import "cmps/board/BoardEdit.css";
 @import "cmps/board/BoardRemovedMsg.css";
+@import "cmps/board/BoardDetailsHeader.css";
 
 /* filter cmps */
 @import "cmps/board/filterCmps/FilterBy.css";
+@import "cmps/board/filterCmps/PersonFilter.css";
+@import "cmps/board/filterCmps/SortBy.css";
 
 
 @import "cmps/StatusAnimation.css";
 @import "cmps/CustomSelect.css";
+
+@import "cmps/BoardActionsNav/InviteByMail.css";
 
 /* Pages */

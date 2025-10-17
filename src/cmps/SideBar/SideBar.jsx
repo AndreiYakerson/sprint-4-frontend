@@ -3,27 +3,26 @@ import { NavLink } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 // services
-import { loadBoards, setIsBoardEditorOpen } from "../../store/actions/board.actions.js";
-import { onSetIsApploading, onSetIsSideBarOpen } from "../../store/actions/system.actions.js";
+import { loadBoards } from "../../store/actions/board.actions.js";
+import { onSetIsApploading, onSetIsSideBarOpen, onSetPopUp } from "../../store/actions/system.actions.js";
 
 // cmps
 import { BoardList } from "../Board/BoardList.jsx";
 import { HoveredTextCmp } from "../HoveredTextCmp.jsx";
 import { SvgIcon } from "../SvgIcon.jsx";
 
-import { PopUp } from "../PopUp.jsx";
 import { BoardEdit } from "../Board/BaordEdit.jsx";
 
 //images
 import favStarIcon from '/img/fav-star-icon.svg'
 
 export function SideBar() {
-
     const isSideBarOpen = useSelector(state => state.systemModule.isSideBarOpen)
     const isAppLoading = useSelector(state => state.systemModule.isAppLoading)
     const boards = useSelector(storeState => storeState.boardModule.boards)
 
     const [isFavoritesTabOpen, setIsFavoritesTabOpen] = useState(false)
+    const [showPopUP, setShowPopUP] = useState(false)
     const [anchorEl, setAnchorEl] = useState(null)
 
     useEffect(() => {
@@ -47,6 +46,11 @@ export function SideBar() {
 
     function toggleIsFavoritesTabOpen() {
         setIsFavoritesTabOpen(!isFavoritesTabOpen)
+    }
+
+    function _onShowPopUp() {
+        const content =  <BoardEdit />
+        onSetPopUp(content)
     }
 
     const favoritesBoards = boards.filter(b => b.isStarred)
@@ -132,7 +136,7 @@ export function SideBar() {
                         </div>
                         <div className="flex align-center">
                             <span className="boards-title">Boards</span>
-                            <button className="blue square" onClick={() => setIsBoardEditorOpen(true)}>
+                            <button className="blue square" onClick={() => _onShowPopUp()}>
                                 <SvgIcon iconName="plus" size={18} colorName="whiteText" />
                             </button>
                         </div>
@@ -142,9 +146,6 @@ export function SideBar() {
                 </div>
             </div>
 
-            <PopUp showCloseBtn={true}>
-                <BoardEdit />
-            </PopUp>
         </div>
     )
 }

@@ -1,5 +1,5 @@
 
-import { IS_FLOATING_OPEN, IS_POPUP_ON, SET_IS_APP_LOADING, SET_SIDE_BAR_OPEN, SET_TXT_HIGH_LIGHT } from '../reducers/system.reducer.js'
+import { CLOSE_POPUP, IS_FLOATING_OPEN, IS_POPUP_ON, SET_IS_APP_LOADING, SET_POPUP, SET_SIDE_BAR_OPEN, SET_TXT_HIGH_LIGHT } from '../reducers/system.reducer.js'
 import { store } from '../store'
 
 
@@ -12,13 +12,32 @@ export async function onSetIsSideBarOpen(value) {
     }
 }
 
-export async function onSetPopUpIsOpen(value) {
+// export async function onSetPopUpIsOpen(value) {
+//     try {
+//         store.dispatch({ type: IS_POPUP_ON, value })
+//     } catch (err) {
+//         console.log('Cannot Close PopUp Bar', err)
+//         throw err
+//     }
+// }
+
+export async function onSetPopUp(content) {
     try {
-        store.dispatch({ type: IS_POPUP_ON, value })
+        store.dispatch({ type: SET_POPUP, content })
     } catch (err) {
-        console.log('Cannot Close PopUp Bar', err)
+        console.log('Cannot set PopUp', err)
         throw err
     }
+}
+
+export function onClosePopUp() {
+    try {
+        store.dispatch({ type: CLOSE_POPUP})
+    } catch (err) {
+        console.log('Cannot Close PopUp ', err)
+        throw err
+    }
+
 }
 
 export async function onSetFloatingIsOpen(value) {
@@ -35,18 +54,14 @@ export function onSetIsApploading(isLoading) {
     store.dispatch({ type: SET_IS_APP_LOADING, isLoading })
 }
 
+
 export async function onSetHighLightedTxt(txt) {
-
     try {
-
         store.dispatch({ type: SET_TXT_HIGH_LIGHT, txt })
-
     } catch (err) {
-
         console.log('Cannot Set Txt To High-Light', err)
-
         throw err
-
     }
 
 }
+
