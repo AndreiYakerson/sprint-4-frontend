@@ -13,6 +13,7 @@ import { LabelSum } from "../TaskCmps/SumCmps/LabelSum.Jsx";
 import { DateSum } from "../TaskCmps/SumCmps/DateSum.jsx";
 import { getColumnType } from "../../services/util.service.js";
 import { useSelector } from "react-redux";
+import { CmpList } from "../CmpList.jsx";
 
 export function GroupPreview({ group, groupsLength, managingType, TaskList,
     onRemoveGroup, onUpdateGroup, onAddTask, onAddGroup, onOpenGroupEditor, onAddColumn }) {
@@ -44,6 +45,7 @@ export function GroupPreview({ group, groupsLength, managingType, TaskList,
     const [isMenuOpen, setIsMenuOpen] = useState(false)
     const btnRef = useRef(null)
     const menuRef = useRef(null)
+    const [anchorEl, setAnchorEl] = useState(null)
 
     function toggleIsMenuOpen(ev) {
         ev.stopPropagation()
@@ -52,6 +54,10 @@ export function GroupPreview({ group, groupsLength, managingType, TaskList,
 
     function onCloseMenu() {
         setIsMenuOpen(false)
+    }
+
+    function onCloseCmpList() {
+        setAnchorEl(null)
     }
     // crudl
 
@@ -349,13 +355,31 @@ export function GroupPreview({ group, groupsLength, managingType, TaskList,
                     ))}
 
                     <div className="column-cell full last-column">
-                        <button className="add-column" onClick={onAddColumn}>
+                        <button
+                            className="add-column"
+                            onClick={(ev) => setAnchorEl(ev.currentTarget)}
+
+                        >
                             <SvgIcon
                                 iconName="plus"
                                 size={18}
                                 colorName={'secondaryText'}
                             />
                         </button>
+                        {anchorEl &&
+                            <FloatingContainerCmp
+                                anchorEl={anchorEl}
+                                enforceLimit={true}
+                                offsetX={-50}
+                                onClose={onCloseCmpList}
+                            >
+                                <CmpList
+                                    cmps={board.cmpOrder}
+                                    onClose={onCloseCmpList}
+                                />
+
+                            </FloatingContainerCmp>
+                        }
                     </div>
                 </div>
 

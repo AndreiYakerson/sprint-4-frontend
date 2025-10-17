@@ -20,8 +20,6 @@ export const boardService = {
     updateGroup,
     removeGroup,
     updateGroupsOrder,
-    //column
-    addColumn,
     //task 
     addTask,
     removeTask,
@@ -293,22 +291,7 @@ async function removeGroup(boardId, groupId) {
     }
 }
 
-// column functions
-async function addColumn(boardId, columnType) {
 
-    try {
-        const board = await getById(boardId)
-        if (!board) throw new Error(`Board ${boardId} not found`);
-
-        board.cmpOrder.push(columnType)
-        await save(board)
-
-        return columnType
-
-    } catch (err) {
-        throw err
-    }
-}
 
 //  task functions
 
@@ -489,7 +472,7 @@ function _setBaordToSave({ title = 'New board', managingType = 'items', privacy 
         createdAt: Date.now(),
         priorities: DefaultPriorities,
         statuses: DefaultStatuses,
-        cmpOrder: ['members', 'status', 'priority', 'due date'],
+        cmpOrder: ['members', 'status'],
         // Demo Members
         members: userService.createDemoUsersForBoard(5),
         groups: [
