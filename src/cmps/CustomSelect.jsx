@@ -88,7 +88,6 @@ export function CustomSelect({ labelsInfo, onSaveLabels }) {
         onSaveLabels(selectedlabel)
     }
 
-    console.log('Here:', labelsInfo?.valueType === 'column' && selectedlabel)
 
     return (
         <section className="custom-select">

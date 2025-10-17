@@ -5,8 +5,6 @@ import { SvgIcon } from "../../SvgIcon"
 export function SortBy({ sortByData, sortOptions, onSetFilterBy }) {
     const [sortByToEdit, setSortByToEdit] = useState(sortByData)
 
-    console.log('sortByData:', sortByData)
-
     useEffect(() => {
         onSetFilterBy(sortByToEdit)
     }, [sortByToEdit])
@@ -18,8 +16,6 @@ export function SortBy({ sortByData, sortOptions, onSetFilterBy }) {
     function onRestSort() {
         setSortByToEdit({ sortBy: '', dir: -1 })
     }
-
-    console.log('sortOptions:', sortOptions)
 
     return (
         <section className="sort-by-board-details">
