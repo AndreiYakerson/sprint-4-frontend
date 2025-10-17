@@ -6,7 +6,9 @@
 
      gap: 8px;
      width: 100%;
+     height: auto;
      padding: 8px 2px 0px 16px;
+     background-color: inherit;
      /* z-index: 1; */
 
      .user-label {

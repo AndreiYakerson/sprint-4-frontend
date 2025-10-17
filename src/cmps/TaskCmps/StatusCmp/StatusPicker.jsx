@@ -29,10 +29,14 @@ export function StatusPicker({ info, onUpdate }) {
         onClose()
     }
 
-    function onUpdateLabels(labels) {
+    async function onUpdateLabels(labels) {
         const newBoard = { ...board, statuses: labels }
-        updateBoard(newBoard)
-        setLabels(labels)
+        try {
+            updateBoard(newBoard)
+            setLabels(labels)
+        } catch (error) {
+
+        }
     }
 
     function onClose() {

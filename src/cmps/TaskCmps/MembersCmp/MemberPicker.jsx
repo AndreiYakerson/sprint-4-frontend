@@ -11,14 +11,17 @@ import { useSelector } from "react-redux"
 import { SvgIcon } from "../../SvgIcon"
 import { showErrorMsg } from "../../../services/event-bus.service"
 import { MultiMembersPreview } from "./MultiMembersPreview"
+import { onSetPopUpIsOpen } from "../../../store/actions/system.actions"
+import { PopUp } from "../../PopUp"
+import { InviteByMail } from "../../BoardActionsNav/InviteByMail"
 
 export function MemberPicker({ info, onUpdate }) {
-    const {selectedMemberIds} = info
-
+    const { selectedMemberIds } = info
     const [memberEl, setMemberEl] = useState(null)
     const [membersSelectEl, setMembersSelectEl] = useState(null)
     const [isAnimation, setIsAnimation] = useState(false)
     const [hoveredUser, setHoveredUser] = useState(null)
+    const [showPopUP, setShowPopUP] = useState(false)
     const board = useSelector(state => state.boardModule.board)
     const isFloatingOpen = useSelector(state => state.systemModule.isFloatingOpen)
 
@@ -53,6 +56,15 @@ export function MemberPicker({ info, onUpdate }) {
         onUpdate(memberIds)
         setMembersSelectEl(null)
         onClearHover()
+    }
+
+
+    function _onShowPopUp(value) {
+        setShowPopUP(value)
+        onSetPopUpIsOpen(value)
+        if (!value === false) {
+            closeMemberSelect()
+        }
     }
 
     const membersToShow = selectedMemberIds.map(memberId => {
@@ -97,9 +109,16 @@ export function MemberPicker({ info, onUpdate }) {
                         selectedMemberIds={selectedMemberIds}
                         members={board.members}
                         onClose={updateTaskMembers}
+                        onInvite={_onShowPopUp}
                     />
                 </FloatingContainerCmp>
             }
+
+            {showPopUP &&
+                <PopUp onClose={() => _onShowPopUp(false)}>
+                    <InviteByMail onClose={() => _onShowPopUp(false)} />
+                </PopUp>}
+
         </article >
     )
 }
