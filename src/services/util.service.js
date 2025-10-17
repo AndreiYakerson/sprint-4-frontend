@@ -91,6 +91,10 @@ export function cleanSearchParams(searchParams) {
     for (const field in searchParams) {
         if (Array.isArray(searchParams[field]) && searchParams[field]?.length > 0) {
             cleanedParams[field] = searchParams[field]
+        } else if (field === 'dir') {
+            if (searchParams['sortBy']) {
+                cleanedParams[field] = searchParams[field]
+            }
         } else if (searchParams[field]) {
             cleanedParams[field] = searchParams[field]
         }

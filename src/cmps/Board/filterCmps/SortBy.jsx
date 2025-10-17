@@ -2,13 +2,13 @@ import { useEffect, useState } from "react"
 import { CustomSelect } from "../../CustomSelect"
 import { SvgIcon } from "../../SvgIcon"
 
-export function SortBy({ sortBy, sortOptions, onSetFilterBy }) {
-    const [sortByToEdit, setSortByToEdit] = useState(sortBy)
+export function SortBy({ sortByData, sortOptions, onSetFilterBy }) {
+    const [sortByToEdit, setSortByToEdit] = useState(sortByData)
 
-    console.log('sortByToEdit:', sortByToEdit)
+    console.log('sortByData:', sortByData)
 
     useEffect(() => {
-        onSetFilterBy({ sortBy: sortByToEdit })
+        onSetFilterBy(sortByToEdit)
     }, [sortByToEdit])
 
     function handleChange(name, value) {
@@ -16,7 +16,7 @@ export function SortBy({ sortBy, sortOptions, onSetFilterBy }) {
     }
 
     function onRestSort() {
-        setSortByToEdit({ column: '', dir: -1 })
+        setSortByToEdit({ sortBy: '', dir: -1 })
     }
 
     console.log('sortOptions:', sortOptions)
@@ -29,11 +29,11 @@ export function SortBy({ sortBy, sortOptions, onSetFilterBy }) {
                 <CustomSelect
                     labelsInfo={{
                         options: [...sortOptions, "name"],
-                        selectedLabel: sortByToEdit.column,
+                        selectedLabel: sortByToEdit.sortBy,
                         type: "sortBy",
                         valueType: 'column'
                     }}
-                    onSaveLabels={value => handleChange("column", value)}
+                    onSaveLabels={value => handleChange("sortBy", value)}
                 />
 
                 <CustomSelect
@@ -48,7 +48,7 @@ export function SortBy({ sortBy, sortOptions, onSetFilterBy }) {
                         handleChange("dir", value === "ascending" ? -1 : 1)
                     }
                 />
-                {sortByToEdit?.column &&
+                {sortByToEdit?.sortBy &&
                     <button onClick={onRestSort} className="white">
                         <SvgIcon iconName='xMark' size={20} colorName='secondaryText' />
                     </button>

@@ -30,7 +30,8 @@ function getDefaultFilterBoardDetails() {
         byMembers: [],
         byDueDateOp: [],
         byPerson: '',
-        sortBy: { column: '', dir: -1 }
+        sortBy: '',
+        dir: -1
     }
 }
 
@@ -42,6 +43,8 @@ function getFilterFromSearchParams(searchParams) {
     for (const field in defaultFilter) {
         if (Array.isArray(defaultFilter[field])) {
             filterBy[field] = searchParams.getAll(field) || defaultFilter[field]
+        } else if (field === 'dir') {
+            filterBy[field] = +searchParams.get(field) || defaultFilter[field]
         } else {
             filterBy[field] = searchParams.get(field) || defaultFilter[field]
         }

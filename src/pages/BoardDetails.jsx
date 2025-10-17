@@ -232,7 +232,7 @@ export function BoardDetails() {
     if (isAppLoading) return <AppLoader />
     if (boardRemovedMsg && !board) return <BoardRemovedMsg removedMsg={boardRemovedMsg} />
 
-    const { byGroups, byNames, byStatuses, byPriorities, byMembers, byDueDateOp, byPerson, sortBy } = filterBy
+    const { byGroups, byNames, byStatuses, byPriorities, byMembers, byDueDateOp, byPerson, sortBy, dir } = filterBy
     const boardGroupsToShow = !!inputValue.length ? searchValues : board?.groups
     // if (boardGroupsToShow) return <BoardRemovedMsg removedMsg={boardRemovedMsg} />
 
@@ -261,7 +261,7 @@ export function BoardDetails() {
 
                         <div className='invite-users'>
                             <button className='invite' onClick={() => _onShowPopUp(true)}>
-                                {` Invite / ${board?.members.length}`}
+                                {` Invite / ${board?.members?.length}`}
                             </button>
 
                             <span className='copy-link'>
@@ -367,14 +367,14 @@ export function BoardDetails() {
                             </button>
 
                             <button
-                                className={`sort-btn hover-show up ${isSortOpen || sortBy?.column ? "active" : ""}`}
+                                className={`sort-btn hover-show up ${isSortOpen || sortBy ? "active" : ""}`}
                                 data-type={'Sort board by Any Column'}
                                 ref={sortByRef} onClick={toggleIsSortOpen}
                             >
                                 <span className="icon">
                                     <SvgIcon iconName='sortArrows' size={20} colorName='secondaryText' />
                                 </span>
-                                <span className='txt'>Sort {sortBy?.column ? ' / 1' : ""}</span>
+                                <span className='txt'>Sort {sortBy ? ' / 1' : ""}</span>
                             </button>
 
                             <button className={`filter-btn hover-show up ${isFilterOpen || filterByNum > 0 ? "active" : ""}`}
@@ -455,7 +455,7 @@ export function BoardDetails() {
             >
                 <SortBy
                     sortOptions={board?.cmpOrder}
-                    sortBy={sortBy}
+                    sortByData={{ sortBy, dir }}
                     onSetFilterBy={onSetFilterBy}
                 />
 
