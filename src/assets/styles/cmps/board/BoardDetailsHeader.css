@@ -31,6 +31,9 @@
           text-overflow: ellipsis;
           white-space: nowrap;
 
+          padding: 1px 4px;
+          width: fit-content;
+
           &:hover {
               background-color: var(--primary-background-hover-color);
               cursor: pointer;
