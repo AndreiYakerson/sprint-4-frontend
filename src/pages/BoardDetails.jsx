@@ -1,6 +1,6 @@
 
 import { useEffect, useRef, useState } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 
 // services
@@ -19,13 +19,18 @@ import { FloatingContainerCmp } from '../cmps/FloatingContainerCmp.jsx'
 import { onSetHighLightedTxt, onSetPopUp } from '../store/actions/system.actions.js'
 import { FilterBy } from '../cmps/Board/filterCmps/FilterBy.jsx'
 import { boardService } from '../services/board/index.js'
-
-// img
-import noResults from '/img/no-results.svg'
 import { PersonFilter } from '../cmps/Board/filterCmps/PersonFilter.jsx'
 import { InviteByMail } from '../cmps/BoardActionsNav/InviteByMail.jsx'
 import { SortBy } from '../cmps/Board/filterCmps/SortBy.jsx'
+<<<<<<< HEAD
 import { PopUp } from '../cmps/PopUp.jsx'
+=======
+import { cleanSearchParams } from '../services/util.service.js'
+
+// img
+import noResults from '/img/no-results.svg'
+
+>>>>>>> origin/main
 
 
 export function BoardDetails() {
@@ -36,6 +41,7 @@ export function BoardDetails() {
 
     const isAppLoading = useSelector(state => state.systemModule.isAppLoading)
     const board = useSelector(storeState => storeState.boardModule.board)
+    const filterOptions = useSelector(storeState => storeState.boardModule.filterOptions)
     const boardRemovedMsg = useSelector(storeState => storeState.boardModule.boardRemovedMsg)
 
     const [searchAnchor, setSearchAnchor] = useState()
@@ -44,7 +50,8 @@ export function BoardDetails() {
     const [inputValue, setInputValue] = useState('')
     const [showPopUP, setShowPopUP] = useState(false)
     const [task, setTask] = useState(null)
-    const [filterBy, setFilterBy] = useState(boardService.getDefaultFilterBoardDetails())
+    const [searchParams, setSearchParams] = useSearchParams()
+    const [filterBy, setFilterBy] = useState(boardService.getFilterFromSearchParams(searchParams))
     const [isFilterOpen, setIsFilterOpen] = useState(false)
     const [isSortOpen, setIsSortOpen] = useState(false)
     const [isPersonFilterOpen, setIsPersonFilterOpen] = useState(false)
@@ -68,10 +75,16 @@ export function BoardDetails() {
         } else if (!taskId && task) {
             setTask(null)
         } else {
+            setFilterBy(boardService.getFilterFromSearchParams(searchParams))
             onLoadBoard(boardId, taskId, filterBy)
         }
 
-    }, [boardId, taskId, filterBy])
+    }, [boardId, taskId])
+
+    useEffect(() => {
+        setSearchParams(cleanSearchParams(filterBy))
+        onLoadBoard(boardId, null, filterBy)
+    }, [filterBy])
 
     async function onLoadBoard(boardId, taskId, filterBy) {
         try {
@@ -153,8 +166,6 @@ export function BoardDetails() {
         setIsSortOpen(false)
     }
 
-    console.log('isSortOpen:', isSortOpen && board?.cmpOrder)
-
     //
 
     function handelChange(ev) {
@@ -225,7 +236,7 @@ export function BoardDetails() {
     if (isAppLoading) return <AppLoader />
     if (boardRemovedMsg && !board) return <BoardRemovedMsg removedMsg={boardRemovedMsg} />
 
-    const { byGroups, byNames, byStatuses, byPriorities, byMembers, byDueDateOp, byPerson, sortBy } = filterBy
+    const { byGroups, byNames, byStatuses, byPriorities, byMembers, byDueDateOp, byPerson, sortBy, dir } = filterBy
     const boardGroupsToShow = !!inputValue.length ? searchValues : board?.groups
 
     return (
@@ -250,8 +261,13 @@ export function BoardDetails() {
                         </div>
 
                         <div className='invite-users'>
+<<<<<<< HEAD
                             <button className='invite' onClick={_onShowPopUp}>
                                 {` Invite / ${board?.members.length}`}
+=======
+                            <button className='invite' onClick={() => _onShowPopUp(true)}>
+                                {` Invite / ${board?.members?.length}`}
+>>>>>>> origin/main
                             </button>
 
                             <span className='copy-link'>
@@ -284,10 +300,13 @@ export function BoardDetails() {
                         <div>Main Table</div>
                     </div>
                     <div className='board-actions'>
+
                         <button
                             onClick={() => onAddTask(board?.groups[0]?.id, `New ${board?.managingType}`, 'unshift')}
+                            disabled={!board?.groups?.length}
                             className='blue add-btn'> New {board?.managingType}
                         </button>
+
                         <section className='board-action-btn'>
 
                             <div className={`search-btn btn ${isSearchOpen} ${!!inputValue.length ? 'hasValue' : ''}`} onClick={onOpenSearchBar}>
@@ -353,17 +372,6 @@ export function BoardDetails() {
                                 }
                             </button>
 
-                            <button
-                                className={`sort-btn hover-show up ${isSortOpen || sortBy?.column ? "active" : ""}`}
-                                data-type={'Sort board by Any Column'}
-                                ref={sortByRef} onClick={toggleIsSortOpen}
-                            >
-                                <span className="icon">
-                                    <SvgIcon iconName='sortArrows' size={20} colorName='secondaryText' />
-                                </span>
-                                <span className='txt'>Sort {sortBy?.column ? ' / 1' : ""}</span>
-                            </button>
-
                             <button className={`filter-btn hover-show up ${isFilterOpen || filterByNum > 0 ? "active" : ""}`}
                                 data-type={'filter board by Anything'}
                                 ref={filterBtnRef} onClick={toggleIsFilterOpen}
@@ -373,6 +381,18 @@ export function BoardDetails() {
                                 </span>
                                 <span className='txt'>Filter {filterByNum ? `/ ${filterByNum}` : ""}</span>
                             </button>
+
+                            <button
+                                className={`sort-btn hover-show up ${isSortOpen || sortBy ? "active" : ""}`}
+                                data-type={'Sort board by Any Column'}
+                                ref={sortByRef} onClick={toggleIsSortOpen}
+                            >
+                                <span className="icon">
+                                    <SvgIcon iconName='sortArrows' size={20} colorName='secondaryText' />
+                                </span>
+                                <span className='txt'>Sort {sortBy ? ' / 1' : ""}</span>
+                            </button>
+
 
                         </section>
                     </div>
@@ -427,6 +447,7 @@ export function BoardDetails() {
             >
                 <FilterBy
                     board={board}
+                    filterOptions={filterOptions}
                     filterBy={{ byGroups, byNames, byStatuses, byPriorities, byMembers, byDueDateOp }}
                     onSetFilterBy={onSetFilterBy}
                 />
@@ -441,7 +462,7 @@ export function BoardDetails() {
             >
                 <SortBy
                     sortOptions={board?.cmpOrder}
-                    sortBy={sortBy}
+                    sortByData={{ sortBy, dir }}
                     onSetFilterBy={onSetFilterBy}
                 />
 

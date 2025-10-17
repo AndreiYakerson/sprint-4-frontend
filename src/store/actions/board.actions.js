@@ -23,6 +23,8 @@ import {
     SET_IS_BOARD_EDITOR_OPEN,
     SET_BOARD_REMOVED_MSG,
     DUPLICATE_TASK,
+    // filter
+    SET_FILTER_OPTIONS,
 } from '../reducers/board.reducer'
 import { SET_SIDE_BAR_OPEN } from '../reducers/system.reducer'
 
@@ -86,13 +88,15 @@ export async function removeBoard(boardId) {
 
 export async function loadBoard(boardId, filterBy) {
     try {
-        const board = await boardService.getById(boardId, filterBy)
+        const { board, filterOptions } = await boardService.getById(boardId, filterBy)
         store.dispatch({ type: SET_BOARD, board })
+        store.dispatch({ type: SET_FILTER_OPTIONS, filterOptions })
     } catch (err) {
         console.log('Cannot load board', err)
         throw err
     }
 }
+
 
 // Groups Actions ///////////////////////////////////////////////////////////////
 

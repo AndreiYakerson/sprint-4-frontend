@@ -3,7 +3,7 @@ import { SvgIcon } from './SvgIcon'
 
 export function CustomSelect({ labelsInfo, onSaveLabels }) {
 
-    const [selectedlabel, setSelectedLabel] = useState([])
+    const [selectedlabel, setSelectedLabel] = useState(null)
     const [isLabelsBoxOpen, setIsLabelsBoxOpen] = useState(false)
     const [position, setPosition] = useState('up')
 
@@ -12,19 +12,18 @@ export function CustomSelect({ labelsInfo, onSaveLabels }) {
     const selectedOptionRef = useRef(null)
 
     useEffect(() => {
-        if (labelsInfo.selectedLabel) {
-            setSelectedLabel(labelsInfo.selectedLabel)
+        if (labelsInfo?.selectedLabel) {
+            setSelectedLabel(labelsInfo?.selectedLabel)
         }
     }, [])
 
 
     // for if filter reset
     useEffect(() => {
-        if (labelsInfo.selectedLabel !== selectedlabel &&
-            labelsInfo.type === 'sortBy') {
-            setSelectedLabel(labelsInfo.selectedLabel)
+        if (labelsInfo?.selectedLabel !== selectedlabel) {
+            setSelectedLabel(labelsInfo?.selectedLabel)
         }
-    }, [labelsInfo.selectedLabel])
+    }, [labelsInfo?.selectedLabel])
 
     useEffect(() => {
         if (isLabelsBoxOpen && selectedOptionRef.current) {
@@ -88,7 +87,6 @@ export function CustomSelect({ labelsInfo, onSaveLabels }) {
     function submitLabels() {
         onSaveLabels(selectedlabel)
     }
-
 
 
     return (
