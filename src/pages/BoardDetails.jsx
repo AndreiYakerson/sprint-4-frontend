@@ -37,6 +37,7 @@ export function BoardDetails() {
 
     const isAppLoading = useSelector(state => state.systemModule.isAppLoading)
     const board = useSelector(storeState => storeState.boardModule.board)
+    const filterOptions = useSelector(storeState => storeState.boardModule.filterOptions)
     const boardRemovedMsg = useSelector(storeState => storeState.boardModule.boardRemovedMsg)
 
     const [searchAnchor, setSearchAnchor] = useState()
@@ -286,10 +287,13 @@ export function BoardDetails() {
                         <div>Main Table</div>
                     </div>
                     <div className='board-actions'>
+
                         <button
                             onClick={() => onAddTask(board?.groups[0]?.id, `New ${board?.managingType}`, 'unshift')}
+                            disabled={!board?.groups?.length}
                             className='blue add-btn'> New {board?.managingType}
                         </button>
+
                         <section className='board-action-btn'>
 
                             <div className={`search-btn btn ${isSearchOpen} ${!!inputValue.length ? 'hasValue' : ''}`} onClick={onOpenSearchBar}>
@@ -429,6 +433,7 @@ export function BoardDetails() {
             >
                 <FilterBy
                     board={board}
+                    filterOptions={filterOptions}
                     filterBy={{ byGroups, byNames, byStatuses, byPriorities, byMembers, byDueDateOp }}
                     onSetFilterBy={onSetFilterBy}
                 />

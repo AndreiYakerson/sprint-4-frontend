@@ -51,39 +51,12 @@ async function query(filterBy = { txt: '' }) {
     return boards
 }
 
-async function updateTasksOrder(orderedTasks, boardId, groupId) {
-    try {
-        const board = await getById(boardId)
-        if (!board) throw new Error(`Board ${boardId} not found`);
-
-        const idx = board.groups.findIndex(group => group.id === groupId)
-        if (idx === -1) throw new Error(`Board ${groupId} not found`);
-
-        board.groups[idx].tasks = orderedTasks
-
-        return await save(board)
-
-    } catch (err) {
-        throw err
-    }
-}
-
-async function updateGroupsOrder(orderedGroups, boardId) {
-    try {
-        const board = await getById(boardId)
-        if (!board) throw new Error(`Board ${boardId} not found`);
-
-        board.groups = orderedGroups
-
-        return await save(board)
-
-    } catch (err) {
-        throw err
-    }
-}
-
 async function getById(boardId, filterBy) {
     var board = await storageService.get(STORAGE_KEY, boardId)
+
+    if (!board) return null
+
+    const filterOptions = getFilterOptions(board)
 
     if (filterBy?.byGroups?.length > 0) {
         board.groups = board.groups.filter(g => filterBy.byGroups.includes(g.id))
@@ -166,11 +139,7 @@ async function getById(boardId, filterBy) {
         })
     }
 
-
-    /// sort 
-
-    console.log('Here:', filterBy?.sortBy)
-    console.log('board:', board)
+    /// sort by 
 
     if (filterBy?.sortBy?.column && filterBy?.sortBy?.dir) {
         if (filterBy?.sortBy?.column === 'name') {
@@ -208,7 +177,32 @@ async function getById(boardId, filterBy) {
         }
     }
 
-    return board
+    return { board, filterOptions }
+}
+
+
+function getFilterOptions(board) {
+    const filterOptions = {}
+
+    filterOptions.groups = board.groups.map(g => {
+        return { id: g.id, title: g.title, color: g.style['--group-color'], taskSum: g?.tasks?.length }
+    })
+
+
+    const nameCounts = board.groups.reduce((acc, g) => {
+        g.tasks.forEach(t => {
+            if (acc[t.title]) acc[t.title] += 1
+            else acc[t.title] = 1
+        })
+
+        return acc
+    }, {})
+
+    filterOptions.names = Object.entries(nameCounts).map(([name, count]) => {
+        return { name, count }
+    })
+
+    return filterOptions
 }
 
 async function remove(boardId) {
@@ -228,10 +222,24 @@ async function save(board) {
 
 // group functions 
 
+async function updateGroupsOrder(orderedGroups, boardId) {
+    try {
+        const { board } = await getById(boardId)
+        if (!board) throw new Error(`Board ${boardId} not found`);
+
+        board.groups = orderedGroups
+
+        return await save(board)
+
+    } catch (err) {
+        throw err
+    }
+}
+
 async function addGroup(boardId) {
 
     try {
-        const board = await getById(boardId)
+        const { board } = await getById(boardId)
         if (!board) throw new Error(`Board ${boardId} not found`);
 
         const newGroupToAdd = _getEmptyGroup()
@@ -250,7 +258,7 @@ async function addGroup(boardId) {
 async function updateGroup(boardId, groupToUpdate) {
 
     try {
-        const board = await getById(boardId)
+        const { board } = await getById(boardId)
         if (!board) throw new Error(`Board ${boardId} not found`);
 
         const idx = board.groups.findIndex(group => group.id === groupToUpdate.id)
@@ -271,7 +279,7 @@ async function updateGroup(boardId, groupToUpdate) {
 async function removeGroup(boardId, groupId) {
 
     try {
-        const board = await getById(boardId)
+        const { board } = await getById(boardId)
         if (!board) throw new Error(`Board ${boardId} not found`);
 
         board.groups = board.groups.filter(group => group.id !== groupId)
@@ -285,10 +293,27 @@ async function removeGroup(boardId, groupId) {
 
 //  task functions
 
+async function updateTasksOrder(orderedTasks, boardId, groupId) {
+    try {
+        const { board } = await getById(boardId)
+        if (!board) throw new Error(`Board ${boardId} not found`);
+
+        const idx = board.groups.findIndex(group => group.id === groupId)
+        if (idx === -1) throw new Error(`Board ${groupId} not found`);
+
+        board.groups[idx].tasks = orderedTasks
+
+        return await save(board)
+
+    } catch (err) {
+        throw err
+    }
+}
+
 async function addTask(boardId, groupId, title, method) {
 
     try {
-        const board = await getById(boardId)
+        const { board } = await getById(boardId)
         if (!board) throw new Error(`Board ${boardId} not found`);
 
         const idx = board.groups.findIndex(group => group.id === groupId)
@@ -315,7 +340,7 @@ async function addTask(boardId, groupId, title, method) {
 async function updateTask(boardId, groupId, taskToUpdate) {
 
     try {
-        const board = await getById(boardId)
+        const { board } = await getById(boardId)
         if (!board) throw new Error(`Board ${boardId} not found`)
 
         const group = board.groups.find(g => g.id === groupId)
@@ -340,7 +365,7 @@ async function updateTask(boardId, groupId, taskToUpdate) {
 async function duplicateTask(boardId, groupId, taskCopy, TaskCopyIdx) {
 
     try {
-        const board = await getById(boardId)
+        const { board } = await getById(boardId)
         if (!board) throw new Error(`Board ${boardId} not found`);
 
         const idx = board.groups.findIndex(group => group.id === groupId)
@@ -366,7 +391,7 @@ async function duplicateTask(boardId, groupId, taskCopy, TaskCopyIdx) {
 async function removeTask(boardId, groupId, taskId) {
 
     try {
-        const board = await getById(boardId)
+        const { board } = await getById(boardId)
         if (!board) throw new Error(`Board ${boardId} not found`);
 
         const idx = board.groups.findIndex(group => group.id === groupId)

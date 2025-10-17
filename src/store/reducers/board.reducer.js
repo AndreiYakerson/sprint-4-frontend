@@ -27,7 +27,8 @@ export const ADD_BOARD_MSG = 'ADD_BOARD_MSG'
 export const SET_IS_BOARD_EDITOR_OPEN = 'SET_IS_BOARD_EDITOR_OPEN'
 export const SET_BOARD_REMOVED_MSG = 'SET_BOARD_REMOVED_MSG'
 
-
+/// filter
+export const SET_FILTER_OPTIONS = 'SET_FILTER_OPTIONS'
 
 const initialState = {
     boards: [],
@@ -36,6 +37,7 @@ const initialState = {
     newTaskIdToEdit: null,
     isBoardEditorOpen: false,
     boardRemovedMsg: '',
+    filterOptions: [],
 }
 
 export function boardReducer(state = initialState, action = {}) {
@@ -178,6 +180,10 @@ export function boardReducer(state = initialState, action = {}) {
 
         case SET_BOARD_REMOVED_MSG:
             newState = { ...state, boardRemovedMsg: action.msg }
+            break
+
+        case SET_FILTER_OPTIONS:
+            newState = { ...state, filterOptions: action.filterOptions }
             break
 
         default:
