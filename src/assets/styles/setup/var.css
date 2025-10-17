@@ -1,4 +1,26 @@
 :root {
+  /* z-index Layers */
+  /* Group list  */
+  --zIndex-Layer-1: 1;
+  --zIndex-Layer-2: 2;
+  --zIndex-Layer-3: 3;
+  --zIndex-Layer-4: 4;
+
+  --zIndex-Layer-10: 10;
+  --zIndex-Layer-30: 30;
+  --zIndex-Layer-50: 50;
+  
+  --zIndex-Layer-200: 200;
+  --zIndex-Layer-500: 500;
+  
+  --zIndex-icons:1000;
+
+  --zIndex-popUp: 10000;
+  --zIndex-userMsg: 10001;
+  --zIndex-toolTip: 100000;
+
+
+
   /* site background-color */
   --surface-color: rgb(237, 241, 252);
   --primary-background-color: rgb(255, 255, 255);
@@ -157,9 +179,9 @@
   --avatar-image-size: 32px;
   --avatar-background: rgba(255, 255, 255, 0.5);
   --font-weight-light: 300;
-  
-/* popup container */
-      --font-h2-medium: 600 24px / 30px var(--title-font-family);
+
+  /* popup container */
+  --font-h2-medium: 600 24px / 30px var(--title-font-family);
 
 
   /* aside menu */

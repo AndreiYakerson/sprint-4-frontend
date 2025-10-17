@@ -6,7 +6,7 @@
     outline: 1px solid var(--primary-color);
     border-radius: 4px;
     padding-inline-start: 4px;
-    z-index: 50;
+    z-index: var(--zIndex-Layer-50);
     background-color: var(--primary-background-color);
 
     width: max-content;

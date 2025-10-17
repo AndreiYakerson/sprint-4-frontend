@@ -12,7 +12,7 @@
         height: 100%;
         width: 0;
         background-color: var(--primary-background-color);
-        z-index: 500;
+        z-index: var(--zIndex-Layer-500);
         transition: 200ms;
 
         &.open {
@@ -34,7 +34,7 @@
             left: 0;
 
             background-color: var(--primary-background-color);
-            z-index: 200;
+            z-index: var(--zIndex-Layer-200);
 
             padding: 18px 30px 0 38px;
 

@@ -10,7 +10,7 @@
     height: 100%;
 
 
-    z-index: 1000;
+    z-index: var(--zIndex-popUp);
     /* background-color: var(--react-modal-background); */
 
 
@@ -39,7 +39,7 @@
         background-color: var(--primary-background-color);
         box-shadow: var(--box-shadow-large);
 
-        /* z-index: 100000; */
+        /* z-index:var(--zIndex-popUp); */
         /* padding: 1rem; */
         /* overflow-y: auto;
     flex: 1; */
@@ -47,7 +47,7 @@
         position: absolute;
         right: 16px;
         top: 16px;
-        z-index: 1000000;
+       z-index:var(--zIndex-popUp);
     } */
 
         &::-webkit-scrollbar-thumb {

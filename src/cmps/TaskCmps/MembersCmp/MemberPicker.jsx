@@ -11,7 +11,7 @@ import { useSelector } from "react-redux"
 import { SvgIcon } from "../../SvgIcon"
 import { showErrorMsg } from "../../../services/event-bus.service"
 import { MultiMembersPreview } from "./MultiMembersPreview"
-import { onSetPopUp } from "../../../store/actions/system.actions"
+import { onSetFloatingIsOpen, onSetPopUp } from "../../../store/actions/system.actions"
 import { InviteByMail } from "../../BoardActionsNav/InviteByMail"
 
 export function MemberPicker({ info, onUpdate }) {
@@ -20,15 +20,19 @@ export function MemberPicker({ info, onUpdate }) {
     const [membersSelectEl, setMembersSelectEl] = useState(null)
     const [isAnimation, setIsAnimation] = useState(false)
     const [hoveredUser, setHoveredUser] = useState(null)
-    // const [showPopUP, setShowPopUP] = useState(false)
     const board = useSelector(state => state.boardModule.board)
     const isFloatingOpen = useSelector(state => state.systemModule.isFloatingOpen)
 
 
     function onSetHoveredUser(user, target) {
-        if (membersSelectEl || isFloatingOpen) return
+        if (isFloatingOpen) return
         setHoveredUser(user);
         setMemberEl(target)
+    }
+
+    function openMemberSelect(ev) {
+        setMembersSelectEl(ev.currentTarget)
+        setMemberEl(null)
     }
 
     function closeMemberSelect() {
@@ -40,6 +44,7 @@ export function MemberPicker({ info, onUpdate }) {
     function onClearHover() {
         if (membersSelectEl) return
         setMemberEl(null)
+        onSetFloatingIsOpen(false)
         setHoveredUser(null);
     }
 
@@ -71,7 +76,7 @@ export function MemberPicker({ info, onUpdate }) {
     }).filter(Boolean)
 
     return (
-        <article className={`member-picker ${membersSelectEl ? "focus" : ""}`} onClick={(ev) => setMembersSelectEl(ev.currentTarget)}>
+        <article className={`member-picker ${membersSelectEl ? "focus" : ""}`} onClick={openMemberSelect}>
             {!!membersToShow.length ?
                 <MultiMembersPreview members={membersToShow} onSetHoveredUser={onSetHoveredUser} onClearHover={onClearHover} isAnimation={isAnimation} />
                 :
@@ -101,7 +106,6 @@ export function MemberPicker({ info, onUpdate }) {
                     centeredX={true}
                     showTriangle={true}
                     enforceLimit={true}
-
                 >
                     <MemberTaskSelect
                         onRemove={onRemoveMember}

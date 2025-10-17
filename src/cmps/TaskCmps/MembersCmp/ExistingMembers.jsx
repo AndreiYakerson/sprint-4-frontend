@@ -5,7 +5,7 @@ export function ExistingMembers({members,onRemove}) {
     return (
         <div className='existing-members'>
        { members.map(member => {
-            return <section >
+            return <section key={member._id}>
                 <span className='user-label'>
                     <img src={member.imgUrl} alt="Member Image" />
                     <span className="user-name">{member.fullname}</span>
