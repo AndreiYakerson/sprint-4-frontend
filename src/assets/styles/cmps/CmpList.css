@@ -1,19 +1,25 @@
 
 .cmp-list {
     display: grid;
-    gap: 12px;
+    gap: .6em;
     padding: 16px;
 
 
     .cmp-preview {
         display: flex;
         align-items: center;
-        gap: 12px;
+        gap: .6em;
         text-transform: capitalize;
+        border: none;
 
 
         p {
             margin: 0;
         }
+    }
+
+    .monday-column-icon-component__icon {
+        width: 20px;
+        height: 20px;
     }
 }

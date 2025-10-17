@@ -125,7 +125,7 @@ export function GroupPreview({ group, groupsLength, managingType, TaskList,
     function handleMouseDown(e, colName) {
         isResizing.current = true
         startX.current = e.pageX
-        currentColName.current = colName === 'due date' ? 'due-date' : colName
+        currentColName.current = colName === 'date' ? 'due-date' : colName
 
         document.querySelectorAll(`.column-cell.${currentColName.current}`)
             .forEach(el => el.classList.add("highlight"));
@@ -243,7 +243,7 @@ export function GroupPreview({ group, groupsLength, managingType, TaskList,
 
                 <div className="task-columns flex">
                     {cmpOrder.map(colName => {
-                        if (colName === 'due date') {
+                        if (colName === 'date') {
                             return <div key={colName} className="column-cell due-date">
                                 <div>{colName}</div>
                                 <DateSum dates={dates} />
@@ -356,7 +356,7 @@ export function GroupPreview({ group, groupsLength, managingType, TaskList,
 
                     <div className="column-cell full last-column">
                         <button
-                            className="add-column"
+                            className={`add-column ${anchorEl ? 'rotate' : ''}`}
                             onClick={(ev) => setAnchorEl(ev.currentTarget)}
 
                         >
@@ -370,12 +370,13 @@ export function GroupPreview({ group, groupsLength, managingType, TaskList,
                             <FloatingContainerCmp
                                 anchorEl={anchorEl}
                                 enforceLimit={true}
-                                offsetX={-50}
+                                offsetX={-120}
                                 onClose={onCloseCmpList}
                             >
                                 <CmpList
                                     cmps={board.cmpOrder}
                                     onClose={onCloseCmpList}
+                                    onAddColumn={onAddColumn}
                                 />
 
                             </FloatingContainerCmp>
@@ -414,7 +415,7 @@ export function GroupPreview({ group, groupsLength, managingType, TaskList,
 
             <div className="task-columns flex">
                 {cmpOrder.map(colName => {
-                    if (colName === 'due date') {
+                    if (colName === 'date') {
                         return <div key={colName} className="column-cell due-date">
                             <DateSum dates={dates} />
                         </div>

@@ -311,7 +311,7 @@ export function TaskPreview({ task, groupId, taskIdx }) {
                             <DynamicCmp cmp={cmp} updateCmpInfo={updateCmpInfo} />
                         </div>
                     }
-                    if (colName === 'due date') {
+                    if (colName === 'date') {
                         var cmp = cmps.find(cmp => cmp?.type === 'DatePicker')
                         return <div className="column-cell due-date " key={colName}>
                             <DynamicCmp cmp={cmp} updateCmpInfo={updateCmpInfo} />

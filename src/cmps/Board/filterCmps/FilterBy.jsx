@@ -141,7 +141,7 @@ export function FilterBy({ board, filterOptions, filterBy, onSetFilterBy }) {
 
                 <div className="option-containe">
                     <div className="option-title">
-                        Due Date
+                        Date
                         {filterToEdit?.byDueDateOp?.length > 0 && ` / ${filterToEdit?.byDueDateOp?.length}`}
                     </div>
                     <ul className="options-list date-ops">

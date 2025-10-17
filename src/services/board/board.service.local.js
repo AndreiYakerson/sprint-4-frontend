@@ -147,7 +147,7 @@ async function getById(boardId, filterBy) {
                 g.tasks = g.tasks.sort((t1, t2) => (t1?.title.localeCompare(t2?.title)) * filterBy?.dir)
                 return g
             })
-        } else if (filterBy?.sortBy === 'due date') {
+        } else if (filterBy?.sortBy === 'date') {
             board.groups = board.groups.map(g => {
                 g.tasks = g.tasks.sort((t1, t2) => (t1?.dueDate?.date - t2?.dueDate?.date) * filterBy?.dir)
                 return g
@@ -472,7 +472,7 @@ function _setBaordToSave({ title = 'New board', managingType = 'items', privacy 
         createdAt: Date.now(),
         priorities: DefaultPriorities,
         statuses: DefaultStatuses,
-        cmpOrder: ['members', 'status'],
+        cmpOrder: [],
         // Demo Members
         members: userService.createDemoUsersForBoard(5),
         groups: [

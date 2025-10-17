@@ -501,12 +501,31 @@
         background-color: inherit;
     }
 
-    .add-column {
-        display: grid;
-        place-content: center;
+    .rotate {
         border: none;
-        width: 22px;
-        height: 22px;
-        margin-inline-start: 5px;
+    }
+
+    
+}
+
+.add-column {
+    display: grid;
+    place-content: center;
+    border: none;
+    width: 22px;
+    height: 22px;
+    margin-inline-start: 5px;
+    
+    .svg-icon {
+        rotate: 0deg;
+        transition: .3s;
+    }
+
+    &.rotate {
+        .svg-icon {
+            rotate: 45deg;
+            transition: .3s;
+            color: blue;
+        }
     }
 }

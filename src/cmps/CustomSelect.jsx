@@ -99,7 +99,7 @@ export function CustomSelect({ labelsInfo, onSaveLabels }) {
                 <div className='flex align-center '>
                     {labelsInfo?.valueType === 'column' && selectedlabel &&
                         <SvgIcon
-                            iconName={`${selectedlabel === 'due date' ? 'dueDate' : selectedlabel}Column`}
+                            iconName={`${selectedlabel === 'date' ? 'dueDate' : selectedlabel}Column`}
                             size={20}
                             colorName={'primaryText'}
                             className={'selected-icon'}
@@ -162,7 +162,7 @@ export function CustomSelect({ labelsInfo, onSaveLabels }) {
                                 />
                                 {labelsInfo?.valueType === 'column' &&
                                     <SvgIcon
-                                        iconName={`${label === 'due date' ? 'dueDate' : label}Column`}
+                                        iconName={`${label === 'date' ? 'dueDate' : label}Column`}
                                         size={20}
                                         colorName={'primaryText'}
                                         className={'selected-icon'}
