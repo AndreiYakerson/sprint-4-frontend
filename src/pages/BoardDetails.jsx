@@ -9,7 +9,6 @@ import { addGroup, addTask, loadBoard, setBoardRemovedMsg } from '../store/actio
 
 // cmps
 import { GroupList } from '../cmps/group/GroupList.jsx'
-import { SortFilterCmp } from '../cmps/SortFilterCmp.jsx'
 import { TaskDetails } from '../cmps/Task/TaskDetails.jsx'
 import { SvgIcon } from '../cmps/SvgIcon.jsx'
 import { BoardRemovedMsg } from '../cmps/Board/BoardRemovedMsg.jsx'
@@ -17,7 +16,7 @@ import { AppLoader } from '../cmps/AppLoader.jsx'
 import { MultiMemberImage } from '../cmps/MultiMemberImage.jsx'
 import { HoveredTextCmp } from '../cmps/HoveredTextCmp.jsx'
 import { FloatingContainerCmp } from '../cmps/FloatingContainerCmp.jsx'
-import { onSetHighLightedTxt, onSetPopUpIsOpen } from '../store/actions/system.actions.js'
+import { onSetHighLightedTxt, onSetPopUp } from '../store/actions/system.actions.js'
 import { FilterBy } from '../cmps/Board/filterCmps/FilterBy.jsx'
 import { boardService } from '../services/board/index.js'
 
@@ -25,8 +24,8 @@ import { boardService } from '../services/board/index.js'
 import noResults from '/img/no-results.svg'
 import { PersonFilter } from '../cmps/Board/filterCmps/PersonFilter.jsx'
 import { InviteByMail } from '../cmps/BoardActionsNav/InviteByMail.jsx'
-import { PopUp } from '../cmps/PopUp.jsx'
 import { SortBy } from '../cmps/Board/filterCmps/SortBy.jsx'
+import { PopUp } from '../cmps/PopUp.jsx'
 
 
 export function BoardDetails() {
@@ -111,6 +110,8 @@ export function BoardDetails() {
     }
 
     function onCloseMenu() {
+        console.log('variable')
+        
         setSearchAnchor(false)
         setShowPopUP(false)
     }
@@ -184,9 +185,9 @@ export function BoardDetails() {
         setIsSearchOpen(true)
     }
 
-    function _onShowPopUp(value) {
-        setShowPopUP(value)
-        onSetPopUpIsOpen(value)
+    function _onShowPopUp() {
+        const content = <InviteByMail />
+        onSetPopUp(content)
     }
 
     function isSearching() {
@@ -226,9 +227,6 @@ export function BoardDetails() {
 
     const { byGroups, byNames, byStatuses, byPriorities, byMembers, byDueDateOp, byPerson, sortBy } = filterBy
     const boardGroupsToShow = !!inputValue.length ? searchValues : board?.groups
-    // if (boardGroupsToShow) return <BoardRemovedMsg removedMsg={boardRemovedMsg} />
-
-
 
     return (
         <section className="board-details">
@@ -252,7 +250,7 @@ export function BoardDetails() {
                         </div>
 
                         <div className='invite-users'>
-                            <button className='invite' onClick={() => _onShowPopUp(true)}>
+                            <button className='invite' onClick={_onShowPopUp}>
                                 {` Invite / ${board?.members.length}`}
                             </button>
 
@@ -448,11 +446,6 @@ export function BoardDetails() {
                 />
 
             </FloatingContainerCmp>}
-
-            {showPopUP && <PopUp onClose={onCloseMenu}>
-                <InviteByMail onClose={onCloseMenu} />
-            </PopUp>}
-
 
         </section>
     )

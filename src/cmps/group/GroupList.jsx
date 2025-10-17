@@ -4,7 +4,6 @@ import { useState, useEffect } from "react";
 
 // import { useState } from "react"
 // import { ConfirmCmp } from "./ConfirmCmp"
-// import { PopUp } from "./PopUp"
 
 import { useParams } from "react-router"
 // services

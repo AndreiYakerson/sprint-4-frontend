@@ -11,8 +11,7 @@ import { useSelector } from "react-redux"
 import { SvgIcon } from "../../SvgIcon"
 import { showErrorMsg } from "../../../services/event-bus.service"
 import { MultiMembersPreview } from "./MultiMembersPreview"
-import { onSetPopUpIsOpen } from "../../../store/actions/system.actions"
-import { PopUp } from "../../PopUp"
+import { onSetPopUp } from "../../../store/actions/system.actions"
 import { InviteByMail } from "../../BoardActionsNav/InviteByMail"
 
 export function MemberPicker({ info, onUpdate }) {
@@ -21,7 +20,7 @@ export function MemberPicker({ info, onUpdate }) {
     const [membersSelectEl, setMembersSelectEl] = useState(null)
     const [isAnimation, setIsAnimation] = useState(false)
     const [hoveredUser, setHoveredUser] = useState(null)
-    const [showPopUP, setShowPopUP] = useState(false)
+    // const [showPopUP, setShowPopUP] = useState(false)
     const board = useSelector(state => state.boardModule.board)
     const isFloatingOpen = useSelector(state => state.systemModule.isFloatingOpen)
 
@@ -60,8 +59,8 @@ export function MemberPicker({ info, onUpdate }) {
 
 
     function _onShowPopUp(value) {
-        setShowPopUP(value)
-        onSetPopUpIsOpen(value)
+        const content = <InviteByMail />
+        onSetPopUp(content)
         if (!value === false) {
             closeMemberSelect()
         }
@@ -113,11 +112,6 @@ export function MemberPicker({ info, onUpdate }) {
                     />
                 </FloatingContainerCmp>
             }
-
-            {showPopUP &&
-                <PopUp onClose={() => _onShowPopUp(false)}>
-                    <InviteByMail onClose={() => _onShowPopUp(false)} />
-                </PopUp>}
 
         </article >
     )

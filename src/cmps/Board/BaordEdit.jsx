@@ -5,7 +5,7 @@ import { addBoard, setIsBoardEditorOpen } from "../../store/actions/board.action
 import { SvgIcon } from "../SvgIcon.jsx"
 
 
-export function BoardEdit({ onClose }) {
+export function BoardEdit({ onClosePopUp }) {
 
     const navigate = useNavigate()
 
@@ -24,7 +24,7 @@ export function BoardEdit({ onClose }) {
 
         if (!boardToEdit.name) boardToEdit.name = 'New board'
         if (!boardToEdit.managingType) boardToEdit.managingType = 'items'
-        onClose()
+        onClosePopUp()
         try {
             const board = await addBoard(boardToEdit)
             setIsBoardEditorOpen(false)
@@ -138,7 +138,7 @@ export function BoardEdit({ onClose }) {
                 <div className="actions">
                     <button type="button"
                         className="white"
-                        onClick={() => setIsBoardEditorOpen(false)}>Cancel</button>
+                        onClick={onClosePopUp}>Cancel</button>
                     <button type="submit" className="blue">Create Board</button>
                 </div>
             </form>

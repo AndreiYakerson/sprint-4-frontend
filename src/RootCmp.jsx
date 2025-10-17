@@ -1,4 +1,3 @@
-import React from 'react'
 import { Routes, Route } from 'react-router'
 
 import { HomePage } from './pages/HomePage'
@@ -14,6 +13,7 @@ import { AppHeader } from './cmps/AppHeader.jsx'
 import { UserMsg } from './cmps/UserMsg.jsx'
 import { LoginSignup, Login, Signup } from './pages/LoginSignup.jsx'
 import { SideBar } from './cmps/SideBar/SideBar.jsx'
+import { PopUp } from './cmps/PopUp.jsx'
 
 
 export function RootCmp() {
@@ -22,6 +22,7 @@ export function RootCmp() {
         <div className="main-container">
             <AppHeader />
             <UserMsg />
+            <PopUp />
             <aside className='app-aside'>
                 <SideBar />
             </aside>

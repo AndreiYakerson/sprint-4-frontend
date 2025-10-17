@@ -1,17 +1,9 @@
 // ICONS
-import searchGalss from '/icons/search-galss.svg'
-import xMark from '/icons/x-mark.svg'
-import inviteMember from '/icons/invite-member.svg'
 import { SvgIcon } from '../../SvgIcon'
 import { ExistingMembers } from './ExistingMembers'
 import { useSelector } from 'react-redux'
-import { FloatingContainerCmp } from '../../FloatingContainerCmp'
 import { useEffect, useState } from 'react'
-import { updateBoard } from '../../../store/actions/board.actions'
 import { loadFromStorage, saveToStorage } from '../../../services/util.service'
-import { InviteByMail } from '../../BoardActionsNav/InviteByMail'
-import { PopUp } from '../../PopUp'
-import { onSetPopUpIsOpen } from '../../../store/actions/system.actions'
 
 // COMPONENTS
 

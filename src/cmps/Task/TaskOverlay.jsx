@@ -24,7 +24,6 @@ import { StatusPicker } from "../TaskCmps/StatusCmp/StatusPicker.jsx"
 
 // import { FloatingContainerCmp } from "../FloatingContainerCmp.jsx"
 // import { MemberTaskSelect } from "../TaskCmps/MembersCmp/MemberTaskSelect.jsx"
-// import { PopUp } from "../PopUp.jsx"
 // import { MemberSelectedPreview } from "../TaskCmps/MembersCmp/MemberSelectedPreview.jsx"
 // import { PriorityPreview } from "../TaskCmps/PriorityCmp/PriorityPreview.jsx"
 

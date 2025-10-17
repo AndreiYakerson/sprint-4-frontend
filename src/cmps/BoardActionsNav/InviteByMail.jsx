@@ -8,7 +8,7 @@ import { updateBoard } from "../../store/actions/board.actions"
 import { showSuccessMsg } from "../../services/event-bus.service"
 import { loginDemoUsers } from "../../store/actions/user.actions"
 
-export function InviteByMail({ onClose }) {
+export function InviteByMail({ onClosePopUp }) {
     const user = useSelector(state => state.userModule.user)
     const users = useSelector(state => state.userModule.users)
     const board = useSelector(state => state.boardModule.board)
@@ -32,7 +32,7 @@ export function InviteByMail({ onClose }) {
        try {
          updateBoard(newBoard)
          showSuccessMsg(' Member add board')
-         onClose()
+         onClosePopUp()
        } catch (error) {
         
        }
@@ -65,7 +65,7 @@ export function InviteByMail({ onClose }) {
                         <button>
                             <SvgIcon iconName="commentHeart" size={20} />
                         </button>
-                        <button onClick={onClose}>
+                        <button onClick={onClosePopUp}>
                             <SvgIcon iconName="xMark" size={20} />
                         </button>
                     </section>
