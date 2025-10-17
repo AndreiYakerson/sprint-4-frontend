@@ -22,15 +22,12 @@ import { boardService } from '../services/board/index.js'
 import { PersonFilter } from '../cmps/Board/filterCmps/PersonFilter.jsx'
 import { InviteByMail } from '../cmps/BoardActionsNav/InviteByMail.jsx'
 import { SortBy } from '../cmps/Board/filterCmps/SortBy.jsx'
-<<<<<<< HEAD
-import { PopUp } from '../cmps/PopUp.jsx'
-=======
 import { cleanSearchParams } from '../services/util.service.js'
 
 // img
 import noResults from '/img/no-results.svg'
 
->>>>>>> origin/main
+import { PopUp } from '../cmps/PopUp.jsx'
 
 
 export function BoardDetails() {
@@ -261,13 +258,8 @@ export function BoardDetails() {
                         </div>
 
                         <div className='invite-users'>
-<<<<<<< HEAD
                             <button className='invite' onClick={_onShowPopUp}>
                                 {` Invite / ${board?.members.length}`}
-=======
-                            <button className='invite' onClick={() => _onShowPopUp(true)}>
-                                {` Invite / ${board?.members?.length}`}
->>>>>>> origin/main
                             </button>
 
                             <span className='copy-link'>
@@ -452,8 +444,8 @@ export function BoardDetails() {
                     onSetFilterBy={onSetFilterBy}
                 />
 
-            </FloatingContainerCmp>}
-
+            </FloatingContainerCmp>
+            }
 
 
             {board?.cmpOrder && isSortOpen && <FloatingContainerCmp
