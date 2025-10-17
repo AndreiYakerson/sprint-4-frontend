@@ -370,7 +370,7 @@ export function GroupPreview({ group, groupsLength, managingType, TaskList,
                             <FloatingContainerCmp
                                 anchorEl={anchorEl}
                                 enforceLimit={true}
-                                offsetX={-120}
+                                centeredX={true}
                                 onClose={onCloseCmpList}
                             >
                                 <CmpList

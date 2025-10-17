@@ -9,8 +9,11 @@ export function CmpList({ cmps, onClose, onAddColumn }) {
         onClose()
     }
 
+    if (cmps.length === fullCmpList.length) return <div className="cmp-list">No more columns to add</div>
+
     return (
         <div className="cmp-list">
+            
             {fullCmpList.map(cmp => {
                 if (cmps.includes(cmp)) return null
 
