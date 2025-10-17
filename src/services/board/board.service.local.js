@@ -167,6 +167,47 @@ async function getById(boardId, filterBy) {
     }
 
 
+    /// sort 
+
+    console.log('Here:', filterBy?.sortBy)
+    console.log('board:', board)
+
+    if (filterBy?.sortBy?.column && filterBy?.sortBy?.dir) {
+        if (filterBy?.sortBy?.column === 'name') {
+            board.groups = board.groups.map(g => {
+                g.tasks = g.tasks.sort((t1, t2) => (t1?.title.localeCompare(t2?.title)) * filterBy?.sortBy?.dir)
+                return g
+            })
+        } else if (filterBy?.sortBy?.column === 'due date') {
+            board.groups = board.groups.map(g => {
+                g.tasks = g.tasks.sort((t1, t2) => (t1?.dueDate?.date - t2?.dueDate?.date) * filterBy?.sortBy?.dir)
+                return g
+            })
+        } else if (filterBy?.sortBy?.column === 'status') {
+            board.groups = board.groups.map(g => {
+                g.tasks = g.tasks.sort((t1, t2) => (t1?.status?.txt.localeCompare(t2?.status?.txt)) * filterBy?.sortBy?.dir)
+                return g
+            })
+        } else if (filterBy?.sortBy?.column === 'priority') {
+            board.groups = board.groups.map(g => {
+                g.tasks = g.tasks.sort((t1, t2) => (t1?.priority?.txt.localeCompare(t2?.priority?.txt)) * filterBy?.sortBy?.dir)
+                return g
+            })
+        } else if (filterBy?.sortBy?.column === 'members') {
+            board.groups = board.groups.map(g => {
+
+                g.tasks = g.tasks.sort((t1, t2) => {
+
+                    const member1 = board.members.find(m => m._id === t1.memberIds[0])?.fullname || ''
+                    const member2 = board.members.find(m => m._id === t2.memberIds[0])?.fullname || ''
+
+                    return (member1.localeCompare(member2)) * filterBy?.sortBy?.dir
+                })
+                return g
+            })
+        }
+    }
+
     return board
 }
 

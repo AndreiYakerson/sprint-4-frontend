@@ -29,7 +29,8 @@ function getDefaultFilterBoardDetails() {
         byPriorities: [],
         byMembers: [],
         byDueDateOp: [],
-        byPerson: ''
+        byPerson: '',
+        sortBy: { column: '', dir: -1 }
     }
 }
 
