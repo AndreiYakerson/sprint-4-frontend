@@ -104,6 +104,7 @@
                     background-color: transparent;
 
                     .invite {
+                        max-height: 31px;
                         line-height: 22px;
                         border-color: var(--ui-border-color);
                         border-bottom-right-radius: 0%;
