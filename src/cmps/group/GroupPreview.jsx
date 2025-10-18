@@ -161,7 +161,7 @@ export function GroupPreview({ group, groupsLength, managingType, TaskList,
         document.removeEventListener("mouseup", handleMouseUp)
     }
 
-
+    console.log('board.cmpOrder:', board.cmpOrder)
 
     ///////////////////////////////////  Collapsed group ///////////////////////////////
 
@@ -250,10 +250,12 @@ export function GroupPreview({ group, groupsLength, managingType, TaskList,
                             </div>
                         } else if (colName === 'status') {
                             return <div key={colName} className="column-cell status">
+                                <div>{colName}</div>
                                 <LabelSum info={{ labels: statuses, type: 'status' }} />
                             </div>
                         } else if (colName === 'priority') {
                             return <div key={colName} className="column-cell priority">
+                                <div>{colName}</div>
                                 <LabelSum info={{ labels: priorities, type: 'priority' }} />
                             </div>
                         } else {
