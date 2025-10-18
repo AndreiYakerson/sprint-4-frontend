@@ -178,9 +178,9 @@ export function BoardDetailsHeader({
                                         <SvgIcon iconName='xMark' size={16} colorName='secondaryText' />
                                     </button>
 
-                                    <button className='search-option-btn hover-show up' data-type={'Search Options'} >
+                                    {/* <button className='search-option-btn hover-show up' data-type={'Search Options'} >
                                         <SvgIcon iconName='searchOptions' size={16} colorName='secondaryText' />
-                                    </button>
+                                    </button> */}
                                 </section>
                             </div>
                         )}
