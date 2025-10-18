@@ -20,9 +20,9 @@ export function FloatingContainerCmp({
 
     if (floating.content) {
         const content = typeof floating.content === 'function'
-            ? floating.content() 
+            ? floating.content()
             : floating.content
-            
+
         contentWithProps = cloneElement(content, {
             ...content.props,
             onCloseFloating
@@ -60,24 +60,34 @@ export function FloatingContainerCmp({
 
     useEffect(() => {
         function handleClickOutside(e) {
-            if (!popupRef.current || !floating.anchor) return
+            if (
+                !popupRef.current ||
+                !floating.anchor ||
+                !(floating.anchor instanceof Node)
+            ) return
+
             const clickedInside = e.target.closest('.fcc-container')
             const clickedAnchor = floating.anchor.contains(e.target)
             if (!clickedInside && !clickedAnchor)
-                setTimeout(() => {
-                    onCloseFloating()
-                }, 0)
+                // setTimeout(() => {
+                onCloseFloating()
+            // }, 0)
         }
 
-        document.addEventListener('mousedown', handleClickOutside)
-        return () => document.removeEventListener('mousedown', handleClickOutside)
+        document.addEventListener('click', handleClickOutside)
+        return () => document.removeEventListener('click', handleClickOutside)
     }, [floating.anchor, onCloseFloating])
 
 
 
     // --- Positioning logic ---
     useLayoutEffect(() => {
-        if (!floating.anchor || !popupRef.current) return
+        //FIXME להודיע על שינוי!!
+        if (
+            !popupRef.current ||
+            !floating.anchor ||
+            !(floating.anchor instanceof Node)
+        ) return
 
         const updatePosition = (ev) => {
             // Ignore scroll events that originate inside anchorEl

@@ -4,7 +4,7 @@ import { LabelsListEdit } from "./LabelsListEdit";
 import { updateBoard } from "../../../store/actions/board.actions";
 import { useSelector } from "react-redux";
 
-export function LabelSelect({ labels, onClose, onUpdate }) {
+export function LabelSelect({ labels, onClose, onUpdate,type}) {
     const board = useSelector(state => state.boardModule.board)
     const [labelsToSelect, setLabelsToSelect] = useState(labels)
     const [isEditOpen, setIsEditOpen] = useState(false)
@@ -27,7 +27,10 @@ export function LabelSelect({ labels, onClose, onUpdate }) {
 
 
     async function onUpdateLabels(labels) {
-        const newBoard = { ...board, statuses: labels }
+        const newBoard = {
+            ...board,
+            [type === "priority" ? "priorities" : "statuses"] : labels
+        }
         try {
             updateBoard(newBoard)
             setLabelsToSelect(labels)

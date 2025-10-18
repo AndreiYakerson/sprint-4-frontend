@@ -34,6 +34,7 @@ export function InviteByMail({ onClosePopUp }) {
          showSuccessMsg(' Member add board')
          onClosePopUp()
        } catch (error) {
+        console.log(" Invite by mail. Problem updating member" , error)
         
        }
     }

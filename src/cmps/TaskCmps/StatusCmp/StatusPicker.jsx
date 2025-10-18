@@ -24,6 +24,7 @@ export function StatusPicker({ info, onUpdate }) {
         if (statusAnchor) {
             onCloseFloating()
             const content = <LabelSelect
+                type="statuses"
                 labels={labels}
                 onUpdate={onUpdate}
                 onClose={onClose}
