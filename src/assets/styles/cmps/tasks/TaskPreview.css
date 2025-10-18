@@ -180,6 +180,7 @@
            align-content: center;
 
            &>:first-child {
+               padding: 2px;
                margin-inline-start: 16px;
            }
 
