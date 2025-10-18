@@ -37,8 +37,6 @@ export function systemReducer(state = initialState, action = {}) {
       return { ...state, popUp: { isOpen: false, content: action.content } }
     case SET_FLOATING:
       // if (state.isFloatingOpen) state.isFloatingOpen = false
-      console.log("🚀 ~ systemReducer ~ action.anchor:", action.anchor)
-      console.log("🚀 ~ systemReducer ~ action.content:", action.content)
       return { ...state, floating: { isOpen: true, anchor: action.anchor, content: action.content } }
     case CLOSE_FLOATING:
       return { ...state, floating: { isOpen: false, anchor: false, content: action.content } }

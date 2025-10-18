@@ -1,11 +1,9 @@
 import { cloneElement, useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
-import { onCloseFloating, onSetFloatingIsOpen } from '../store/actions/system.actions'
+import { onCloseFloating } from '../store/actions/system.actions'
 import { useSelector } from 'react-redux'
 
 export function FloatingContainerCmp({
-    // anchorEl: floating.anchor,
-    //  onClose: onCloseFloating,
     offsetX = 0, offsetY = 0, centeredX = false,
     showTriangle = false, enforceLimit = false
 }) {
@@ -16,20 +14,21 @@ export function FloatingContainerCmp({
     const [trianglePos, setTrianglePos] = useState('UP')
     const popupRef = useRef(null)
 
-    const contentWithProps = floating.content
-        ? cloneElement(floating.content, {
-            ...floating.content.props, onCloseFloating: onCloseFloating
+
+
+    let contentWithProps = null
+
+    if (floating.content) {
+        const content = typeof floating.content === 'function'
+            ? floating.content() 
+            : floating.content
+            
+        contentWithProps = cloneElement(content, {
+            ...content.props,
+            onCloseFloating
         })
-        : null
+    }
 
-    useEffect(() => {
-        // if (floating.isOpen) return  onCloseFloating()
-       
-
-        // return () => {
-        //     onCloseFloating()
-        // }
-    }, [])
 
     useEffect(() => {
         if (!floating.anchor || !enforceLimit) return
@@ -158,7 +157,6 @@ export function FloatingContainerCmp({
         }
     }, [floating.anchor])
 
-    // if (!anchorEl) return null
 
     useLayoutEffect(() => {
         setStyle(prev => ({

@@ -7,12 +7,11 @@ import { loadFromStorage, saveToStorage } from '../../../services/util.service'
 
 // COMPONENTS
 
-export function MemberTaskSelect({ selectedMemberIds, onClose, members, onRemove ,onInvite}) {
+export function MemberTaskSelect({ selectedMemberIds, onClose, members, onRemove, onInvite,onUpdate }) {
+
     const [inputValue, setInputValue] = useState('')
     const board = useSelector(state => state.boardModule.board)
     const users = loadFromStorage('users')
-    const [anchorEl, setAnchorEl] = useState(false)
-    const [showPopUP, setShowPopUP] = useState(false)
     const [membersToShow, setMembersToShow] = useState([])
 
     //Demo
@@ -22,6 +21,7 @@ export function MemberTaskSelect({ selectedMemberIds, onClose, members, onRemove
             const users = userService.createDemoUsersForLoggedUsers()
             saveToStorage('users', users)
         }
+        return () => onClose()
     }, [])
 
 
@@ -39,21 +39,24 @@ export function MemberTaskSelect({ selectedMemberIds, onClose, members, onRemove
             .filter(m => regex.test(m.fullname) || regex.test(m.profession))
 
         if (!!filteredMembers.length) setMembersToShow(filteredMembers)
-        setAnchorEl(ev.currentTarget)
     }
 
     function onClearInput() {
         setMembersToShow(false)
-        setAnchorEl(false)
         setInputValue('')
 
     }
 
     function onSelectMember(member) {
         const taskMembersIds = [...selectedMemberIds, member._id]
-        onClose(taskMembersIds)
+        onUpdate(taskMembersIds)
+        onClose()
     }
 
+    function onRemoveMember(memberId) {
+        const memberIds = selectedMemberIds.filter(id => id !== memberId)
+        onUpdate(memberIds)
+    }
 
 
     const usersToShow = !!membersToShow.length ? membersToShow : members.filter(member => !selectedMemberIds.includes(member._id));
@@ -61,7 +64,7 @@ export function MemberTaskSelect({ selectedMemberIds, onClose, members, onRemove
     const emptyInput = inputValue ? true : false
     return (
         <div className='member-task-select-wrapper'>
-            <ExistingMembers onRemove={onRemove} members={existingUsers} />
+            <ExistingMembers onRemove={onRemoveMember} members={existingUsers} />
             <div className="member-task-select">
                 <section className='search-bar-container'>
                     <div className="search-bar">

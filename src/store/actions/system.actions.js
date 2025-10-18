@@ -40,6 +40,8 @@ export function onClosePopUp() {
 
 }
 export async function onSetFloating(content, anchor) {
+    const floatingOpen = store.getState().systemModule.floating.isOpen
+    if  (floatingOpen) return
     try {
         store.dispatch({ type: SET_FLOATING, content, anchor })
     } catch (err) {
