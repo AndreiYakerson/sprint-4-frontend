@@ -17,7 +17,7 @@ export function BoardIndex({ setIsSideBarOpen }) {
 
     const isAppLoading = useSelector(state => state.systemModule.isAppLoading)
     const boards = useSelector(storeState => storeState.boardModule.boards)
-    
+
     const [filterBy, setFilterBy] = useState(boardService.getDefaultFilter())
     const [isCollapse, setIsCollapse] = useState(false)
     const user = userService.getLoggedinUser()
@@ -60,7 +60,7 @@ export function BoardIndex({ setIsSideBarOpen }) {
                     <span className='morning'>Good morning, {<span className="user-name">{user?.fullname}</span>}!</span>
                     <span className='text'>Quickly access your recent boards, Inbox and workspaces</span>
                 </div>
-                <button className='blue' onClick={() => setIsBoardEditorOpen(true)}>Add New Board</button>
+                {/* <button className='blue' onClick={() => setIsBoardEditorOpen(true)}>Add New Board</button> */}
             </header>
             {/* <BoardFilter filterBy={filterBy} setFilterBy={setFilterBy} /> */}
 
