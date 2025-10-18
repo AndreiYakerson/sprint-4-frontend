@@ -316,7 +316,7 @@
         &>* {
             align-self: center;
             width: 100%;
-            padding-inline-start: 32px;
+            padding-inline-start: 12px;
             margin-inline: 4px;
 
             &:hover {

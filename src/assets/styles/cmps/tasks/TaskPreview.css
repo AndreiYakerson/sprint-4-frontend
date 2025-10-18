@@ -180,7 +180,7 @@
            align-content: center;
 
            &>:first-child {
-               margin-inline-start: 36px;
+               margin-inline-start: 16px;
            }
 
            .task-name {
