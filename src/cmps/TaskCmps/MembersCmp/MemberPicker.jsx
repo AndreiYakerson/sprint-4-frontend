@@ -11,7 +11,7 @@ import { useSelector } from "react-redux"
 import { SvgIcon } from "../../SvgIcon"
 import { showErrorMsg } from "../../../services/event-bus.service"
 import { MultiMembersPreview } from "./MultiMembersPreview"
-import { onCloseFloating, onSetFloating} from "../../../store/actions/system.actions"
+import { onCloseFloating, onSetFloating } from "../../../store/actions/system.actions"
 
 export function MemberPicker({ info, onUpdate }) {
     const { selectedMemberIds } = info
@@ -31,7 +31,7 @@ export function MemberPicker({ info, onUpdate }) {
             />
             onSetFloating(content, membersSelectEl)
         }
-    }, [selectedMemberIds])
+    }, [selectedMemberIds, membersSelectEl])
 
     function onSetHoveredUser(user, ev) {
         const content = <MemberInfo
@@ -41,14 +41,15 @@ export function MemberPicker({ info, onUpdate }) {
 
     function openMemberSelect(ev) {
         if (floating.isOpen) onCloseFloating()
-        const content = <MemberTaskSelect
-            selectedMemberIds={selectedMemberIds}
-            members={board.members}
-            onClose={closeMemberSelect}
-            onUpdate={updateTaskMembers}
-        />
-        onSetFloating(content, ev.currentTarget)
         setMembersSelectEl(ev.currentTarget)
+
+        // const content = <MemberTaskSelect
+        //     selectedMemberIds={selectedMemberIds}
+        //     members={board.members}
+        //     onClose={closeMemberSelect}
+        //     onUpdate={updateTaskMembers}
+        // />
+        // onSetFloating(content, ev.currentTarget)
     }
 
     function closeMemberSelect() {
