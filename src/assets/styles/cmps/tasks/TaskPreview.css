@@ -48,6 +48,11 @@
                /* make bug - bark the layout - need to find solution */
                z-index: var(--zIndex-Layer-40);
 
+               &:has(.time-icon:hover) {
+                   z-index: auto;
+               }
+
+
                .sticky-cell-wrapper {
                    background-color: var(--pulse-background-color-rgb);
                }
@@ -230,7 +235,8 @@
 
        &>* {
            /* Creates problems with tooltip, go to advanced portal to resolve the issue */
-           overflow: hidden;
+           /* overflow: hidden; */
+           /* overflow-y: hidden; */
            white-space: nowrap;
            text-overflow: ellipsis;
        }
