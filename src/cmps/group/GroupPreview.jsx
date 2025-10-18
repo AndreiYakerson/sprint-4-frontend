@@ -14,6 +14,7 @@ import { DateSum } from "../TaskCmps/SumCmps/DateSum.jsx";
 import { getColumnType } from "../../services/util.service.js";
 import { useSelector } from "react-redux";
 import { CmpList } from "../CmpList.jsx";
+import { onCloseFloating, onSetFloating } from "../../store/actions/system.actions.js";
 
 export function GroupPreview({ group, groupsLength, managingType, TaskList,
     onRemoveGroup, onUpdateGroup, onAddTask, onAddGroup, onOpenGroupEditor, onAddColumn }) {
@@ -41,11 +42,31 @@ export function GroupPreview({ group, groupsLength, managingType, TaskList,
         }
     }
 
+
+
     //menu 
     const [isMenuOpen, setIsMenuOpen] = useState(false)
     const btnRef = useRef(null)
     const menuRef = useRef(null)
-    const [anchorEl, setAnchorEl] = useState(null)
+    const [cmpSelectAnchor, setCmpSelectAnchor] = useState(null)
+
+    useEffect(() => {
+        if (cmpSelectAnchor) {
+            onCloseFloating()
+            onSetFloating(
+                <CmpList
+                    cmps={board.cmpOrder}
+                    onClose={onCloseCmpList}
+                    setCmpSelectAnchor={setCmpSelectAnchor}
+                    onAddColumn={onAddColumn}
+                    enforceLimit={true}
+                    centeredX={true}
+                />, cmpSelectAnchor)
+        }
+    }, [cmpSelectAnchor])
+
+
+
 
     function toggleIsMenuOpen(ev) {
         ev.stopPropagation()
@@ -57,7 +78,7 @@ export function GroupPreview({ group, groupsLength, managingType, TaskList,
     }
 
     function onCloseCmpList() {
-        setAnchorEl(null)
+        setCmpSelectAnchor(null)
     }
     // crudl
 
@@ -356,8 +377,8 @@ export function GroupPreview({ group, groupsLength, managingType, TaskList,
 
                     <div className="column-cell full last-column">
                         <button
-                            className={`add-column ${anchorEl ? 'rotate' : ''}`}
-                            onClick={(ev) => setAnchorEl(ev.currentTarget)}
+                            className={`add-column ${cmpSelectAnchor ? 'rotate' : ''}`}
+                            onClick={(ev) => setCmpSelectAnchor(ev.currentTarget)}
 
                         >
                             <SvgIcon
@@ -366,7 +387,7 @@ export function GroupPreview({ group, groupsLength, managingType, TaskList,
                                 colorName={'secondaryText'}
                             />
                         </button>
-                        {anchorEl &&
+                        {/* {anchorEl &&
                             <FloatingContainerCmp
                                 anchorEl={anchorEl}
                                 enforceLimit={true}
@@ -380,7 +401,7 @@ export function GroupPreview({ group, groupsLength, managingType, TaskList,
                                 />
 
                             </FloatingContainerCmp>
-                        }
+                        } */}
                     </div>
                 </div>
 
