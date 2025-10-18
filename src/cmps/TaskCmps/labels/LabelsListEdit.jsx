@@ -10,13 +10,22 @@ import { FloatingContainerCmp } from '../../FloatingContainerCmp'
 import { SvgIcon } from '../../SvgIcon'
 import { getVarColors } from '../../../services/util.service'
 
-export function LabelsListEdit({ labels, onUpdateLabels, onSwitchEditMode }) {
+export function LabelsListEdit({ labels, onUpdateLabels, onSwitchEditMode   }) {
     const [anchorEl, setAnchorEl] = useState()
     const [colorAnchorEl, setColorAnchorEl] = useState()
     const [labelsToUpdate, setLabelsToUpdate] = useState(labels)
     const [editingLabel, setEditingLabel] = useState()
     const bgColors = getVarColors()
 
+// useEffect(() => {
+  
+
+//   return () => {
+//     console.log('variable')
+    
+//     onClose()
+//   }
+// }, [])
 
 
     function handelChange(ev, id) {
@@ -94,7 +103,7 @@ export function LabelsListEdit({ labels, onUpdateLabels, onSwitchEditMode }) {
                             </span>
 
 
-                            {colorAnchorEl && editingLabel?.id === label.id && (
+                            {/* {colorAnchorEl && editingLabel?.id === label.id && (
                                 <FloatingContainerCmp
                                     anchorEl={colorAnchorEl}
                                     onClose={onCloseMenu}
@@ -110,7 +119,7 @@ export function LabelsListEdit({ labels, onUpdateLabels, onSwitchEditMode }) {
                                         ))}
                                     </div>
                                 </FloatingContainerCmp>
-                            )}
+                            )} */}
 
                             <input
                                 name='title'
@@ -126,13 +135,13 @@ export function LabelsListEdit({ labels, onUpdateLabels, onSwitchEditMode }) {
                             <SvgIcon iconName='dots' size={16} />
                         </button>
 
-                        {anchorEl && (
+                        {/* {anchorEl && (
                             <FloatingContainerCmp anchorEl={anchorEl} onClose={onCloseMenu}>
                                 <button className='now-con' onClick={() => onRemoveLabel(editingLabel.id)}>
                                     <SvgIcon iconName='trash' size={20} />
                                 </button>
                             </FloatingContainerCmp>
-                        )}
+                        )} */}
                     </li>
                 ))}
                 <li className='label-list-edit container '>
