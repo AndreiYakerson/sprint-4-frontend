@@ -23,13 +23,13 @@ export function StatusPicker({ info, onUpdate }) {
     useEffect(() => {
         if (statusAnchor) {
             onCloseFloating()
-            const content = <LabelSelect
-                type="statuses"
-                labels={labels}
-                onUpdate={onUpdate}
-                onClose={onClose}
-            />
-            onSetFloating(content, statusAnchor)
+            onSetFloating(
+                <LabelSelect
+                    type="statuses"
+                    labels={labels}
+                    onUpdate={onUpdate}
+                    onClose={onClose}
+                />, statusAnchor)
         }
     }, [statusAnchor])
 

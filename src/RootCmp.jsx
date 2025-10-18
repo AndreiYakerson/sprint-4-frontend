@@ -15,6 +15,7 @@ import { LoginSignup, Login, Signup } from './pages/LoginSignup.jsx'
 import { SideBar } from './cmps/SideBar/SideBar.jsx'
 import { PopUp } from './cmps/PopUp.jsx'
 import { FloatingContainerCmp } from './cmps/FloatingContainerCmp.jsx'
+import { FloatingSecondary } from './cmps/FloatingSecondary.jsx'
 
 
 export function RootCmp() {
@@ -25,6 +26,7 @@ export function RootCmp() {
             <UserMsg />
             <PopUp />
             <FloatingContainerCmp />
+            <FloatingSecondary />
             <aside className='app-aside'>
                 <SideBar />
             </aside>

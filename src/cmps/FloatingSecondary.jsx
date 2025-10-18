@@ -1,14 +1,14 @@
 import { cloneElement, useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
-import { onCloseFloating } from '../store/actions/system.actions'
+import { onCloseFloating as onCloseFloatingSecondary } from '../store/actions/system.actions'
 import { useSelector } from 'react-redux'
 
-export function FloatingContainerCmp({
+export function FloatingSecondary({
     offsetX = 0, offsetY = 0, centeredX = false,
     showTriangle = false, enforceLimit = false
 }) {
     const popUp = useSelector(state => state.systemModule.popUp)
-    const floating = useSelector(state => state.systemModule.floating)
+    const floating = useSelector(state => state.systemModule.floatingSecondary)
     const [style, setStyle] = useState({})
     const [isVisible, setIsVisible] = useState(false)
     const [trianglePos, setTrianglePos] = useState('UP')
@@ -40,7 +40,8 @@ export function FloatingContainerCmp({
             const isOffScreen = rect.bottom < 0 || rect.top > window.innerHeight
 
             if (isBelowHeader || isOffScreen) {
-                onCloseFloating()
+
+                onCloseFloatingSecondary()
             }
         }
 
@@ -52,12 +53,13 @@ export function FloatingContainerCmp({
             window.removeEventListener('scroll', checkAnchorVisibility, true)
             window.removeEventListener('resize', checkAnchorVisibility)
         }
-    }, [floating.anchor, onCloseFloating, enforceLimit])
+    }, [floating.anchor, onCloseFloatingSecondary, enforceLimit])
 
 
 
 
     useEffect(() => {
+        console.log('variable')
 
         function handleClickOutside(e) {
             if (
@@ -66,15 +68,16 @@ export function FloatingContainerCmp({
                 !(floating.anchor instanceof Node)
             ) return
 
-            const clickedInside = e.target.closest('.fcc-container')
+            const clickedInside = e.target.closest('.fcc-container.secondary')
             const clickedAnchor = floating.anchor.contains(e.target)
             if (!clickedInside && !clickedAnchor)
-                onCloseFloating()
+
+            onCloseFloatingSecondary()
         }
 
-        document.addEventListener('click', handleClickOutside)
-        return () => document.removeEventListener('click', handleClickOutside)
-    }, [floating.anchor, onCloseFloating])
+        document.addEventListener('click', handleClickOutside,true)
+        return () => document.removeEventListener('click', handleClickOutside,true)
+    }, [floating.anchor, onCloseFloatingSecondary])
 
 
 
@@ -179,7 +182,7 @@ export function FloatingContainerCmp({
     return createPortal(
         floating.anchor ? (
             <div
-                className={`fcc-container ${showTriangle ? "triangle" : ""} ${showTriangle ? trianglePos : ""}`}
+                className={`fcc-container secondary ${showTriangle ? "triangle" : ""} ${showTriangle ? trianglePos : ""}`}
                 ref={popupRef}
                 style={style}
                 onClick={e => e.stopPropagation()}

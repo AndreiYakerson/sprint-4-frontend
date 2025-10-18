@@ -8,7 +8,7 @@ export function LabelSelect({ labels, onClose, onUpdate,type}) {
     const board = useSelector(state => state.boardModule.board)
     const [labelsToSelect, setLabelsToSelect] = useState(labels)
     const [isEditOpen, setIsEditOpen] = useState(false)
-    const [selectedLabelId, setSelectedLabelId] = useState()
+    // const [selectedLabelId, setSelectedLabelId] = useState()
 
     useEffect(() => {
         return () => onClose()
@@ -20,7 +20,7 @@ export function LabelSelect({ labels, onClose, onUpdate,type}) {
 
     function onSaveLabel(label) {
         const newLabel = ({ ...label, updatedAt: Date.now() })
-        setSelectedLabelId(newLabel.id)
+        // setSelectedLabelId(newLabel.id)
         onClose()
         onUpdate(newLabel)
     }

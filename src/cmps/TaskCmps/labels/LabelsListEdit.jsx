@@ -9,23 +9,41 @@ import { FloatingContainerCmp } from '../../FloatingContainerCmp'
 
 import { SvgIcon } from '../../SvgIcon'
 import { getVarColors } from '../../../services/util.service'
+import { onCloseFloating, onCloseFloatingSecondary, onSetFloatingSecondary } from '../../../store/actions/system.actions'
+import { ColorPalette } from './ColorPalette'
 
-export function LabelsListEdit({ labels, onUpdateLabels, onSwitchEditMode   }) {
+export function LabelsListEdit({ labels, onUpdateLabels, onSwitchEditMode }) {
     const [anchorEl, setAnchorEl] = useState()
     const [colorAnchorEl, setColorAnchorEl] = useState()
     const [labelsToUpdate, setLabelsToUpdate] = useState(labels)
     const [editingLabel, setEditingLabel] = useState()
     const bgColors = getVarColors()
 
-// useEffect(() => {
-  
+    useEffect(() => {
+        if (colorAnchorEl && editingLabel) {
+            onCloseFloatingSecondary()
+            onSetFloatingSecondary(
+                <ColorPalette
+                    bgColors={bgColors}
+                    handelColorChange={handelColorChange}
+                    label={editingLabel} />
+                , colorAnchorEl)
+        }
+    }, [colorAnchorEl, editingLabel])
 
-//   return () => {
-//     console.log('variable')
-    
-//     onClose()
-//   }
-// }, [])
+    useEffect(() => {
+        if (anchorEl && editingLabel) {
+            onCloseFloatingSecondary()
+            onSetFloatingSecondary(
+                <button className='now-con' onClick={() => {
+                    onCloseFloating()
+                    onRemoveLabel(editingLabel.id)
+                }}>
+                    <SvgIcon iconName='trash' size={20} />
+                </button>
+                , anchorEl)
+        }
+    }, [colorAnchorEl, editingLabel])
 
 
     function handelChange(ev, id) {
@@ -102,25 +120,6 @@ export function LabelsListEdit({ labels, onUpdateLabels, onSwitchEditMode   }) {
                                 <SvgIcon iconName='bucket' size={16} colorName='whiteText' />
                             </span>
 
-
-                            {/* {colorAnchorEl && editingLabel?.id === label.id && (
-                                <FloatingContainerCmp
-                                    anchorEl={colorAnchorEl}
-                                    onClose={onCloseMenu}
-                                >
-                                    <div className='color-option-container'>
-                                        {bgColors.map(color => (
-                                            <span
-                                                key={color}
-                                                className='color-option'
-                                                style={{ background: `var(${color})` }}
-                                                onClick={() => handelColorChange(color, label.id)}
-                                            />
-                                        ))}
-                                    </div>
-                                </FloatingContainerCmp>
-                            )} */}
-
                             <input
                                 name='title'
                                 type="text"
@@ -135,13 +134,6 @@ export function LabelsListEdit({ labels, onUpdateLabels, onSwitchEditMode   }) {
                             <SvgIcon iconName='dots' size={16} />
                         </button>
 
-                        {/* {anchorEl && (
-                            <FloatingContainerCmp anchorEl={anchorEl} onClose={onCloseMenu}>
-                                <button className='now-con' onClick={() => onRemoveLabel(editingLabel.id)}>
-                                    <SvgIcon iconName='trash' size={20} />
-                                </button>
-                            </FloatingContainerCmp>
-                        )} */}
                     </li>
                 ))}
                 <li className='label-list-edit container '>

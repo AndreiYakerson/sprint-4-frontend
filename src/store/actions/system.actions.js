@@ -1,5 +1,5 @@
 
-import { CLOSE_FLOATING, CLOSE_POPUP, IS_FLOATING_OPEN, SET_FLOATING, SET_IS_APP_LOADING, SET_POPUP, SET_SIDE_BAR_OPEN, SET_TXT_HIGH_LIGHT } from '../reducers/system.reducer.js'
+import { CLOSE_FLOATING, CLOSE_FLOATING_SECONDARY, CLOSE_POPUP, IS_FLOATING_OPEN, SET_FLOATING, SET_FLOATING_SECONDARY, SET_IS_APP_LOADING, SET_POPUP, SET_SIDE_BAR_OPEN, SET_TXT_HIGH_LIGHT } from '../reducers/system.reducer.js'
 import { store } from '../store'
 
 
@@ -41,6 +41,7 @@ export function onClosePopUp() {
 }
 export async function onSetFloating(content, anchor) {
     const floatingOpen = store.getState().systemModule.floating.isOpen
+    console.log("🚀 ~ onSetFloating ~ floatingOpen:", floatingOpen)
     if  (floatingOpen) return
     try {
         store.dispatch({ type: SET_FLOATING, content, anchor })
@@ -50,11 +51,34 @@ export async function onSetFloating(content, anchor) {
     }
 }
 
+export async function onSetFloatingSecondary(content, anchor) {
+    const floatingSecondary = store.getState().systemModule.floatingSecondary.isOpen
+    console.log("🚀 ~ onSetFloating ~ floatingOpen:", floatingSecondary)
+    if  (floatingSecondary) return
+    try {
+        store.dispatch({ type: SET_FLOATING_SECONDARY, content, anchor })
+    } catch (err) {
+        console.log('Cannot set floatingSecondary', err)
+        throw err
+    }
+}
+
 export function onCloseFloating() {
     try {
         store.dispatch({ type: CLOSE_FLOATING })
     } catch (err) {
         console.log('Cannot Close floating ', err)
+        throw err
+    }
+
+}
+export function onCloseFloatingSecondary() {
+    console.log('variable')
+    
+    try {
+        store.dispatch({ type: CLOSE_FLOATING_SECONDARY })
+    } catch (err) {
+        console.log('Cannot Close floatingSecondary ', err)
         throw err
     }
 
