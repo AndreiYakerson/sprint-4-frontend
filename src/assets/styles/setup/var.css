@@ -7,13 +7,14 @@
   --zIndex-Layer-4: 4;
 
   --zIndex-Layer-10: 10;
+  --zIndex-Layer-40: 40;
   --zIndex-Layer-30: 30;
   --zIndex-Layer-50: 50;
-  
+
   --zIndex-Layer-200: 200;
   --zIndex-Layer-500: 500;
-  
-  --zIndex-icons:1000;
+
+  --zIndex-icons: 1000;
 
   --zIndex-popUp: 10000;
   --zIndex-userMsg: 10001;
