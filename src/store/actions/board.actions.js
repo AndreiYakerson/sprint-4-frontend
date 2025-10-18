@@ -233,6 +233,21 @@ board.cmpOrder.push(columnType)
     }
 }
 
+export async function removeColumn(board, columnType) {
+    const filteredCmpOrder = board.cmpOrder.filter(cmp => cmp !== columnType)
+    board.cmpOrder = filteredCmpOrder
+
+
+    try {
+        const savedBoard = await boardService.save(board)
+        store.dispatch({ type: UPDATE_BOARD, board: savedBoard })
+        return savedBoard
+    } catch (err) {
+        console.log('Cannot add column', err)
+        throw err
+    }
+}
+
 
 
 
