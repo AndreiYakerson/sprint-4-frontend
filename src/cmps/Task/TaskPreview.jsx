@@ -247,13 +247,19 @@ export function TaskPreview({ task, groupId, taskIdx }) {
                 <div className="task-menu-wrapper">
                     <button
                         onClick={toggleIsMenuOpen}
-                        className={`white task-menu-btn ${isMenuOpen ? "menu-open" : ""}`}
+                        className='btn-shrink-wrapper '
                         ref={btnRef}>
-                        <SvgIcon
-                            iconName="dots"
-                            size={16}
-                            colorName={'primaryText'}
-                        /></button>
+                        <div
+                            className={`btn white ${isMenuOpen ? "menu-open" : ""} shrink`}
+                        >
+                            <SvgIcon
+                                iconName="dots"
+                                size={16}
+                                colorName={'primaryText'}
+                            />
+                        </div>
+                    </button>
+
 
                     {isMenuOpen && <FloatingContainerCmp anchorEl={btnRef.current} onClose={onCloseMenu}>
                         <ActionsMenu

@@ -207,12 +207,13 @@ export function BoardDetails() {
 
                 {board?.groups?.length > 0 && boardGroupsToShow?.length > 0 &&
                     <button
-                        onClick={() => onAddGroup(board?._id)}
-                        className='add-group flex'>
-                        <SvgIcon iconName="plus" size={20} />
-                        <span>Add new group</span>
+                        className='btn-shrink-wrapper'
+                        onClick={() => onAddGroup(board?._id)}>
+                        <div className='btn add-group shrink flex'>
+                            <SvgIcon iconName="plus" size={20} />
+                            <span>Add new group</span>
+                        </div>
                     </button>}
-
             </div>
 
 

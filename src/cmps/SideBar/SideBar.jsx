@@ -49,7 +49,7 @@ export function SideBar() {
     }
 
     function _onShowPopUp() {
-        const content =  <BoardEdit />
+        const content = <BoardEdit />
         onSetPopUp(content)
     }
 
@@ -136,9 +136,11 @@ export function SideBar() {
                         </div>
                         <div className="flex align-center">
                             <span className="boards-title">Boards</span>
+
                             <button className="blue square" onClick={() => _onShowPopUp()}>
                                 <SvgIcon iconName="plus" size={18} colorName="whiteText" />
                             </button>
+
                         </div>
                     </div>
 

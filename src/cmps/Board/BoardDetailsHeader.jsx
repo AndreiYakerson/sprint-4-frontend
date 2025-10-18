@@ -107,8 +107,10 @@ export function BoardDetailsHeader({
                 </div>
 
                 <div className='invite-users'>
-                    <button className='invite' onClick={_onShowPopUp}>
-                        {` Invite / ${board?.members.length}`}
+                    <button className='btn-shrink-wrapper' onClick={_onShowPopUp}>
+                        <div className='btn invite shrink'>
+                            {` Invite / ${board?.members.length}`}
+                        </div>
                     </button>
 
                     <span className='copy-link'>
@@ -142,8 +144,10 @@ export function BoardDetailsHeader({
                 <button
                     onClick={() => onAddTask(board?.groups[0]?.id, `New ${board?.managingType}`, 'unshift')}
                     disabled={!board?.groups?.length}
-                    className='blue add-btn'>
-                    New {board?.managingType}
+                    className='btn-shrink-wrapper'>
+                    <div className='btn blue add-btn shrink'>
+                        New {board?.managingType}
+                    </div>
                 </button>
 
                 <section className='board-action-btn'>
