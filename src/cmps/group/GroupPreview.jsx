@@ -13,6 +13,7 @@ import { LabelSum } from "../TaskCmps/SumCmps/LabelSum.Jsx";
 import { DateSum } from "../TaskCmps/SumCmps/DateSum.jsx";
 import { getColumnType } from "../../services/util.service.js";
 import { useSelector } from "react-redux";
+import { CmpList } from "../CmpList.jsx";
 
 export function GroupPreview({ group, groupsLength, managingType, TaskList,
     onRemoveGroup, onUpdateGroup, onAddTask, onAddGroup, onOpenGroupEditor, onAddColumn }) {
@@ -44,6 +45,7 @@ export function GroupPreview({ group, groupsLength, managingType, TaskList,
     const [isMenuOpen, setIsMenuOpen] = useState(false)
     const btnRef = useRef(null)
     const menuRef = useRef(null)
+    const [anchorEl, setAnchorEl] = useState(null)
 
     function toggleIsMenuOpen(ev) {
         ev.stopPropagation()
@@ -52,6 +54,10 @@ export function GroupPreview({ group, groupsLength, managingType, TaskList,
 
     function onCloseMenu() {
         setIsMenuOpen(false)
+    }
+
+    function onCloseCmpList() {
+        setAnchorEl(null)
     }
     // crudl
 
@@ -119,7 +125,7 @@ export function GroupPreview({ group, groupsLength, managingType, TaskList,
     function handleMouseDown(e, colName) {
         isResizing.current = true
         startX.current = e.pageX
-        currentColName.current = colName === 'due date' ? 'due-date' : colName
+        currentColName.current = colName === 'date' ? 'due-date' : colName
 
         document.querySelectorAll(`.column-cell.${currentColName.current}`)
             .forEach(el => el.classList.add("highlight"));
@@ -237,7 +243,7 @@ export function GroupPreview({ group, groupsLength, managingType, TaskList,
 
                 <div className="task-columns flex">
                     {cmpOrder.map(colName => {
-                        if (colName === 'due date') {
+                        if (colName === 'date') {
                             return <div key={colName} className="column-cell due-date">
                                 <div>{colName}</div>
                                 <DateSum dates={dates} />
@@ -349,13 +355,32 @@ export function GroupPreview({ group, groupsLength, managingType, TaskList,
                     ))}
 
                     <div className="column-cell full last-column">
-                        <button className="add-column" onClick={onAddColumn}>
+                        <button
+                            className={`add-column ${anchorEl ? 'rotate' : ''}`}
+                            onClick={(ev) => setAnchorEl(ev.currentTarget)}
+
+                        >
                             <SvgIcon
                                 iconName="plus"
                                 size={18}
                                 colorName={'secondaryText'}
                             />
                         </button>
+                        {anchorEl &&
+                            <FloatingContainerCmp
+                                anchorEl={anchorEl}
+                                enforceLimit={true}
+                                centeredX={true}
+                                onClose={onCloseCmpList}
+                            >
+                                <CmpList
+                                    cmps={board.cmpOrder}
+                                    onClose={onCloseCmpList}
+                                    onAddColumn={onAddColumn}
+                                />
+
+                            </FloatingContainerCmp>
+                        }
                     </div>
                 </div>
 
@@ -390,7 +415,7 @@ export function GroupPreview({ group, groupsLength, managingType, TaskList,
 
             <div className="task-columns flex">
                 {cmpOrder.map(colName => {
-                    if (colName === 'due date') {
+                    if (colName === 'date') {
                         return <div key={colName} className="column-cell due-date">
                             <DateSum dates={dates} />
                         </div>

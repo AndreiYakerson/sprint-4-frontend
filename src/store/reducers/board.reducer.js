@@ -27,6 +27,10 @@ export const ADD_BOARD_MSG = 'ADD_BOARD_MSG'
 export const SET_IS_BOARD_EDITOR_OPEN = 'SET_IS_BOARD_EDITOR_OPEN'
 export const SET_BOARD_REMOVED_MSG = 'SET_BOARD_REMOVED_MSG'
 
+export const ADD_COLUMN = 'ADD_COLUMN'
+export const REMOVE_COLUMN = 'REMOVE_COLUMN'
+
+
 /// filter
 export const SET_FILTER_OPTIONS = 'SET_FILTER_OPTIONS'
 
@@ -57,8 +61,10 @@ export function boardReducer(state = initialState, action = {}) {
             newState = { ...state, boards: [...state.boards, action.board] }
             break
         case UPDATE_BOARD:
+            
             boards = state.boards.map(board => (board._id === action.board._id) ? action.board : board)
             if (action.board?._id === state.board?._id) {
+                
                 return newState = { ...state, boards, board: action.board }
             }
             newState = { ...state, boards }

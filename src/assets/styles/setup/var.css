@@ -37,7 +37,9 @@
   --primary-selected-color-btn: #cce5ff;
   --primary-selected-hover-color: #aed4fc;
 
-
+  --color-done-green: #00c875;
+  --color-purple: #9d50dd;
+  --color-chili-blue: #66ccff;
   /* text color -  icon use this colors  */
   --primary-text-color: rgb(50, 51, 56);
   --secondary-text-color: rgb(103, 104, 121);

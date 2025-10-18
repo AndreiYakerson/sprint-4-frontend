@@ -76,7 +76,7 @@ export function getColumnType(colName) {
             return 'priority'
         case 'members':
             return 'members'
-        case 'due date':
+        case 'date':
             return 'due-date'
         default:
             return ""

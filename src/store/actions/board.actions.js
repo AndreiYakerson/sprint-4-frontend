@@ -218,6 +218,24 @@ export function setBoardRemovedMsg(msg) {
     store.dispatch({ type: SET_BOARD_REMOVED_MSG, msg })
 }
 
+// Columns  ///////////////////////////////////////////////////////////////
+
+export async function addColumn(board, columnType) {
+board.cmpOrder.push(columnType)
+
+    try {
+        const savedBoard = await boardService.save(board)
+        store.dispatch({ type: UPDATE_BOARD, board: savedBoard })
+        return savedBoard
+    } catch (err) {
+        console.log('Cannot add column', err)
+        throw err
+    }
+}
+
+
+
+
 
 
 // // Command Creators:

@@ -8,7 +8,7 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router"
 // services
 import { showErrorMsg, showSuccessMsg } from "../../services/event-bus.service"
-import { addGroup, addTask, removeGroup, setNewGroupIdToEdit, updateGroup, updateGroupsOrder } from "../../store/actions/board.actions"
+import { addColumn, addGroup, addTask, removeGroup, setNewGroupIdToEdit, updateGroup, updateGroupsOrder } from "../../store/actions/board.actions"
 
 // cmps
 import { TaskList } from "../Task/TaskList";
@@ -21,10 +21,14 @@ import { GroupOverlay } from "./GroupOverlay";
 
 export function GroupList({ groups, managingType }) {
     const { boardId } = useParams()
-    
+
     const [localGroups, setLocalGroups] = useState(groups)
     const [isDragging, setIsDragging] = useState(false)
     const [activeId, setActiveId] = useState(null);
+
+    const board = useSelector(state => state.boardModule.board)
+
+
 
     const mouseSensor = useSensor(MouseSensor, {
         activationConstraint: {
@@ -39,7 +43,7 @@ export function GroupList({ groups, managingType }) {
 
     useEffect(() => {
         setLocalGroups(groups)
-    }, [groups])
+    }, [groups, board])
 
 
     async function onUpdateGroup(groupToUpdate) {
@@ -74,8 +78,8 @@ export function GroupList({ groups, managingType }) {
         }
     }
 
-    function onAddColumn() {
-        console.log('onAddColumn')
+    function onAddColumn(columnType) {
+        addColumn(board, columnType)
     }
 
     // This needs to be improved, add the group's IDX, and add the new one below it.
