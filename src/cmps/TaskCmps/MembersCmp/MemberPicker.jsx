@@ -11,8 +11,7 @@ import { useSelector } from "react-redux"
 import { SvgIcon } from "../../SvgIcon"
 import { showErrorMsg } from "../../../services/event-bus.service"
 import { MultiMembersPreview } from "./MultiMembersPreview"
-import { onCloseFloating, onSetFloating, onSetFloatingIsOpen, onSetPopUp } from "../../../store/actions/system.actions"
-import { InviteByMail } from "../../BoardActionsNav/InviteByMail"
+import { onCloseFloating, onSetFloating} from "../../../store/actions/system.actions"
 
 export function MemberPicker({ info, onUpdate }) {
     const { selectedMemberIds } = info
@@ -29,7 +28,6 @@ export function MemberPicker({ info, onUpdate }) {
                 members={board.members}
                 onClose={closeMemberSelect}
                 onUpdate={updateTaskMembers}
-                onInvite={_onShowPopUp}
             />
             onSetFloating(content, membersSelectEl)
         }
@@ -48,7 +46,6 @@ export function MemberPicker({ info, onUpdate }) {
             members={board.members}
             onClose={closeMemberSelect}
             onUpdate={updateTaskMembers}
-            onInvite={_onShowPopUp}
         />
         onSetFloating(content, ev.currentTarget)
         setMembersSelectEl(ev.currentTarget)
@@ -70,14 +67,6 @@ export function MemberPicker({ info, onUpdate }) {
         setIsAnimation(true)
         setTimeout(() => setIsAnimation(false), 400)
         onUpdate(memberIds)
-    }
-
-    function _onShowPopUp(value) {
-        const content = <InviteByMail />
-        onSetPopUp(content)
-        if (!value === false) {
-            closeMemberSelect()
-        }
     }
 
     const membersToShow = selectedMemberIds.map(memberId => {

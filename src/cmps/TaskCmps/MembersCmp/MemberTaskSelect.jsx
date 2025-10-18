@@ -4,21 +4,23 @@ import { ExistingMembers } from './ExistingMembers'
 import { useSelector } from 'react-redux'
 import { useEffect, useState } from 'react'
 import { loadFromStorage, saveToStorage } from '../../../services/util.service'
+import { onSetPopUp } from '../../../store/actions/system.actions'
+import { InviteByMail } from '../../BoardActionsNav/InviteByMail'
 
 // COMPONENTS
 
-export function MemberTaskSelect({ selectedMemberIds, onClose, members, onRemove, onInvite,onUpdate }) {
+export function MemberTaskSelect({ selectedMemberIds, onClose, members, onInvite, onUpdate }) {
 
     const [inputValue, setInputValue] = useState('')
-    const board = useSelector(state => state.boardModule.board)
-    const users = loadFromStorage('users')
+    // const board = useSelector(state => state.boardModule.board)
+    // const users = loadFromStorage('users')
     const [membersToShow, setMembersToShow] = useState([])
 
     //Demo
     useEffect(() => {
         if (!loadFromStorage('users')) {
             console.log(' Setting demo user to LocalStorage ')
-            const users = userService.createDemoUsersForLoggedUsers()
+            let users = userService.createDemoUsersForLoggedUsers()
             saveToStorage('users', users)
         }
         return () => onClose()
@@ -58,6 +60,13 @@ export function MemberTaskSelect({ selectedMemberIds, onClose, members, onRemove
         onUpdate(memberIds)
     }
 
+    function _onShowPopUp(value) {
+        const content = <InviteByMail />
+        onSetPopUp(content)
+        if (!value === false) {
+            onClose()
+        }
+    }
 
     const usersToShow = !!membersToShow.length ? membersToShow : members.filter(member => !selectedMemberIds.includes(member._id));
     const existingUsers = members.filter(member => selectedMemberIds.includes(member._id));
@@ -98,7 +107,7 @@ export function MemberTaskSelect({ selectedMemberIds, onClose, members, onRemove
                     })}
 
                     <button className="user invite-btn flex"
-                        onClick={() => onInvite(true)}>
+                        onClick={() => _onShowPopUp(true)}>
                         <span className="icon">
                             <SvgIcon iconName='addMember' size={16} colorName="secondaryText" />
                         </span>
