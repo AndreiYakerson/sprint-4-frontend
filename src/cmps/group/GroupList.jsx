@@ -8,7 +8,7 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router"
 // services
 import { showErrorMsg, showSuccessMsg } from "../../services/event-bus.service"
-import { addColumn, addGroup, addTask, removeGroup, setNewGroupIdToEdit, updateGroup, updateGroupsOrder } from "../../store/actions/board.actions"
+import { addColumn, addGroup, addTask, removeColumn, removeGroup, setNewGroupIdToEdit, updateGroup, updateGroupsOrder } from "../../store/actions/board.actions"
 
 // cmps
 import { TaskList } from "../Task/TaskList";
@@ -80,6 +80,11 @@ export function GroupList({ groups, managingType }) {
 
     function onAddColumn(columnType) {
         addColumn(board, columnType)
+    }
+
+    function onRemoveColumn(colName) {
+        removeColumn(board, colName)
+        
     }
 
     // This needs to be improved, add the group's IDX, and add the new one below it.
@@ -177,6 +182,7 @@ export function GroupList({ groups, managingType }) {
                                 onAddGroup={onAddGroup}
                                 onOpenGroupEditor={onOpenGroupEditor}
                                 onAddColumn={onAddColumn}
+                                onRemoveColumn={onRemoveColumn}
                             />
 
                     })}

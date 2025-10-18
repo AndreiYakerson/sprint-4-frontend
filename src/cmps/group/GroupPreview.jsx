@@ -16,7 +16,7 @@ import { useSelector } from "react-redux";
 import { CmpList } from "../CmpList.jsx";
 
 export function GroupPreview({ group, groupsLength, managingType, TaskList,
-    onRemoveGroup, onUpdateGroup, onAddTask, onAddGroup, onOpenGroupEditor, onAddColumn }) {
+    onRemoveGroup, onUpdateGroup, onAddTask, onAddGroup, onOpenGroupEditor, onAddColumn, onRemoveColumn }) {
 
     // dnd kit
     const { attributes, listeners, setNodeRef,
@@ -347,6 +347,13 @@ export function GroupPreview({ group, groupsLength, managingType, TaskList,
                     {cmpOrder.map((colName) => (
                         <div key={colName} className={`column-cell ${getColumnType(colName)}`}>
                             <span>{colName}</span>
+                            <span className="column-menu-btn" key={colName} onClick={() => onRemoveColumn(colName)}>
+                                <SvgIcon
+                                    iconName="dots"
+                                    size={22}
+                                    colorName={'secondaryText'}
+                                />
+                            </span>
                             <div
                                 className="resize-btn"
                                 onMouseDown={(ev) => handleMouseDown(ev, colName)}

@@ -163,6 +163,37 @@
             position: relative;
             place-content: center;
             text-align: center;
+            display: grid;
+            grid-template-columns: 1fr max-content;
+
+            span:first-child {
+                grid-column: 1;
+                place-self: center;
+            }
+
+            .column-menu-btn {
+                display: none;
+                grid-column: 2;
+                place-self: center end;
+
+                &:hover {
+
+                    .svg-icon {
+                        background-color: var(--primary-selected-color);
+                        border-radius: var(--border-radius-small);
+                        cursor: pointer;
+                    }
+
+                }
+            }
+
+            &:hover .column-menu-btn {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+
         }
 
         .column-cell {
