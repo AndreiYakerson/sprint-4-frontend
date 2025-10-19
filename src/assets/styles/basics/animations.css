@@ -33,7 +33,8 @@
   top: 0;
   right: 0;
 
-  width: 139px;
+  min-width: 139px;
+  width: 100%;
   height: 36px;
   background-image: url('/img/done-animation.png');
   background-repeat: no-repeat;
