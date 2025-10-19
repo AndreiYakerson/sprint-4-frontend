@@ -1,6 +1,6 @@
 
 // SERVICES
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { updateBoard } from "../../../store/actions/board.actions.js";
 import { useSelector } from "react-redux";
 // COMPONENTS
@@ -17,13 +17,37 @@ export function StatusPicker({ info, onUpdate }) {
     const [anchorEl, setAnchorEl] = useState()
     const label = labels.find(l => l.id === selectedLabelId)
 
+    const [showDoneAnimation, setShowDoneAnimation] = useState(false)
+    const timeOutRef = useRef(null)
+
     useEffect(() => {
         setLabels(board.statuses)
     }, [board.statuses])
 
 
+    useEffect(() => {
+        return (() => {
+            if (timeOutRef.current) clearTimeout(timeOutRef.current)
+        })
+    }, [])
+
+    function onSetDoneAnimation() {
+        setShowDoneAnimation(true)
+        timeOutRef.current = setTimeout(() => {
+            setShowDoneAnimation(false)
+        }, 3400)
+    }
+
     function onSaveLabel(label) {
         const newLabel = ({ ...label, updatedAt: Date.now() })
+
+        /// done animtion 
+        if (label?.id === 'done') onSetDoneAnimation()
+        if (label?.id !== 'done' && showDoneAnimation) {
+            setShowDoneAnimation(false)
+            clearTimeout(timeOutRef.current)
+        }
+
         setSelectedLabelId(newLabel.id)
         onUpdate(newLabel)
         onClose()
@@ -54,11 +78,13 @@ export function StatusPicker({ info, onUpdate }) {
     const labelToShow = label ? label : labels.find(status => status.id === 'default')
 
     return (
-        <div className={`labels-select-container ${anchorEl ? "focus" : ""}`}
+        <div className={`labels-select-container ${anchorEl ? "focus" : ""} done-animation`}
             style={{ background: `var(${labelToShow?.cssVar})` }}
             onClick={(ev) => setAnchorEl(ev.currentTarget)}>
             <div className="label-txt">{labelToShow?.txt}</div>
             <StatusAnimation color={`var(${labelToShow?.cssVar})`} />
+
+            {showDoneAnimation && <div className="done-animation" />}
 
             {anchorEl &&
                 <FloatingContainerCmp
