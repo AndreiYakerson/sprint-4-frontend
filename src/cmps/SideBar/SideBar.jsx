@@ -125,7 +125,7 @@ export function SideBar() {
                     <div className="boards-title-tab">
                         <div className="small-nav-tab flex align-center justify-between">
                             <span> Workspaces</span>
-                            <div className="Workspaces-tab-btns">
+                            <div className="workspaces-tab-btns">
                                 <button className={`transparent board-menu-btn`}>
                                     <SvgIcon iconName="dots" size={16} colorName="secondaryText" />
                                 </button>
@@ -135,7 +135,11 @@ export function SideBar() {
                             </div>
                         </div>
                         <div className="flex align-center">
-                            <span className="boards-title">Boards</span>
+
+                            <div className="boards-title-workspaces flex align-center">
+                                <div className="workspaces-icon">M</div>
+                                <span>My Boards</span>
+                            </div>
 
                             <button className="blue square" onClick={() => _onShowPopUp()}>
                                 <SvgIcon iconName="plus" size={18} colorName="whiteText" />

@@ -33,7 +33,7 @@
         height: 30px;
         border-radius: var(--border-radius-big);
         padding: 0;
-        z-index: var( --zIndex-icons);
+        z-index: var(--zIndex-icons);
         cursor: pointer;
 
         .svg-icon {
@@ -239,23 +239,37 @@
         padding-inline: 16px;
         padding-block-end: 2px;
 
-        .Workspaces-tab-btns {
+        .workspaces-tab-btns {
             display: flex;
             gap: 8px;
             margin-inline-end: 4px;
         }
 
-        .boards-title {
+        .boards-title-workspaces {
+            place-content: start;
+            gap: 6px;
+
+            cursor: default;
             border-radius: 4px;
             border: 1px solid var(--ui-border-color);
-            min-height: 30px;
+            min-height: 32px;
             padding-inline: 4px;
             flex: 1;
             font-size: 16px;
             font-weight: 600;
             margin-inline-start: 6px;
             margin-inline-end: 4px;
-            place-content: center;
+
+            .workspaces-icon {
+                color: var(--text-color-on-primary);
+                background-color: rgb(89, 90, 212);
+                border-radius: 6px;
+                width: 20px;
+                height: 20px;
+                font-size: 14px;
+                font-weight: 500;
+                text-align: center;
+            }
         }
     }
 }
