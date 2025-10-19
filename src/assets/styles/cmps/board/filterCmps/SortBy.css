@@ -1,6 +1,6 @@
 .sort-by-board-details {
-    padding: 16px;
-    width: 556px;
+    padding: 20px 16px 16px 16px;
+    width: 524px;
 
     .sort-by-header {
         font-size: 15px;
@@ -8,17 +8,34 @@
         margin-block-end: 16px;
     }
 
+   .sort-select *:nth-child(1) {
+        width: 280px;
+        /* first CustomSelect */
+    }
+
+   .sort-select *:nth-child(2) {
+        width: 208px;
+    }
+
     .sort-select {
         display: grid;
         grid-template-columns: 1fr 230px max-content;
         gap: 8px;
-        margin-block-end: 16px;
+        margin-block-end: 32px;
+        height: 40px;
+        width: 524px;
 
         .custom-select {
             border: 1px solid var(--ui-border-color);
             border-radius: 4px;
-            height: 40px;
             text-transform: capitalize;
+
+            /* :first-child {
+                width: 280px;
+            } */
+
+
+
 
             &:hover {
                 border-color: black;
