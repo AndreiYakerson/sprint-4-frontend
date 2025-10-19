@@ -161,7 +161,6 @@ export function GroupPreview({ group, groupsLength, managingType, TaskList,
         document.removeEventListener("mouseup", handleMouseUp)
     }
 
-    console.log('board.cmpOrder:', board.cmpOrder)
 
     ///////////////////////////////////  Collapsed group ///////////////////////////////
 
