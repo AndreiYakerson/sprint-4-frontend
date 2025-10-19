@@ -31,6 +31,7 @@
             padding-inline-start: 8px;
             margin: 0;
 
+            .workspace-info,
             .board-actions,
             .board-img-wrapper {
                 display: none;

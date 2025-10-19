@@ -183,6 +183,14 @@ export function BoardPreview({ board, isSideBarDisplay }) {
 
             </div>
 
+            <div className='workspace-info flex'>
+                <SvgIcon
+                    iconName="flower"
+                    size={18}
+                />
+                <span>{`work management > My Boards`}</span>
+            </div>
+
         </article >)
 }
 
