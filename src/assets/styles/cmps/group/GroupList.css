@@ -15,8 +15,6 @@
         border: solid 1px var(--layout-border-color);
         border-radius: .5em;
         border-left: 6px solid var(--group-color);
-        width: 100%;
-        height: 100%;
     }
 
     &.collapsed {
@@ -393,13 +391,12 @@
 .group-overlay {
     display: flex;
     align-items: center;
-    ;
     border-left: 6px solid;
     border-left-color: var(--group-color);
     height: 35px;
-    width: calc(100vw - 350px);
+    width: calc(100% - 70px);
 
-    translate: 30px;
+    translate: 70px;
     rotate: 1deg;
     opacity: .8;
     background-color: rgba(223, 209, 209, 0.276);
