@@ -516,9 +516,9 @@
         }
 
 
-        .sticky-cell-wrapper {
-            /* z-index: var(--zIndex-Layer-1); */
-        }
+        /* .sticky-cell-wrapper {
+            z-index: var(--zIndex-Layer-1);
+        } */
 
     }
 
