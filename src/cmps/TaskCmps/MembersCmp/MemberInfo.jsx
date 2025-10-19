@@ -26,7 +26,7 @@ export function MemberInfo({ user }) {
 
                 </div>
             </article>
-            <hr></hr>
+            {/* <hr></hr> */}
         </div>
     )
 
