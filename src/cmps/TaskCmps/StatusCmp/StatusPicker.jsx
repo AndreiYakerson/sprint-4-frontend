@@ -40,6 +40,7 @@ export function StatusPicker({ info, onUpdate }) {
     }
 
     function onClose() {
+        console.log("🚀 ~ onClose ~ onClose:")
         setIsEditOpen(false)
         setAnchorEl(null)
     }

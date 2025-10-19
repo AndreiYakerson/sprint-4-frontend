@@ -11,7 +11,7 @@ import { SvgIcon } from '../../SvgIcon'
 import { getVarColors } from '../../../services/util.service'
 import { ActionsMenu } from '../../ActionsMenu'
 
-export function LabelsListEdit({ labels, onUpdateLabels, onSwitchEditMode }) {
+export function LabelsListEdit({ labels, onUpdateLabels, onSwitchEditMode, onClose }) {
     const [anchorEl, setAnchorEl] = useState()
     const [colorAnchorEl, setColorAnchorEl] = useState()
     const [labelsToUpdate, setLabelsToUpdate] = useState(labels)
@@ -36,15 +36,30 @@ export function LabelsListEdit({ labels, onUpdateLabels, onSwitchEditMode }) {
             setColorAnchorEl(null)
             return labels
         })
+       setTimeout(() => {
+         onCloseColorPallet()
+       }, 0);
     }
+
+
 
     function changeLabelColor(ev, id) {
         const label = labelsToUpdate.find(label => label.id === id)
+        onOpenColorPallet(ev, label)
+    }
+
+    function onOpenColorPallet(ev, label) {
         setEditingLabel(label)
         setColorAnchorEl(ev.currentTarget)
     }
 
-    function onOpenMenu(ev, id) {
+    function onCloseColorPallet() {
+        setEditingLabel(null)
+        setColorAnchorEl(null)
+        onClose()
+    }
+
+    function onOpenActionMenu(ev, id) {
         setAnchorEl(ev.currentTarget)
         setEditingLabel(labelsToUpdate.find(label => label.id === id))
     }
@@ -124,7 +139,7 @@ export function LabelsListEdit({ labels, onUpdateLabels, onSwitchEditMode }) {
                         </section>
 
                         <button className={`more-icon-btn ${anchorEl && editingLabel?.id === label?.id ? "open" : ""}`}
-                            onClick={(ev) => onOpenMenu(ev, label.id)}>
+                            onClick={(ev) => onOpenActionMenu(ev, label.id)}>
                             <SvgIcon iconName='dots' size={16} />
                         </button>
 
@@ -154,7 +169,7 @@ export function LabelsListEdit({ labels, onUpdateLabels, onSwitchEditMode }) {
                             />
 
                         </section>
-                        <button className="more-icon-btn" onClick={(ev) => onOpenMenu(ev, label.id)}>
+                        <button className="more-icon-btn" onClick={(ev) => onOpenActionMenu(ev, label.id)}>
                             <SvgIcon iconName='dots' size={16} />
                         </button>
                     </div>
