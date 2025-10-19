@@ -39,6 +39,10 @@
         .svg-icon {
             cursor: pointer;
         }
+
+        &:hover {
+            background-color: var(--surface-color);
+        }
     }
 
     &.close {
