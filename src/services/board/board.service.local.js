@@ -454,7 +454,7 @@ const DefaultStatuses = [
         , cssVar: '--group-title-clr12'
     },
     {
-        id: 'default',
+        id: 'Not Started',
         txt: 'Not Started'
         , cssVar: '--group-title-clr18'
     },
@@ -489,7 +489,7 @@ function _setBaordToSave({ title = 'New board', managingType = 'items', privacy 
                         createdAt: Date.now(),
                         memberIds: [],
                         priority: { txt: 'Default Label', cssVar: '--group-title-clr18', id: 'default' },
-                        status: { id: 'default', txt: 'Not Started', cssVar: '--group-title-clr18' },
+                        status: { txt: 'Not Started', cssVar: '--group-title-clr18', id: 'Not Started' },
 
                     },
                     {
@@ -498,7 +498,7 @@ function _setBaordToSave({ title = 'New board', managingType = 'items', privacy 
                         createdAt: Date.now(),
                         memberIds: [],
                         priority: { txt: 'Default Label', cssVar: '--group-title-clr18', id: 'default' },
-                        status: { id: 'default', txt: 'Not Started', cssVar: '--group-title-clr18' },
+                        status: { txt: 'Not Started', cssVar: '--group-title-clr18', id: 'Not Started' },
                     },
                 ],
                 style: {

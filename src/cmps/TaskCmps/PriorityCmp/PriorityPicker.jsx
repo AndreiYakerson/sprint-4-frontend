@@ -79,7 +79,7 @@ export function PriorityPicker({ info, onUpdate }) {
                             {!isEditOpen ?
                                 <LabelsList labels={labels} onSaveLabel={onSaveLabel} onSwitchEditMode={switchEditMode} />
                                 :
-                                <LabelsListEdit labels={labels} onUpdateLabels={onUpdateLabels} onClose={onClose} onSwitchEditMode={switchEditMode} />
+                                <LabelsListEdit labels={labels} type={'priority'} onUpdateLabels={onUpdateLabels} onClose={onClose} onSwitchEditMode={switchEditMode} />
                             }
 
                         </div>

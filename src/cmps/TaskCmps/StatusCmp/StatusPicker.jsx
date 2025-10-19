@@ -74,7 +74,7 @@ export function StatusPicker({ info, onUpdate }) {
                             {!isEditOpen ?
                                 <LabelsList labels={labels} onSaveLabel={onSaveLabel} onSwitchEditMode={switchEditMode} />
                                 :
-                                <LabelsListEdit labels={labels} onUpdateLabels={onUpdateLabels} onClose={onClose} onSwitchEditMode={switchEditMode} />
+                                <LabelsListEdit labels={labels} type={'status'} onUpdateLabels={onUpdateLabels} onClose={onClose} onSwitchEditMode={switchEditMode} />
                             }
 
                         </div>
