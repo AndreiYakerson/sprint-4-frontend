@@ -237,7 +237,8 @@
        &>* {
            /* Creates problems with tooltip, go to advanced portal to resolve the issue */
            /* overflow: hidden; */
-           /* overflow-y: hidden; */
+           overflow-x: hidden;
+           overflow-y: hidden;
            white-space: nowrap;
            text-overflow: ellipsis;
        }

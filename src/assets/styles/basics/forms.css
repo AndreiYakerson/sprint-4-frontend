@@ -107,6 +107,12 @@ button {
 		}
 	}
 
+	&.column-menu-btn {
+		width: 24px;
+		height: 24px;
+		justify-content: center;
+	}
+
 
 	&.add-group {
 		align-items: center;

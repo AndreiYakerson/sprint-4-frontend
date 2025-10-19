@@ -42,18 +42,41 @@ export function GroupPreview({ group, groupsLength, managingType, TaskList,
     }
 
     //menu 
-    const [isMenuOpen, setIsMenuOpen] = useState(false)
-    const btnRef = useRef(null)
-    const menuRef = useRef(null)
+    const [isGroupMenuOpen, setIsGroupMenuOpen] = useState(false)
+    const [elColumnMenu, setIsElColumnMenu] = useState(null)
+    const [columnType, setcolumnType] = useState('')
     const [anchorEl, setAnchorEl] = useState(null)
 
-    function toggleIsMenuOpen(ev) {
+
+    const btnRef = useRef(null)
+    const menuRef = useRef(null)
+    const columnBtnRef = useRef(null)
+
+
+    function toggleIsGroupMenuOpen(ev) {
         ev.stopPropagation()
-        setIsMenuOpen(!isMenuOpen)
+        setIsGroupMenuOpen(!isGroupMenuOpen)
+    }
+
+    function toggleIsColumnMenuOpen(ev, colname) {
+        ev.stopPropagation()
+        setIsElColumnMenu(elColumnMenu ? null : ev.currentTarget)
+
+        if (!columnType) {
+            setcolumnType(colname)
+        } else {
+            setcolumnType('')
+        }
     }
 
     function onCloseMenu() {
-        setIsMenuOpen(false)
+        if (isGroupMenuOpen) {
+            setIsGroupMenuOpen(false)
+        }
+        if (elColumnMenu) {
+            setIsElColumnMenu(null)
+            setcolumnType('')
+        }
     }
 
     function onCloseCmpList() {
@@ -185,8 +208,8 @@ export function GroupPreview({ group, groupsLength, managingType, TaskList,
                     <div className="group-bar">
                         <div className="group-menu-wrapper">
 
-                            <button onClick={toggleIsMenuOpen}
-                                className={`white group-menu ${isMenuOpen ? "menu-open" : ""}`}
+                            <button onClick={toggleIsGroupMenuOpen}
+                                className={`white group-menu ${isGroupMenuOpen ? "menu-open" : ""}`}
                                 ref={btnRef}>
 
                                 <SvgIcon
@@ -197,7 +220,7 @@ export function GroupPreview({ group, groupsLength, managingType, TaskList,
 
                             </button>
 
-                            {isMenuOpen && <FloatingContainerCmp
+                            {isGroupMenuOpen && <FloatingContainerCmp
                                 anchorEl={btnRef.current}
                                 onClose={onCloseMenu}
                                 offsetX={40}
@@ -288,7 +311,9 @@ export function GroupPreview({ group, groupsLength, managingType, TaskList,
         >
             <div className="group-title-row" {...listeners}>
                 <div className="group-menu-wrapper">
-                    <button onClick={toggleIsMenuOpen} className={`white group-menu ${isMenuOpen ? "menu-open" : ""}`} ref={btnRef}>
+                    <button onClick={toggleIsGroupMenuOpen}
+                        className={`white group-menu ${isGroupMenuOpen ? "menu-open" : ""}`}
+                        ref={btnRef}>
                         <SvgIcon
                             iconName="dots"
                             size={22}
@@ -296,7 +321,7 @@ export function GroupPreview({ group, groupsLength, managingType, TaskList,
                         />
                     </button>
 
-                    {isMenuOpen && <FloatingContainerCmp
+                    {isGroupMenuOpen && <FloatingContainerCmp
                         anchorEl={btnRef.current}
                         onClose={onCloseMenu}
                         offsetX={40}
@@ -304,7 +329,6 @@ export function GroupPreview({ group, groupsLength, managingType, TaskList,
                         enforceLimit={true}
                     >
                         <ActionsMenu
-                            menuRef={menuRef}
                             onCloseMenu={onCloseMenu}
                             onRemoveGroup={() => onRemoveGroup(group?.id)}
                             groupsLength={groupsLength}
@@ -348,13 +372,19 @@ export function GroupPreview({ group, groupsLength, managingType, TaskList,
                     {cmpOrder.map((colName) => (
                         <div key={colName} className={`column-cell ${getColumnType(colName)}`}>
                             <span>{colName}</span>
-                            <span className="column-menu-btn" key={colName} onClick={() => onRemoveColumn(colName)}>
+
+                            <button
+                                className={` transparent column-menu-btn ${elColumnMenu && columnType === colName ? "open" : ""}`}
+                                key={colName}
+                                ref={columnBtnRef}
+                                onClick={(ev) => toggleIsColumnMenuOpen(ev, colName)}>
                                 <SvgIcon
                                     iconName="dots"
                                     size={22}
                                     colorName={'secondaryText'}
                                 />
-                            </span>
+                            </button>
+
                             <div
                                 className="resize-btn"
                                 onMouseDown={(ev) => handleMouseDown(ev, colName)}
@@ -446,5 +476,21 @@ export function GroupPreview({ group, groupsLength, managingType, TaskList,
             </div>
         </div>
 
+
+        {elColumnMenu && <FloatingContainerCmp
+            anchorEl={elColumnMenu}
+            onClose={onCloseMenu}
+            offsetX={30}
+            offsetY={45}
+        >
+            <ActionsMenu
+                onCloseMenu={onCloseMenu}
+                isHrShown={false}
+                onRemoveItem={() => onRemoveColumn(columnType)}
+            />
+        </FloatingContainerCmp>
+        }
+
     </div >
 }
+

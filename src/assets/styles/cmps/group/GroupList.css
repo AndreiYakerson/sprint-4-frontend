@@ -163,34 +163,18 @@
             position: relative;
             place-content: center;
             text-align: center;
-            display: grid;
-            grid-template-columns: 1fr max-content;
+            /* display: grid;
+
+            grid-template-columns: minmax(1px, 1fr) max-content; */
+            display: flex;
+            overflow: hidden;
 
             span:first-child {
                 grid-column: 1;
                 place-self: center;
-            }
-
-            .column-menu-btn {
-                display: none;
-                grid-column: 2;
-                place-self: center end;
-
-                &:hover {
-
-                    .svg-icon {
-                        background-color: var(--primary-selected-color);
-                        border-radius: var(--border-radius-small);
-                        cursor: pointer;
-                    }
-
-                }
-            }
-
-            &:hover .column-menu-btn {
-                display: flex;
-                justify-content: center;
-                align-items: center;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                overflow: hidden;
             }
 
 
@@ -215,6 +199,50 @@
                 .resize-btn {
                     opacity: 1;
                 }
+            }
+
+            &:has(.open) {
+                background-color: var(--primary-background-hover-color);
+            }
+
+            span:first-child {
+                flex: 1;
+                place-self: center;
+            }
+
+            .column-menu-btn {
+                display: grid;
+                place-self: center end;
+                visibility: hidden;
+                max-width: 0;
+                opacity: 0;
+                margin: 0;
+                padding: 0;
+                transition: all 200ms ease-in-out;
+
+                &.open {
+                    opacity: 1;
+                    visibility: visible;
+                    max-width: 24px;
+                    margin-inline-end: 6px;
+                }
+
+                &:hover {
+
+                    .svg-icon {
+                        background-color: var(--primary-selected-color);
+                        border-radius: var(--border-radius-small);
+                        cursor: pointer;
+                    }
+
+                }
+            }
+
+            &:hover .column-menu-btn {
+                opacity: 1;
+                visibility: visible;
+                max-width: 24px;
+                margin-inline-end: 6px;
             }
 
             .resize-btn {

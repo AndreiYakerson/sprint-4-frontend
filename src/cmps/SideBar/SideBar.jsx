@@ -175,7 +175,6 @@ export function SideBar() {
                 offsetY={45}
             >
                 <ActionsMenu
-                    menuRef={btnMenuRef.current}
                     onCloseMenu={onCloseMenu}
                     isHrShown={false}
                     onAddBoard={() => _onShowPopUp()}
