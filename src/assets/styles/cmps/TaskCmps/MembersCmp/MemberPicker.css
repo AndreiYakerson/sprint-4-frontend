@@ -20,11 +20,14 @@
         border-radius: var(--border-radius-big);
         place-self: center;
 
+        &:not(:has(.person)) {
+            border: 2px solid var(--pulse-background-color);
+        }
+
 
         .person {
             position: relative;
             right: 15%;
-
         }
 
         .plus-blue {

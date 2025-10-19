@@ -76,7 +76,7 @@
     &.invite-btn {
 
         display: flex;
-    gap: 8px;
+        gap: 8px;
 
         & .icon {
             margin-inline: 6px;
@@ -92,6 +92,8 @@
 
     .user-img {
         width: 26px;
+        border-radius: 50%;
+        border: 1px solid white;
     }
 
     .user-name,
