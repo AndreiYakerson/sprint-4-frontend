@@ -3,12 +3,12 @@
     max-width: 404px;
     min-width: 220px;
     max-height: 500px;
-    overflow: auto;
 
     .person-filter-header {
         margin-block-end: 16px;
         font-size: 15px;
         font-weight: 500;
+        gap: 8px;
     }
 
     .person-list {

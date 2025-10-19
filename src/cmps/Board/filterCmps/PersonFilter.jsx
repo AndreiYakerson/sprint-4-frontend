@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react"
+import { SvgIcon } from "../../SvgIcon"
+import { HoveredTextCmp } from "../../HoveredTextCmp"
 
 export function PersonFilter({ members, filterBy, onSetFilterBy }) {
 
@@ -23,8 +25,16 @@ export function PersonFilter({ members, filterBy, onSetFilterBy }) {
     return (
         <section className="person-filter">
 
-            <header className="person-filter-header">
-                Filter this board by person
+            <header className="person-filter-header flex align-center ">
+                <span>Filter this board by person</span>
+                <HoveredTextCmp
+                    label="See items assigned to a specific person on this board"
+                    position="up"
+                    onClick={(ev) => setAnchorEl(ev.currentTarget)}
+                >
+                    <SvgIcon iconName="questionMark" size={20} colorName="secondaryText" />
+                </HoveredTextCmp>
+
             </header>
 
             <ul className="person-list">
