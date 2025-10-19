@@ -37,6 +37,14 @@
     grid-template-columns: subgrid;
     grid-column: 1/-1;
 
+    &.sticky-active {
+        .table-row {
+            &.table-header {
+                box-shadow: 4px 6px 15px -8px var(--ui-border-color);
+            }
+        }
+    }
+
     .group-title-row {
         position: sticky;
         left: 0;
@@ -144,6 +152,7 @@
 
     &.table-header {
         text-transform: capitalize;
+        transition: box-shadow 200ms ease-in-out;
 
         .sticky-cell-wrapper {
 

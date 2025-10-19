@@ -168,6 +168,42 @@ export function BoardDetails() {
         }
     }
 
+    /// group header box shadow on scroll
+
+    const boardContiner = useRef(null)
+
+    useEffect(() => {
+        if (isAppLoading) return
+        const container = boardContiner.current
+        if (!container) return
+
+        const headers = container.querySelectorAll('.group-header')
+        if (!headers.length) return
+
+        const onScroll = () => {
+            const containerRect = container.getBoundingClientRect()
+            const scrollTop = container.scrollTop
+
+            headers.forEach((header, idx) => {
+                const rect = header.getBoundingClientRect()
+                const isSticky = rect.top - containerRect.top <= 148
+
+                if (scrollTop === 0) {
+                    header.classList.remove('sticky-active')
+                } else {
+                    const firstHeaderRect = headers[0].getBoundingClientRect()
+                    const firstIsSticky = firstHeaderRect.top - containerRect.top <= 148
+                    header.classList.toggle('sticky-active', isSticky && firstIsSticky)
+                }
+            })
+        }
+
+        container.addEventListener('scroll', onScroll)
+
+        return (() => {
+            container.removeEventListener('scroll', onScroll)
+        })
+    }, [board, isAppLoading])
 
 
     if (isAppLoading) return <AppLoader />
@@ -177,7 +213,7 @@ export function BoardDetails() {
 
     return (
         <section className="board-details">
-            <div className="board-details-container" >
+            <div className="board-details-container" ref={boardContiner}>
 
                 <BoardDetailsHeader
                     board={board}
