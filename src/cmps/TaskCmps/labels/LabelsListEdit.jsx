@@ -9,6 +9,7 @@ import { FloatingContainerCmp } from '../../FloatingContainerCmp'
 
 import { SvgIcon } from '../../SvgIcon'
 import { getVarColors } from '../../../services/util.service'
+import { ActionsMenu } from '../../ActionsMenu'
 
 export function LabelsListEdit({ labels, onUpdateLabels, onSwitchEditMode }) {
     const [anchorEl, setAnchorEl] = useState()
@@ -122,15 +123,18 @@ export function LabelsListEdit({ labels, onUpdateLabels, onSwitchEditMode }) {
                             />
                         </section>
 
-                        <button className="more-icon-btn" onClick={(ev) => onOpenMenu(ev, label.id)}>
+                        <button className={`more-icon-btn ${anchorEl && editingLabel?.id === label?.id ? "open" : ""}`}
+                            onClick={(ev) => onOpenMenu(ev, label.id)}>
                             <SvgIcon iconName='dots' size={16} />
                         </button>
 
                         {anchorEl && (
                             <FloatingContainerCmp anchorEl={anchorEl} onClose={onCloseMenu}>
-                                <button className='now-con' onClick={() => onRemoveLabel(editingLabel.id)}>
-                                    <SvgIcon iconName='trash' size={20} />
-                                </button>
+                                <ActionsMenu
+                                    onCloseMenu={onCloseMenu}
+                                    isHrShown={false}
+                                    onRemoveItem={() => onRemoveLabel(editingLabel.id)}
+                                />
                             </FloatingContainerCmp>
                         )}
                     </li>
