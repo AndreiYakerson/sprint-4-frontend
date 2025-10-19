@@ -78,7 +78,7 @@ export function StatusPicker({ info, onUpdate }) {
     const labelToShow = label ? label : labels.find(status => status.id === 'default')
 
     return (
-        <div className={`labels-select-container ${anchorEl ? "focus" : ""} done-animation`}
+        <div className={`labels-select-container ${anchorEl ? "focus" : ""}`}
             style={{ background: `var(${labelToShow?.cssVar})` }}
             onClick={(ev) => setAnchorEl(ev.currentTarget)}>
             <div className="label-txt">{labelToShow?.txt}</div>
