@@ -1,6 +1,7 @@
 import { SvgIcon } from "./SvgIcon.jsx"
 
-export function ActionsMenu({ style,
+export function ActionsMenu({
+    style,
     menuRef,
     onCloseMenu,
     //
@@ -12,11 +13,14 @@ export function ActionsMenu({ style,
     onRemoveItem,
     onDuplicateItem,
     onRenameBoard,
-
+    onAddBoard,
+    //
     onRemoveGroup,
     groupsLength,
     onAddGroup,
     onRenameGroup,
+    //
+    isHrShown = false
 }) {
 
     return (<div className="actions-menu" style={{ ...style }} ref={menuRef}>
@@ -34,8 +38,12 @@ export function ActionsMenu({ style,
                 <SvgIcon iconName="newTab" size={18} colorName="secondaryText" />
                 <span>Add group</span>
             </li>}
+            {onAddBoard && <li className="menu-action" onClick={() => { onCloseMenu(), onAddBoard() }}>
+                <SvgIcon iconName="board" size={18} colorName="secondaryText" />
+                <span>Add Board</span>
+            </li>}
 
-            <div className="hr"></div>
+            {isHrShown && <div className="hr"></div>}
 
             {onRenameBoard && <li className="menu-action" onClick={() => { onCloseMenu(), onRenameBoard(true) }}>
                 <SvgIcon iconName="pen" size={18} colorName="secondaryText" />
@@ -55,7 +63,7 @@ export function ActionsMenu({ style,
                 <span>Duplicate</span>
             </li>}
 
-            <div className="hr"></div>
+            {isHrShown && <div className="hr"></div>}
 
             {onRemoveItem && <li className="menu-action" onClick={() => { onCloseMenu(), onRemoveItem() }}>
                 <SvgIcon iconName="trash" size={18} colorName="secondaryText" />

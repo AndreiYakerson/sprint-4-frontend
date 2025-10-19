@@ -167,6 +167,7 @@ export function BoardPreview({ board, isSideBarDisplay }) {
                                 onRemoveItem={() => onRemoveBoard(board)}
                                 isStarred={isStarred}
                                 onRenameBoard={onSetRenameBoard}
+                                isHrShown={true}
                             />
                         </FloatingContainerCmp>}
                     </>
