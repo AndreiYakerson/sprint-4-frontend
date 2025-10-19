@@ -161,12 +161,9 @@
         .task-title,
         .column-cell {
             position: relative;
-            place-content: center;
-            text-align: center;
-            /* display: grid;
-
-            grid-template-columns: minmax(1px, 1fr) max-content; */
             display: flex;
+            text-align: center;
+            place-content: center;
             overflow: hidden;
 
             span:first-child {
