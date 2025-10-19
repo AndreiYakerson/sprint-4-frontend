@@ -9,11 +9,10 @@ export function MiniUser({ user }) {
         </div>
 
 
-        <img className="avatar-img" src={defaultAvatar} />
-
-        {/* <Link to={`user/${user._id}`}>
-            <img className="avatar-img" src={user?.imgUrl ? user.imgUrl : defaultAvatar} />
-        </Link> */}
+        {/* <Link to={`user/${user._id}`}> */}
+        <img className="avatar-img" src={'/img/danPic.jpg'} /> 
+             {/* <img className="avatar-img" src={user?.imgUrl ? user.imgUrl : defaultAvatar} /> */}
+        {/* </Link> */}
 
     </div>
 }
