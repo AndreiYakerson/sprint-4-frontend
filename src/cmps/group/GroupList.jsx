@@ -19,6 +19,7 @@ import { arrayMove, SortableContext, verticalListSortingStrategy } from "@dnd-ki
 import { GroupOverlay } from "./GroupOverlay";
 
 
+
 export function GroupList({ groups, managingType }) {
     const { boardId } = useParams()
 
@@ -29,12 +30,12 @@ export function GroupList({ groups, managingType }) {
     const board = useSelector(state => state.boardModule.board)
 
 
+    
+
 
     const mouseSensor = useSensor(MouseSensor, {
         activationConstraint: {
             distance: 15,
-            // delay: 0,
-            // tolerance: 50, 
         },
     });
 

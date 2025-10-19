@@ -89,6 +89,7 @@ export function BoardDetailsHeader({
     }
 
     const { byGroups, byNames, byStatuses, byPriorities, byMembers, byDueDateOp, byPerson, sortBy, dir } = filterBy
+    
 
     return (
         <header className='board-details-header'>

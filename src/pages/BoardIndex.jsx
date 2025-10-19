@@ -22,6 +22,9 @@ export function BoardIndex({ setIsSideBarOpen }) {
     const [isCollapse, setIsCollapse] = useState(false)
     const user = userService.getLoggedinUser()
 
+
+    
+
     useEffect(() => {
         loadBoards(filterBy)
     }, [filterBy])

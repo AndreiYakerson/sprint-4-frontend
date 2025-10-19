@@ -42,6 +42,9 @@ export function BoardDetails() {
     const [searchParams, setSearchParams] = useSearchParams()
     const [filterBy, setFilterBy] = useState(boardService.getFilterFromSearchParams(searchParams))
 
+
+    
+
     const inputRef = useRef(null)
 
     useEffect(() => {

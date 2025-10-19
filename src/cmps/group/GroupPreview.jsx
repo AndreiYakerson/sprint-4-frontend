@@ -15,13 +15,16 @@ import { getColumnType } from "../../services/util.service.js";
 import { useSelector } from "react-redux";
 import { CmpList } from "../CmpList.jsx";
 import { IndividualGroupCollapse } from "./IndividualGroupCollapse.jsx";
+import { useSearchParams } from "react-router-dom";
 
 export function GroupPreview({ group, groupsLength, managingType, TaskList,
     onRemoveGroup, onUpdateGroup, onAddTask, onAddGroup, onOpenGroupEditor, onAddColumn, onRemoveColumn }) {
 
+        const [searchParams] = useSearchParams();
+
     // dnd kit
     const { attributes, listeners, setNodeRef,
-        transform, transition, isDragging } = useSortable({ id: group.id, disabled: groupsLength < 2 })
+        transform, transition, isDragging } = useSortable({ id: group.id, disabled: searchParams.size > 0 })
 
     const style = {
         transition: transition,
