@@ -15,11 +15,11 @@ export function LabelsList({ labels, onSwitchEditMode, onSaveLabel }) {
                         {label.txt}
                     </li>
                 })}
-                <li className="label"
-                    onClick={() => onSaveLabel({ txt: 'Default Label', cssVar: '--group-title-clr18', id: makeId() })}
+                {/* <li className="label"
+                    onClick={() => onSaveLabel({ txt: 'Default Label', cssVar: '--group-title-clr18', id: 'default' })}
                     style={{ backgroundColor: 'var(--group-title-clr18)', color: 'var(--group-title-clr18)' }}>
                     Default Label
-                </li>
+                </li> */}
             </ul>
 
             <section className="actions">

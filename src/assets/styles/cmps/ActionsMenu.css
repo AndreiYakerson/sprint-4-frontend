@@ -49,3 +49,7 @@
 
     }
 }
+.active-label .actions-menu .menu-action{
+    opacity: 0.5;
+    cursor: default !important;
+}
