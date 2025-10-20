@@ -25,9 +25,6 @@ export function CmpList({ cmps, onAddColumn, setCmpSelectAnchor }) {
                             size={20}
                             colorName={cmp}
                         />}
-
-
-
                     <p>{cmp}</p>
                 </button>
             })}

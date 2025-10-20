@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 
 // services
 import { loadBoards } from "../../store/actions/board.actions.js";
-import { onSetIsApploading, onSetIsSideBarOpen, onSetPopUp } from "../../store/actions/system.actions.js";
+import { onCloseFloating, onSetFloating, onSetIsApploading, onSetIsSideBarOpen, onSetPopUp } from "../../store/actions/system.actions.js";
 
 // cmps
 import { BoardList } from "../Board/BoardList.jsx";
@@ -25,12 +25,52 @@ export function SideBar() {
 
     const [isFavoritesTabOpen, setIsFavoritesTabOpen] = useState(false)
     const [isMenuOpen, setIsMenuOpen] = useState(false)
+    const [actionAnchor, setActionAnchor] = useState()
+    console.log("🚀 ~ SideBar ~ actionAnchor:", actionAnchor)
     const btnMenuRef = useRef(null)
+
+
+
 
 
     useEffect(() => {
         onLoadBoards()
+
+        return () => {
+            setIsMenuOpen(false)
+            setActionAnchor(null)
+            
+        }
     }, [])
+
+
+    useEffect(() => {
+        console.log("🚀 ~ SideBar ~ actionAnchor:", actionAnchor)
+        if (actionAnchor) {
+
+            // onCloseFloating()
+            onSetFloating(<ActionsMenu
+                onCloseMenu={onCloseMenu}
+                isHrShown={false}
+                onAddBoard={() => _onShowPopUp()}
+            />, actionAnchor)
+
+        }
+        // {isMenuOpen && <FloatingContainerCmp
+        //     anchorEl={}
+        //     onClose={onCloseMenu}
+        //     offsetX={40}
+        //     offsetY={45}
+        // >
+
+        // </FloatingContainerCmp>}
+return ()=> {
+    
+    onCloseFloating()
+}
+    }, [actionAnchor])
+
+
 
     async function onLoadBoards() {
         if (!boards?.length) {
@@ -60,7 +100,9 @@ export function SideBar() {
 
     function toggleIsMenuOpen(ev) {
         ev.stopPropagation()
-        setIsMenuOpen(!isMenuOpen)
+        setActionAnchor(ev.currentTarget)
+        // setIsMenuOpen(!isMenuOpen)
+
     }
 
     function onCloseMenu() {
@@ -156,7 +198,7 @@ export function SideBar() {
                                 <span>My Boards</span>
                             </div>
 
-                            <button className="blue square" onClick={toggleIsMenuOpen} ref={btnMenuRef}>
+                            <button className="blue square" onClick={toggleIsMenuOpen} >
                                 <SvgIcon iconName="plus" size={18} colorName="whiteText" />
                             </button>
 
@@ -168,7 +210,7 @@ export function SideBar() {
             </div>
 
 
-            {isMenuOpen && <FloatingContainerCmp
+            {/* {isMenuOpen && <FloatingContainerCmp
                 anchorEl={btnMenuRef.current}
                 onClose={onCloseMenu}
                 offsetX={40}
@@ -179,7 +221,7 @@ export function SideBar() {
                     isHrShown={false}
                     onAddBoard={() => _onShowPopUp()}
                 />
-            </FloatingContainerCmp>}
+            </FloatingContainerCmp>} */}
 
         </div>
     )

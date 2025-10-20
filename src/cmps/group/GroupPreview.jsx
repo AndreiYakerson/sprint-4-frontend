@@ -15,6 +15,7 @@ import { getColumnType } from "../../services/util.service.js";
 import { useSelector } from "react-redux";
 import { CmpList } from "../CmpList.jsx";
 import { onCloseFloating, onSetFloating } from "../../store/actions/system.actions.js";
+import { useSearchParams } from "react-router-dom";
 
 export function GroupPreview({ group, groupsLength, managingType, TaskList,
     onRemoveGroup, onUpdateGroup, onAddTask, onAddGroup, onOpenGroupEditor, onAddColumn, onRemoveColumn }) {

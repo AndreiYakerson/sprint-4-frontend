@@ -3,7 +3,8 @@ import { useEffect, useState } from 'react'
 import { showErrorMsg, showSuccessMsg } from '../../../services/event-bus.service'
 import { boardService } from '../../../services/board'
 //Cmp
-
+import { onCloseFloating, onCloseFloatingSecondary, onSetFloatingSecondary } from '../../../store/actions/system.actions'
+import { ColorPalette } from './ColorPalette'
 import { FloatingContainerCmp } from '../../FloatingContainerCmp'
 //Icons
 
@@ -14,8 +15,6 @@ import { useSelector } from 'react-redux'
 
 export function LabelsListEdit({ labels, onUpdateLabels, onSwitchEditMode, onClose, type }) {
     const board = useSelector(state => state.boardModule.board)
-import { onCloseFloating, onCloseFloatingSecondary, onSetFloatingSecondary } from '../../../store/actions/system.actions'
-import { ColorPalette } from './ColorPalette'
 
     const [anchorEl, setAnchorEl] = useState()
     const [colorAnchorEl, setColorAnchorEl] = useState()
