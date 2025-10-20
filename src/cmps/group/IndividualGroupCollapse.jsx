@@ -6,6 +6,7 @@ import { GroupTitleEditor } from "./GroupTitleEditor.jsx"
 import { LabelSum } from "../TaskCmps/SumCmps/LabelSum.jsx"
 import { DateSum } from "../TaskCmps/SumCmps/DateSum.jsx"
 import { getColumnType } from "../../services/util.service.js"
+import { FloatingContainerCmpOld } from "../FloatingContainerCmpOld.jsx"
 
 export function IndividualGroupCollapse({
     group,
@@ -66,7 +67,7 @@ export function IndividualGroupCollapse({
 
                                 </button>
 
-                                {isGroupMenuOpen && <FloatingContainerCmp
+                                {isGroupMenuOpen && <FloatingContainerCmpOld
                                     anchorEl={btnRef.current}
                                     onClose={onCloseMenu}
                                     offsetX={40}
@@ -81,7 +82,7 @@ export function IndividualGroupCollapse({
                                         onAddGroup={onAddGroup}
                                         onRenameGroup={() => onOpenGroupEditor(group?.id)}
                                     />
-                                </FloatingContainerCmp>}
+                                </FloatingContainerCmpOld>}
 
                             </div>
                         </div>

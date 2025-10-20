@@ -23,6 +23,7 @@ import { PriorityPicker } from "../TaskCmps/PriorityCmp/PriorityPicker.jsx"
 import { MemberPicker } from "../TaskCmps/MembersCmp/MemberPicker.jsx"
 import { StatusPicker } from "../TaskCmps/StatusCmp/StatusPicker.jsx"
 import { useSearchParams } from "react-router-dom";
+import { FloatingContainerCmpOld } from "../FloatingContainerCmpOld.jsx"
 
 export function TaskPreview({ task, groupId, taskIdx }) {
     const navigate = useNavigate()
@@ -262,7 +263,7 @@ export function TaskPreview({ task, groupId, taskIdx }) {
                     </button>
 
 
-                    {isMenuOpen && <FloatingContainerCmp anchorEl={btnRef.current} onClose={onCloseMenu}>
+                    {isMenuOpen && <FloatingContainerCmpOld anchorEl={btnRef.current} onClose={onCloseMenu}>
                         <ActionsMenu
                             menuRef={menuRef}
                             onCloseMenu={onCloseMenu}
@@ -271,7 +272,7 @@ export function TaskPreview({ task, groupId, taskIdx }) {
                             isItemOpen={taskId === task?.id}
                             onDuplicateItem={() => onDuplicateTask(task)}
                         />
-                    </FloatingContainerCmp>}
+                    </FloatingContainerCmpOld>}
 
                 </div>
 

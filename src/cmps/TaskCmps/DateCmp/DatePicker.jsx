@@ -3,6 +3,7 @@ import { Calendar } from "./Calendar"
 import { SvgIcon } from "../../SvgIcon"
 import { FloatingContainerCmp } from "../../FloatingContainerCmp"
 import { HoveredTextCmp } from "../../HoveredTextCmp"
+import { FloatingContainerCmpOld } from "../../FloatingContainerCmpOld"
 
 export function DatePicker({ info, onUpdate }) {
     const [dateToEdit, setDateToEdit] = useState(info?.selectedDate)
@@ -161,7 +162,7 @@ export function DatePicker({ info, onUpdate }) {
             }
 
 
-            {isEditing && <FloatingContainerCmp
+            {isEditing && <FloatingContainerCmpOld
                 anchorEl={datePickerRef.current}
                 onClose={() => onSetIsEditing(false)}
                 enforceLimit={true}
@@ -172,7 +173,7 @@ export function DatePicker({ info, onUpdate }) {
                     onUpDate={onSaveDate}
                     onSetIsEditing={onSetIsEditing}
                 />
-            </FloatingContainerCmp>}
+            </FloatingContainerCmpOld>}
 
         </section>
     )

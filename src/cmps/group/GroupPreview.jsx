@@ -16,6 +16,7 @@ import { useSelector } from "react-redux";
 import { CmpList } from "../CmpList.jsx";
 import { onCloseFloating, onSetFloating } from "../../store/actions/system.actions.js";
 import { useSearchParams } from "react-router-dom";
+import { FloatingContainerCmpOld } from "../FloatingContainerCmpOld.jsx";
 
 export function GroupPreview({ group, groupsLength, managingType, TaskList,
     onRemoveGroup, onUpdateGroup, onAddTask, onAddGroup, onOpenGroupEditor, onAddColumn, onRemoveColumn }) {
@@ -284,7 +285,7 @@ export function GroupPreview({ group, groupsLength, managingType, TaskList,
                         />
                     </button>
 
-                    {isGroupMenuOpen && <FloatingContainerCmp
+                    {isGroupMenuOpen && <FloatingContainerCmpOld
                         anchorEl={btnRef.current}
                         onClose={onCloseMenu}
                         offsetX={40}
@@ -298,7 +299,7 @@ export function GroupPreview({ group, groupsLength, managingType, TaskList,
                             onAddGroup={onAddGroup}
                             onRenameGroup={() => onOpenGroupEditor(group?.id)}
                         />
-                    </FloatingContainerCmp>}
+                    </FloatingContainerCmpOld>}
 
                 </div>
                 <div className="collapse-group-toggle" onClick={() => onToggleCollapsed(true)}>
@@ -445,7 +446,7 @@ export function GroupPreview({ group, groupsLength, managingType, TaskList,
         </div>
 
 
-        {elColumnMenu && <FloatingContainerCmp
+        {elColumnMenu && <FloatingContainerCmpOld
             anchorEl={elColumnMenu}
             onClose={onCloseMenu}
             offsetX={30}
@@ -456,7 +457,7 @@ export function GroupPreview({ group, groupsLength, managingType, TaskList,
                 isHrShown={false}
                 onRemoveItem={() => onRemoveColumn(columnType)}
             />
-        </FloatingContainerCmp>
+        </FloatingContainerCmpOld>
         }
 
     </div >

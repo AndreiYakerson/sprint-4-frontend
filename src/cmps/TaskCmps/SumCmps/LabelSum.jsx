@@ -4,6 +4,7 @@ import { FloatingContainerCmp } from "../../FloatingContainerCmp"
 import { SumSelectMenu } from "./SumSelectMenu"
 import { useRef } from "react"
 import { useSelector } from "react-redux"
+import { FloatingContainerCmpOld } from "../../FloatingContainerCmpOld"
 
 export function LabelSum({ info }) {
 
@@ -113,7 +114,7 @@ export function LabelSum({ info }) {
             </div>
 
             {
-                isMenuOpen && <FloatingContainerCmp
+                isMenuOpen && <FloatingContainerCmpOld
                     anchorEl={listRef.current}
                     onClose={onCloseMenu}
                     offsetX={-listRef?.current?.getBoundingClientRect().width * 2}
@@ -124,7 +125,7 @@ export function LabelSum({ info }) {
                         type={info?.type}
                         onSetIsLabelsFilterd={onSetIsLabelsFilterd}
                     />
-                </FloatingContainerCmp>
+                </FloatingContainerCmpOld>
             }
 
         </section >

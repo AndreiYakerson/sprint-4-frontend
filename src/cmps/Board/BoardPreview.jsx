@@ -15,6 +15,7 @@ import { SvgIcon } from '../SvgIcon.jsx'
 
 // images
 import boardItemLogo from '/img/board-item-img.svg'
+import { FloatingContainerCmpOld } from '../FloatingContainerCmpOld.jsx'
 
 
 
@@ -153,7 +154,7 @@ export function BoardPreview({ board, isSideBarDisplay }) {
                         </button>
 
 
-                        {isMenuOpen && <FloatingContainerCmp
+                        {isMenuOpen && <FloatingContainerCmpOld
                             anchorEl={btnRef.current}
                             onClose={onCloseMenu}
                             offsetX={40}
@@ -169,7 +170,7 @@ export function BoardPreview({ board, isSideBarDisplay }) {
                                 onRenameBoard={onSetRenameBoard}
                                 isHrShown={true}
                             />
-                        </FloatingContainerCmp>}
+                        </FloatingContainerCmpOld>}
                     </>
 
                     : <button className='white square' onClick={(ev) => { ev.stopPropagation(), toggleIsStarred(!isStarred) }}>

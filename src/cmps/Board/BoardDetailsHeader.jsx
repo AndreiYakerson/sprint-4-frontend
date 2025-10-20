@@ -14,6 +14,7 @@ import { FilterBy } from './filterCmps/FilterBy.jsx'
 import { SortBy } from './filterCmps/SortBy.jsx'
 import { FloatingContainerCmp } from '../FloatingContainerCmp.jsx'
 import { useRef, useState } from 'react'
+import { FloatingContainerCmpOld } from '../FloatingContainerCmpOld.jsx'
 
 export function BoardDetailsHeader({
     board,
@@ -247,7 +248,7 @@ export function BoardDetailsHeader({
             </div>
 
 
-            {board && isPersonFilterOpen && <FloatingContainerCmp
+            {board && isPersonFilterOpen && <FloatingContainerCmpOld
                 anchorEl={personBtnRef.current}
                 onClose={onClosePersonFilter}
             >
@@ -257,9 +258,9 @@ export function BoardDetailsHeader({
                     onSetFilterBy={onSetFilterBy}
                 />
 
-            </FloatingContainerCmp>}
+            </FloatingContainerCmpOld>}
 
-            {board && isFilterOpen && <FloatingContainerCmp
+            {board && isFilterOpen && <FloatingContainerCmpOld
                 anchorEl={filterBtnRef.current}
                 onClose={onCloseFilter}
             >
@@ -270,11 +271,11 @@ export function BoardDetailsHeader({
                     onSetFilterBy={onSetFilterBy}
                 />
 
-            </FloatingContainerCmp>
+            </FloatingContainerCmpOld>
             }
 
 
-            {board?.cmpOrder && isSortOpen && <FloatingContainerCmp
+            {board?.cmpOrder && isSortOpen && <FloatingContainerCmpOld
                 anchorEl={sortByRef.current}
                 onClose={onCloseSortBy}
             >
@@ -284,7 +285,7 @@ export function BoardDetailsHeader({
                     onSetFilterBy={onSetFilterBy}
                 />
 
-            </FloatingContainerCmp>}
+            </FloatingContainerCmpOld>}
 
         </header>
     )
