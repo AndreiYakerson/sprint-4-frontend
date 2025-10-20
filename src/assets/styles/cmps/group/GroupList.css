@@ -154,6 +154,11 @@
         text-transform: capitalize;
         transition: box-shadow 200ms ease-in-out;
 
+        /* Prevent the user from highlighting text, to allow better flow in columns resize */
+        user-select: none;
+        -webkit-user-select: none;
+        -ms-user-select: none;
+
         .sticky-cell-wrapper {
 
             &>*:not(.table-border, .task-menu-wrapper) {
@@ -184,10 +189,8 @@
 
         }
 
+        .sticky-cell-wrapper,
         .column-cell {
-            span {
-                margin-inline: 5px;
-            }
 
             &.highlight {
                 .resize-btn {
@@ -198,11 +201,40 @@
             }
 
             &:hover {
-                background-color: var(--primary-background-hover-color);
-
                 .resize-btn {
                     opacity: 1;
                 }
+            }
+
+            .resize-btn {
+                position: absolute;
+                top: 0;
+                right: -3px;
+                content: "";
+                width: 6px;
+                height: 100%;
+                background-color: var(--layout-border-color);
+                cursor: col-resize;
+                opacity: 0;
+                border-radius: 4px;
+
+                &:hover {
+                    background-color: var(--primary-color);
+                    z-index: var(--zIndex-Layer-4);
+                }
+            }
+
+        }
+
+        .column-cell {
+            span {
+                margin-inline: 5px;
+            }
+
+
+            &:hover {
+                background-color: var(--primary-background-hover-color);
+
             }
 
             &:has(.open) {
@@ -247,24 +279,6 @@
                 visibility: visible;
                 max-width: 24px;
                 margin-inline-end: 6px;
-            }
-
-            .resize-btn {
-                position: absolute;
-                top: 0;
-                right: -3px;
-                content: "";
-                width: 6px;
-                height: 100%;
-                background-color: var(--layout-border-color);
-                cursor: col-resize;
-                opacity: 0;
-                border-radius: 4px;
-
-                &:hover {
-                    background-color: var(--primary-color);
-                    z-index: var(--zIndex-Layer-4);
-                }
             }
         }
 

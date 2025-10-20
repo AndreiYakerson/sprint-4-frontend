@@ -20,7 +20,7 @@ import { useSearchParams } from "react-router-dom";
 export function GroupPreview({ group, groupsLength, managingType, TaskList,
     onRemoveGroup, onUpdateGroup, onAddTask, onAddGroup, onOpenGroupEditor, onAddColumn, onRemoveColumn }) {
 
-        const [searchParams] = useSearchParams();
+    const [searchParams] = useSearchParams();
 
     // dnd kit
     const { attributes, listeners, setNodeRef,
@@ -154,11 +154,19 @@ export function GroupPreview({ group, groupsLength, managingType, TaskList,
         startX.current = e.pageX
         currentColName.current = colName === 'date' ? 'due-date' : colName
 
-        document.querySelectorAll(`.column-cell.${currentColName.current}`)
-            .forEach(el => el.classList.add("highlight"));
+        if (colName === 'item') {
+            document.querySelectorAll(`.sticky-cell-wrapper`)
+                .forEach(el => el.classList.add("highlight"))
+        } else {
+            document.querySelectorAll(`.column-cell.${currentColName.current}`)
+                .forEach(el => el.classList.add("highlight"))
+        }
 
         const colElement = e.target.parentElement
-        startWidth.current = colElement.offsetWidth
+        startWidth.current = colName === 'item' ? colElement.offsetWidth + 36 : colElement.offsetWidth
+
+        console.log('colElement.offsetWidth:', colElement.offsetWidth)
+        console.log('startWidth.current:', startWidth.current)
 
         document.addEventListener("mousemove", handleMouseMove)
         document.addEventListener("mouseup", handleMouseUp)
@@ -170,8 +178,13 @@ export function GroupPreview({ group, groupsLength, managingType, TaskList,
         const root = document.documentElement
         const newWidth = startWidth.current + (e.pageX - startX.current)
         const varName = `--${currentColName.current}-column`
+        console.log('after:', startWidth.current)
         console.log('newWidth:', newWidth)
-        if (newWidth <= 60) {
+
+        if (newWidth <= 250 && currentColName.current === 'item') {
+            console.log('stop:')
+            return
+        } else if (newWidth <= 60) {
             console.log('stop:')
             return
         }
@@ -181,8 +194,14 @@ export function GroupPreview({ group, groupsLength, managingType, TaskList,
 
     function handleMouseUp() {
         isResizing.current = false
-        document.querySelectorAll(`.column-cell.${currentColName.current}`)
-            .forEach(el => el.classList.remove("highlight"))
+
+        if (currentColName.current === 'item') {
+            document.querySelectorAll(`.sticky-cell-wrapper`)
+                .forEach(el => el.classList.remove("highlight"))
+        } else {
+            document.querySelectorAll(`.column-cell.${currentColName.current}`)
+                .forEach(el => el.classList.remove("highlight"))
+        }
 
         document.removeEventListener("mousemove", handleMouseMove)
         document.removeEventListener("mouseup", handleMouseUp)
@@ -292,7 +311,13 @@ export function GroupPreview({ group, groupsLength, managingType, TaskList,
                     <div className="task-menu-wrapper"></div>
                     <div className="table-border"></div>
                     <div className="task-select"></div>
-                    <div className="task-title">{managingType}</div>
+                    <div className="task-title">
+                        <span>{managingType}</span>
+                    </div>
+                    <div
+                        className="resize-btn"
+                        onMouseDown={(ev) => handleMouseDown(ev, 'item')}
+                    ></div>
                 </div>
 
                 <div className="task-columns flex">

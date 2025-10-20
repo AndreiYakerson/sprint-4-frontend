@@ -85,7 +85,7 @@
        background-color: white;
 
        display: grid;
-       grid-template-columns: 6px 36px 1fr;
+       grid-template-columns: 6px 36px calc(var(--item-column) - 78px);
 
 
        &>*:not(.table-border, .task-menu-wrapper) {
@@ -96,6 +96,9 @@
            border-inline-end: 1px solid var(--layout-border-color);
        }
 
+       &.highlight {
+           border-inline-end: 2px solid var(--primary-color);
+       }
 
        &:has(:focus, .focus):not(:has(.add-task-cell)) {
 
@@ -186,7 +189,6 @@
            .task-name {
                cursor: text;
                width: max-content;
-               max-width: 200px;
                white-space: nowrap;
                overflow: hidden;
                text-overflow: ellipsis;

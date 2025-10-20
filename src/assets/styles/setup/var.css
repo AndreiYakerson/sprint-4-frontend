@@ -146,6 +146,7 @@
 
   /* column-cell-width */
   --item-column: 400px;
+  --name-column: 322px;
   --owner-column: 98px;
   --members-column: 98px;
   --status-column: 140px;
