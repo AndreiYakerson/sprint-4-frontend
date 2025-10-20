@@ -1,4 +1,5 @@
-import { Routes, Route } from 'react-router'
+import { useEffect, useLayoutEffect, useState } from 'react'
+import { Routes, Route, useLocation } from 'react-router'
 
 import { HomePage } from './pages/HomePage'
 import { AboutUs } from './pages/AboutUs.jsx'
@@ -20,19 +21,28 @@ import { FloatingSecondary } from './cmps/FloatingSecondary.jsx'
 
 export function RootCmp() {
 
+    const location = useLocation()
+    const [isBoardLayout, setIsBoardLayout] = useState(() =>
+        location.pathname.includes('board')
+    )
+
+    useLayoutEffect(() => {
+        setIsBoardLayout(location.pathname.includes('board'))
+    }, [location.pathname])
+
     return (
-        <div className="main-container">
+        <div className={`main-container ${isBoardLayout ? "main-site-layout" : ""}`}>
             <AppHeader />
             <UserMsg />
             <PopUp />
             <FloatingContainerCmp />
             <FloatingSecondary />
-            <aside className='app-aside'>
+            {isBoardLayout && <aside className='app-aside'>
                 <SideBar />
-            </aside>
+            </aside>}
             <main className='app-main-content'>
                 <Routes>
-                    <Route path="" element={<BoardIndex />} />
+                    <Route path="" element={<HomePage />} />
                     <Route path="about" element={<AboutUs />} />
                     <Route path="board" element={<BoardIndex />} />
                     <Route path="board/:boardId" element={<BoardDetails />} />

@@ -65,7 +65,7 @@ button {
 		padding: 0.5em;
 	}
 
-	&.active {
+	&.active:not(.nav-heaer-btn) {
 		background-color: var(--primary-selected-color-btn)
 	}
 
@@ -74,7 +74,7 @@ button {
 	&:hover:not(:disabled, .btn-shrink-wrapper) {
 		background-color: var(--primary-background-hover-color);
 
-		&.active {
+		&.active:not(.nav-heaer-btn) {
 			background-color: var(--primary-selected-color-btn)
 		}
 
@@ -131,6 +131,59 @@ button {
 		}
 	}
 
+	&.nav-heaer-btn {
+		background-color: transparent;
+		border: none;
+
+		font-size: 0.875rem;
+		align-items: center;
+		padding: 8px 10px;
+		color: #535768;
+		transition: color 200ms ease;
+		border-radius: 8px;
+
+
+		&.login {
+			margin-inline-end: 8px;
+		}
+
+		&:hover {
+			background-color: #F0F3FF;
+			color: #5034FF;
+		}
+	}
+
+	&.get-started-btn {
+		display: flex;
+		align-items: center;
+
+		font-family: Poppins, Roboto, Helvetica, Arial, sans-serif;
+		box-sizing: border-box;
+		font-weight: 300;
+		border-radius: 100vh;
+		padding: 8px 8px 8px 16px;
+		border: none;
+		color: white;
+		background-color: rgb(97, 97, 255);
+
+		span {
+			margin-inline-end: 8px;
+		}
+
+		.svg-icon {
+			transition: 200ms ease-in-out;
+		}
+
+		&:hover {
+			background-color: #5151d5;
+
+			.svg-icon {
+				transform: translateX(4px);
+			}
+		}
+	}
+
+
 	&.person-btn {
 		.selected-person {
 			border-radius: 50%;
@@ -152,7 +205,7 @@ button {
 
 }
 
-
+.input,
 input {
 	margin: 0;
 	padding: 0;
@@ -175,6 +228,11 @@ input {
 		border-color: var(--ui-border-color);
 	}
 
+	&:hover {
+		border: 1px solid var(--primary-text-color);
+	}
+
+	&:active,
 	&:focus {
 		border: 1px solid var(--primary-color);
 	}
