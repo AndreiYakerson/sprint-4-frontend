@@ -8,34 +8,17 @@
         margin-block-end: 16px;
     }
 
-   .sort-select *:nth-child(1) {
-        width: 280px;
-        /* first CustomSelect */
-    }
-
-   .sort-select *:nth-child(2) {
-        width: 208px;
-    }
-
     .sort-select {
         display: grid;
-        grid-template-columns: 1fr 230px max-content;
+        grid-template-columns: minmax(250px, 1fr) minmax(200px, 1fr) max-content;
         gap: 8px;
-        margin-block-end: 32px;
-        height: 40px;
-        width: 524px;
+        margin-block-end: 16px;
 
         .custom-select {
             border: 1px solid var(--ui-border-color);
             border-radius: 4px;
+            height: 40px;
             text-transform: capitalize;
-
-            /* :first-child {
-                width: 280px;
-            } */
-
-
-
 
             &:hover {
                 border-color: black;
