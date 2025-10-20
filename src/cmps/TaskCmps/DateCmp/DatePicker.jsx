@@ -116,7 +116,14 @@ export function DatePicker({ info, onUpdate }) {
                 className="date-to-edit flex align-center"
                 onClick={() => setIsEditing(true)} >
 
-                <HoveredTextCmp
+                <SvgIcon
+                    iconName={statusIcon}
+                    size={iconSize}
+                    colorName={statusColor}
+                    className='time-icon'
+                />
+
+                {/* <HoveredTextCmp
                     label={titleMsg}
                     position="up"
                 >
@@ -126,7 +133,7 @@ export function DatePicker({ info, onUpdate }) {
                         colorName={statusColor}
                         className='time-icon'
                     />
-                </HoveredTextCmp>
+                </HoveredTextCmp> */}
 
                 <div className={`selected-time ${info?.selectedStatus?.id === 'done' ? "done" : ""}`}>
                     <div>
