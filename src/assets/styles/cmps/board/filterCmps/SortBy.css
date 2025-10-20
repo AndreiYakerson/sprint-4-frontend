@@ -1,6 +1,6 @@
 .sort-by-board-details {
-    padding: 16px;
-    width: 556px;
+    padding: 20px 16px 16px 16px;
+    width: 524px;
 
     .sort-by-header {
         font-size: 15px;
@@ -10,7 +10,7 @@
 
     .sort-select {
         display: grid;
-        grid-template-columns: 1fr 230px max-content;
+        grid-template-columns: minmax(250px, 1fr) minmax(200px, 1fr) max-content;
         gap: 8px;
         margin-block-end: 16px;
 

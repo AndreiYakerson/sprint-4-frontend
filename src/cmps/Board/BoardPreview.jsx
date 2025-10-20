@@ -142,12 +142,16 @@ export function BoardPreview({ board, isSideBarDisplay }) {
                 {isSideBarDisplay
                     ? <>
                         <button
-                            className={`transparent board-menu-btn ${isMenuOpen ? "menu-open" : ""}`}
+                            className='btn-shrink-wrapper'
                             onClick={toggleIsMenuOpen}
                             ref={btnRef}
                         >
-                            <SvgIcon iconName="dots" size={16} colorName="currentColor" />
+                            <div className={`btn transparent board-menu-btn ${isMenuOpen ? "menu-open" : ""} shrink`}>
+                                <SvgIcon iconName="dots" size={16} colorName="currentColor" />
+                            </div>
+
                         </button>
+
 
                         {isMenuOpen && <FloatingContainerCmp
                             anchorEl={btnRef.current}
@@ -163,6 +167,7 @@ export function BoardPreview({ board, isSideBarDisplay }) {
                                 onRemoveItem={() => onRemoveBoard(board)}
                                 isStarred={isStarred}
                                 onRenameBoard={onSetRenameBoard}
+                                isHrShown={true}
                             />
                         </FloatingContainerCmp>}
                     </>
@@ -176,6 +181,14 @@ export function BoardPreview({ board, isSideBarDisplay }) {
                 }
 
 
+            </div>
+
+            <div className='workspace-info flex'>
+                <SvgIcon
+                    iconName="flower"
+                    size={18}
+                />
+                <span>{`work management > My Boards`}</span>
             </div>
 
         </article >)

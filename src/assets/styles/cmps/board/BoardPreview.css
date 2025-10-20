@@ -60,6 +60,15 @@
 
         }
 
+        .workspace-info {
+            gap: 4px;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
 
+            font-size: 14px;
+            font-weight: 400;
+            color: var(--secondary-text-color);
+        }
     }
 }

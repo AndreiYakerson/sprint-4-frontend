@@ -13,21 +13,21 @@ export function CmpList({ cmps, onAddColumn, setCmpSelectAnchor }) {
 
     return (
         <div className="cmp-list">
-            
+
             {fullCmpList.map(cmp => {
                 if (cmps.includes(cmp)) return null
 
                 return <button key={cmp} className="cmp-preview btn" onClick={() => selectCmp(cmp)}>
 
                     {cmp === 'priority' ? <img className="monday-column-icon-component__icon" src="https://files.monday.com/euc1/photos/10162286/original/app_version_10162286_photo_2023_10_26_13_37_04.png?1760734649366" alt=""></img>
-                        : null}
+                        : <SvgIcon
+                            iconName={cmp}
+                            size={20}
+                            colorName={cmp}
+                        />}
 
 
-                    {/* <SvgIcon
-                        iconName={cmp}
-                        size={20}
-                        colorName={cmp}
-                    /> */}
+
                     <p>{cmp}</p>
                 </button>
             })}

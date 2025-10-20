@@ -22,14 +22,15 @@ import { DatePicker } from "../TaskCmps/DateCmp/DatePicker.jsx"
 import { PriorityPicker } from "../TaskCmps/PriorityCmp/PriorityPicker.jsx"
 import { MemberPicker } from "../TaskCmps/MembersCmp/MemberPicker.jsx"
 import { StatusPicker } from "../TaskCmps/StatusCmp/StatusPicker.jsx"
-
+import { useSearchParams } from "react-router-dom";
 
 export function TaskPreview({ task, groupId, taskIdx }) {
     const navigate = useNavigate()
     const { boardId, taskId } = useParams()
+    const [searchParams] = useSearchParams();
 
     // dnd
-    const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id: task.id })
+    const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id: task.id, disabled: searchParams.size > 0 })
     const style = {
         transition,
         transform: CSS.Transform.toString(transform),
@@ -247,13 +248,19 @@ export function TaskPreview({ task, groupId, taskIdx }) {
                 <div className="task-menu-wrapper">
                     <button
                         onClick={toggleIsMenuOpen}
-                        className={`white task-menu-btn ${isMenuOpen ? "menu-open" : ""}`}
+                        className='btn-shrink-wrapper '
                         ref={btnRef}>
-                        <SvgIcon
-                            iconName="dots"
-                            size={16}
-                            colorName={'primaryText'}
-                        /></button>
+                        <div
+                            className={`btn white ${isMenuOpen ? "menu-open" : ""} shrink`}
+                        >
+                            <SvgIcon
+                                iconName="dots"
+                                size={16}
+                                colorName={'primaryText'}
+                            />
+                        </div>
+                    </button>
+
 
                     {isMenuOpen && <FloatingContainerCmp anchorEl={btnRef.current} onClose={onCloseMenu}>
                         <ActionsMenu

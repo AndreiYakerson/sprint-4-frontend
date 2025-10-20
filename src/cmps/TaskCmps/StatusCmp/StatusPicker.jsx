@@ -1,6 +1,6 @@
 
 // SERVICES
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 // COMPONENTS
 import { StatusAnimation } from "../../StatusAnimation.jsx";
@@ -33,12 +33,54 @@ export function StatusPicker({ info, onUpdate }) {
         }
     }, [statusAnchor])
 
+    const [showDoneAnimation, setShowDoneAnimation] = useState(false)
+    const timeOutRef = useRef(null)
+
     useEffect(() => {
         setLabels(board.statuses)
     }, [board.statuses])
 
 
+    useEffect(() => {
+        return (() => {
+            if (timeOutRef.current) clearTimeout(timeOutRef.current)
+        })
+    }, [])
+
+    function onSetDoneAnimation() {
+        setShowDoneAnimation(true)
+        timeOutRef.current = setTimeout(() => {
+            setShowDoneAnimation(false)
+        }, 3400)
+    }
+
+    function onSaveLabel(label) {
+        const newLabel = ({ ...label, updatedAt: Date.now() })
+
+        /// done animtion 
+        if (label?.id === 'done') onSetDoneAnimation()
+        if (label?.id !== 'done' && showDoneAnimation) {
+            setShowDoneAnimation(false)
+            clearTimeout(timeOutRef.current)
+        }
+
+        setSelectedLabelId(newLabel.id)
+        onUpdate(newLabel)
+        onClose()
+    }
+
+    async function onUpdateLabels(labels) {
+        const newBoard = { ...board, statuses: labels }
+        try {
+            updateBoard(newBoard)
+            setLabels(labels)
+        } catch (error) {
+
+        }
+    }
+
     function onClose() {
+        console.log("🚀 ~ onClose ~ onClose:")
         setStatusAnchor(null)
         onCloseFloating()
     }
@@ -53,6 +95,31 @@ export function StatusPicker({ info, onUpdate }) {
                 {labelToShow?.txt}
             </div>
             <StatusAnimation color={`var(${labelToShow?.cssVar})`} />
+
+            {showDoneAnimation && <div className="done-animation" />}
+
+            {anchorEl &&
+                <FloatingContainerCmp
+                    anchorEl={anchorEl}
+                    onClose={onClose}
+
+                    centeredX={true}
+                    showTriangle={true}
+                    enforceLimit={true}
+                >
+                    <div className={`labels-container ${isEditOpen}`}>
+                        <div className={`label-select ${isEditOpen}`}>
+                            {!isEditOpen ?
+                                <LabelsList labels={labels} onSaveLabel={onSaveLabel} onSwitchEditMode={switchEditMode} />
+                                :
+                                <LabelsListEdit labels={labels} type={'status'} onUpdateLabels={onUpdateLabels} onClose={onClose} onSwitchEditMode={switchEditMode} />
+                            }
+
+                        </div>
+                    </div>
+
+
+                </FloatingContainerCmp>}
         </div>
     )
 

@@ -49,9 +49,11 @@ export function DatePicker({ info, onUpdate }) {
 
 
     function calculateDateStatus(statusInfo) {
-        const diffInMs = Math.abs(dateToEdit.date - statusInfo.updatedAt)
-        const diffInDays = Math.floor(diffInMs / (1000 * 60 * 60 * 24))
         const now = Date.now()
+        const diffInMs = statusInfo?.updatedAt
+            ? Math.abs(dateToEdit.date - statusInfo.updatedAt)
+            : Math.abs(dateToEdit.date - now)
+        const diffInDays = Math.floor(diffInMs / (1000 * 60 * 60 * 24))
 
         if (statusInfo.updatedAt > dateToEdit.date && dateToEdit.isTimeShow ||
             statusInfo.updatedAt > dateToEdit.date || !statusInfo?.updatedAt && now > dateToEdit.date
@@ -114,7 +116,14 @@ export function DatePicker({ info, onUpdate }) {
                 className="date-to-edit flex align-center"
                 onClick={() => setIsEditing(true)} >
 
-                <HoveredTextCmp
+                <SvgIcon
+                    iconName={statusIcon}
+                    size={iconSize}
+                    colorName={statusColor}
+                    className='time-icon'
+                />
+
+                {/* <HoveredTextCmp
                     label={titleMsg}
                     position="up"
                 >
@@ -124,7 +133,7 @@ export function DatePicker({ info, onUpdate }) {
                         colorName={statusColor}
                         className='time-icon'
                     />
-                </HoveredTextCmp>
+                </HoveredTextCmp> */}
 
                 <div className={`selected-time ${info?.selectedStatus?.id === 'done' ? "done" : ""}`}>
                     <div>

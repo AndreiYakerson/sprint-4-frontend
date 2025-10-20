@@ -56,7 +56,8 @@ export function AppHeader() {
 
 			</Link>
 
-			<button className='see-plans-container'>
+
+			<button className='see-plans-container shrink'>
 				<SvgIcon
 					iconName="seePlans"
 					size={20}
@@ -64,6 +65,7 @@ export function AppHeader() {
 				/>
 				See plans
 			</button>
+
 
 			<section className='main-nav'>
 
@@ -112,7 +114,7 @@ export function AppHeader() {
 						/>
 					</HoveredTextCmp>
 				</button>
-{/* 
+				{/* 
 				<button className='main-nav-btn'>
 
 					<HoveredTextCmp

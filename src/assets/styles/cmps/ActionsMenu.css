@@ -2,6 +2,7 @@
     cursor: auto;
     width: max-content;
     height: max-content;
+    padding: 8px;
 
     .actions-list {
         width: 240px;
@@ -47,4 +48,8 @@
 
 
     }
+}
+.active-label .actions-menu .menu-action{
+    opacity: 0.5;
+    cursor: default !important;
 }

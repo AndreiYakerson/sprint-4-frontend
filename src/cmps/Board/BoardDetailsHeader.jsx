@@ -89,6 +89,7 @@ export function BoardDetailsHeader({
     }
 
     const { byGroups, byNames, byStatuses, byPriorities, byMembers, byDueDateOp, byPerson, sortBy, dir } = filterBy
+    
 
     return (
         <header className='board-details-header'>
@@ -107,8 +108,10 @@ export function BoardDetailsHeader({
                 </div>
 
                 <div className='invite-users'>
-                    <button className='invite' onClick={_onShowPopUp}>
-                        {` Invite / ${board?.members.length}`}
+                    <button className='btn-shrink-wrapper' onClick={_onShowPopUp}>
+                        <div className='btn invite shrink'>
+                            {` Invite / ${board?.members.length}`}
+                        </div>
                     </button>
 
                     <span className='copy-link'>
@@ -142,8 +145,10 @@ export function BoardDetailsHeader({
                 <button
                     onClick={() => onAddTask(board?.groups[0]?.id, `New ${board?.managingType}`, 'unshift')}
                     disabled={!board?.groups?.length}
-                    className='blue add-btn'>
-                    New {board?.managingType}
+                    className='btn-shrink-wrapper'>
+                    <div className='btn blue add-btn shrink'>
+                        New {board?.managingType}
+                    </div>
                 </button>
 
                 <section className='board-action-btn'>
@@ -174,9 +179,9 @@ export function BoardDetailsHeader({
                                         <SvgIcon iconName='xMark' size={16} colorName='secondaryText' />
                                     </button>
 
-                                    <button className='search-option-btn hover-show up' data-type={'Search Options'} >
+                                    {/* <button className='search-option-btn hover-show up' data-type={'Search Options'} >
                                         <SvgIcon iconName='searchOptions' size={16} colorName='secondaryText' />
-                                    </button>
+                                    </button> */}
                                 </section>
                             </div>
                         )}

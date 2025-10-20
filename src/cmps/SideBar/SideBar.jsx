@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 // services
 import { loadBoards } from "../../store/actions/board.actions.js";
@@ -15,6 +15,8 @@ import { BoardEdit } from "../Board/BaordEdit.jsx";
 
 //images
 import favStarIcon from '/img/fav-star-icon.svg'
+import { ActionsMenu } from "../ActionsMenu.jsx";
+import { FloatingContainerCmp } from "../FloatingContainerCmp.jsx";
 
 export function SideBar() {
     const isSideBarOpen = useSelector(state => state.systemModule.isSideBarOpen)
@@ -22,8 +24,9 @@ export function SideBar() {
     const boards = useSelector(storeState => storeState.boardModule.boards)
 
     const [isFavoritesTabOpen, setIsFavoritesTabOpen] = useState(false)
-    const [showPopUP, setShowPopUP] = useState(false)
-    const [anchorEl, setAnchorEl] = useState(null)
+    const [isMenuOpen, setIsMenuOpen] = useState(false)
+    const btnMenuRef = useRef(null)
+
 
     useEffect(() => {
         onLoadBoards()
@@ -49,9 +52,21 @@ export function SideBar() {
     }
 
     function _onShowPopUp() {
-        const content =  <BoardEdit />
+        const content = <BoardEdit />
         onSetPopUp(content)
     }
+
+    ///
+
+    function toggleIsMenuOpen(ev) {
+        ev.stopPropagation()
+        setIsMenuOpen(!isMenuOpen)
+    }
+
+    function onCloseMenu() {
+        setIsMenuOpen(false)
+    }
+
 
     const favoritesBoards = boards.filter(b => b.isStarred)
 
@@ -125,7 +140,7 @@ export function SideBar() {
                     <div className="boards-title-tab">
                         <div className="small-nav-tab flex align-center justify-between">
                             <span> Workspaces</span>
-                            <div className="Workspaces-tab-btns">
+                            <div className="workspaces-tab-btns">
                                 <button className={`transparent board-menu-btn`}>
                                     <SvgIcon iconName="dots" size={16} colorName="secondaryText" />
                                 </button>
@@ -135,16 +150,36 @@ export function SideBar() {
                             </div>
                         </div>
                         <div className="flex align-center">
-                            <span className="boards-title">Boards</span>
-                            <button className="blue square" onClick={() => _onShowPopUp()}>
+
+                            <div className="boards-title-workspaces flex align-center">
+                                <div className="workspaces-icon">M</div>
+                                <span>My Boards</span>
+                            </div>
+
+                            <button className="blue square" onClick={toggleIsMenuOpen} ref={btnMenuRef}>
                                 <SvgIcon iconName="plus" size={18} colorName="whiteText" />
                             </button>
+
                         </div>
                     </div>
 
                     <BoardList boards={boards} isSideBarDisplay={true} />
                 </div>
             </div>
+
+
+            {isMenuOpen && <FloatingContainerCmp
+                anchorEl={btnMenuRef.current}
+                onClose={onCloseMenu}
+                offsetX={40}
+                offsetY={45}
+            >
+                <ActionsMenu
+                    onCloseMenu={onCloseMenu}
+                    isHrShown={false}
+                    onAddBoard={() => _onShowPopUp()}
+                />
+            </FloatingContainerCmp>}
 
         </div>
     )

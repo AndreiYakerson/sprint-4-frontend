@@ -4,10 +4,10 @@
     flex-direction: column;
     width: max-content;
 
-    box-shadow: var(--box-shadow-small);
-
+    
     background-color: var(--primary-background-color);
     border-radius: var(--border-radius-medium);
+    box-shadow: var(--box-shadow-medium);
 
     transition: width .1s;
     z-index: var(--zIndex-toolTip);
@@ -20,10 +20,6 @@
         outline: 1px solid transparent;
         padding: var(--spacing-small);
 
-    }
-
-    &:has(.member-card-wrapper) {
-        box-shadow: none !important;
     }
 
 

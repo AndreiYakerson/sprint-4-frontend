@@ -9,7 +9,7 @@
 
         display: flex;
         align-items: center;
-        padding: 8px;
+        padding: 3px 10px;
         font-family: var(--title-font-family);
 
         margin-block: 4px;

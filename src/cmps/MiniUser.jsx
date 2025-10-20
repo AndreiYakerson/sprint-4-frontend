@@ -7,10 +7,12 @@ export function MiniUser({ user }) {
         <div className="avatar-logo-container">
             <img className='avatar-logo' src="/img/logo.png" alt="logo" />
         </div>
-        
-        <Link to={`user/${user._id}`}>
-            <img className="avatar-img" src={user?.imgUrl ? user.imgUrl : defaultAvatar} />
-        </Link>
+
+
+        {/* <Link to={`user/${user._id}`}> */}
+        <img className="avatar-img" src={'/img/danPic.jpg'} /> 
+             {/* <img className="avatar-img" src={user?.imgUrl ? user.imgUrl : defaultAvatar} /> */}
+        {/* </Link> */}
 
     </div>
 }

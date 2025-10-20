@@ -100,7 +100,7 @@ export function MemberTaskSelect({ selectedMemberIds, onClose, members, onInvite
                             <span className="img-container"><img className=" user-img" src={member.imgUrl} alt="User Image" /></span>
                             <span className="user-name ">{member.fullname}</span>
                             <span className="profession ">
-                                ({member.profession})
+                                {member.profession ? `(${member.profession})` : ''}
                             </span>
 
                         </button>

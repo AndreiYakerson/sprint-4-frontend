@@ -42,6 +42,9 @@ export function BoardDetails() {
     const [searchParams, setSearchParams] = useSearchParams()
     const [filterBy, setFilterBy] = useState(boardService.getFilterFromSearchParams(searchParams))
 
+
+    
+
     const inputRef = useRef(null)
 
     useEffect(() => {
@@ -168,6 +171,42 @@ export function BoardDetails() {
         }
     }
 
+    /// group header box shadow on scroll
+
+    const boardContiner = useRef(null)
+
+    useEffect(() => {
+        if (isAppLoading) return
+        const container = boardContiner.current
+        if (!container) return
+
+        const headers = container.querySelectorAll('.group-header')
+        if (!headers.length) return
+
+        const onScroll = () => {
+            const containerRect = container.getBoundingClientRect()
+            const scrollTop = container.scrollTop
+
+            headers.forEach((header, idx) => {
+                const rect = header.getBoundingClientRect()
+                const isSticky = rect.top - containerRect.top <= 148
+
+                if (scrollTop === 0) {
+                    header.classList.remove('sticky-active')
+                } else {
+                    const firstHeaderRect = headers[0].getBoundingClientRect()
+                    const firstIsSticky = firstHeaderRect.top - containerRect.top <= 148
+                    header.classList.toggle('sticky-active', isSticky && firstIsSticky)
+                }
+            })
+        }
+
+        container.addEventListener('scroll', onScroll)
+
+        return (() => {
+            container.removeEventListener('scroll', onScroll)
+        })
+    }, [board, isAppLoading])
 
 
     if (isAppLoading) return <AppLoader />
@@ -177,7 +216,7 @@ export function BoardDetails() {
 
     return (
         <section className="board-details">
-            <div className="board-details-container" >
+            <div className="board-details-container" ref={boardContiner}>
 
                 <BoardDetailsHeader
                     board={board}
@@ -207,12 +246,13 @@ export function BoardDetails() {
 
                 {board?.groups?.length > 0 && boardGroupsToShow?.length > 0 &&
                     <button
-                        onClick={() => onAddGroup(board?._id)}
-                        className='add-group flex'>
-                        <SvgIcon iconName="plus" size={20} />
-                        <span>Add new group</span>
+                        className='btn-shrink-wrapper'
+                        onClick={() => onAddGroup(board?._id)}>
+                        <div className='btn add-group shrink flex'>
+                            <SvgIcon iconName="plus" size={20} />
+                            <span>Add new group</span>
+                        </div>
                     </button>}
-
             </div>
 
 

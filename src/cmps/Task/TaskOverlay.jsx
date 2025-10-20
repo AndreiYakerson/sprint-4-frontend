@@ -1,53 +1,46 @@
 
-
-// services
-import { useParams, Link, useNavigate } from "react-router-dom"
-import { useEffect, useState } from "react"
-import { removeTask, updateTask } from "../../store/actions/board.actions.js"
-import { showErrorMsg, showSuccessMsg } from "../../services/event-bus.service"
+import { useEffect, useRef, useState } from "react"
+import { useParams, useNavigate } from "react-router-dom"
 import { useSelector } from "react-redux"
-import { DatePicker } from "../TaskCmps/DateCmp/DatePicker.jsx"
-import { PriorityPicker } from "../TaskCmps/PriorityCmp/PriorityPicker.jsx"
-
-
-
-
-// cmps
-// import { DynamicCmp } from "../DynamicCmp"
-import { TitleEditor } from "./TitleEditor"
-
-// icon
-// import updateIcon from "/icons/update.svg"
-import { MemberPicker } from "../TaskCmps/MembersCmp/MemberPicker.jsx"
-import { StatusPicker } from "../TaskCmps/StatusCmp/StatusPicker.jsx"
-
-
-// import { FloatingContainerCmp } from "../FloatingContainerCmp.jsx"
-// import { MemberTaskSelect } from "../TaskCmps/MembersCmp/MemberTaskSelect.jsx"
-// import { MemberSelectedPreview } from "../TaskCmps/MembersCmp/MemberSelectedPreview.jsx"
-// import { PriorityPreview } from "../TaskCmps/PriorityCmp/PriorityPreview.jsx"
-
-
-import { SvgIcon } from "../SvgIcon.jsx"
 
 //dnd-kit
 import { useSortable } from "@dnd-kit/sortable"
 import { CSS } from "@dnd-kit/utilities"
-import { constant } from "lodash"
+
+// services
+import { duplicateTask, removeTask, updateTask } from "../../store/actions/board.actions.js"
+import { showErrorMsg, showSuccessMsg } from "../../services/event-bus.service"
+
+// cmps
+import { SvgIcon } from "../SvgIcon.jsx"
+import { FloatingContainerCmp } from "../FloatingContainerCmp.jsx"
+import { ActionsMenu } from "../ActionsMenu.jsx"
+
+// DynamicCmp
+import { TitleEditor } from "./TitleEditor"
+import { DatePicker } from "../TaskCmps/DateCmp/DatePicker.jsx"
+import { PriorityPicker } from "../TaskCmps/PriorityCmp/PriorityPicker.jsx"
+import { MemberPicker } from "../TaskCmps/MembersCmp/MemberPicker.jsx"
+import { StatusPicker } from "../TaskCmps/StatusCmp/StatusPicker.jsx"
 
 
-
-
-
-export function TaskOverlay({ task, groupId, }) {
-    const board = useSelector(state => state.boardModule.board)
-
-    const [membersSelectEl, setMembersSelectEl] = useState(null)
-    const [memberEl, setMemberEl] = useState(null)
-
-
+export function TaskOverlay({ task, groupId, taskIdx }) {
+    const navigate = useNavigate()
     const { boardId, taskId } = useParams()
 
+    // dnd
+    const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id: task.id })
+    const style = {
+        transition,
+        transform: CSS.Transform.toString(transform),
+        opacity: isDragging ? 0 : 1,
+        border: isDragging ? '1px dashed transparent' : '',
+
+
+    }
+
+    const board = useSelector(state => state.boardModule.board)
+    const cmpOrder = board?.cmpOrder || []
     const [cmps, setCmps] = useState(
         [
             {
@@ -56,7 +49,7 @@ export function TaskOverlay({ task, groupId, }) {
                     label: 'Status:',
                     propName: 'status',
                     selectedStatus: task.status,
-                    statuses: board.statuses,
+                    // statuses: board.statuses,
                 }
             },
             {
@@ -65,7 +58,7 @@ export function TaskOverlay({ task, groupId, }) {
                     label: 'Members:',
                     propName: 'memberIds',
                     selectedMemberIds: task.memberIds || [],
-                    members: board.members,
+                    // members: board.members,
                 }
             },
             {
@@ -75,7 +68,7 @@ export function TaskOverlay({ task, groupId, }) {
                     propName: 'priority',
                     taskPriority: task.priority,
                     boardPriorities: board.priorities,
-                    boardId: board._id
+                    // boardId: board._id
                 }
             },
             {
@@ -84,6 +77,7 @@ export function TaskOverlay({ task, groupId, }) {
                     label: 'Due date:',
                     propName: 'dueDate',
                     selectedDate: task?.dueDate,
+                    selectedStatus: task.status,
                 }
             },
             {
@@ -99,60 +93,77 @@ export function TaskOverlay({ task, groupId, }) {
         ]
     )
 
-    useEffect(() => {
-        setCmps([
+    // useEffect(() => {
+    //     setCmps([
 
-            {
-                type: 'StatusPicker',
-                info: {
-                    label: 'Status:',
-                    propName: 'status',
-                    selectedStatus: task.status,
-                    statuses: board.statuses,
-                }
-            },
-            {
-                type: 'MemberPicker',
-                info: {
-                    label: 'Members:',
-                    propName: 'memberIds',
-                    selectedMemberIds: task.memberIds || [],
-                    members: board.members,
-                }
-            },
-            {
-                type: 'PriorityPicker',
-                info: {
-                    label: 'priority:',
-                    propName: 'priority',
-                    taskPriority: task.priority,
-                    boardPriorities: board.priorities,
-                    boardId: board._id
-                }
-            },
-            {
-                type: 'DatePicker',
-                info: {
-                    label: 'Due date:',
-                    propName: 'dueDate',
-                    selectedDate: task?.dueDate,
-                }
-            },
-            {
-                type: 'TitleEditor',
-                info: {
-                    taskId: task?.id,
-                    label: 'Title:',
-                    propName: 'title',
-                    currTitle: task?.title,
-                }
-            },
-        ])
-    }, [task, board])
+    //         {
+    //             type: 'StatusPicker',
+    //             info: {
+    //                 label: 'Status:',
+    //                 propName: 'status',
+    //                 selectedStatus: task.status,
+    //                 statuses: board.statuses,
+    //             }
+    //         },
+    //         {
+    //             type: 'MemberPicker',
+    //             info: {
+    //                 label: 'Members:',
+    //                 propName: 'memberIds',
+    //                 selectedMemberIds: task.memberIds || [],
+    //                 members: board.members,
+    //             }
+    //         },
+    //         {
+    //             type: 'PriorityPicker',
+    //             info: {
+    //                 label: 'priority:',
+    //                 propName: 'priority',
+    //                 taskPriority: task.priority,
+    //                 boardPriorities: board.priorities,
+    //                 boardId: board._id
+    //             }
+    //         },
+    //         {
+    //             type: 'DatePicker',
+    //             info: {
+    //                 label: 'Due date:',
+    //                 propName: 'dueDate',
+    //                 selectedDate: task?.dueDate,
+    //                 selectedStatus: task.status,
+    //             }
+    //         },
+    //         {
+    //             type: 'TitleEditor',
+    //             info: {
+    //                 taskId: task?.id,
+    //                 label: 'Title:',
+    //                 propName: 'title',
+    //                 currTitle: task?.title,
+    //             }
+    //         },
+    //     ])
+    // }, [task, board])
 
-    const cmpsOrder = ['StatusPicker', 'PriorityPicker', 'MemberPicker', 'DatePicker']
+    const [isMenuOpen, setIsMenuOpen] = useState(false)
+
+    const btnRef = useRef(null)
+    const menuRef = useRef(null)
+
+    function toggleIsMenuOpen(ev) {
+        ev.stopPropagation()
+        setIsMenuOpen(!isMenuOpen)
+    }
+
+    function onCloseMenu() {
+        setIsMenuOpen(false)
+    }
+
+    // crudl fncs
 
     async function updateCmpInfo(cmp, cmpInfoPropName, data, activityTitle) {
+
+        console.log('data:', data)
 
         const taskPropName = cmp.info.propName
         console.log(`Updating: ${taskPropName} to: `, data)
@@ -160,7 +171,11 @@ export function TaskOverlay({ task, groupId, }) {
         // Update cmps in local state
         const updatedCmp = structuredClone(cmp)
         updatedCmp.info[cmpInfoPropName] = data
-        setCmps(cmps.map(currCmp => (currCmp.info.propName !== cmp.info.propName) ? currCmp : updatedCmp))
+        setCmps(prevCmps =>
+            prevCmps.map(currCmp =>
+                currCmp.info.propName !== cmp.info.propName ? currCmp : updatedCmp
+            )
+        )
 
         // Update the task
         const updatedTask = structuredClone(task)
@@ -169,12 +184,26 @@ export function TaskOverlay({ task, groupId, }) {
         try {
             await updateTask(boardId, groupId, updatedTask, activityTitle)
             showSuccessMsg(`Task updated`)
+
+            //If the status was updated successfully, in order to synchronize the status with the due date, 
+            // this function updates the status data in the due date component.
+            if (taskPropName === 'status') setStatusInDatePickerCmp(data)
+
         } catch (err) {
             console.log('err:', err)
             showErrorMsg('Cannot update task')
         }
     }
 
+    function setStatusInDatePickerCmp(status) {
+        setCmps(prevCmps =>
+            prevCmps.map(currCmp =>
+                currCmp.info.propName !== 'dueDate'
+                    ? currCmp
+                    : { ...currCmp, info: { ...currCmp.info, selectedStatus: status } }
+            )
+        )
+    }
 
     async function onRemoveTask() {
         try {
@@ -194,70 +223,89 @@ export function TaskOverlay({ task, groupId, }) {
     }
 
 
+    async function onDuplicateTask(task) {
+        const taskCopy = structuredClone(task)
+        taskCopy.title = taskCopy.title + ' (copy)'
+        delete taskCopy?.id, delete taskCopy.createdAt
+
+        try {
+            await duplicateTask(boardId, groupId, taskCopy, taskIdx + 1)
+            showSuccessMsg('task duplicated to the board')
+        } catch (err) {
+            console.log(err)
+            showErrorMsg('cannot duplicate task')
+        }
+    }
+
 
     return (
 
-            <div className="task-preview">
-                <div className="sticky-cell-wrapper" >
-                    <div className="table-border"></div>
-                    <div className="task-select"></div>
-                    <div className="task-title flex align-center">
-                        <TitleEditor info={cmps.find(cmp => cmp.type === 'TitleEditor')?.info} onUpdate={(data) => {
-                            updateCmpInfo(cmps.find(cmp => cmp.type === 'TitleEditor'),
-                                'currTitle', data, `Changed title to ${data}`)
+        <div className="task-preview" style={style} ref={setNodeRef} {...attributes}  >
 
-                        }} />
 
-                        <div className="grab-block" ></div>
+            <div className="sticky-cell-wrapper" {...listeners}>
+                
 
-                        <div onClick={onToggleTaskDetails} className={`task-updates-cell ${task.id === taskId ? "focus" : ""}`}>
-                            <SvgIcon
-                                iconName="bubblePlus"
-                                size={20}
-                                colorName={'primaryText'}
-                            />
-                        </div>
+                <div className="table-border"></div>
+                <div className="task-select"></div>
+                <div className="task-title flex align-center">
+                    <TitleEditor info={cmps.find(cmp => cmp.type === 'TitleEditor')?.info} onUpdate={(data) => {
+                        updateCmpInfo(cmps.find(cmp => cmp.type === 'TitleEditor'),
+                            'currTitle', data, `Changed title to ${data}`)
+
+                    }} />
+
+                    <div className="grab-block" ></div>
+
+                    <div onClick={onToggleTaskDetails} className={`task-updates-cell ${task.id === taskId ? "focus" : ""}`}>
+                        <SvgIcon
+                            iconName="bubblePlus"
+                            size={20}
+                            colorName={'primaryText'}
+                        />
                     </div>
-                </div >
+                </div>
+            </div >
 
-                <div className="task-columns flex">
-                    {cmpsOrder.map((colName, idx) => {
+            <div className="task-columns flex">
+                {cmpOrder.map((colName, idx) => {
 
-                        if (colName === 'StatusPicker') {
-                            var cmp = cmps.find(cmp => cmp?.type === 'StatusPicker')
-                            return <div className="column-cell" key={colName}>
-                                {DynamicCmp({ cmp, updateCmpInfo })}
-                            </div>
-                        }
-                        if (colName === 'MemberPicker') {
-                            var cmp = cmps.find(cmp => cmp?.type === 'MemberPicker')
-                            return <div className="column-cell" key={colName}>
-                                {DynamicCmp({ cmp, updateCmpInfo })}
-                            </div>
-                        }
-                        if (colName === 'PriorityPicker') {
-                            var cmp = cmps.find(cmp => cmp?.type === 'PriorityPicker')
-                            return <div className="column-cell" key={colName}>
-                                {DynamicCmp({ cmp, updateCmpInfo })}
-                            </div>
-                        }
-                        if (colName === 'DatePicker') {
-                            var cmp = cmps.find(cmp => cmp?.type === 'DatePicker')
-                            return <div className="column-cell" key={colName}>
-                                {DynamicCmp({ cmp, updateCmpInfo })}
-                            </div>
-                        }
-                        else {
-                            return <div className="column-cell" key={idx}></div>
-                        }
-                    })
+                    if (colName === 'status') {
+                        var cmp = cmps.find(cmp => cmp?.type === 'StatusPicker')
+                        return <div className="column-cell status" key={colName}>
+                            <DynamicCmp cmp={cmp} updateCmpInfo={updateCmpInfo} />
+
+                        </div>
                     }
-                    <div className="column-cell full"></div>
-                </div >
-            </div>
+                    if (colName === 'members') {
+                        var cmp = cmps.find(cmp => cmp?.type === 'MemberPicker')
+                        return <div className="column-cell members" key={colName}>
+                            <DynamicCmp cmp={cmp} updateCmpInfo={updateCmpInfo} />
+                        </div>
+                    }
+                    if (colName === 'priority') {
+                        var cmp = cmps.find(cmp => cmp?.type === 'PriorityPicker')
+                        return <div className="column-cell priority" key={colName}>
+                            <DynamicCmp cmp={cmp} updateCmpInfo={updateCmpInfo} />
+                        </div>
+                    }
+                    if (colName === 'date') {
+                        var cmp = cmps.find(cmp => cmp?.type === 'DatePicker')
+                        return <div className="column-cell due-date " key={colName}>
+                            <DynamicCmp cmp={cmp} updateCmpInfo={updateCmpInfo} />
+                        </div>
+                    }
+                    else {
+                        return <div className="column-cell" key={idx}></div>
+                    }
+                })
+                }
+                <div className="column-cell full"></div>
+            </div >
+        </div>
     )
-}
 
+}
 
 
 
@@ -273,7 +321,7 @@ function DynamicCmp({ cmp, updateCmpInfo }) {
             }} />
         case 'PriorityPicker':
             return <PriorityPicker info={cmp?.info} onUpdate={(data) => {
-                updateCmpInfo(cmp, 'selectedPriority', data, `Changed due priority to ${data}`)
+                updateCmpInfo(cmp, 'taskPriority', data, `Changed due priority to ${data}`)
             }} />
         case 'MemberPicker':
             return <MemberPicker info={cmp.info} onUpdate={(data) => {

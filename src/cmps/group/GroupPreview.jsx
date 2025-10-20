@@ -17,11 +17,13 @@ import { CmpList } from "../CmpList.jsx";
 import { onCloseFloating, onSetFloating } from "../../store/actions/system.actions.js";
 
 export function GroupPreview({ group, groupsLength, managingType, TaskList,
-    onRemoveGroup, onUpdateGroup, onAddTask, onAddGroup, onOpenGroupEditor, onAddColumn }) {
+    onRemoveGroup, onUpdateGroup, onAddTask, onAddGroup, onOpenGroupEditor, onAddColumn, onRemoveColumn }) {
+
+    const [searchParams] = useSearchParams();
 
     // dnd kit
     const { attributes, listeners, setNodeRef,
-        transform, transition, isDragging } = useSortable({ id: group.id, disabled: groupsLength < 2 })
+        transform, transition, isDragging } = useSortable({ id: group.id, disabled: searchParams.size > 0 })
 
     const style = {
         transition: transition,
@@ -45,7 +47,12 @@ export function GroupPreview({ group, groupsLength, managingType, TaskList,
 
 
     //menu 
-    const [isMenuOpen, setIsMenuOpen] = useState(false)
+    const [isGroupMenuOpen, setIsGroupMenuOpen] = useState(false)
+    const [elColumnMenu, setIsElColumnMenu] = useState(null)
+    const [columnType, setcolumnType] = useState('')
+    const [anchorEl, setAnchorEl] = useState(null)
+
+
     const btnRef = useRef(null)
     const menuRef = useRef(null)
     const [cmpSelectAnchor, setCmpSelectAnchor] = useState(null)
@@ -68,13 +75,30 @@ export function GroupPreview({ group, groupsLength, managingType, TaskList,
 
 
 
-    function toggleIsMenuOpen(ev) {
+    function toggleIsGroupMenuOpen(ev) {
         ev.stopPropagation()
-        setIsMenuOpen(!isMenuOpen)
+        setIsGroupMenuOpen(!isGroupMenuOpen)
+    }
+
+    function toggleIsColumnMenuOpen(ev, colname) {
+        ev.stopPropagation()
+        setIsElColumnMenu(elColumnMenu ? null : ev.currentTarget)
+
+        if (!columnType) {
+            setcolumnType(colname)
+        } else {
+            setcolumnType('')
+        }
     }
 
     function onCloseMenu() {
-        setIsMenuOpen(false)
+        if (isGroupMenuOpen) {
+            setIsGroupMenuOpen(false)
+        }
+        if (elColumnMenu) {
+            setIsElColumnMenu(null)
+            setcolumnType('')
+        }
     }
 
     function onCloseCmpList() {
@@ -148,11 +172,19 @@ export function GroupPreview({ group, groupsLength, managingType, TaskList,
         startX.current = e.pageX
         currentColName.current = colName === 'date' ? 'due-date' : colName
 
-        document.querySelectorAll(`.column-cell.${currentColName.current}`)
-            .forEach(el => el.classList.add("highlight"));
+        if (colName === 'item') {
+            document.querySelectorAll(`.sticky-cell-wrapper`)
+                .forEach(el => el.classList.add("highlight"))
+        } else {
+            document.querySelectorAll(`.column-cell.${currentColName.current}`)
+                .forEach(el => el.classList.add("highlight"))
+        }
 
         const colElement = e.target.parentElement
-        startWidth.current = colElement.offsetWidth
+        startWidth.current = colName === 'item' ? colElement.offsetWidth + 36 : colElement.offsetWidth
+
+        console.log('colElement.offsetWidth:', colElement.offsetWidth)
+        console.log('startWidth.current:', startWidth.current)
 
         document.addEventListener("mousemove", handleMouseMove)
         document.addEventListener("mouseup", handleMouseUp)
@@ -164,8 +196,13 @@ export function GroupPreview({ group, groupsLength, managingType, TaskList,
         const root = document.documentElement
         const newWidth = startWidth.current + (e.pageX - startX.current)
         const varName = `--${currentColName.current}-column`
+        console.log('after:', startWidth.current)
         console.log('newWidth:', newWidth)
-        if (newWidth <= 60) {
+
+        if (newWidth <= 250 && currentColName.current === 'item') {
+            console.log('stop:')
+            return
+        } else if (newWidth <= 60) {
             console.log('stop:')
             return
         }
@@ -175,120 +212,50 @@ export function GroupPreview({ group, groupsLength, managingType, TaskList,
 
     function handleMouseUp() {
         isResizing.current = false
-        document.querySelectorAll(`.column-cell.${currentColName.current}`)
-            .forEach(el => el.classList.remove("highlight"))
+
+        if (currentColName.current === 'item') {
+            document.querySelectorAll(`.sticky-cell-wrapper`)
+                .forEach(el => el.classList.remove("highlight"))
+        } else {
+            document.querySelectorAll(`.column-cell.${currentColName.current}`)
+                .forEach(el => el.classList.remove("highlight"))
+        }
 
         document.removeEventListener("mousemove", handleMouseMove)
         document.removeEventListener("mouseup", handleMouseUp)
     }
 
 
-
     ///////////////////////////////////  Collapsed group ///////////////////////////////
 
-    if (isCollapsed) return <section
-        className="group-container individual-collapse"
-        ref={setNodeRef}
-        {...attributes}
-        style={{
-            ...style,
-            ...groupInfoToEdit?.style,
-            opacity: isDragging ? 0.5 : 1,
-            zIndex: isDragging ? 10 : 'auto',
-        }}
-    >
-
-        <header
-            className="group-header"
-        >
-            <div className="table-row table-header" {...listeners}>
-
-                <div className="group-title-row" >
-                    <div className="group-bar">
-                        <div className="group-menu-wrapper">
-
-                            <button onClick={toggleIsMenuOpen}
-                                className={`white group-menu ${isMenuOpen ? "menu-open" : ""}`}
-                                ref={btnRef}>
-
-                                <SvgIcon
-                                    iconName="dots"
-                                    size={22}
-                                    colorName={'primaryText'}
-                                />
-
-                            </button>
-
-                            {isMenuOpen && <FloatingContainerCmp
-                                anchorEl={btnRef.current}
-                                onClose={onCloseMenu}
-                                offsetX={40}
-                                offsetY={35}
-                                enforceLimit={true}
-                            >
-                                <ActionsMenu
-                                    menuRef={menuRef}
-                                    onCloseMenu={onCloseMenu}
-                                    onRemoveGroup={() => onRemoveGroup(group?.id)}
-                                    groupsLength={groupsLength}
-                                    onAddGroup={onAddGroup}
-                                    onRenameGroup={() => onOpenGroupEditor(group?.id)}
-                                />
-                            </FloatingContainerCmp>}
-
-                        </div>
-                    </div>
-                    <div className="collapse-group-toggle" onClick={() => onToggleCollapsed(false)}>
-                        <SvgIcon
-                            iconName={isCollapsed ? "chevronRight" : "chevronDown"}
-                            size={22}
-                            colorName={'currentColor'}
-                        />
-                    </div>
-                    <div className="group-title-wrapper flex" >
-                        <GroupTitleEditor
-                            info={groupInfoToEdit}
-                            onUpdate={(newVals) => onSetGroupToUpdate(group, newVals)}
-                        />
-                    </div>
-
-                    <div className="task-count-wrapper">
-                        <div></div>
-                        <span className="task-count" >
-                            {group?.tasks?.length > 0 ? `${group?.tasks?.length} Tasks`
-                                : 'No Tasks'}
-                        </span>
-                    </div>
-
-                </div>
-
-                <div className="task-columns flex">
-                    {cmpOrder.map(colName => {
-                        if (colName === 'date') {
-                            return <div key={colName} className="column-cell due-date">
-                                <div>{colName}</div>
-                                <DateSum dates={dates} />
-                            </div>
-                        } else if (colName === 'status') {
-                            return <div key={colName} className="column-cell status">
-                                <LabelSum info={{ labels: statuses, type: 'status' }} />
-                            </div>
-                        } else if (colName === 'priority') {
-                            return <div key={colName} className="column-cell priority">
-                                <LabelSum info={{ labels: priorities, type: 'priority' }} />
-                            </div>
-                        } else {
-                            return <div key={colName} className={`column-cell ${getColumnType(colName)}`}>
-                                <span></span>
-                            </div>
-                        }
-
-                    })}
-                    <div className="column-cell full"></div>
-                </div>
-            </div>
-        </header>
-    </section >
+    if (isCollapsed)
+        return (
+            <IndividualGroupCollapse
+                group={group}
+                groupInfoToEdit={groupInfoToEdit}
+                style={style}
+                isDragging={isDragging}
+                cmpOrder={cmpOrder}
+                statuses={statuses}
+                priorities={priorities}
+                dates={dates}
+                btnRef={btnRef}
+                menuRef={menuRef}
+                isGroupMenuOpen={isGroupMenuOpen}
+                onCloseMenu={onCloseMenu}
+                toggleIsGroupMenuOpen={toggleIsGroupMenuOpen}
+                onOpenGroupEditor={onOpenGroupEditor}
+                onRemoveGroup={onRemoveGroup}
+                onAddGroup={onAddGroup}
+                onToggleCollapsed={onToggleCollapsed}
+                setNodeRef={setNodeRef}
+                attributes={attributes}
+                listeners={listeners}
+                isCollapsed={isCollapsed}
+                groupsLength={groupsLength}
+                onSetGroupToUpdate={onSetGroupToUpdate}
+            />
+        )
 
     ///////////////////////////////  group  /////////////////////////////////
 
@@ -308,7 +275,9 @@ export function GroupPreview({ group, groupsLength, managingType, TaskList,
         >
             <div className="group-title-row" {...listeners}>
                 <div className="group-menu-wrapper">
-                    <button onClick={toggleIsMenuOpen} className={`white group-menu ${isMenuOpen ? "menu-open" : ""}`} ref={btnRef}>
+                    <button onClick={toggleIsGroupMenuOpen}
+                        className={`white group-menu ${isGroupMenuOpen ? "menu-open" : ""}`}
+                        ref={btnRef}>
                         <SvgIcon
                             iconName="dots"
                             size={22}
@@ -316,7 +285,7 @@ export function GroupPreview({ group, groupsLength, managingType, TaskList,
                         />
                     </button>
 
-                    {isMenuOpen && <FloatingContainerCmp
+                    {isGroupMenuOpen && <FloatingContainerCmp
                         anchorEl={btnRef.current}
                         onClose={onCloseMenu}
                         offsetX={40}
@@ -324,7 +293,6 @@ export function GroupPreview({ group, groupsLength, managingType, TaskList,
                         enforceLimit={true}
                     >
                         <ActionsMenu
-                            menuRef={menuRef}
                             onCloseMenu={onCloseMenu}
                             onRemoveGroup={() => onRemoveGroup(group?.id)}
                             groupsLength={groupsLength}
@@ -361,13 +329,32 @@ export function GroupPreview({ group, groupsLength, managingType, TaskList,
                     <div className="task-menu-wrapper"></div>
                     <div className="table-border"></div>
                     <div className="task-select"></div>
-                    <div className="task-title">{managingType}</div>
+                    <div className="task-title">
+                        <span>{managingType}</span>
+                    </div>
+                    <div
+                        className="resize-btn"
+                        onMouseDown={(ev) => handleMouseDown(ev, 'item')}
+                    ></div>
                 </div>
 
                 <div className="task-columns flex">
                     {cmpOrder.map((colName) => (
                         <div key={colName} className={`column-cell ${getColumnType(colName)}`}>
                             <span>{colName}</span>
+
+                            <button
+                                className={` transparent column-menu-btn ${elColumnMenu && columnType === colName ? "open" : ""}`}
+                                key={colName}
+                                ref={columnBtnRef}
+                                onClick={(ev) => toggleIsColumnMenuOpen(ev, colName)}>
+                                <SvgIcon
+                                    iconName="dots"
+                                    size={22}
+                                    colorName={'secondaryText'}
+                                />
+                            </button>
+
                             <div
                                 className="resize-btn"
                                 onMouseDown={(ev) => handleMouseDown(ev, colName)}
@@ -459,5 +446,21 @@ export function GroupPreview({ group, groupsLength, managingType, TaskList,
             </div>
         </div>
 
+
+        {elColumnMenu && <FloatingContainerCmp
+            anchorEl={elColumnMenu}
+            onClose={onCloseMenu}
+            offsetX={30}
+            offsetY={45}
+        >
+            <ActionsMenu
+                onCloseMenu={onCloseMenu}
+                isHrShown={false}
+                onRemoveItem={() => onRemoveColumn(columnType)}
+            />
+        </FloatingContainerCmp>
+        }
+
     </div >
 }
+

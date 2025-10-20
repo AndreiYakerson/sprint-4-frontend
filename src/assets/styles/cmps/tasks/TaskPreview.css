@@ -14,9 +14,8 @@
            rotate: 1deg;
            opacity: 0.8;
            background-color: rgb(19, 157, 203);
-           
-        }
-        
+       }
+
 
 
        &:has(:focus, .focus):not(.table-header) {
@@ -47,6 +46,11 @@
 
                /* make bug - bark the layout - need to find solution */
                z-index: var(--zIndex-Layer-40);
+
+               &:has(.time-icon:hover) {
+                   z-index: auto;
+               }
+
 
                .sticky-cell-wrapper {
                    background-color: var(--pulse-background-color-rgb);
@@ -81,7 +85,7 @@
        background-color: white;
 
        display: grid;
-       grid-template-columns: 6px 36px 1fr;
+       grid-template-columns: 6px 36px calc(var(--item-column) - 78px);
 
 
        &>*:not(.table-border, .task-menu-wrapper) {
@@ -92,6 +96,9 @@
            border-inline-end: 1px solid var(--layout-border-color);
        }
 
+       &.highlight {
+           border-inline-end: 2px solid var(--primary-color);
+       }
 
        &:has(:focus, .focus):not(:has(.add-task-cell)) {
 
@@ -142,16 +149,23 @@
                margin-inline-end: 4px;
                margin-block-end: 4px;
                opacity: 0;
+
+               &:has(.menu-open) {
+                   position: relative;
+                   opacity: 1;
+
+                   .menu-open {
+                       background-color: var(--card-selected-background-color);
+
+                       &:hover {
+                           background-color: var(--primary-selected-hover-color);
+                       }
+                   }
+               }
            }
 
            .task-menu-btn {
                position: relative;
-
-               &.menu-open {
-                   position: relative;
-                   background-color: var(--primary-selected-color);
-                   opacity: 1;
-               }
            }
        }
 
@@ -165,16 +179,16 @@
 
        .task-title {
            justify-content: space-between;
-           align-content: center;
+           align-items: center;
 
            &>:first-child {
-               margin-inline-start: 36px;
+               padding: 2px;
+               margin-inline-start: 16px;
            }
 
            .task-name {
                cursor: text;
                width: max-content;
-               max-width: 200px;
                white-space: nowrap;
                overflow: hidden;
                text-overflow: ellipsis;
@@ -223,7 +237,9 @@
 
        &>* {
            /* Creates problems with tooltip, go to advanced portal to resolve the issue */
-           overflow: hidden;
+           /* overflow: hidden; */
+           overflow-x: hidden;
+           overflow-y: hidden;
            white-space: nowrap;
            text-overflow: ellipsis;
        }
@@ -289,7 +305,7 @@
            align-content: center;
        }
 
-       &:has(:focus, .focus) {
+       &:has(:focus, .focus):not(:has(button)) {
            &>* {
                border: 1px solid var(--primary-color);
            }
