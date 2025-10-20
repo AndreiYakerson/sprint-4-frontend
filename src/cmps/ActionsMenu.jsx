@@ -1,3 +1,4 @@
+import { useEffect } from "react"
 import { SvgIcon } from "./SvgIcon.jsx"
 
 export function ActionsMenu({
@@ -22,6 +23,11 @@ export function ActionsMenu({
     //
     isHrShown = false
 }) {
+
+    useEffect(() => {
+  return ()=> onCloseMenu()
+    }, [])
+    
 
     return (<div className="actions-menu" style={{ ...style }} ref={menuRef}>
         <ul className="actions-list">

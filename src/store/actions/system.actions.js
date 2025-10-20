@@ -22,6 +22,7 @@ export async function onSetIsSideBarOpen(value) {
 // }
 
 export async function onSetPopUp(content) {
+    onCloseFloating()
     try {
         store.dispatch({ type: SET_POPUP, content })
     } catch (err) {
@@ -30,7 +31,7 @@ export async function onSetPopUp(content) {
     }
 }
 
-export function onClosePopUp() {
+export async function onClosePopUp() {
     try {
         store.dispatch({ type: CLOSE_POPUP })
     } catch (err) {
@@ -41,8 +42,9 @@ export function onClosePopUp() {
 }
 export async function onSetFloating(content, anchor) {
     const floatingOpen = store.getState().systemModule.floating.isOpen
-    console.log("🚀 ~ onSetFloating ~ floatingOpen:", floatingOpen)
-    if  (floatingOpen) return
+    const floatingSecondaryOpen = store.getState().systemModule.floatingSecondary.isOpen
+    if (floatingOpen) await onCloseFloating()
+        
     try {
         store.dispatch({ type: SET_FLOATING, content, anchor })
     } catch (err) {
@@ -53,8 +55,7 @@ export async function onSetFloating(content, anchor) {
 
 export async function onSetFloatingSecondary(content, anchor) {
     const floatingSecondary = store.getState().systemModule.floatingSecondary.isOpen
-    console.log("🚀 ~ onSetFloating ~ floatingOpen:", floatingSecondary)
-    if  (floatingSecondary) return
+    if (floatingSecondary) return
     try {
         store.dispatch({ type: SET_FLOATING_SECONDARY, content, anchor })
     } catch (err) {
@@ -63,7 +64,9 @@ export async function onSetFloatingSecondary(content, anchor) {
     }
 }
 
-export function onCloseFloating() {
+export async function onCloseFloating() {
+    console.log("🚀 ~ onCloseFloating ~ onCloseFloating:")
+    
     try {
         store.dispatch({ type: CLOSE_FLOATING })
     } catch (err) {
@@ -72,9 +75,7 @@ export function onCloseFloating() {
     }
 
 }
-export function onCloseFloatingSecondary() {
-    console.log('variable')
-    
+export async function onCloseFloatingSecondary() {
     try {
         store.dispatch({ type: CLOSE_FLOATING_SECONDARY })
     } catch (err) {

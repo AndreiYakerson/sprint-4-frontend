@@ -36,6 +36,8 @@ export function LabelsListEdit({ labels, onUpdateLabels, onSwitchEditMode, onClo
         )
         setLabelsInUse(active)
     }, [board, type])
+
+
     useEffect(() => {
         if (colorAnchorEl && editingLabel) {
             onCloseFloatingSecondary()
@@ -50,14 +52,17 @@ export function LabelsListEdit({ labels, onUpdateLabels, onSwitchEditMode, onClo
 
     useEffect(() => {
         if (anchorEl && editingLabel) {
+            const res = labelsInUse.some(l => l.id === editingLabel.id) || editingLabel.id === 'default' ? 'active-label hover-show up' : ''
+            const data = editingLabel.id === 'default' ? 'Cannot remove Default label' : 'label in use, remove from tasks before delete'
             onCloseFloatingSecondary()
             onSetFloatingSecondary(
-                <button className='now-con' onClick={() => {
-                    onCloseFloating()
-                    onRemoveLabel(editingLabel.id)
-                }}>
-                    <SvgIcon iconName='trash' size={20} />
-                </button>
+                <span className={res} data-type={data}>
+                    <ActionsMenu
+                        onCloseMenu={onCloseMenu}
+                        isHrShown={false}
+                        onRemoveItem={() => onRemoveLabel(editingLabel.id)}
+                    />
+                </span>
                 , anchorEl)
         }
     }, [colorAnchorEl, editingLabel])
@@ -65,24 +70,16 @@ export function LabelsListEdit({ labels, onUpdateLabels, onSwitchEditMode, onClo
 
     function handelChange(ev, id) {
         const value = ev.target.value
-        setLabelsToUpdate(prevLabels => {
-            return prevLabels.map(label => label.id === id ? { ...label, txt: value } : label)
-        })
+        setLabelsToUpdate(prevLabels => prevLabels.map(label => label.id === id ? { ...label, txt: value } : label))
     }
 
     function handelColorChange(color, id) {
+        const newLabels = labelsToUpdate.map(l => l.id === id ? { ...l, cssVar: color } : l)
         setEditingLabel(prevLabel => ({ ...prevLabel, cssVar: color }))
-        setLabelsToUpdate(prevLabels => {
-            let labels = prevLabels.map(label => label.id === id ? { ...label, cssVar: color } : label)
-            onUpdateLabels(labels)
-            setColorAnchorEl(null)
-            return labels
-        })
-        setTimeout(() => {
-            onCloseColorPallet()
-        }, 0);
+        setLabelsToUpdate(newLabels)
+        onUpdateLabels(newLabels)
+        onCloseColorPallet()
     }
-
 
 
     function changeLabelColor(ev, id) {
@@ -105,160 +102,118 @@ export function LabelsListEdit({ labels, onUpdateLabels, onSwitchEditMode, onClo
         setAnchorEl(ev.currentTarget);
         let labelToEdit;
         if (id === 'default') {
-            labelToEdit = { id: 'default', txt: 'Default Label', cssVar:' --group-title-clr18'};
+            labelToEdit = { id: 'default', txt: 'Default Label', cssVar: ' --group-title-clr18' };
         } else {
             labelToEdit = labelsToUpdate.find(label => label.id === id);
         }
         setEditingLabel(labelToEdit);
-}
-
-function onCloseMenu() {
-    setAnchorEl(null)
-    setEditingLabel(null)
-}
-
-function onRemoveLabel(id) {
-    if (labelsInUse.some(label => label.id === id)) {
-        return showErrorMsg(' Cannot remove label')
     }
-    setLabelsToUpdate(prev => {
-        const labels = prev.filter(label => label.id !== id)
-        onUpdateLabels(labels)
-        return labels
-    })
-    showSuccessMsg(' label removed')
-    setAnchorEl(null)
-}
 
-function addNewLabel() {
-    const newLabel = boardService.getEmptyPriorityLabel()
-    setLabelsToUpdate(prev => {
-        const labels = [...prev, newLabel]
-        onUpdateLabels(labels)
-        return labels
-    })
-    showSuccessMsg('new label added')
-}
+    function onCloseMenu() {
+        setAnchorEl(null)
+        setEditingLabel(null)
+    }
 
-function onApply() {
-    onUpdateLabels(labelsToUpdate)
-    onSwitchEditMode()
-}
+    function onRemoveLabel(id) {
+        if (labelsInUse.some(label => label.id === id)) return showErrorMsg(' Cannot remove label')
+        const newLabels = labelsToUpdate.filter(label => label.id !== id)
+        setLabelsToUpdate(newLabels)
+        showSuccessMsg(' label removed')
+        onUpdateLabels(newLabels)
+        setAnchorEl(null)
+        onClose()
 
-return (
-    <>
-        <ul className='label-list edit'>
-            {labelsToUpdate.map(label => (
-                <li key={label.id} className="label-list-edit-container flex">
-                    <SvgIcon iconName='dragBox' size={16} className='drag-icon' />
-                    <section className='label edit'>
-                        <span
-                            className="color-icon-container"
-                            onClick={(ev) => changeLabelColor(ev, label.id)}
-                            style={{ backgroundColor: `var(${label.cssVar})` }}
-                        >
-                            <SvgIcon iconName='bucket' size={16} colorName='whiteText' />
-                        </span>
+    }
 
+    function addNewLabel() {
+        const newLabel = boardService.getEmptyPriorityLabel()
+        const newLabels = [...labelsToUpdate, newLabel]
+        setLabelsToUpdate(newLabels)
+        onUpdateLabels(newLabels)
+        showSuccessMsg('new label added')
+    }
 
-                        {colorAnchorEl && editingLabel?.id === label.id && (
-                            <FloatingContainerCmp
-                                anchorEl={colorAnchorEl}
-                                onClose={onCloseMenu}
-                            >
-                                <div className='color-option-container'>
-                                    {bgColors.map(color => (
-                                        <span
-                                            key={color}
-                                            className='color-option'
-                                            style={{ background: `var(${color})` }}
-                                            onClick={() => handelColorChange(color, label.id)}
-                                        />
-                                    ))}
-                                </div>
-                            </FloatingContainerCmp>
-                        )}
+    function onApply() {
+        onUpdateLabels(labelsToUpdate)
+        onSwitchEditMode()
+    }
 
-                        <input
-                            name='title'
-                            type="text"
-                            value={label.txt}
-                            onBlur={() => onUpdateLabels(labelsToUpdate)}
-                            onKeyDown={ev => ev.key === 'Enter' && handelChange(ev, label.id)}
-                            onChange={(ev) => handelChange(ev, label.id)}
-                        />
-                    </section>
-
-                    <button className={`more-icon-btn ${anchorEl && editingLabel?.id === label?.id ? "open" : ""}`}
-                        onClick={(ev) => onOpenActionMenu(ev, label.id)}>
-                        <SvgIcon iconName='dots' size={16} />
-                    </button>
-
-                    {anchorEl && editingLabel && (
-                        <FloatingContainerCmp anchorEl={anchorEl} onClose={onCloseMenu}>
+    return (
+        <>
+            <ul className='label-list edit'>
+                {labelsToUpdate.map(label => (
+                    <li key={label.id} className="label-list-edit-container flex">
+                        <SvgIcon iconName='dragBox' size={16} className='drag-icon' />
+                        <section className='label edit'>
                             <span
-                                data-type={' Labeled in use. Change it before'}
-                                className={
-                                    labelsInUse?.some(l => l.id === editingLabel.id)
-                                        ?
-                                        'active-label hover-show up'
-                                        :
-                                        ''
-                                }>
-                                <ActionsMenu
-                                    onCloseMenu={onCloseMenu}
-                                    isHrShown={false}
-                                    onRemoveItem={() => onRemoveLabel(editingLabel.id)}
-                                />
+                                className="color-icon-container"
+                                onClick={(ev) => changeLabelColor(ev, label.id)}
+                                style={{ backgroundColor: `var(${label.cssVar})` }}
+                            >
+                                <SvgIcon iconName='bucket' size={16} colorName='whiteText' />
                             </span>
-                        </FloatingContainerCmp>
-                    )}
 
+
+                            <input
+                                name='title'
+                                type="text"
+                                value={label.txt}
+                                onBlur={() => onUpdateLabels(labelsToUpdate)}
+                                onKeyDown={ev => ev.key === 'Enter' && handelChange(ev, label.id)}
+                                onChange={(ev) => handelChange(ev, label.id)}
+                            />
+                        </section>
+
+                        <button className={`more-icon-btn ${anchorEl && editingLabel?.id === label?.id ? "open" : ""}`}
+                            onClick={(ev) => onOpenActionMenu(ev, label.id)}>
+                            <SvgIcon iconName='dots' size={16} />
+                        </button>
+
+                    </li>
+                ))}
+                <li className='label-list-edit container '>
+                    <div className="label-list-edit-container flex" >
+                        <SvgIcon iconName='dragBox' size={16} className='drag-icon' />
+                        <section className='label default edit' >
+                            <span
+                                className="color-icon-container"
+                                style={{ backgroundColor: `var(--group-title-clr18)` }}
+                            >
+                                <SvgIcon iconName='bucket' size={16} colorName='whiteText' />
+                            </span>
+                            <input
+                                placeholder={'Default Label'}
+                            />
+
+                        </section>
+
+                        <button className={`more-icon-btn `}
+                            onClick={(ev) => onOpenActionMenu(ev, 'default')}>
+                            <SvgIcon iconName='dots' size={16} />
+                        </button>
+
+                    </div>
+                </li >
+
+                <li className='label-list-edit-container '>
+                    <div className="label-list-edit-container flex"
+                        onClick={addNewLabel}>
+                        <span style={{ width: '16px' }}></span>
+                        <section className='label new edit' >
+                            <span
+                                className="color-icon-container"
+                                style={{ backgroundColor: 'transparent' }}>
+                                <SvgIcon iconName='plus' size={16} />
+                            </span>
+                            <span className='new-label-tab'>New Label</span>
+                        </section>
+                    </div>
                 </li>
-            ))}
-            <li className='label-list-edit container '>
-                <div className="label-list-edit-container flex" >
-                    <SvgIcon iconName='dragBox' size={16} className='drag-icon' />
-                    <section className='label default edit' >
-                        <span
-                            className="color-icon-container"
-                            style={{ backgroundColor: `var(--group-title-clr18)` }}
-                        >
-                            <SvgIcon iconName='bucket' size={16} colorName='whiteText' />
-                        </span>
-                        <input
-                            placeholder={'Default Label'}
-                        />
-
-                    </section>
-
-                    <button className={`more-icon-btn `}
-                        onClick={(ev) => onOpenActionMenu(ev, 'default')}>
-                        <SvgIcon iconName='dots' size={16} />
-                    </button>
-
-                </div>
-            </li >
-
-            <li className='label-list-edit-container '>
-                <div className="label-list-edit-container flex"
-                    onClick={addNewLabel}>
-                    <span style={{ width: '16px' }}></span>
-                    <section className='label new edit' >
-                        <span
-                            className="color-icon-container"
-                            style={{ backgroundColor: 'transparent' }}>
-                            <SvgIcon iconName='plus' size={16} />
-                        </span>
-                        <span className='new-label-tab'>New Label</span>
-                    </section>
-                </div>
-            </li>
-        </ul>
-        <section className="actions">
-            <button onClick={onApply}
-                className='edit-apply-btn edit'> Apply </button>
-        </section>
-    </>
-)
+            </ul>
+            <section className="actions">
+                <button onClick={onApply}
+                    className='edit-apply-btn edit'> Apply </button>
+            </section>
+        </>
+    )
 }

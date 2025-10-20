@@ -13,20 +13,23 @@ export function PriorityPicker({ info, onUpdate }) {
     const label = labels.find(l => l.id === info.taskPriority?.id)
 
     useEffect(() => {
-        return () => setPriorityAnchor(null)
+        return () => {
+            onCloseFloating()
+            setPriorityAnchor(null)
+        }
     }, [])
 
     useEffect(() => {
         if (priorityAnchor) {
-            onCloseFloating()
-            const content = <LabelSelect
+            onSetFloating(<LabelSelect
                 type="priority"
                 labels={labels}
+                onCloseAnchor={setPriorityAnchor}
                 onUpdate={onUpdate}
                 onClose={onClose}
-            />
-            onSetFloating(content, priorityAnchor)
+            />, priorityAnchor)
         }
+
     }, [priorityAnchor])
 
     useEffect(() => {

@@ -53,27 +53,24 @@ export function GroupPreview({ group, groupsLength, managingType, TaskList,
     const [columnType, setcolumnType] = useState('')
     const [anchorEl, setAnchorEl] = useState(null)
 
-
+    // const columnBtnRef = useRef(null)
     const btnRef = useRef(null)
     const menuRef = useRef(null)
-    const [cmpSelectAnchor, setCmpSelectAnchor] = useState(null)
+    const [cmpSelectAnchor, setCmpSelectAnchor] = useState(false)
 
     useEffect(() => {
         if (cmpSelectAnchor) {
-            onCloseFloating()
+            // onCloseFloating()
             onSetFloating(
                 <CmpList
                     cmps={board.cmpOrder}
                     onClose={onCloseCmpList}
-                    setCmpSelectAnchor={setCmpSelectAnchor}
                     onAddColumn={onAddColumn}
                     enforceLimit={true}
                     centeredX={true}
-                />, cmpSelectAnchor)
+                />, cmpSelectAnchor,)
         }
     }, [cmpSelectAnchor])
-
-
 
 
     function toggleIsGroupMenuOpen(ev) {
@@ -103,6 +100,7 @@ export function GroupPreview({ group, groupsLength, managingType, TaskList,
     }
 
     function onCloseCmpList() {
+        onCloseFloating()
         setCmpSelectAnchor(null)
     }
     // crudl
@@ -347,7 +345,7 @@ export function GroupPreview({ group, groupsLength, managingType, TaskList,
                             <button
                                 className={` transparent column-menu-btn ${elColumnMenu && columnType === colName ? "open" : ""}`}
                                 key={colName}
-                                ref={columnBtnRef}
+                                ref={btnRef}
                                 onClick={(ev) => toggleIsColumnMenuOpen(ev, colName)}>
                                 <SvgIcon
                                     iconName="dots"
@@ -367,7 +365,6 @@ export function GroupPreview({ group, groupsLength, managingType, TaskList,
                         <button
                             className={`add-column ${cmpSelectAnchor ? 'rotate' : ''}`}
                             onClick={(ev) => setCmpSelectAnchor(ev.currentTarget)}
-
                         >
                             <SvgIcon
                                 iconName="plus"

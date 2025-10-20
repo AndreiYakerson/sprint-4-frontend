@@ -33,33 +33,25 @@ export function MemberPicker({ info, onUpdate }) {
         }
     }, [selectedMemberIds, membersSelectEl])
 
-    function onSetHoveredUser(user, ev) {
+    function onSetHoveredUser(user, anchor) {
         const content = <MemberInfo
             user={user} />
-        onSetFloating(content, ev)
+        onSetFloating(content, anchor)
     }
 
     function openMemberSelect(ev) {
         if (floating.isOpen) onCloseFloating()
         setMembersSelectEl(ev.currentTarget)
-
-        // const content = <MemberTaskSelect
-        //     selectedMemberIds={selectedMemberIds}
-        //     members={board.members}
-        //     onClose={closeMemberSelect}
-        //     onUpdate={updateTaskMembers}
-        // />
-        // onSetFloating(content, ev.currentTarget)
     }
 
     function closeMemberSelect() {
         setMembersSelectEl(null)
-        onCloseFloating()
         onClearHover()
     }
 
     function onClearHover() {
         if (membersSelectEl) return
+
         onCloseFloating()
     }
 

@@ -3,10 +3,7 @@ import { createPortal } from 'react-dom'
 import { onCloseFloating as onCloseFloatingSecondary } from '../store/actions/system.actions'
 import { useSelector } from 'react-redux'
 
-export function FloatingSecondary({
-    offsetX = 0, offsetY = 0, centeredX = false,
-    showTriangle = false, enforceLimit = false
-}) {
+export function FloatingSecondary() {
     const popUp = useSelector(state => state.systemModule.popUp)
     const floating = useSelector(state => state.systemModule.floatingSecondary)
     const [style, setStyle] = useState({})
@@ -16,17 +13,21 @@ export function FloatingSecondary({
 
 
 
-    let contentWithProps = null
-
+     let contentWithProps = null
+    let dynamicProps = { offsetX: 0, offsetY: 0, centeredX: false, showTriangle: false, enforceLimit: false }
     if (floating.content) {
         const content = typeof floating.content === 'function'
             ? floating.content()
             : floating.content
-
-        contentWithProps = cloneElement(content, {
-            ...content.props
+        const floatKeys = ['offsetX', 'offsetY', 'centeredX', 'showTriangle', 'enforceLimit']
+        floatKeys.forEach(key => {
+            if (content.props?.[key] !== undefined) dynamicProps[key] = content.props[key]
         })
+        contentWithProps = cloneElement(content, { ...content.props })
     }
+    
+    const { offsetX, offsetY, centeredX, showTriangle, enforceLimit } = dynamicProps
+
 
 
     useEffect(() => {
@@ -59,8 +60,6 @@ export function FloatingSecondary({
 
 
     useEffect(() => {
-        console.log('variable')
-
         function handleClickOutside(e) {
             if (
                 !popupRef.current ||

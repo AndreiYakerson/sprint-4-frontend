@@ -3,7 +3,7 @@ import { createPortal } from 'react-dom'
 import { onSetFloatingIsOpen } from '../store/actions/system.actions'
 import { useSelector } from 'react-redux'
 
-export function FloatingContainerCmp1({
+export function FloatingContainerCmpOld({
     anchorEl, children, onClose,
     offsetX = 0, offsetY = 0, centeredX = false,
     showTriangle = false, enforceLimit = false
@@ -16,9 +16,7 @@ export function FloatingContainerCmp1({
     const popupRef = useRef(null)
 
     useEffect(() => {
-        // if (isPopUpOpen) return
         onSetFloatingIsOpen(true)
-
         return () => {
             onSetFloatingIsOpen(false)
         }

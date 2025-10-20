@@ -26,7 +26,6 @@ export function SideBar() {
     const [isFavoritesTabOpen, setIsFavoritesTabOpen] = useState(false)
     const [isMenuOpen, setIsMenuOpen] = useState(false)
     const [actionAnchor, setActionAnchor] = useState()
-    console.log("🚀 ~ SideBar ~ actionAnchor:", actionAnchor)
     const btnMenuRef = useRef(null)
 
 
@@ -35,39 +34,22 @@ export function SideBar() {
 
     useEffect(() => {
         onLoadBoards()
-
-        return () => {
-            setIsMenuOpen(false)
-            setActionAnchor(null)
-            
-        }
     }, [])
 
 
     useEffect(() => {
-        console.log("🚀 ~ SideBar ~ actionAnchor:", actionAnchor)
         if (actionAnchor) {
 
-            // onCloseFloating()
+            onCloseFloating()
             onSetFloating(<ActionsMenu
                 onCloseMenu={onCloseMenu}
                 isHrShown={false}
-                onAddBoard={() => _onShowPopUp()}
+                onAddBoard={_onShowPopUp}
+                offsetX={40}
+                offsetY={45}
             />, actionAnchor)
 
         }
-        // {isMenuOpen && <FloatingContainerCmp
-        //     anchorEl={}
-        //     onClose={onCloseMenu}
-        //     offsetX={40}
-        //     offsetY={45}
-        // >
-
-        // </FloatingContainerCmp>}
-return ()=> {
-    
-    onCloseFloating()
-}
     }, [actionAnchor])
 
 
@@ -94,6 +76,7 @@ return ()=> {
     function _onShowPopUp() {
         const content = <BoardEdit />
         onSetPopUp(content)
+        onCloseMenu()
     }
 
     ///
@@ -101,12 +84,10 @@ return ()=> {
     function toggleIsMenuOpen(ev) {
         ev.stopPropagation()
         setActionAnchor(ev.currentTarget)
-        // setIsMenuOpen(!isMenuOpen)
-
     }
 
     function onCloseMenu() {
-        setIsMenuOpen(false)
+        setActionAnchor(null)
     }
 
 
@@ -208,21 +189,6 @@ return ()=> {
                     <BoardList boards={boards} isSideBarDisplay={true} />
                 </div>
             </div>
-
-
-            {/* {isMenuOpen && <FloatingContainerCmp
-                anchorEl={btnMenuRef.current}
-                onClose={onCloseMenu}
-                offsetX={40}
-                offsetY={45}
-            >
-                <ActionsMenu
-                    onCloseMenu={onCloseMenu}
-                    isHrShown={false}
-                    onAddBoard={() => _onShowPopUp()}
-                />
-            </FloatingContainerCmp>} */}
-
         </div>
     )
 }

@@ -1,12 +1,17 @@
+import { useEffect } from "react"
 import { SvgIcon } from "./SvgIcon"
 
-export function CmpList({ cmps, onAddColumn, setCmpSelectAnchor }) {
+export function CmpList({ cmps, onAddColumn, onClose }) {
 
     const fullCmpList = ['status', 'members', 'priority', 'date']
 
+    useEffect(() => {
+        return () => onClose()
+    }, [])
+
     function selectCmp(cmp) {
         onAddColumn(cmp)
-       setCmpSelectAnchor(null)
+        onClose()
     }
 
     if (cmps.length === fullCmpList.length) return <div className="cmp-list">No more columns to add</div>
