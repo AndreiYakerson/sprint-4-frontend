@@ -151,12 +151,9 @@ svg {
 }
 
 button {
-    font: inherit !important;
+    font-family: inherit !important;
 }
 
 .Highlighted-text {
     background-color: var(--text-with-highlight)
 }
-
-
-

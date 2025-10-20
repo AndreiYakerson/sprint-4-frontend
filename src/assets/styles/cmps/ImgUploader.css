@@ -1,0 +1,26 @@
+.upload-preview {
+    display: grid;
+    grid-template-columns: 1fr;
+    align-content: center;
+    gap: 8px;
+
+    &:has(.prev-user-img) {
+        grid-template-columns: 1fr max-content;
+    }
+
+    label {
+        width: 100%;
+        cursor: pointer;
+
+        input {
+            display: none;
+        }
+    }
+
+    .prev-user-img {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+    }
+
+}

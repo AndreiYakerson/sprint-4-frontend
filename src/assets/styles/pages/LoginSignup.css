@@ -1,49 +1,130 @@
-.login-form,
-.signup-form {
+.login-page {
 	display: grid;
-	width: min(80%, 300px);
-	margin: auto;
+	grid-template-columns: 1fr 1fr;
+	min-height: 100vh;
 
-	padding: 1em;
-}
+	background-color: white;
 
-.signup-form {
-	>input {
-		width: 100%;
-		margin: 0.4em 0;
-	}
-
-	.admin-toggle {
+	.login-signup-container {
 		display: flex;
-		align-items: center;
-		justify-self: start;
+		justify-content: space-between;
+		flex-direction: column;
+		overflow-y: hidden;
 
-		>span {
-			font-size: .8em;
+		min-width: 535px;
+		padding: 88px 100px;
+
+		.form-container {
+			h1 {
+				color: var(--primary-text-color);
+				margin-block-end: var(--spacing-small);
+				text-align: center;
+				font-size: 32px;
+			}
+
+			h2 {
+				color: var(--primary-text-color);
+				font-size: 16px;
+				font-weight: normal;
+				margin-bottom: var(--spacing-xxl);
+				margin-top: 0;
+				text-align: center;
+			}
+
+			.signup-form,
+			.login-form {
+				max-width: 400px;
+				justify-self: center;
+			}
+
+			.input,
+			input {
+				min-height: 40px;
+				background-color: var(--secondary-background-color);
+				transition: border-color var(--motion-productive-medium) ease-in;
+				padding: var(--spacing-small) var(--spacing-medium);
+				white-space: nowrap;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				color: var(--primary-text-color);
+				font-size: 16px;
+				margin-block-end: var(--spacing-medium);
+			}
+
+			select {
+				width: 100%;
+				margin-block-end: var(--spacing-medium);
+
+				border: 1px solid var(--layout-border-color);
+
+				&:hover {
+					border: 1px solid var(--primary-text-color);
+				}
+
+				&:active,
+				&:focus {
+					border: 1px solid var(--primary-color);
+				}
+			}
+
+			.or-selection {
+				display: grid;
+				gap: var(--spacing-small);
+				grid-template-columns: 1fr auto 1fr;
+				margin-block-end: var(--spacing-medium);
+				width: 100%;
+				font-size: 16px;
+				font-weight: 400;
+
+				.or-hr {
+					align-self: flex-end;
+					border-top: 1px solid;
+					color: var(--layout-border-color);
+					height: 50%;
+				}
+			}
+
+			button {
+				width: 100%;
+				padding: var(--spacing-small) var(--spacing-medium);
+				height: 40px;
+				font-size: 16px;
+				font-weight: 400;
+			}
+		}
+
+		.login-nav {
+			color: var(--primary-text-color);
+			font-size: 16px;
+			text-align: center;
+
+			a {
+				color: var(--link-color);
+				font-weight: 500;
+
+				&:hover {
+					text-decoration: underline;
+				}
+			}
 		}
 	}
-}
 
-.login-page nav {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	gap: 2em;
+	.login-welcome-msg {
+		max-height: 100%;
+		justify-content: center;
+		display: flex;
+		background-color: rgb(97, 97, 255);
+		overflow: hidden;
 
-	margin-block: 100px 0.5em;
+		img {
+			min-height: 100%;
+			max-height: 100vh;
+			width: unset;
 
-
-	>a {
-		font-size: 0.8em;
-		color: var(--secondary-text-color);
-
-		&:hover {
-			color: var(--primary-text-color);
-		}
-
-		&.active {
-			text-decoration: underline;
-			color: var(--primary-text-color);
+			overflow-clip-margin: content-box;
+			overflow: clip;
+			object-fit: cover;
 		}
 	}
+
 }

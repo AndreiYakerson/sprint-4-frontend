@@ -34,6 +34,7 @@
 @import "cmps/MiniUser.css";
 @import "cmps/MultiMemberCmp.css";
 @import "cmps/CmpList.css";
+@import "cmps/ImgUploader.css";
 
 @import "cmps/group/GroupList.css";
 @import "cmps/group/GroupTitleEditor.css";
