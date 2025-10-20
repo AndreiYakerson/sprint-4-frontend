@@ -42,11 +42,26 @@ export function HomePage() {
             </header>
 
             <main className="home-page-main-content">
-                <h1>main content</h1>
+
+                <div className='welcome-box'>
+                    <h1>
+                        One AI work platform <br></br>
+                        for any kind of work
+                    </h1>
+                    <h2>Plan and execute work across projects, sales, marketing, IT,<br></br>
+                        and engineering with a unified, AI-first product suite.</h2>
+                    <Link to="/board" className='btn get-started-btn'>
+                        <span>
+                            Get Started
+                        </span>
+                        <SvgIcon iconName="arrowRight" size={12} colorName="currentColor" />
+                    </Link>
+                </div>
+
             </main>
 
             <footer className="home-page-footer">
-                <h3>footer</h3>
+                <div>All Rights Reserved © oneday.com</div>
             </footer>
         </section >
     )
