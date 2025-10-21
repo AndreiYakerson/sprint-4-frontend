@@ -76,13 +76,14 @@ export function getColumnType(colName) {
             return 'priority'
         case 'members':
             return 'members'
+        case 'timeline':
+            return 'timeline'
         case 'date':
             return 'due-date'
         default:
             return ""
     }
 }
-
 
 export function cleanSearchParams(searchParams) {
 

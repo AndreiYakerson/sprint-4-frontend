@@ -1,10 +1,25 @@
-.date-sum {
+.timeline-picker {
+    position: relative;
     display: grid;
     justify-content: center;
+    cursor: pointer;
 
+    .remove-date {
+        position: absolute;
+        top: 50%;
+        translate: 0 -50%;
+        right: 8px;
+        opacity: 0;
+    }
+
+    &:hover {
+        .remove-date {
+            opacity: 1;
+        }
+    }
 
     .dates-container {
-        width: calc(var(--due-date-column) - 30px);
+        width: calc(var(--timeline-column) - 20px);
 
 
         background-color: rgb(196, 196, 196);

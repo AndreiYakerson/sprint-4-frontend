@@ -1,0 +1,38 @@
+.calendar-container {
+    &.timeline {
+        color: var(--secondary-text-color);
+
+        .timeline-header {
+            margin-block-end: 8px;
+
+            .set-title {
+                color: var(--primary-text-color);
+                font-weight: 600;
+            }
+        }
+
+        .dates-input {
+            gap: 8px;
+            margin-block-end: 8px;
+        }
+
+        li {
+            &:has(.between) {
+                background-color: var(--primary-selected-color);
+            }
+
+            &:has(.time-line) {
+                color: var(--text-color-on-primary);
+                background-color: var(--primary-color);
+
+                &:has(.start) {
+                    border-radius: 4px 0px 0px 4px;
+                }
+
+                &:has(.end) {
+                    border-radius: 0px 4px 4px 0px;
+                }
+            }
+        }
+    }
+}

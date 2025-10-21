@@ -100,12 +100,13 @@ button {
 		transition: 100ms ease-in-out;
 		padding: 0;
 		border: 0;
-		background-color: var(--primary-background-hover-color);
+		background-color: var(--ui-background-color);
 
 		&:hover {
-			background-color: var(--primary-selected-color);
+			background-color: var(--ui-border-color);
 		}
 	}
+
 
 	&.column-menu-btn {
 		width: 24px;

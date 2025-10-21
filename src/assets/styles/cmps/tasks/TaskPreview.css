@@ -294,6 +294,11 @@
            max-width: var(--files-column);
        }
 
+       &.timeline {
+           min-width: var(--timeline-column);
+           max-width: var(--timeline-column);
+       }
+
        &.highlight {
            border-inline-end: 2px solid var(--primary-color);
        }
@@ -305,11 +310,24 @@
            align-content: center;
        }
 
-       &:has(:focus, .focus):not(:has(button)) {
+       &:has(.focus) {
            &>* {
-               border: 1px solid var(--primary-color);
+               &::after {
+                   position: absolute;
+                   content: "";
+                   pointer-events: none;
+                   top: 0;
+                   right: 0;
+                   width: calc(100%);
+                   height: 100%;
+                   border-color: var(--primary-color) !important;
+                   border: solid 1px;
+               }
            }
        }
+
+
+
 
        &.full {
            flex-grow: 1;

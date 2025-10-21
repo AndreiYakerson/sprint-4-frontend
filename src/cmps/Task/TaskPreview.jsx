@@ -14,6 +14,8 @@ import { showErrorMsg, showSuccessMsg } from "../../services/event-bus.service"
 // cmps
 import { SvgIcon } from "../SvgIcon.jsx"
 import { ActionsMenu } from "../ActionsMenu.jsx"
+import { FloatingContainerCmp } from "../FloatingContainerCmp.jsx"
+import { useSearchParams } from "react-router-dom";
 
 // DynamicCmp
 import { TitleEditor } from "./TitleEditor"
@@ -21,8 +23,8 @@ import { DatePicker } from "../TaskCmps/DateCmp/DatePicker.jsx"
 import { PriorityPicker } from "../TaskCmps/PriorityCmp/PriorityPicker.jsx"
 import { MemberPicker } from "../TaskCmps/MembersCmp/MemberPicker.jsx"
 import { StatusPicker } from "../TaskCmps/StatusCmp/StatusPicker.jsx"
-import { useSearchParams } from "react-router-dom";
-import { FloatingContainerCmp } from "../FloatingContainerCmp.jsx"
+import { TimelinePicker } from "../TaskCmps/TimelineCmp/TimelinePicker.jsx"
+
 
 export function TaskPreview({ task, groupId, taskIdx }) {
     const navigate = useNavigate()
@@ -50,7 +52,7 @@ export function TaskPreview({ task, groupId, taskIdx }) {
                     label: 'Status:',
                     propName: 'status',
                     selectedStatus: task.status,
-                   
+
                 }
             },
             {
@@ -59,7 +61,7 @@ export function TaskPreview({ task, groupId, taskIdx }) {
                     label: 'Members:',
                     propName: 'memberIds',
                     selectedMemberIds: task.memberIds || [],
-                  
+
                 }
             },
             {
@@ -69,7 +71,7 @@ export function TaskPreview({ task, groupId, taskIdx }) {
                     propName: 'priority',
                     taskPriority: task.priority,
                     boardPriorities: board.priorities,
-                
+
                 }
             },
             {
@@ -90,6 +92,14 @@ export function TaskPreview({ task, groupId, taskIdx }) {
                     currTitle: task?.title,
                 }
 
+            },
+            {
+                type: 'TimelinePicker',
+                info: {
+                    label: 'timeline:',
+                    propName: 'timeline',
+                    selectedTimeline: task?.timeline,
+                }
             },
         ]
     )
@@ -273,6 +283,12 @@ export function TaskPreview({ task, groupId, taskIdx }) {
                             <DynamicCmp cmp={cmp} updateCmpInfo={updateCmpInfo} />
                         </div>
                     }
+                    if (colName === 'timeline') {
+                        var cmp = cmps.find(cmp => cmp?.type === 'TimelinePicker')
+                        return <div className="column-cell timeline " key={colName}>
+                            <DynamicCmp cmp={cmp} updateCmpInfo={updateCmpInfo} />
+                        </div>
+                    }
                     else {
                         return <div className="column-cell" key={idx}></div>
                     }
@@ -304,6 +320,10 @@ function DynamicCmp({ cmp, updateCmpInfo }) {
         case 'MemberPicker':
             return <MemberPicker info={cmp.info} onUpdate={(data) => {
                 updateCmpInfo(cmp, 'selectedMemberIds', data, `Changed members`)
+            }} />
+        case 'TimelinePicker':
+            return <TimelinePicker info={cmp.info} onUpdate={(data) => {
+                updateCmpInfo(cmp, 'selectedTimeline', data, `Changed timeline dates`)
             }} />
         default:
             return <p>{cmp?.type}</p>

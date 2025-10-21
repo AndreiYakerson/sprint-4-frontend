@@ -3,7 +3,7 @@ import { SvgIcon } from "./SvgIcon"
 
 export function CmpList({ cmps, onAddColumn, onClose }) {
 
-    const fullCmpList = ['status', 'members', 'priority', 'date']
+    const fullCmpList = ['status', 'members', 'priority', 'date', 'timeline']
 
     useEffect(() => {
         return () => onClose()
