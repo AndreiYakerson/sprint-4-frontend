@@ -3,7 +3,6 @@ import { useEffect, useRef, useState } from 'react'
 import { showErrorMsg, showSuccessMsg } from '../../../services/event-bus.service'
 import { boardService } from '../../../services/board'
 //Cmp
-import { onCloseFloatingSecondary, onSetFloatingSecondary } from '../../../store/actions/system.actions'
 import { ColorPalette } from './ColorPalette'
 //Icons
 
@@ -27,7 +26,6 @@ export function LabelsListEdit({ labels, onUpdateLabels, onSwitchEditMode, onClo
     const [isActionMenuOpen, setIsActionMenuOpen] = useState(false)
 
     const colorRefs = useRef({})
-    const actionRefs = useRef({})
 
     useEffect(() => {
         const active = []
@@ -42,44 +40,6 @@ export function LabelsListEdit({ labels, onUpdateLabels, onSwitchEditMode, onClo
         )
         setLabelsInUse(active)
     }, [board, type])
-
-    useEffect(() => {
-        return () => {
-            setIsColorPickerOpen(false)
-            setIsActionMenuOpen(false)
-            setAnchorEl(null)
-            setColorAnchorEl(null)
-            setEditingLabel(null)
-        }
-    }, [])
-    // useEffect(() => {
-    //     if (colorAnchorEl && editingLabel) {
-    //         onCloseFloatingSecondary()
-    //         onSetFloatingSecondary(
-    //             <ColorPalette
-    //                 bgColors={bgColors}
-    //                 handelColorChange={handelColorChange}
-    //                 label={editingLabel} />
-    //             , colorAnchorEl)
-    //     }
-    // }, [colorAnchorEl, editingLabel])
-
-    // useEffect(() => {
-    //     if (anchorEl && editingLabel) {
-    //         const res = labelsInUse.some(l => l.id === editingLabel.id) || editingLabel.id === 'default' ? 'active-label hover-show up' : ''
-    //         const data = editingLabel.id === 'default' ? 'Cannot remove Default label' : 'label in use, remove from tasks before delete'
-    //         onCloseFloatingSecondary()
-    //         onSetFloatingSecondary(
-    //             <span className={res} data-type={data}>
-    //                 <ActionsMenu
-    //                     onCloseMenu={onCloseMenu}
-    //                     isHrShown={false}
-    //                     onRemoveItem={() => onRemoveLabel(editingLabel.id)}
-    //                 />
-    //             </span>
-    //             , anchorEl)
-    //     }
-    // }, [colorAnchorEl, editingLabel])
 
 
     function handelChange(ev, id) {
@@ -101,30 +61,26 @@ export function LabelsListEdit({ labels, onUpdateLabels, onSwitchEditMode, onClo
         const label = labelsToUpdate.find(label => label.id === id)
         if (!label) return
         onOpenColorPallet(null, label)
-
     }
 
     function onOpenColorPallet(ev, label) {
-        setIsActionMenuOpen(false)   // 🔒 close action menu
-        setAnchorEl(null)
-
+        onCloseMenu()
         const anchor = colorRefs.current[label.id]
         if (!anchor) return
+
         setEditingLabel(label)
         setColorAnchorEl(anchor)
         setIsColorPickerOpen(true)
     }
 
     function onCloseColorPallet() {
-
         setEditingLabel(null)
         setColorAnchorEl(null)
         setIsColorPickerOpen(false)
     }
 
     function onOpenActionMenu(ev, id) {
-        setIsColorPickerOpen(false)  // 🔒 close color picker
-        setColorAnchorEl(null)
+        onCloseColorPallet()
         setAnchorEl(ev.currentTarget)
         let labelToEdit;
         if (id === 'default') {
@@ -137,6 +93,7 @@ export function LabelsListEdit({ labels, onUpdateLabels, onSwitchEditMode, onClo
     }
 
     function onCloseMenu() {
+        setIsActionMenuOpen(false)
         setAnchorEl(null)
         setEditingLabel(null)
     }
@@ -262,10 +219,10 @@ export function LabelsListEdit({ labels, onUpdateLabels, onSwitchEditMode, onClo
             {isActionMenuOpen && (
                 <FloatingContainerCmp
                     anchorEl={anchorEl}
-                    onClose={() => setIsActionMenuOpen(false)}>
+                    onClose={onCloseMenu}>
                     <span className={res} data-type={data}>
                         <ActionsMenu
-                            onCloseMenu={() => setIsActionMenuOpen(false)}
+                            onCloseMenu={onCloseMenu}
                             isHrShown={false}
                             onRemoveItem={() => onRemoveLabel(editingLabel?.id)}
                         />

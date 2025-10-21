@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 
 // services
 import { loadBoards } from "../../store/actions/board.actions.js";
-import { onCloseFloating, onSetFloating, onSetIsApploading, onSetIsSideBarOpen, onSetPopUp } from "../../store/actions/system.actions.js";
+import { onSetIsApploading, onSetIsSideBarOpen, onSetPopUp } from "../../store/actions/system.actions.js";
 
 // cmps
 import { BoardList } from "../Board/BoardList.jsx";
@@ -16,7 +16,6 @@ import { BoardEdit } from "../Board/BaordEdit.jsx";
 //images
 import favStarIcon from '/img/fav-star-icon.svg'
 import { ActionsMenu } from "../ActionsMenu.jsx";
-// import { FloatingContainerCmpNewNotToUse } from "../FloatingContainerCmpNewNotToUse.jsx";
 import { FloatingContainerCmp } from "../FloatingContainerCmp.jsx";
 
 export function SideBar() {
@@ -26,11 +25,7 @@ export function SideBar() {
 
     const [isFavoritesTabOpen, setIsFavoritesTabOpen] = useState(false)
     const [isMenuOpen, setIsMenuOpen] = useState(false)
-    const [actionAnchor, setActionAnchor] = useState()
     const btnMenuRef = useRef(null)
-
-
-
 
 
     useEffect(() => {
@@ -62,7 +57,6 @@ export function SideBar() {
         onCloseMenu()
     }
 
-    ///
 
     function toggleIsMenuOpen(ev) {
         ev.stopPropagation()
@@ -72,7 +66,6 @@ export function SideBar() {
     function onCloseMenu() {
         setIsMenuOpen(false)
     }
-
 
     const favoritesBoards = boards.filter(b => b.isStarred)
 

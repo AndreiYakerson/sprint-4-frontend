@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react"
 import { HoveredTextCmp } from "../../HoveredTextCmp"
-// import { FloatingContainerCmpNewNotToUse } from "../../FloatingContainerCmpNewNotToUse"
 import { SumSelectMenu } from "./SumSelectMenu"
 import { useRef } from "react"
 import { useSelector } from "react-redux"

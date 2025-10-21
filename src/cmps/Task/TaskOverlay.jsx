@@ -1,5 +1,5 @@
 
-import { useEffect, useRef, useState } from "react"
+import {useRef, useState } from "react"
 import { useParams, useNavigate } from "react-router-dom"
 import { useSelector } from "react-redux"
 
@@ -13,8 +13,6 @@ import { showErrorMsg, showSuccessMsg } from "../../services/event-bus.service"
 
 // cmps
 import { SvgIcon } from "../SvgIcon.jsx"
-// import { FloatingContainerCmpNewNotToUse } from "../FloatingContainerCmpNewNotToUse.jsx"
-import { ActionsMenu } from "../ActionsMenu.jsx"
 
 // DynamicCmp
 import { TitleEditor } from "./TitleEditor"
@@ -49,7 +47,6 @@ export function TaskOverlay({ task, groupId, taskIdx }) {
                     label: 'Status:',
                     propName: 'status',
                     selectedStatus: task.status,
-                    // statuses: board.statuses,
                 }
             },
             {
@@ -58,7 +55,6 @@ export function TaskOverlay({ task, groupId, taskIdx }) {
                     label: 'Members:',
                     propName: 'memberIds',
                     selectedMemberIds: task.memberIds || [],
-                    // members: board.members,
                 }
             },
             {
@@ -67,8 +63,6 @@ export function TaskOverlay({ task, groupId, taskIdx }) {
                     label: 'priority:',
                     propName: 'priority',
                     taskPriority: task.priority,
-                    boardPriorities: board.priorities,
-                    // boardId: board._id
                 }
             },
             {
@@ -92,58 +86,6 @@ export function TaskOverlay({ task, groupId, taskIdx }) {
             },
         ]
     )
-
-    // useEffect(() => {
-    //     setCmps([
-
-    //         {
-    //             type: 'StatusPicker',
-    //             info: {
-    //                 label: 'Status:',
-    //                 propName: 'status',
-    //                 selectedStatus: task.status,
-    //                 statuses: board.statuses,
-    //             }
-    //         },
-    //         {
-    //             type: 'MemberPicker',
-    //             info: {
-    //                 label: 'Members:',
-    //                 propName: 'memberIds',
-    //                 selectedMemberIds: task.memberIds || [],
-    //                 members: board.members,
-    //             }
-    //         },
-    //         {
-    //             type: 'PriorityPicker',
-    //             info: {
-    //                 label: 'priority:',
-    //                 propName: 'priority',
-    //                 taskPriority: task.priority,
-    //                 boardPriorities: board.priorities,
-    //                 boardId: board._id
-    //             }
-    //         },
-    //         {
-    //             type: 'DatePicker',
-    //             info: {
-    //                 label: 'Due date:',
-    //                 propName: 'dueDate',
-    //                 selectedDate: task?.dueDate,
-    //                 selectedStatus: task.status,
-    //             }
-    //         },
-    //         {
-    //             type: 'TitleEditor',
-    //             info: {
-    //                 taskId: task?.id,
-    //                 label: 'Title:',
-    //                 propName: 'title',
-    //                 currTitle: task?.title,
-    //             }
-    //         },
-    //     ])
-    // }, [task, board])
 
     const [isMenuOpen, setIsMenuOpen] = useState(false)
 

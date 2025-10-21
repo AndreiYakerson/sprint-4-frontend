@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 // COMPONENTS
 import { StatusAnimation } from "../../StatusAnimation.jsx";
-import { onCloseFloating, onSetFloating } from "../../../store/actions/system.actions.js";
+import { onCloseFloating } from "../../../store/actions/system.actions.js";
 import { LabelSelect } from "../labels/LabelSelect.jsx";
 import { FloatingContainerCmp } from "../../FloatingContainerCmp.jsx";
 
@@ -27,21 +27,6 @@ export function StatusPicker({ info, onUpdate }) {
             onCloseFloating()
         })
     }, [])
-
-    // useEffect(() => {
-    //     if (statusAnchor) {
-    //         onSetFloating(
-    //             <LabelSelect
-    //                 type="status"
-    //                 onAnimate={onAnimate}
-    //                 labels={labels}
-    //                 onUpdate={onUpdate}
-    //                 onCloseAnchor={setStatusAnchor}
-    //                 onClose={onClose}
-    //             />, statusAnchor)
-    //     }
-
-    // }, [statusAnchor])
 
     useEffect(() => {
         setLabels(board.statuses)

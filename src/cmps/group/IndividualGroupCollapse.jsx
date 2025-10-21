@@ -1,6 +1,5 @@
 // cmps
 import { SvgIcon } from "../SvgIcon"
-// import { FloatingContainerCmpNewNotToUse } from "../FloatingContainerCmpNewNotToUse.jsx"
 import { ActionsMenu } from "../ActionsMenu.jsx"
 import { GroupTitleEditor } from "./GroupTitleEditor.jsx"
 import { LabelSum } from "../TaskCmps/SumCmps/LabelSum.jsx"

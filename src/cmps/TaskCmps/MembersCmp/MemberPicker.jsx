@@ -3,7 +3,6 @@
 import { useEffect, useRef, useState } from "react"
 
 // COMPONENTS
-// import { FloatingContainerCmpNewNotToUse } from "../../FloatingContainerCmpNewNotToUse"
 import { MemberInfo } from "./MemberInfo"
 import { MemberTaskSelect } from "./MemberTaskSelect"
 // ICONS
@@ -11,7 +10,7 @@ import { useSelector } from "react-redux"
 import { SvgIcon } from "../../SvgIcon"
 import { showErrorMsg } from "../../../services/event-bus.service"
 import { MultiMembersPreview } from "./MultiMembersPreview"
-import { onCloseFloating, onSetFloating } from "../../../store/actions/system.actions"
+import { onCloseFloating } from "../../../store/actions/system.actions"
 import { FloatingContainerCmp } from "../../FloatingContainerCmp.jsx"
 
 export function MemberPicker({ info, onUpdate }) {
@@ -33,31 +32,11 @@ export function MemberPicker({ info, onUpdate }) {
         isPickerOpenRef.current = isOpenMemberPicker
     }, [isOpenMemberPicker])
 
-    // useEffect(() => {
-    //     if (membersSelectEl) {
-    //         onCloseFloating()
-    //         const content = <MemberTaskSelect
-    //             selectedMemberIds={selectedMemberIds}
-    //             members={board.members}
-    //             onClose={closeMemberSelect}
-    //             onUpdate={updateTaskMembers}
-    //         />
-    //         onSetFloating(content, membersSelectEl)
-    //     }
-    // }, [selectedMemberIds, membersSelectEl])
-
-    // function onSetHoveredUser(user, anchor) {
-    //     const content = <MemberInfo
-    //         user={user} />
-    //     onSetFloating(content, anchor)
-    // }
-
     function onSetHoveredUser(user, anchor) {
         if (isPickerOpenRef.current) return
         setSelectedUser(user)
         setHoveredAnchor(anchor)
         setIsOpenHoveredUser(true)
-
     }
 
     function openMemberSelect(ev) {

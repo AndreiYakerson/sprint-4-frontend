@@ -7,7 +7,6 @@ import { CSS } from "@dnd-kit/utilities";
 import { SvgIcon } from "../SvgIcon";
 import { TitleEditor } from "../Task/TitleEditor.jsx";
 import { GroupTitleEditor } from "./GroupTitleEditor.jsx";
-// import { FloatingContainerCmpNewNotToUse } from "../FloatingContainerCmpNewNotToUse.jsx";
 import { ActionsMenu } from "../ActionsMenu.jsx";
 import { LabelSum } from "../TaskCmps/SumCmps/LabelSum.Jsx";
 import { DateSum } from "../TaskCmps/SumCmps/DateSum.jsx";

@@ -7,7 +7,6 @@ import { showErrorMsg, showSuccessMsg } from '../../services/event-bus.service.j
 import { removeBoard, setBoard, setBoardRemovedMsg, updateBoard } from '../../store/actions/board.actions.js'
 
 // cmps
-// import { FloatingContainerCmpNewNotToUse } from '../FloatingContainerCmpNewNotToUse.jsx'
 import { HoveredTextCmp } from '../HoveredTextCmp.jsx'
 import { TitleEditor } from '../Task/TitleEditor.jsx'
 import { ActionsMenu } from '../ActionsMenu.jsx'

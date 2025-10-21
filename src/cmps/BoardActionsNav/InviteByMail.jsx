@@ -1,9 +1,6 @@
 import { useSelector } from "react-redux"
 import { SvgIcon } from "../SvgIcon"
-import { MemberTaskSelect } from "../TaskCmps/MembersCmp/MemberTaskSelect"
-import { useEffect, useRef, useState } from "react"
-// import { FloatingContainerCmpNewNotToUse } from "../FloatingContainerCmpNewNotToUse"
-import { loadFromStorage } from "../../services/util.service"
+import { useEffect, useState } from "react"
 import { updateBoard } from "../../store/actions/board.actions"
 import { showSuccessMsg } from "../../services/event-bus.service"
 import { loginDemoUsers } from "../../store/actions/user.actions"
@@ -13,8 +10,6 @@ export function InviteByMail({ onClosePopUp }) {
     const users = useSelector(state => state.userModule.users)
     const board = useSelector(state => state.boardModule.board)
 
-    // const [users, setUsers] = useState(users)
-    const [anchorEl, setAnchorEl] = useState(false)
     const [searchValues, setSearchValues] = useState([])
     const [inputValue, setInputValue] = useState('')
 
@@ -46,15 +41,8 @@ export function InviteByMail({ onClosePopUp }) {
         const foundUsers = users.filter(u => regex.test(u.fullname) || regex.test(u.profession))
             .filter(u => !board.members.some(m => m._id === u._id))
 
-
         if (!UserToSearch) setSearchValues([])
         else setSearchValues(foundUsers)
-        setAnchorEl(ev.currentTarget)
-    }
-
-    function onCloseMenu() {
-        console.log('variable')
-        setAnchorEl(false)
     }
 
     return (

@@ -12,7 +12,6 @@ import { InviteByMail } from '../BoardActionsNav/InviteByMail.jsx'
 import { PersonFilter } from './filterCmps/PersonFilter.jsx'
 import { FilterBy } from './filterCmps/FilterBy.jsx'
 import { SortBy } from './filterCmps/SortBy.jsx'
-// import { FloatingContainerCmpNewNotToUse } from '../FloatingContainerCmpNewNotToUse.jsx'
 import { useRef, useState } from 'react'
 import { FloatingContainerCmp } from '../FloatingContainerCmp.jsx'
 
@@ -37,22 +36,6 @@ export function BoardDetailsHeader({
     const filterBtnRef = useRef(null)
     const personBtnRef = useRef(null)
     const sortByRef = useRef(null)
-
-
-    // useEffect(() => {
-
-    //   {board && isPersonFilterOpen && 
-    //   <FloatingContainerCmp
-    //             anchorEl={personBtnRef.current}
-    //             onClose={onClosePersonFilter}
-    //         >
-    //             <PersonFilter
-    //                 members={board?.members}
-    //                 filterBy={{ byPerson }}
-    //                 onSetFilterBy={onSetFilterBy}
-    //             />
-    //         </FloatingContainerCmp>}
-    // }, [third])
     
 
     function toggleIsFilterOpen() {

@@ -2,8 +2,7 @@
 import { useEffect, useRef, useState } from "react"
 import { useSelector } from "react-redux"
 // COMPONENTS
-import { StatusAnimation } from "../../StatusAnimation.jsx"
-import { onCloseFloating, onSetFloating } from "../../../store/actions/system.actions.js"
+import { onCloseFloating } from "../../../store/actions/system.actions.js"
 import { LabelSelect } from "../labels/LabelSelect.jsx"
 import { FloatingContainerCmp } from "../../FloatingContainerCmp.jsx"
 
@@ -21,19 +20,6 @@ export function PriorityPicker({ info, onUpdate }) {
             setPriorityAnchor(null)
         }
     }, [])
-
-    // useEffect(() => {
-    //     if (priorityAnchor) {
-    //         onSetFloating(<LabelSelect
-    //             type="priority"
-    //             labels={labels}
-    //             onCloseAnchor={setPriorityAnchor}
-    //             onUpdate={onUpdate}
-    //             onClose={onClose}
-    //         />, priorityAnchor)
-    //     }
-
-    // }, [priorityAnchor])
 
     useEffect(() => {
         setLabels(board.priorities)
@@ -53,7 +39,6 @@ export function PriorityPicker({ info, onUpdate }) {
             <div className="label-txt">
                 {labelToShow?.txt}
             </div>
-            {/* <StatusAnimation color={`var(${labelToShow?.cssVar})`} /> */}
 
             {isOpen && (
                 <FloatingContainerCmp
@@ -62,7 +47,6 @@ export function PriorityPicker({ info, onUpdate }) {
                 >
                     <LabelSelect
                         type="priority"
-                        // onAnimate={onAnimate}
                         labels={labels}
                         onUpdate={onUpdate}
                         onCloseAnchor={() => setIsOpen(false)}

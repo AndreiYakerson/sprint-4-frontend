@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState, useLayoutEffect } from "react"
 import { Calendar } from "./Calendar"
 import { SvgIcon } from "../../SvgIcon"
-// import { FloatingContainerCmpNewNotToUse } from "../../FloatingContainerCmpNewNotToUse"
 import { HoveredTextCmp } from "../../HoveredTextCmp"
 import { FloatingContainerCmp } from "../../FloatingContainerCmp.jsx"
 
