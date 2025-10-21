@@ -73,7 +73,7 @@ export function MemberPicker({ info, onUpdate }) {
     }).filter(Boolean)
 
     return (
-        <article className={`member-picker ${membersSelectEl ? "focus" : ""}`} onClick={ev => openMemberSelect(ev)}>
+        <article className={`member-picker ${isOpenMemberPicker ? "focus" : ""}`} onClick={ev => openMemberSelect(ev)}>
             {!!membersToShow.length ?
                 <MultiMembersPreview members={membersToShow} onSetHoveredUser={onSetHoveredUser} onClearHover={onClearHover} isAnimation={isAnimation} />
                 :

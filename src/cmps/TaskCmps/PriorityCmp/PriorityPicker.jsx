@@ -33,7 +33,7 @@ export function PriorityPicker({ info, onUpdate }) {
     const labelToShow = label ? label : labels.find(l => l.id === 'default')
 
     return (
-        <div ref={priorityRef} className={`labels-select-container ${priorityAnchor ? "focus" : ""}`}
+        <div ref={priorityRef} className={`labels-select-container ${isOpen ? "focus" : ""}`}
             style={{ background: `var(${labelToShow?.cssVar})` }}
             onClick={(ev) => setIsOpen(ev.currentTarget)}>
             <div className="label-txt">

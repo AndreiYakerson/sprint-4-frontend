@@ -57,7 +57,7 @@ export function StatusPicker({ info, onUpdate }) {
     const labelToShow = label ? label : labels.find(status => status.id === 'Not Started')
 
     return (
-        <div ref={statusRef} className={`labels-select-container ${statusAnchor ? "focus" : ""}`}
+        <div ref={statusRef} className={`labels-select-container ${isOpen ? "focus" : ""}`}
             style={{ background: `var(${labelToShow?.cssVar})` }}
             onClick={(ev) => {
                 ev.stopPropagation()
