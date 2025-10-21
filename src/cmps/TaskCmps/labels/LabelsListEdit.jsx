@@ -1,17 +1,17 @@
 //Services
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { showErrorMsg, showSuccessMsg } from '../../../services/event-bus.service'
 import { boardService } from '../../../services/board'
 //Cmp
-import { onCloseFloating, onCloseFloatingSecondary, onSetFloatingSecondary } from '../../../store/actions/system.actions'
+import { onCloseFloatingSecondary, onSetFloatingSecondary } from '../../../store/actions/system.actions'
 import { ColorPalette } from './ColorPalette'
-import { FloatingContainerCmp } from '../../FloatingContainerCmp'
 //Icons
 
 import { SvgIcon } from '../../SvgIcon'
 import { getVarColors } from '../../../services/util.service'
 import { ActionsMenu } from '../../ActionsMenu'
 import { useSelector } from 'react-redux'
+import { FloatingContainerCmp } from '../../FloatingContainerCmp.jsx'
 
 export function LabelsListEdit({ labels, onUpdateLabels, onSwitchEditMode, onClose, type }) {
     const board = useSelector(state => state.boardModule.board)
@@ -22,6 +22,12 @@ export function LabelsListEdit({ labels, onUpdateLabels, onSwitchEditMode, onClo
     const [labelsInUse, setLabelsInUse] = useState()
     const [editingLabel, setEditingLabel] = useState()
     const bgColors = getVarColors()
+
+    const [isColorPickerOpen, setIsColorPickerOpen] = useState(false)
+    const [isActionMenuOpen, setIsActionMenuOpen] = useState(false)
+
+    const colorRefs = useRef({})
+    const actionRefs = useRef({})
 
     useEffect(() => {
         const active = []
@@ -37,35 +43,43 @@ export function LabelsListEdit({ labels, onUpdateLabels, onSwitchEditMode, onClo
         setLabelsInUse(active)
     }, [board, type])
 
-
     useEffect(() => {
-        if (colorAnchorEl && editingLabel) {
-            onCloseFloatingSecondary()
-            onSetFloatingSecondary(
-                <ColorPalette
-                    bgColors={bgColors}
-                    handelColorChange={handelColorChange}
-                    label={editingLabel} />
-                , colorAnchorEl)
+        return () => {
+            setIsColorPickerOpen(false)
+            setIsActionMenuOpen(false)
+            setAnchorEl(null)
+            setColorAnchorEl(null)
+            setEditingLabel(null)
         }
-    }, [colorAnchorEl, editingLabel])
+    }, [])
+    // useEffect(() => {
+    //     if (colorAnchorEl && editingLabel) {
+    //         onCloseFloatingSecondary()
+    //         onSetFloatingSecondary(
+    //             <ColorPalette
+    //                 bgColors={bgColors}
+    //                 handelColorChange={handelColorChange}
+    //                 label={editingLabel} />
+    //             , colorAnchorEl)
+    //     }
+    // }, [colorAnchorEl, editingLabel])
 
-    useEffect(() => {
-        if (anchorEl && editingLabel) {
-            const res = labelsInUse.some(l => l.id === editingLabel.id) || editingLabel.id === 'default' ? 'active-label hover-show up' : ''
-            const data = editingLabel.id === 'default' ? 'Cannot remove Default label' : 'label in use, remove from tasks before delete'
-            onCloseFloatingSecondary()
-            onSetFloatingSecondary(
-                <span className={res} data-type={data}>
-                    <ActionsMenu
-                        onCloseMenu={onCloseMenu}
-                        isHrShown={false}
-                        onRemoveItem={() => onRemoveLabel(editingLabel.id)}
-                    />
-                </span>
-                , anchorEl)
-        }
-    }, [colorAnchorEl, editingLabel])
+    // useEffect(() => {
+    //     if (anchorEl && editingLabel) {
+    //         const res = labelsInUse.some(l => l.id === editingLabel.id) || editingLabel.id === 'default' ? 'active-label hover-show up' : ''
+    //         const data = editingLabel.id === 'default' ? 'Cannot remove Default label' : 'label in use, remove from tasks before delete'
+    //         onCloseFloatingSecondary()
+    //         onSetFloatingSecondary(
+    //             <span className={res} data-type={data}>
+    //                 <ActionsMenu
+    //                     onCloseMenu={onCloseMenu}
+    //                     isHrShown={false}
+    //                     onRemoveItem={() => onRemoveLabel(editingLabel.id)}
+    //                 />
+    //             </span>
+    //             , anchorEl)
+    //     }
+    // }, [colorAnchorEl, editingLabel])
 
 
     function handelChange(ev, id) {
@@ -79,34 +93,47 @@ export function LabelsListEdit({ labels, onUpdateLabels, onSwitchEditMode, onClo
         setLabelsToUpdate(newLabels)
         onUpdateLabels(newLabels)
         onCloseColorPallet()
+        onClose()
     }
 
 
     function changeLabelColor(ev, id) {
         const label = labelsToUpdate.find(label => label.id === id)
-        onOpenColorPallet(ev, label)
+        if (!label) return
+        onOpenColorPallet(null, label)
+
     }
 
     function onOpenColorPallet(ev, label) {
+        setIsActionMenuOpen(false)   // 🔒 close action menu
+        setAnchorEl(null)
+
+        const anchor = colorRefs.current[label.id]
+        if (!anchor) return
         setEditingLabel(label)
-        setColorAnchorEl(ev.currentTarget)
+        setColorAnchorEl(anchor)
+        setIsColorPickerOpen(true)
     }
 
     function onCloseColorPallet() {
+
         setEditingLabel(null)
         setColorAnchorEl(null)
-        onClose()
+        setIsColorPickerOpen(false)
     }
 
     function onOpenActionMenu(ev, id) {
-        setAnchorEl(ev.currentTarget);
+        setIsColorPickerOpen(false)  // 🔒 close color picker
+        setColorAnchorEl(null)
+        setAnchorEl(ev.currentTarget)
         let labelToEdit;
         if (id === 'default') {
             labelToEdit = { id: 'default', txt: 'Default Label', cssVar: ' --group-title-clr18' };
         } else {
             labelToEdit = labelsToUpdate.find(label => label.id === id);
         }
-        setEditingLabel(labelToEdit);
+        setIsActionMenuOpen(true)
+        setEditingLabel(labelToEdit)
     }
 
     function onCloseMenu() {
@@ -122,7 +149,6 @@ export function LabelsListEdit({ labels, onUpdateLabels, onSwitchEditMode, onClo
         onUpdateLabels(newLabels)
         setAnchorEl(null)
         onClose()
-
     }
 
     function addNewLabel() {
@@ -138,6 +164,16 @@ export function LabelsListEdit({ labels, onUpdateLabels, onSwitchEditMode, onClo
         onSwitchEditMode()
     }
 
+    const res =
+        editingLabel &&
+            (labelsInUse?.some(l => l.id === editingLabel.id) || editingLabel.id === 'default')
+            ? 'active-label hover-show up'
+            : ''
+
+    const data =
+        editingLabel?.id === 'default'
+            ? 'Cannot remove Default label'
+            : 'label in use, remove from tasks before delete'
     return (
         <>
             <ul className='label-list edit'>
@@ -146,13 +182,13 @@ export function LabelsListEdit({ labels, onUpdateLabels, onSwitchEditMode, onClo
                         <SvgIcon iconName='dragBox' size={16} className='drag-icon' />
                         <section className='label edit'>
                             <span
+                                ref={(el) => colorRefs.current[label.id] = el}
                                 className="color-icon-container"
                                 onClick={(ev) => changeLabelColor(ev, label.id)}
                                 style={{ backgroundColor: `var(${label.cssVar})` }}
                             >
                                 <SvgIcon iconName='bucket' size={16} colorName='whiteText' />
                             </span>
-
 
                             <input
                                 name='title'
@@ -210,6 +246,33 @@ export function LabelsListEdit({ labels, onUpdateLabels, onSwitchEditMode, onClo
                     </div>
                 </li>
             </ul>
+
+            {isColorPickerOpen && (
+                <FloatingContainerCmp
+                    anchorEl={colorAnchorEl}
+                    onClose={onCloseColorPallet}>
+                    <ColorPalette
+                        bgColors={bgColors}
+                        handelColorChange={handelColorChange}
+                        label={editingLabel}
+                    />
+                </FloatingContainerCmp>
+            )}
+
+            {isActionMenuOpen && (
+                <FloatingContainerCmp
+                    anchorEl={anchorEl}
+                    onClose={() => setIsActionMenuOpen(false)}>
+                    <span className={res} data-type={data}>
+                        <ActionsMenu
+                            onCloseMenu={() => setIsActionMenuOpen(false)}
+                            isHrShown={false}
+                            onRemoveItem={() => onRemoveLabel(editingLabel?.id)}
+                        />
+                    </span>
+                </FloatingContainerCmp>
+            )}
+
             <section className="actions">
                 <button onClick={onApply}
                     className='edit-apply-btn edit'> Apply </button>

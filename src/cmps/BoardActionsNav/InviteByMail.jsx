@@ -2,7 +2,7 @@ import { useSelector } from "react-redux"
 import { SvgIcon } from "../SvgIcon"
 import { MemberTaskSelect } from "../TaskCmps/MembersCmp/MemberTaskSelect"
 import { useEffect, useRef, useState } from "react"
-import { FloatingContainerCmp } from "../FloatingContainerCmp"
+// import { FloatingContainerCmpNewNotToUse } from "../FloatingContainerCmpNewNotToUse"
 import { loadFromStorage } from "../../services/util.service"
 import { updateBoard } from "../../store/actions/board.actions"
 import { showSuccessMsg } from "../../services/event-bus.service"
@@ -114,14 +114,6 @@ export function InviteByMail({ onClosePopUp }) {
                         </button>
                     })}
                 </section>
-
-                {/* {!!searchValues.length &&
-                    <FloatingContainerCmp
-                        anchorEl={anchorEl}
-                        onClose={onCloseMenu}
-                    >
-                        <div>hello</div>
-                    </FloatingContainerCmp>} */}
             </div>
         </div>
     )

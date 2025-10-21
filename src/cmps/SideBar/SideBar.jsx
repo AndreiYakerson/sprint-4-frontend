@@ -16,6 +16,7 @@ import { BoardEdit } from "../Board/BaordEdit.jsx";
 //images
 import favStarIcon from '/img/fav-star-icon.svg'
 import { ActionsMenu } from "../ActionsMenu.jsx";
+// import { FloatingContainerCmpNewNotToUse } from "../FloatingContainerCmpNewNotToUse.jsx";
 import { FloatingContainerCmp } from "../FloatingContainerCmp.jsx";
 
 export function SideBar() {
@@ -35,24 +36,6 @@ export function SideBar() {
     useEffect(() => {
         onLoadBoards()
     }, [])
-
-
-    useEffect(() => {
-        if (actionAnchor) {
-
-            onCloseFloating()
-            onSetFloating(<ActionsMenu
-                onCloseMenu={onCloseMenu}
-                isHrShown={false}
-                onAddBoard={_onShowPopUp}
-                offsetX={40}
-                offsetY={45}
-            />, actionAnchor)
-
-        }
-    }, [actionAnchor])
-
-
 
     async function onLoadBoards() {
         if (!boards?.length) {
@@ -83,11 +66,11 @@ export function SideBar() {
 
     function toggleIsMenuOpen(ev) {
         ev.stopPropagation()
-        setActionAnchor(ev.currentTarget)
+        setIsMenuOpen(!isMenuOpen)
     }
 
     function onCloseMenu() {
-        setActionAnchor(null)
+        setIsMenuOpen(false)
     }
 
 
@@ -179,7 +162,7 @@ export function SideBar() {
                                 <span>My Boards</span>
                             </div>
 
-                            <button className="blue square" onClick={toggleIsMenuOpen} >
+                            <button className="blue square" onClick={toggleIsMenuOpen} ref={btnMenuRef}>
                                 <SvgIcon iconName="plus" size={18} colorName="whiteText" />
                             </button>
 
@@ -187,6 +170,22 @@ export function SideBar() {
                     </div>
 
                     <BoardList boards={boards} isSideBarDisplay={true} />
+
+                    {isMenuOpen && (
+                        <FloatingContainerCmp
+                            anchorEl={btnMenuRef.current}
+                            onClose={onCloseMenu}
+                            offsetX={40}
+                            offsetY={45}
+                        >
+                            <ActionsMenu
+                                onCloseMenu={onCloseMenu}
+                                isHrShown={false}
+                                onAddBoard={() => _onShowPopUp()}
+                            />
+                        </FloatingContainerCmp>
+                    )}
+
                 </div>
             </div>
         </div>

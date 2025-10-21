@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 import { StatusAnimation } from "../../StatusAnimation.jsx";
 import { onCloseFloating, onSetFloating } from "../../../store/actions/system.actions.js";
 import { LabelSelect } from "../labels/LabelSelect.jsx";
+import { FloatingContainerCmp } from "../../FloatingContainerCmp.jsx";
 
 export function StatusPicker({ info, onUpdate }) {
     const board = useSelector(state => state.boardModule.board)
@@ -16,6 +17,9 @@ export function StatusPicker({ info, onUpdate }) {
     const label = labels.find(l => l.id === info.selectedStatus?.id)
     const timeOutRef = useRef(null)
 
+    const [isOpen, setIsOpen] = useState(false)
+    const statusRef = useRef(null)
+
     useEffect(() => {
         return (() => {
             setStatusAnchor(null)
@@ -24,20 +28,20 @@ export function StatusPicker({ info, onUpdate }) {
         })
     }, [])
 
-    useEffect(() => {
-        if (statusAnchor) {
-            onSetFloating(
-                <LabelSelect
-                    type="status"
-                    onAnimate={onAnimate}
-                    labels={labels}
-                    onUpdate={onUpdate}
-                    onCloseAnchor={setStatusAnchor}
-                    onClose={onClose}
-                />, statusAnchor)
-        }
+    // useEffect(() => {
+    //     if (statusAnchor) {
+    //         onSetFloating(
+    //             <LabelSelect
+    //                 type="status"
+    //                 onAnimate={onAnimate}
+    //                 labels={labels}
+    //                 onUpdate={onUpdate}
+    //                 onCloseAnchor={setStatusAnchor}
+    //                 onClose={onClose}
+    //             />, statusAnchor)
+    //     }
 
-    }, [statusAnchor])
+    // }, [statusAnchor])
 
     useEffect(() => {
         setLabels(board.statuses)
@@ -60,6 +64,7 @@ export function StatusPicker({ info, onUpdate }) {
     }
 
     function onClose() {
+        console.log("🚀 ~ onClose ~ onClose:")
         setStatusAnchor(null)
         onCloseFloating()
     }
@@ -67,14 +72,33 @@ export function StatusPicker({ info, onUpdate }) {
     const labelToShow = label ? label : labels.find(status => status.id === 'Not Started')
 
     return (
-        <div className={`labels-select-container ${statusAnchor ? "focus" : ""}`}
+        <div ref={statusRef} className={`labels-select-container ${statusAnchor ? "focus" : ""}`}
             style={{ background: `var(${labelToShow?.cssVar})` }}
-            onClick={(ev) => setStatusAnchor(ev.currentTarget)}>
+            onClick={(ev) => {
+                ev.stopPropagation()
+                setIsOpen(true)
+            }}>
             <div className="label-txt">
                 {labelToShow?.txt}
             </div>
             <StatusAnimation color={`var(${labelToShow?.cssVar})`} />
             {showDoneAnimation && <div className="done-animation" />}
+
+            {isOpen && (
+                <FloatingContainerCmp
+                    anchorEl={statusRef.current}
+                    onClose={() => setIsOpen(false)}
+                >
+                    <LabelSelect
+                        type="status"
+                        onAnimate={onAnimate}
+                        labels={labels}
+                        onUpdate={onUpdate}
+                        onCloseAnchor={() => setIsOpen(false)}
+                        onClose={() => setIsOpen(false)}
+                    />
+                </FloatingContainerCmp>
+            )}
         </div>
     )
 

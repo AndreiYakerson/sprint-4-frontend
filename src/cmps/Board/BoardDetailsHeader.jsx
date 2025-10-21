@@ -12,9 +12,9 @@ import { InviteByMail } from '../BoardActionsNav/InviteByMail.jsx'
 import { PersonFilter } from './filterCmps/PersonFilter.jsx'
 import { FilterBy } from './filterCmps/FilterBy.jsx'
 import { SortBy } from './filterCmps/SortBy.jsx'
-import { FloatingContainerCmp } from '../FloatingContainerCmp.jsx'
+// import { FloatingContainerCmpNewNotToUse } from '../FloatingContainerCmpNewNotToUse.jsx'
 import { useRef, useState } from 'react'
-import { FloatingContainerCmpOld } from '../FloatingContainerCmpOld.jsx'
+import { FloatingContainerCmp } from '../FloatingContainerCmp.jsx'
 
 export function BoardDetailsHeader({
     board,
@@ -42,7 +42,7 @@ export function BoardDetailsHeader({
     // useEffect(() => {
 
     //   {board && isPersonFilterOpen && 
-    //   <FloatingContainerCmpOld
+    //   <FloatingContainerCmp
     //             anchorEl={personBtnRef.current}
     //             onClose={onClosePersonFilter}
     //         >
@@ -51,7 +51,7 @@ export function BoardDetailsHeader({
     //                 filterBy={{ byPerson }}
     //                 onSetFilterBy={onSetFilterBy}
     //             />
-    //         </FloatingContainerCmpOld>}
+    //         </FloatingContainerCmp>}
     // }, [third])
     
 
@@ -264,7 +264,7 @@ export function BoardDetailsHeader({
             </div>
 
 
-            {board && isPersonFilterOpen && <FloatingContainerCmpOld
+            {board && isPersonFilterOpen && <FloatingContainerCmp
                 anchorEl={personBtnRef.current}
                 onClose={onClosePersonFilter}
             >
@@ -274,9 +274,9 @@ export function BoardDetailsHeader({
                     onSetFilterBy={onSetFilterBy}
                 />
 
-            </FloatingContainerCmpOld>}
+            </FloatingContainerCmp>}
 
-            {board && isFilterOpen && <FloatingContainerCmpOld
+            {board && isFilterOpen && <FloatingContainerCmp
                 anchorEl={filterBtnRef.current}
                 onClose={onCloseFilter}
             >
@@ -287,11 +287,11 @@ export function BoardDetailsHeader({
                     onSetFilterBy={onSetFilterBy}
                 />
 
-            </FloatingContainerCmpOld>
+            </FloatingContainerCmp>
             }
 
 
-            {board?.cmpOrder && isSortOpen && <FloatingContainerCmpOld
+            {board?.cmpOrder && isSortOpen && <FloatingContainerCmp
                 anchorEl={sortByRef.current}
                 onClose={onCloseSortBy}
             >
@@ -301,7 +301,7 @@ export function BoardDetailsHeader({
                     onSetFilterBy={onSetFilterBy}
                 />
 
-            </FloatingContainerCmpOld>}
+            </FloatingContainerCmp>}
 
         </header>
     )

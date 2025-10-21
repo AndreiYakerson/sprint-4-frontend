@@ -7,17 +7,16 @@ import { CSS } from "@dnd-kit/utilities";
 import { SvgIcon } from "../SvgIcon";
 import { TitleEditor } from "../Task/TitleEditor.jsx";
 import { GroupTitleEditor } from "./GroupTitleEditor.jsx";
-import { FloatingContainerCmp } from "../FloatingContainerCmp.jsx";
+// import { FloatingContainerCmpNewNotToUse } from "../FloatingContainerCmpNewNotToUse.jsx";
 import { ActionsMenu } from "../ActionsMenu.jsx";
 import { LabelSum } from "../TaskCmps/SumCmps/LabelSum.Jsx";
 import { DateSum } from "../TaskCmps/SumCmps/DateSum.jsx";
 import { getColumnType } from "../../services/util.service.js";
 import { useSelector } from "react-redux";
 import { CmpList } from "../CmpList.jsx";
-import { onCloseFloating, onSetFloating } from "../../store/actions/system.actions.js";
-import { useSearchParams } from "react-router-dom";
-import { FloatingContainerCmpOld } from "../FloatingContainerCmpOld.jsx";
 import { IndividualGroupCollapse } from "./IndividualGroupCollapse.jsx";
+import { useSearchParams } from "react-router-dom";
+import { FloatingContainerCmp } from "../FloatingContainerCmp.jsx";
 
 export function GroupPreview({ group, groupsLength, managingType, TaskList,
     onRemoveGroup, onUpdateGroup, onAddTask, onAddGroup, onOpenGroupEditor, onAddColumn, onRemoveColumn }) {
@@ -47,45 +46,26 @@ export function GroupPreview({ group, groupsLength, managingType, TaskList,
         }
     }
 
-
-
     //menu 
-    const [groupMenuAnchor, setGroupMenuAnchor] = useState(false)
-    const [isElColumnMenu, setIsElColumnMenu] = useState(null)
+    const [isGroupMenuOpen, setIsGroupMenuOpen] = useState(false)
+    const [elColumnMenu, setIsElColumnMenu] = useState(null)
     const [columnType, setcolumnType] = useState('')
     const [anchorEl, setAnchorEl] = useState(null)
 
-    // const columnBtnRef = useRef(null)
+
     const btnRef = useRef(null)
     const menuRef = useRef(null)
-    const [cmpSelectAnchor, setCmpSelectAnchor] = useState(false)
-
-    useEffect(() => {
-        if (cmpSelectAnchor) {
-            // onCloseFloating()
-            onSetFloating(
-                <CmpList
-                    cmps={board.cmpOrder}
-                    onClose={onCloseCmpList}
-                    onAddColumn={onAddColumn}
-                    enforceLimit={true}
-                    centeredX={true}
-                />, cmpSelectAnchor,)
-        }
-    }, [cmpSelectAnchor])
+    const columnBtnRef = useRef(null)
 
 
-    function onSetGroupMenuAnchor(ev) {
+    function toggleIsGroupMenuOpen(ev) {
         ev.stopPropagation()
-        if (groupMenuAnchor) return
-        // let isOpen = groupMenuAnchor ? null : ev.currentTarget
-
-        setGroupMenuAnchor(ev.currentTarget)
+        setIsGroupMenuOpen(!isGroupMenuOpen)
     }
 
     function toggleIsColumnMenuOpen(ev, colname) {
         ev.stopPropagation()
-        setIsElColumnMenu(isElColumnMenu ? null : ev.currentTarget)
+        setIsElColumnMenu(elColumnMenu ? null : ev.currentTarget)
 
         if (!columnType) {
             setcolumnType(colname)
@@ -95,20 +75,17 @@ export function GroupPreview({ group, groupsLength, managingType, TaskList,
     }
 
     function onCloseMenu() {
-        if (groupMenuAnchor) {
-            setGroupMenuAnchor(false)
-            onCloseFloating()
+        if (isGroupMenuOpen) {
+            setIsGroupMenuOpen(false)
         }
-        if (isElColumnMenu) {
+        if (elColumnMenu) {
             setIsElColumnMenu(null)
             setcolumnType('')
-            onCloseFloating()
         }
     }
 
     function onCloseCmpList() {
-        onCloseFloating()
-        setCmpSelectAnchor(null)
+        setAnchorEl(null)
     }
     // crudl
 
@@ -247,9 +224,9 @@ export function GroupPreview({ group, groupsLength, managingType, TaskList,
                 dates={dates}
                 btnRef={btnRef}
                 menuRef={menuRef}
-                isGroupMenuOpen={groupMenuAnchor}
+                isGroupMenuOpen={isGroupMenuOpen}
                 onCloseMenu={onCloseMenu}
-                toggleIsGroupMenuOpen={onSetGroupMenuAnchor}
+                toggleIsGroupMenuOpen={toggleIsGroupMenuOpen}
                 onOpenGroupEditor={onOpenGroupEditor}
                 onRemoveGroup={onRemoveGroup}
                 onAddGroup={onAddGroup}
@@ -264,40 +241,6 @@ export function GroupPreview({ group, groupsLength, managingType, TaskList,
         )
 
     ///////////////////////////////  group  /////////////////////////////////
-
-    // useEffect(() => {
-    //     if (groupMenuAnchor) {
-    //         onSetFloating(
-    //         <ActionsMenu
-    //             onCloseMenu={onCloseMenu}
-    //             onRemoveGroup={() => onRemoveGroup(group?.id)}
-    //             groupsLength={groupsLength}
-    //             onAddGroup={onAddGroup}
-    //             onRenameGroup={() => onOpenGroupEditor(group?.id)}
-    //             offsetX={40}
-    //             offsetY={35}
-    //             enforceLimit={true}
-    //         />, groupMenuAnchor)
-    //     }
-
-    // }, [groupMenuAnchor])
-
-    // useEffect(() => {
-    //     console.log("🚀 ~ isElColumnMenu:", isElColumnMenu)
-    //     if (isElColumnMenu) {
-    //         onSetFloating(
-    //             <ActionsMenu
-    //                 onCloseMenu={onCloseMenu}
-    //                 isHrShown={false}
-    //                 onRemoveItem={() => onRemoveColumn(columnType)}
-    //                 offsetX={30}
-    //                 offsetY={45}
-    //             />, isElColumnMenu)
-    //     }
-
-    // }, [isElColumnMenu])
-
-
 
     return <div
         className="group-container"
@@ -315,8 +258,8 @@ export function GroupPreview({ group, groupsLength, managingType, TaskList,
         >
             <div className="group-title-row" {...listeners}>
                 <div className="group-menu-wrapper">
-                    <button onClick={onSetGroupMenuAnchor}
-                        className={`white group-menu ${groupMenuAnchor ? "menu-open" : ""}`}
+                    <button onClick={toggleIsGroupMenuOpen}
+                        className={`white group-menu ${isGroupMenuOpen ? "menu-open" : ""}`}
                         ref={btnRef}>
                         <SvgIcon
                             iconName="dots"
@@ -324,8 +267,8 @@ export function GroupPreview({ group, groupsLength, managingType, TaskList,
                             colorName={'primaryText'}
                         />
                     </button>
-                    {/* 
-                    {isGroupMenuOpen && <FloatingContainerCmpOld
+
+                    {isGroupMenuOpen && <FloatingContainerCmp
                         anchorEl={btnRef.current}
                         onClose={onCloseMenu}
                         offsetX={40}
@@ -339,7 +282,7 @@ export function GroupPreview({ group, groupsLength, managingType, TaskList,
                             onAddGroup={onAddGroup}
                             onRenameGroup={() => onOpenGroupEditor(group?.id)}
                         />
-                    </FloatingContainerCmpOld>} */}
+                    </FloatingContainerCmp>}
 
                 </div>
                 <div className="collapse-group-toggle" onClick={() => onToggleCollapsed(true)}>
@@ -384,9 +327,9 @@ export function GroupPreview({ group, groupsLength, managingType, TaskList,
                             <span>{colName}</span>
 
                             <button
-                                className={` transparent column-menu-btn ${isElColumnMenu && columnType === colName ? "open" : ""}`}
+                                className={` transparent column-menu-btn ${elColumnMenu && columnType === colName ? "open" : ""}`}
                                 key={colName}
-                                ref={btnRef}
+                                ref={columnBtnRef}
                                 onClick={(ev) => toggleIsColumnMenuOpen(ev, colName)}>
                                 <SvgIcon
                                     iconName="dots"
@@ -404,8 +347,9 @@ export function GroupPreview({ group, groupsLength, managingType, TaskList,
 
                     <div className="column-cell full last-column">
                         <button
-                            className={`add-column ${cmpSelectAnchor ? 'rotate' : ''}`}
-                            onClick={(ev) => setCmpSelectAnchor(ev.currentTarget)}
+                            className={`add-column ${anchorEl ? 'rotate' : ''}`}
+                            onClick={(ev) => setAnchorEl(ev.currentTarget)}
+
                         >
                             <SvgIcon
                                 iconName="plus"
@@ -413,7 +357,7 @@ export function GroupPreview({ group, groupsLength, managingType, TaskList,
                                 colorName={'secondaryText'}
                             />
                         </button>
-                        {/* {anchorEl &&
+                        {anchorEl &&
                             <FloatingContainerCmp
                                 anchorEl={anchorEl}
                                 enforceLimit={true}
@@ -427,7 +371,7 @@ export function GroupPreview({ group, groupsLength, managingType, TaskList,
                                 />
 
                             </FloatingContainerCmp>
-                        } */}
+                        }
                     </div>
                 </div>
 
@@ -486,7 +430,7 @@ export function GroupPreview({ group, groupsLength, managingType, TaskList,
         </div>
 
 
-        {/* {elColumnMenu && <FloatingContainerCmpOld
+        {elColumnMenu && <FloatingContainerCmp
             anchorEl={elColumnMenu}
             onClose={onCloseMenu}
             offsetX={30}
@@ -497,9 +441,9 @@ export function GroupPreview({ group, groupsLength, managingType, TaskList,
                 isHrShown={false}
                 onRemoveItem={() => onRemoveColumn(columnType)}
             />
-        </FloatingContainerCmpOld>
+        </FloatingContainerCmp>
         }
- */}
+
     </div >
 }
 

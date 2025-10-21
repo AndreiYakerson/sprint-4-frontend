@@ -1,12 +1,12 @@
 // cmps
 import { SvgIcon } from "../SvgIcon"
-import { FloatingContainerCmp } from "../FloatingContainerCmp.jsx"
+// import { FloatingContainerCmpNewNotToUse } from "../FloatingContainerCmpNewNotToUse.jsx"
 import { ActionsMenu } from "../ActionsMenu.jsx"
 import { GroupTitleEditor } from "./GroupTitleEditor.jsx"
 import { LabelSum } from "../TaskCmps/SumCmps/LabelSum.jsx"
 import { DateSum } from "../TaskCmps/SumCmps/DateSum.jsx"
 import { getColumnType } from "../../services/util.service.js"
-import { FloatingContainerCmpOld } from "../FloatingContainerCmpOld.jsx"
+import { FloatingContainerCmp } from "../FloatingContainerCmp.jsx"
 
 export function IndividualGroupCollapse({
     group,
@@ -67,7 +67,7 @@ export function IndividualGroupCollapse({
 
                                 </button>
 
-                                {isGroupMenuOpen && <FloatingContainerCmpOld
+                                {isGroupMenuOpen && <FloatingContainerCmp
                                     anchorEl={btnRef.current}
                                     onClose={onCloseMenu}
                                     offsetX={40}
@@ -82,7 +82,7 @@ export function IndividualGroupCollapse({
                                         onAddGroup={onAddGroup}
                                         onRenameGroup={() => onOpenGroupEditor(group?.id)}
                                     />
-                                </FloatingContainerCmpOld>}
+                                </FloatingContainerCmp>}
 
                             </div>
                         </div>

@@ -1,44 +1,38 @@
-import { cloneElement, useEffect, useLayoutEffect, useRef, useState } from 'react'
+import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
-import { onCloseFloating } from '../store/actions/system.actions'
+import { onSetFloatingIsOpen } from '../store/actions/system.actions'
 import { useSelector } from 'react-redux'
 
-export function FloatingContainerCmp() {
+export function FloatingContainerCmp({
+    anchorEl, children, onClose,
+    offsetX = 0, offsetY = 0, centeredX = false,
+    showTriangle = false, enforceLimit = false
+}) {
 
-    const popUp = useSelector(state => state.systemModule.popUp)
-    const floating = useSelector(state => state.systemModule.floating)
     const [style, setStyle] = useState({})
     const [isVisible, setIsVisible] = useState(false)
     const [trianglePos, setTrianglePos] = useState('UP')
     const popupRef = useRef(null)
 
-    let contentWithProps = null
-    let dynamicProps = { offsetX: 0, offsetY: 0, centeredX: false, showTriangle: false, enforceLimit: false }
-    if (floating.content) {
-        const content = typeof floating.content === 'function'
-            ? floating.content()
-            : floating.content
-        const floatKeys = ['offsetX', 'offsetY', 'centeredX', 'showTriangle', 'enforceLimit']
-        floatKeys.forEach(key => {
-            if (content.props?.[key] !== undefined) dynamicProps[key] = content.props[key]
-        })
-        contentWithProps = cloneElement(content, { ...content.props })
-    }
-    
-    const { offsetX, offsetY, centeredX, showTriangle, enforceLimit } = dynamicProps
+    useEffect(() => {
+        onSetFloatingIsOpen(true)
+        return () => {
+            onSetFloatingIsOpen(false)
+        }
+    }, [])
 
     useEffect(() => {
-        if (!floating.anchor || !enforceLimit) return
+        if (!anchorEl || !enforceLimit) return
 
         const HEADER_HEIGHT = 160
 
         const checkAnchorVisibility = () => {
-            const rect = floating.anchor.getBoundingClientRect()
+            const rect = anchorEl.getBoundingClientRect()
             const isBelowHeader = rect.top < HEADER_HEIGHT
             const isOffScreen = rect.bottom < 0 || rect.top > window.innerHeight
 
             if (isBelowHeader || isOffScreen) {
-                onCloseFloating()
+                    onClose()
             }
         }
 
@@ -50,48 +44,36 @@ export function FloatingContainerCmp() {
             window.removeEventListener('scroll', checkAnchorVisibility, true)
             window.removeEventListener('resize', checkAnchorVisibility)
         }
-    }, [floating.anchor, onCloseFloating, enforceLimit])
+    }, [anchorEl, onClose, enforceLimit])
 
 
 
 
     useEffect(() => {
-
         function handleClickOutside(e) {
-            if (
-                !popupRef.current ||
-                !floating.anchor ||
-                !(floating.anchor instanceof Node)
-            ) return
-
+            if (!popupRef.current || !anchorEl) return
             const clickedInside = e.target.closest('.fcc-container')
-            const clickedAnchor = floating.anchor.contains(e.target)
+            const clickedAnchor = anchorEl.contains(e.target)
             if (!clickedInside && !clickedAnchor)
-                onCloseFloating()
+                    onClose()
         }
 
         document.addEventListener('click', handleClickOutside)
         return () => document.removeEventListener('click', handleClickOutside)
-    }, [floating.anchor, onCloseFloating])
-
+    }, [anchorEl, onClose])
 
 
     // --- Positioning logic ---
     useLayoutEffect(() => {
-        //FIXME להודיע על שינוי!!
-        if (
-            !popupRef.current ||
-            !floating.anchor ||
-            !(floating.anchor instanceof Node)
-        ) return
+        if (!anchorEl || !popupRef.current) return
 
         const updatePosition = (ev) => {
             // Ignore scroll events that originate inside anchorEl
             if (ev) {
-                if (popupRef.current.contains(ev.target) || floating.anchor.contains(ev.target)) return
+                if (popupRef.current.contains(ev.target) || anchorEl.contains(ev.target)) return
             }
 
-            const anchorRect = floating.anchor.getBoundingClientRect()
+            const anchorRect = anchorEl.getBoundingClientRect()
             const popupEl = popupRef.current
             const popupHeight = popupEl.offsetHeight
             const popupWidth = popupEl.offsetWidth
@@ -161,8 +143,9 @@ export function FloatingContainerCmp() {
             window.removeEventListener('scroll', updatePosition, true)
             window.removeEventListener('resize', updatePosition)
         }
-    }, [floating.anchor])
+    }, [anchorEl])
 
+    // if (!anchorEl) return null
 
     useLayoutEffect(() => {
         setStyle(prev => ({
@@ -175,14 +158,14 @@ export function FloatingContainerCmp() {
 
 
     return createPortal(
-        floating.anchor ? (
+        anchorEl ? (
             <div
                 className={`fcc-container ${showTriangle ? "triangle" : ""} ${showTriangle ? trianglePos : ""}`}
                 ref={popupRef}
                 style={style}
                 onClick={e => e.stopPropagation()}
             >
-                {contentWithProps}
+                {children}
             </div>
         ) : null,
         document.getElementById('portal-root')

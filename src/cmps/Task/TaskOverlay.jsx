@@ -13,7 +13,7 @@ import { showErrorMsg, showSuccessMsg } from "../../services/event-bus.service"
 
 // cmps
 import { SvgIcon } from "../SvgIcon.jsx"
-import { FloatingContainerCmp } from "../FloatingContainerCmp.jsx"
+// import { FloatingContainerCmpNewNotToUse } from "../FloatingContainerCmpNewNotToUse.jsx"
 import { ActionsMenu } from "../ActionsMenu.jsx"
 
 // DynamicCmp

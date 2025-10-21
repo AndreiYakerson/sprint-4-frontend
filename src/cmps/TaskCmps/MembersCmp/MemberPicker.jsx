@@ -1,9 +1,9 @@
 
 // SERVICES
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 
 // COMPONENTS
-import { FloatingContainerCmp } from "../../FloatingContainerCmp"
+// import { FloatingContainerCmpNewNotToUse } from "../../FloatingContainerCmpNewNotToUse"
 import { MemberInfo } from "./MemberInfo"
 import { MemberTaskSelect } from "./MemberTaskSelect"
 // ICONS
@@ -12,6 +12,7 @@ import { SvgIcon } from "../../SvgIcon"
 import { showErrorMsg } from "../../../services/event-bus.service"
 import { MultiMembersPreview } from "./MultiMembersPreview"
 import { onCloseFloating, onSetFloating } from "../../../store/actions/system.actions"
+import { FloatingContainerCmp } from "../../FloatingContainerCmp.jsx"
 
 export function MemberPicker({ info, onUpdate }) {
     const { selectedMemberIds } = info
@@ -20,38 +21,64 @@ export function MemberPicker({ info, onUpdate }) {
     const board = useSelector(state => state.boardModule.board)
     const floating = useSelector(state => state.systemModule.floating)
 
+    const [selectedUser, setSelectedUser] = useState(null)
+    const [hoveredAnchor, setHoveredAnchor] = useState(null)
+    const [memberAnchor, setMemberAnchor] = useState(null)
+    const [isOpenMemberPicker, setIsOpenMemberPicker] = useState(false)
+    const [isOpenHoveredUser, setIsOpenHoveredUser] = useState(false)
+
+    const isPickerOpenRef = useRef(false)
+
     useEffect(() => {
-        if (membersSelectEl) {
-            onCloseFloating()
-            const content = <MemberTaskSelect
-                selectedMemberIds={selectedMemberIds}
-                members={board.members}
-                onClose={closeMemberSelect}
-                onUpdate={updateTaskMembers}
-            />
-            onSetFloating(content, membersSelectEl)
-        }
-    }, [selectedMemberIds, membersSelectEl])
+        isPickerOpenRef.current = isOpenMemberPicker
+    }, [isOpenMemberPicker])
+
+    // useEffect(() => {
+    //     if (membersSelectEl) {
+    //         onCloseFloating()
+    //         const content = <MemberTaskSelect
+    //             selectedMemberIds={selectedMemberIds}
+    //             members={board.members}
+    //             onClose={closeMemberSelect}
+    //             onUpdate={updateTaskMembers}
+    //         />
+    //         onSetFloating(content, membersSelectEl)
+    //     }
+    // }, [selectedMemberIds, membersSelectEl])
+
+    // function onSetHoveredUser(user, anchor) {
+    //     const content = <MemberInfo
+    //         user={user} />
+    //     onSetFloating(content, anchor)
+    // }
 
     function onSetHoveredUser(user, anchor) {
-        const content = <MemberInfo
-            user={user} />
-        onSetFloating(content, anchor)
+        if (isPickerOpenRef.current) return
+        setSelectedUser(user)
+        setHoveredAnchor(anchor)
+        setIsOpenHoveredUser(true)
+
     }
 
     function openMemberSelect(ev) {
-        if (floating.isOpen) onCloseFloating()
-        setMembersSelectEl(ev.currentTarget)
+        ev.stopPropagation()
+        if (isOpenHoveredUser) {
+            setIsOpenHoveredUser(null)
+            setHoveredAnchor(null)
+        }
+        setMemberAnchor(ev.currentTarget)
+        setIsOpenMemberPicker(true)
     }
 
     function closeMemberSelect() {
-        setMembersSelectEl(null)
-        onClearHover()
+        setMemberAnchor(null)
+        setIsOpenMemberPicker(false)
     }
 
     function onClearHover() {
-        if (membersSelectEl) return
-
+        if (isOpenMemberPicker) return
+        setIsOpenHoveredUser(null)
+        setHoveredAnchor(null)
         onCloseFloating()
     }
 
@@ -76,6 +103,28 @@ export function MemberPicker({ info, onUpdate }) {
                     <SvgIcon iconName="person" className="person" colorName='grayPerson' size={30} />
                 </div>
             }
+            {isOpenMemberPicker && (
+                <FloatingContainerCmp
+                    anchorEl={memberAnchor}
+                    onClose={closeMemberSelect}
+                >
+                    <MemberTaskSelect
+                        selectedMemberIds={selectedMemberIds}
+                        members={board.members}
+                        onClose={closeMemberSelect}
+                        onUpdate={updateTaskMembers}
+                    />
+                </FloatingContainerCmp>
+            )}
+
+            {isOpenHoveredUser && (
+                <FloatingContainerCmp
+                    anchorEl={hoveredAnchor}
+                    onClose={closeMemberSelect}
+                >
+                    <MemberInfo user={selectedUser} />
+                </FloatingContainerCmp>
+            )}
         </article >
     )
 }

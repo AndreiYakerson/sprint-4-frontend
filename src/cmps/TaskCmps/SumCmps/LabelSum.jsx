@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react"
 import { HoveredTextCmp } from "../../HoveredTextCmp"
-import { FloatingContainerCmp } from "../../FloatingContainerCmp"
+// import { FloatingContainerCmpNewNotToUse } from "../../FloatingContainerCmpNewNotToUse"
 import { SumSelectMenu } from "./SumSelectMenu"
 import { useRef } from "react"
 import { useSelector } from "react-redux"
-import { FloatingContainerCmpOld } from "../../FloatingContainerCmpOld"
+import { FloatingContainerCmp } from "../../FloatingContainerCmp.jsx"
 
 export function LabelSum({ info }) {
 
@@ -114,7 +114,7 @@ export function LabelSum({ info }) {
             </div>
 
             {
-                isMenuOpen && <FloatingContainerCmpOld
+                isMenuOpen && <FloatingContainerCmp
                     anchorEl={listRef.current}
                     onClose={onCloseMenu}
                     offsetX={-listRef?.current?.getBoundingClientRect().width * 2}
@@ -125,7 +125,7 @@ export function LabelSum({ info }) {
                         type={info?.type}
                         onSetIsLabelsFilterd={onSetIsLabelsFilterd}
                     />
-                </FloatingContainerCmpOld>
+                </FloatingContainerCmp>
             }
 
         </section >

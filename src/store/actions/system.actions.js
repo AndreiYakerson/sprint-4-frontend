@@ -44,7 +44,7 @@ export async function onSetFloating(content, anchor) {
     const floatingOpen = store.getState().systemModule.floating.isOpen
     const floatingSecondaryOpen = store.getState().systemModule.floatingSecondary.isOpen
     if (floatingOpen) await onCloseFloating()
-        
+
     try {
         store.dispatch({ type: SET_FLOATING, content, anchor })
     } catch (err) {
@@ -66,7 +66,7 @@ export async function onSetFloatingSecondary(content, anchor) {
 
 export async function onCloseFloating() {
     console.log("🚀 ~ onCloseFloating ~ onCloseFloating:")
-    
+
     try {
         store.dispatch({ type: CLOSE_FLOATING })
     } catch (err) {

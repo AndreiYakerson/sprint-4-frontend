@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState, useLayoutEffect } from "react"
 import { Calendar } from "./Calendar"
 import { SvgIcon } from "../../SvgIcon"
-import { FloatingContainerCmp } from "../../FloatingContainerCmp"
+// import { FloatingContainerCmpNewNotToUse } from "../../FloatingContainerCmpNewNotToUse"
 import { HoveredTextCmp } from "../../HoveredTextCmp"
-import { FloatingContainerCmpOld } from "../../FloatingContainerCmpOld"
+import { FloatingContainerCmp } from "../../FloatingContainerCmp.jsx"
 
 export function DatePicker({ info, onUpdate }) {
     const [dateToEdit, setDateToEdit] = useState(info?.selectedDate)
@@ -162,7 +162,7 @@ export function DatePicker({ info, onUpdate }) {
             }
 
 
-            {isEditing && <FloatingContainerCmpOld
+            {isEditing && <FloatingContainerCmp
                 anchorEl={datePickerRef.current}
                 onClose={() => onSetIsEditing(false)}
                 enforceLimit={true}
@@ -173,7 +173,7 @@ export function DatePicker({ info, onUpdate }) {
                     onUpDate={onSaveDate}
                     onSetIsEditing={onSetIsEditing}
                 />
-            </FloatingContainerCmpOld>}
+            </FloatingContainerCmp>}
 
         </section>
     )

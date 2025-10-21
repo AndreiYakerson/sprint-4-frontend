@@ -7,7 +7,7 @@ import { showErrorMsg, showSuccessMsg } from '../../services/event-bus.service.j
 import { removeBoard, setBoard, setBoardRemovedMsg, updateBoard } from '../../store/actions/board.actions.js'
 
 // cmps
-import { FloatingContainerCmp } from '../FloatingContainerCmp.jsx'
+// import { FloatingContainerCmpNewNotToUse } from '../FloatingContainerCmpNewNotToUse.jsx'
 import { HoveredTextCmp } from '../HoveredTextCmp.jsx'
 import { TitleEditor } from '../Task/TitleEditor.jsx'
 import { ActionsMenu } from '../ActionsMenu.jsx'
@@ -15,7 +15,7 @@ import { SvgIcon } from '../SvgIcon.jsx'
 
 // images
 import boardItemLogo from '/img/board-item-img.svg'
-import { FloatingContainerCmpOld } from '../FloatingContainerCmpOld.jsx'
+import { FloatingContainerCmp } from '../FloatingContainerCmp.jsx'
 
 
 
@@ -154,7 +154,7 @@ export function BoardPreview({ board, isSideBarDisplay }) {
                         </button>
 
 
-                        {isMenuOpen && <FloatingContainerCmpOld
+                        {isMenuOpen && <FloatingContainerCmp
                             anchorEl={btnRef.current}
                             onClose={onCloseMenu}
                             offsetX={40}
@@ -170,7 +170,7 @@ export function BoardPreview({ board, isSideBarDisplay }) {
                                 onRenameBoard={onSetRenameBoard}
                                 isHrShown={true}
                             />
-                        </FloatingContainerCmpOld>}
+                        </FloatingContainerCmp>}
                     </>
 
                     : <button className='white square' onClick={(ev) => { ev.stopPropagation(), toggleIsStarred(!isStarred) }}>

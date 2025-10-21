@@ -15,8 +15,8 @@ import { UserMsg } from './cmps/UserMsg.jsx'
 import { LoginSignup, Login, Signup } from './pages/LoginSignup.jsx'
 import { SideBar } from './cmps/SideBar/SideBar.jsx'
 import { PopUp } from './cmps/PopUp.jsx'
-import { FloatingContainerCmp } from './cmps/FloatingContainerCmp.jsx'
-import { FloatingSecondary } from './cmps/FloatingSecondary.jsx'
+// import { FloatingContainerCmpNewNotToUse } from './cmps/FloatingContainerCmpNewNotToUse.jsx'
+// import { FloatingSecondary } from './cmps/FloatingSecondary.jsx'
 
 
 export function RootCmp() {
@@ -30,13 +30,14 @@ export function RootCmp() {
         setIsBoardLayout(location.pathname.includes('board'))
     }, [location.pathname])
 
+
     return (
         <div className={`main-container ${isBoardLayout ? "main-site-layout" : ""}`}>
             <AppHeader />
             <UserMsg />
             <PopUp />
-            <FloatingContainerCmp />
-            <FloatingSecondary />
+            {/* <FloatingContainerCmpNewNotToUse />
+            <FloatingSecondary /> */}
             {isBoardLayout && <aside className='app-aside'>
                 <SideBar />
             </aside>}
