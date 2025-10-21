@@ -47,8 +47,6 @@ export function FloatingContainerCmp({
     }, [anchorEl, onClose, enforceLimit])
 
 
-
-
     useEffect(() => {
         function handleClickOutside(e) {
             if (!popupRef.current || !anchorEl) return
@@ -57,7 +55,7 @@ export function FloatingContainerCmp({
             if (!clickedInside && !clickedAnchor)
                 setTimeout(() => {
                     onClose()
-                }, 0)
+                }, 0);
         }
 
         document.addEventListener('mousedown', handleClickOutside)
