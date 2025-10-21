@@ -1,4 +1,7 @@
 .filter-by-board-details {
+    max-width: 800px;
+    min-width: 600px;
+
     .filter-header {
         width: 100%;
         padding: 16px 24px 0;
@@ -16,7 +19,8 @@
         margin: 8px 24px 24px 24px;
         overflow-y: hidden;
         overflow-x: auto;
-        width: 752px;
+        width: 100%;
+        max-width: 752px;
         height: 276px;
     }
 

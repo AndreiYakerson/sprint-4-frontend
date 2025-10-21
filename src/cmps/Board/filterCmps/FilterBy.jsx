@@ -5,7 +5,7 @@ export function FilterBy({ board, filterOptions, filterBy, onSetFilterBy }) {
 
     const [boardData, setBoardData] = useState(board)
     const [filterToEdit, setFilterToEdit] = useState(filterBy)
-    
+
 
     const restFiltersRef = useRef({
         byGroups: [], byNames: [], byStatuses: [],
@@ -65,7 +65,7 @@ export function FilterBy({ board, filterOptions, filterBy, onSetFilterBy }) {
                     </ul>
                 </div>
 
-                <div className="option-containe">
+                {filterOptions?.names?.length > 0 && <div className="option-containe">
                     <div className="option-title">
                         Name
                         {filterToEdit?.byNames?.length > 0 && ` / ${filterToEdit?.byNames?.length}`}
@@ -81,9 +81,9 @@ export function FilterBy({ board, filterOptions, filterBy, onSetFilterBy }) {
                             </li>
                         })}
                     </ul>
-                </div>
+                </div>}
 
-                <div className="option-containe">
+                {board?.cmpOrder?.includes('status') && <div className="option-containe">
                     <div className="option-title">
                         Status
                         {filterToEdit?.byStatuses?.length > 0 && ` / ${filterToEdit?.byStatuses?.length}`}
@@ -100,9 +100,9 @@ export function FilterBy({ board, filterOptions, filterBy, onSetFilterBy }) {
                             </li>
                         })}
                     </ul>
-                </div>
+                </div>}
 
-                <div className="option-containe">
+                {board?.cmpOrder?.includes('priority') && <div className="option-containe">
                     <div className="option-title">
                         Priority
                         {filterToEdit?.byPriorities?.length > 0 && ` / ${filterToEdit?.byPriorities?.length}`}
@@ -119,11 +119,11 @@ export function FilterBy({ board, filterOptions, filterBy, onSetFilterBy }) {
                             </li>
                         })}
                     </ul>
-                </div>
+                </div>}
 
-                <div className="option-containe">
+                {board?.cmpOrder?.includes('members') && <div className="option-containe">
                     <div className="option-title">
-                        Member
+                        Members
                         {filterToEdit?.byMembers?.length > 0 && ` / ${filterToEdit?.byMembers?.length}`}
                     </div>
                     <ul className="options-list">
@@ -138,9 +138,9 @@ export function FilterBy({ board, filterOptions, filterBy, onSetFilterBy }) {
                             </li>
                         })}
                     </ul>
-                </div>
+                </div>}
 
-                <div className="option-containe">
+                {board?.cmpOrder?.includes('date') && <div className="option-containe">
                     <div className="option-title">
                         Date
                         {filterToEdit?.byDueDateOp?.length > 0 && ` / ${filterToEdit?.byDueDateOp?.length}`}
@@ -156,7 +156,7 @@ export function FilterBy({ board, filterOptions, filterBy, onSetFilterBy }) {
                             </li>
                         })}
                     </ul>
-                </div>
+                </div>}
 
             </section>
 
