@@ -206,7 +206,7 @@ button {
 
 }
 
-.input,
+.img-input,
 input {
 	margin: 0;
 	padding: 0;
@@ -228,16 +228,6 @@ input {
 	&.gray {
 		border-color: var(--ui-border-color);
 	}
-
-	&:hover {
-		border: 1px solid var(--primary-text-color);
-	}
-
-	&:active,
-	&:focus {
-		border: 1px solid var(--primary-color);
-	}
-
 }
 
 input[type="radio"] {

@@ -2,6 +2,8 @@
     &.timeline {
         color: var(--secondary-text-color);
 
+
+
         .timeline-header {
             margin-block-end: 8px;
 
@@ -14,6 +16,19 @@
         .dates-input {
             gap: 8px;
             margin-block-end: 8px;
+
+            input {
+                padding-inline-start: 8px;
+
+                &:hover {
+                    border: 1px solid var(--primary-text-color);
+                }
+
+                &:active,
+                &:focus {
+                    border: 1px solid var(--primary-color);
+                }
+            }
         }
 
         li {

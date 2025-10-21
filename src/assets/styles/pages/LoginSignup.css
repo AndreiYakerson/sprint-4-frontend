@@ -37,7 +37,7 @@
 				justify-self: center;
 			}
 
-			.input,
+			.img-input,
 			input {
 				min-height: 40px;
 				background-color: var(--secondary-background-color);
@@ -49,6 +49,16 @@
 				color: var(--primary-text-color);
 				font-size: 16px;
 				margin-block-end: var(--spacing-medium);
+
+
+				&:hover {
+					border: 1px solid var(--primary-text-color);
+				}
+
+				&:active,
+				&:focus {
+					border: 1px solid var(--primary-color);
+				}
 			}
 
 			select {

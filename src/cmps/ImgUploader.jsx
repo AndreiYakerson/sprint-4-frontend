@@ -24,7 +24,7 @@ export function ImgUploader({ onUploaded = null }) {
 
   return (
     <div className="upload-preview">
-      <label htmlFor="imgUpload" className='input'>{getUploadLabel()}
+      <label htmlFor="imgUpload" className='img-input'>{getUploadLabel()}
         <input type="file" onChange={uploadImg} accept="img/*" id="imgUpload" />
       </label>
       {imgData.imgUrl && <img src={imgData.imgUrl} className='prev-user-img' />}
