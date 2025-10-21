@@ -39,6 +39,22 @@ export function BoardDetailsHeader({
     const sortByRef = useRef(null)
 
 
+    // useEffect(() => {
+
+    //   {board && isPersonFilterOpen && 
+    //   <FloatingContainerCmpOld
+    //             anchorEl={personBtnRef.current}
+    //             onClose={onClosePersonFilter}
+    //         >
+    //             <PersonFilter
+    //                 members={board?.members}
+    //                 filterBy={{ byPerson }}
+    //                 onSetFilterBy={onSetFilterBy}
+    //             />
+    //         </FloatingContainerCmpOld>}
+    // }, [third])
+    
+
     function toggleIsFilterOpen() {
         setIsFilterOpen(!isFilterOpen)
     }

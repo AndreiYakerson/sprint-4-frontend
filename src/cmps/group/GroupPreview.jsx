@@ -17,6 +17,7 @@ import { CmpList } from "../CmpList.jsx";
 import { onCloseFloating, onSetFloating } from "../../store/actions/system.actions.js";
 import { useSearchParams } from "react-router-dom";
 import { FloatingContainerCmpOld } from "../FloatingContainerCmpOld.jsx";
+import { IndividualGroupCollapse } from "./IndividualGroupCollapse.jsx";
 
 export function GroupPreview({ group, groupsLength, managingType, TaskList,
     onRemoveGroup, onUpdateGroup, onAddTask, onAddGroup, onOpenGroupEditor, onAddColumn, onRemoveColumn }) {
@@ -264,37 +265,37 @@ export function GroupPreview({ group, groupsLength, managingType, TaskList,
 
     ///////////////////////////////  group  /////////////////////////////////
 
-    useEffect(() => {
-        if (groupMenuAnchor) {
-            onSetFloating(
-            <ActionsMenu
-                onCloseMenu={onCloseMenu}
-                onRemoveGroup={() => onRemoveGroup(group?.id)}
-                groupsLength={groupsLength}
-                onAddGroup={onAddGroup}
-                onRenameGroup={() => onOpenGroupEditor(group?.id)}
-                offsetX={40}
-                offsetY={35}
-                enforceLimit={true}
-            />, groupMenuAnchor)
-        }
+    // useEffect(() => {
+    //     if (groupMenuAnchor) {
+    //         onSetFloating(
+    //         <ActionsMenu
+    //             onCloseMenu={onCloseMenu}
+    //             onRemoveGroup={() => onRemoveGroup(group?.id)}
+    //             groupsLength={groupsLength}
+    //             onAddGroup={onAddGroup}
+    //             onRenameGroup={() => onOpenGroupEditor(group?.id)}
+    //             offsetX={40}
+    //             offsetY={35}
+    //             enforceLimit={true}
+    //         />, groupMenuAnchor)
+    //     }
 
-    }, [groupMenuAnchor])
+    // }, [groupMenuAnchor])
 
-    useEffect(() => {
-        console.log("🚀 ~ isElColumnMenu:", isElColumnMenu)
-        if (isElColumnMenu) {
-            onSetFloating(
-                <ActionsMenu
-                    onCloseMenu={onCloseMenu}
-                    isHrShown={false}
-                    onRemoveItem={() => onRemoveColumn(columnType)}
-                    offsetX={30}
-                    offsetY={45}
-                />, isElColumnMenu)
-        }
+    // useEffect(() => {
+    //     console.log("🚀 ~ isElColumnMenu:", isElColumnMenu)
+    //     if (isElColumnMenu) {
+    //         onSetFloating(
+    //             <ActionsMenu
+    //                 onCloseMenu={onCloseMenu}
+    //                 isHrShown={false}
+    //                 onRemoveItem={() => onRemoveColumn(columnType)}
+    //                 offsetX={30}
+    //                 offsetY={45}
+    //             />, isElColumnMenu)
+    //     }
 
-    }, [isElColumnMenu])
+    // }, [isElColumnMenu])
 
 
 
