@@ -16,6 +16,7 @@ import { SvgIcon } from "../SvgIcon.jsx"
 import { ActionsMenu } from "../ActionsMenu.jsx"
 import { FloatingContainerCmp } from "../FloatingContainerCmp.jsx"
 import { useSearchParams } from "react-router-dom";
+import { setStringDate } from "../../services/util.service.js"
 
 // DynamicCmp
 import { TitleEditor } from "./TitleEditor"
@@ -322,15 +323,15 @@ function DynamicCmp({ cmp, updateCmpInfo }) {
     switch (cmp?.type) {
         case 'StatusPicker':
             return <StatusPicker info={cmp.info} onUpdate={(data) => {
-                updateCmpInfo(cmp, 'selectedStatus', data, `Changed Status to ${data}`)
+                updateCmpInfo(cmp, 'selectedStatus', data, `Changed Status to ${data?.txt}`)
             }} />
         case 'DatePicker':
             return <DatePicker info={cmp?.info} onUpdate={(data) => {
-                updateCmpInfo(cmp, 'selectedDate', data, `Changed due date to ${data}`)
+                updateCmpInfo(cmp, 'selectedDate', data, `Changed due date to ${setStringDate(data?.date)}`)
             }} />
         case 'PriorityPicker':
             return <PriorityPicker info={cmp?.info} onUpdate={(data) => {
-                updateCmpInfo(cmp, 'taskPriority', data, `Changed due priority to ${data}`)
+                updateCmpInfo(cmp, 'taskPriority', data, `Changed due priority to ${data?.txt}`)
             }} />
         case 'MemberPicker':
             return <MemberPicker info={cmp.info} onUpdate={(data) => {

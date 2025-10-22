@@ -315,6 +315,14 @@ async function getTaskById(boardId, taskId) {
 
         if (!foundTask) throw new Error(`Task ${taskId} not found`)
 
+        const activities = board.activities.filter(a => {
+            return a.task.id === taskId
+        }).sort((a1, a2) => (a1?.createdAt - a2?.createdAt) * -1)
+
+        foundTask.activities = activities
+
+        console.log('activities:', activities)
+
         return foundTask
 
     } catch (err) {
@@ -382,7 +390,7 @@ async function updateTask(boardId, groupId, taskToUpdate, activityTitle) {
 
 
         const activity = _createActivity(activityTitle, _getMiniUser(),
-            _toMiniTask(group.tasks[taskIdx]), _toMiniGroup(group))
+            _toMiniGroup(group), _toMiniTask(group.tasks[taskIdx]),)
 
         board.activities.push(activity)
 
@@ -468,7 +476,7 @@ function _getMiniUser() {
         return {
             _id: 'guest',
             fullname: 'guest',
-            imgUrl: '../../../public/img/gray-avatar.svg',
+            imgUrl: '/img/gray-avatar.svg',
         }
     }
 

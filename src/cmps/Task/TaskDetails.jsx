@@ -48,6 +48,7 @@ export function TaskDetails() {
 
         const taskToUpdate = structuredClone(task)
         delete taskToUpdate.groupId
+        delete taskToUpdate.activities
         taskToUpdate.title = newTitle
 
         try {
@@ -62,7 +63,7 @@ export function TaskDetails() {
         navigate(`/board/${boardId}`)
     }
 
-    if (!task) return
+    if (!task || task.id !== taskId) return
     return (
         <div className={`task-details ${task ? "open" : ""}`}>
 
