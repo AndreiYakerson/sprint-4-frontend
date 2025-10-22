@@ -171,7 +171,7 @@ export function boardReducer(state = initialState, action = {}) {
                 group.tasks = group.tasks.map(t => (t.id !== action.task.id) ? t : action.task)
                 return group
             })
-            // board.activities = [...board.activities, action.activity]
+            board.activities = [...board.activities, action.activity]
             newState = { ...state, board }
             break
 

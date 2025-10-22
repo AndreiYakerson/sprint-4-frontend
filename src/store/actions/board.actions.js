@@ -185,10 +185,10 @@ export async function duplicateTask(boardId, groupId, taskCopy, taskCopyIdx) {
 
 
 
-export async function updateTask(boardId, groupId, taskToUpdate) {
+export async function updateTask(boardId, groupId, taskToUpdate, activityTitle) {
     try {
-        const savedTask = await boardService.updateTask(boardId, groupId, taskToUpdate)
-        store.dispatch({ type: UPDATE_TASK, groupId, task: savedTask })
+        const { savedTask, activity } = await boardService.updateTask(boardId, groupId, taskToUpdate, activityTitle)
+        store.dispatch({ type: UPDATE_TASK, groupId, task: savedTask, activity })
     } catch (err) {
         console.log('Cannot update task', err)
         throw err

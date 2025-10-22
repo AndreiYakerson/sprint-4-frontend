@@ -207,7 +207,7 @@ export function TaskPreview({ task, groupId, taskIdx }) {
         taskToUpdate.title = newTitle
 
         try {
-            await updateTask(boardId, groupId, taskToUpdate)
+            await updateTask(boardId, groupId, taskToUpdate, activityTitle)
         } catch (err) {
             showErrorMsg('cannot update task')
             setTitleToEdit(prev => ({ ...prev, currTitle: preTitleCopy }))

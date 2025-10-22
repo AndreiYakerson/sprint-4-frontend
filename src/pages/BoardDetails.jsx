@@ -44,6 +44,7 @@ export function BoardDetails() {
     const [filterBy, setFilterBy] = useState(boardService.getFilterFromSearchParams(searchParams))
 
 
+    console.log(board);
 
 
     const inputRef = useRef(null)

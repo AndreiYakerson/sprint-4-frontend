@@ -1,6 +1,6 @@
 
 import { storageService } from '../async-storage.service'
-import { userService } from '../user'
+import { getLoggedinUser, userService } from '../user'
 import { getRandomGroupColor, makeId } from '../util.service'
 
 /// for filter date
@@ -366,7 +366,7 @@ async function addTask(boardId, groupId, title, method) {
 }
 
 
-async function updateTask(boardId, groupId, taskToUpdate) {
+async function updateTask(boardId, groupId, taskToUpdate, activityTitle) {
 
     try {
         const { board } = await getById(boardId)
@@ -380,9 +380,15 @@ async function updateTask(boardId, groupId, taskToUpdate) {
 
         group.tasks[taskIdx] = { ...group.tasks[taskIdx], ...taskToUpdate }
 
+
+        const activity = _createActivity(activityTitle, _getMiniUser(),
+            _toMiniTask(group.tasks[taskIdx]), _toMiniGroup(group))
+
+        board.activities.push(activity)
+
         await save(board)
 
-        return group.tasks[taskIdx]
+        return { savedTask: group.tasks[taskIdx], activity }
 
     } catch (err) {
         throw err
@@ -435,6 +441,49 @@ async function removeTask(boardId, groupId, taskId) {
     }
 }
 
+
+
+//////  Activity
+
+function _createActivity(activityTitle, miniUser, miniGroup, miniTask) {
+    return {
+        id: makeId(),
+        title: activityTitle,
+        createdAt: Date.now(),
+        byMember: miniUser,
+        group: miniGroup,
+        task: miniTask,
+    }
+}
+
+function _getMiniUser() {
+    const user = getLoggedinUser()
+    if (user) {
+        return {
+            _id: user?._id,
+            fullname: user?.fullname,
+            imgUrl: user?.imgUrl,
+        }
+    } else {
+        return {
+            _id: 'guest',
+            fullname: 'guest',
+            imgUrl: '../../../public/img/gray-avatar.svg',
+        }
+    }
+
+}
+
+function _toMiniTask({ id, title }) {
+    return { id, title }
+}
+
+function _toMiniGroup({ id, title }) {
+    return { id, title }
+}
+
+
+//////// 
 
 const DefaultPriorities = [
     {
@@ -533,6 +582,7 @@ function _setBaordToSave({ title = 'New board', managingType = 'items', privacy 
                 },
             },
         ],
+        activities: [],
     }
 }
 
