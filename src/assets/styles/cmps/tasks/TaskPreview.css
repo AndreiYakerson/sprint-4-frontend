@@ -17,7 +17,6 @@
        }
 
 
-
        &:has(:focus, .focus):not(.table-header) {
            background-color: var(--primary-selected-color-rgb);
 
@@ -86,6 +85,10 @@
 
        display: grid;
        grid-template-columns: 6px 36px calc(var(--item-column) - 78px);
+
+       &.checked {
+        background-color: var(--primary-selected-color-rgb);
+       }
 
 
        &>*:not(.table-border, .task-menu-wrapper) {
@@ -362,6 +365,10 @@
                &:hover .checkbox-label {
                    background-color: #0060b9;
                }
+
+               .sticky-cell-wrapper {
+                   background-color: var(--primary-selected-color-rgb);
+               }
            }
 
            .svg-icon {
@@ -389,3 +396,4 @@
        }
 
    }
+

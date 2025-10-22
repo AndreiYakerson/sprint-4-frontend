@@ -223,7 +223,10 @@ export function TaskPreview({ task, groupId, taskIdx }) {
         <div className="task-preview" style={style} ref={setNodeRef} {...attributes}  >
 
 
-            <div className="sticky-cell-wrapper" {...listeners}>
+            <div
+                className={`sticky-cell-wrapper ${isTaskCheked ? 'checked' : ''}`}
+                {...listeners}
+            >
                 <div className="task-menu-wrapper">
                     <button
                         onClick={toggleIsMenuOpen}
