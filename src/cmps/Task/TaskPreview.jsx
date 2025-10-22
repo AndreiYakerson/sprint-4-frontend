@@ -31,6 +31,9 @@ export function TaskPreview({ task, groupId, taskIdx }) {
     const { boardId, taskId } = useParams()
     const [searchParams] = useSearchParams();
 
+    const [isTaskCheked, setIsTaskChecked] = useState(false)
+
+
     // dnd
     const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id: task.id, disabled: searchParams.size > 0 })
     const style = {
@@ -252,7 +255,32 @@ export function TaskPreview({ task, groupId, taskIdx }) {
                 </div>
 
                 <div className="table-border"></div>
-                <div className="task-select"></div>
+                <div className="task-select">
+
+                    <div className={`checkbox-container ${isTaskCheked ? 'checked' : ''}`}>
+
+                        <label
+                            className="checkbox-label"
+                            htmlFor={task.id}
+                            style={isTaskCheked ? { opacity: 1 } : { opacity: 0 }}
+                        >
+                            <input
+                                className="select-input"
+                                id={task.id}
+                                type="checkbox"
+                                style={{ display: 'none' }}
+                                onChange={(ev) => setIsTaskChecked(ev.target.checked)}
+                            />
+                            <SvgIcon
+                                iconName="checkbox"
+                                size={16}
+                                colorName={'whiteText'}
+                            />
+                        </label>
+
+                    </div>
+
+                </div>
                 <div className="task-title flex align-center">
                     <TitleEditor info={titleToEdit} onUpdate={(newTitle) => {
                         onUpdateTaskTitle(newTitle, `Changed title to ${newTitle}`)

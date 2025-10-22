@@ -334,3 +334,51 @@
            border-inline-end: 0;
        }
    }
+
+   .task-select {
+       display: flex;
+       align-items: center;
+       justify-content: center;
+
+
+       .checkbox-container {
+
+           display: flex;
+           align-items: center;
+           justify-content: center;
+
+           border: solid 1px var(--ui-border-color);
+           border-radius: 2px;
+
+           width: 16px;
+           height: 16px;
+
+           &.checked {
+               border-color: transparent;
+
+               &:hover .checkbox-label {
+                   background-color: #0060b9;
+               }
+           }
+
+
+
+           &:hover {
+               border-color: var(--text-column);
+           }
+
+           .checkbox-label {
+               display: flex;
+               align-items: center;
+               justify-content: center;
+
+               width: 16px;
+               height: 16px;
+               border-radius: 2px;
+               background-color: var(--primary-color);
+               opacity: 0;
+               transition: opacity 0.1s ease-in-out;
+           }
+       }
+
+   }
