@@ -1,6 +1,6 @@
 
 import { useEffect, useRef, useState } from 'react'
-import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
+import { Outlet, useNavigate, useParams, useSearchParams } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 
 // services
@@ -26,7 +26,7 @@ export function BoardDetails() {
     const [anchorEl, setAnchorEl] = useState(false)
     const navigate = useNavigate()
 
-    const { boardId, taskId } = useParams()
+    const { boardId } = useParams()
 
     const isAppLoading = useSelector(state => state.systemModule.isAppLoading)
     const board = useSelector(storeState => storeState.boardModule.board)
@@ -34,16 +34,17 @@ export function BoardDetails() {
     const boardRemovedMsg = useSelector(storeState => storeState.boardModule.boardRemovedMsg)
 
     const [searchAnchor, setSearchAnchor] = useState()
+    const [showPopUP, setShowPopUP] = useState(false)
+
     const [isSearchOpen, setIsSearchOpen] = useState(false)
     const [searchValues, setSearchValues] = useState(false)
     const [inputValue, setInputValue] = useState('')
-    const [showPopUP, setShowPopUP] = useState(false)
-    const [task, setTask] = useState(null)
+
     const [searchParams, setSearchParams] = useSearchParams()
     const [filterBy, setFilterBy] = useState(boardService.getFilterFromSearchParams(searchParams))
 
 
-    
+
 
     const inputRef = useRef(null)
 
@@ -56,63 +57,29 @@ export function BoardDetails() {
 
 
     useEffect(() => {
-        if (taskId && taskId !== task?.id && board) {
-            setTaskForDetails(taskId, board)
-        } else if (!taskId && task) {
-            setTask(null)
-        } else {
-            setFilterBy(boardService.getFilterFromSearchParams(searchParams))
-            onLoadBoard(boardId, taskId, filterBy)
-        }
-
-    }, [boardId, taskId])
+        setFilterBy(boardService.getFilterFromSearchParams(searchParams))
+        onLoadBoard(boardId, filterBy)
+    }, [boardId])
 
 
     useEffect(() => {
         setSearchParams(cleanSearchParams(filterBy))
-        onLoadBoard(boardId, null, filterBy)
+        onLoadBoard(boardId, filterBy)
     }, [filterBy])
 
 
-    async function onLoadBoard(boardId, taskId, filterBy) {
+    async function onLoadBoard(boardId, filterBy) {
         try {
             if (boardRemovedMsg) setBoardRemovedMsg('')
-
             await loadBoard(boardId, filterBy)
-
-            if (taskId && board) setTaskForDetails(taskId, board)
-            else if (task) setTask(null)
-
         } catch (err) {
             console.log(err)
             showErrorMsg('faild to laod board')
         }
     }
 
-    function setTaskForDetails(taskId, board) {
-
-        var foundTask = null
-
-        for (const group of board.groups) {
-            const task = group.tasks.find(task => task.id === taskId)
-            if (task) {
-                foundTask = task
-                break
-            }
-        }
-
-        if (foundTask) {
-            setTask(foundTask)
-        }
-    }
-
-    function onCloseTaskDetails() {
-        navigate(`/board/${boardId}`)
-    }
 
     function onCloseMenu() {
-        console.log('variable')
-
         setSearchAnchor(false)
         setShowPopUP(false)
     }
@@ -255,13 +222,10 @@ export function BoardDetails() {
                     </button>}
             </div>
 
-
-            <div className={`task-details-wrapper ${task ? "open" : ""}`}>
-                {task && <TaskDetails
-                    task={task}
-                    onCloseTaskDetails={onCloseTaskDetails}
-                />}
+            <div className='task-details-wrapper'>
+                <Outlet />
             </div>
+
 
         </section>
     )

@@ -1,33 +1,15 @@
 .board-details {
     height: 100%;
 
-
     display: grid;
     grid-template-columns: 1fr auto;
-
-
-    .task-details-wrapper {
-        top: 0;
-        left: 0;
-        height: 100%;
-        width: 0;
-        background-color: var(--primary-background-color);
-        z-index: var(--zIndex-Layer-500);
-        transition: 200ms;
-
-        &.open {
-            width: 600px;
-            background-color: var(--primary-background-color);
-        }
-    }
-
+    overflow: hidden;
 
     .board-details-container {
         height: 100%;
         overflow: auto;
         position: relative;
         padding-block-end: 2em;
-
 
     }
 
@@ -49,5 +31,9 @@
             font-size: 24px;
             font-weight: 300;
         }
+    }
+
+    .task-details-content {
+        height: 100%;
     }
 }

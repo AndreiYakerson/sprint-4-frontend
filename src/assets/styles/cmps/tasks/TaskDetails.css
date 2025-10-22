@@ -1,3 +1,59 @@
-/* TaskDetails */
+.task-details-wrapper {
+
+    z-index: var(--zIndex-Layer-500);
+    width: 0;
+    transition: 200ms ease-in-out;
+
+    &:has(.open) {
+        width: 600px;
+        background-color: var(--primary-background-color);
+        box-shadow: -10px 0px 10px rgb(175, 175, 175);
+    }
+
+    .task-details {
+        height: 100%;
+        background-color: var(--primary-background-color);
 
 
+        .close-btn {
+            padding: 0;
+        }
+
+        .task-details-header {
+            padding: 20px 20px 0px 20px;
+            border-bottom: 1px solid;
+            border-color: var(--layout-border-color);
+
+            /* .task-title-container {} */
+
+            .task-details-nav {
+                height: max-content;
+                gap: 1px;
+
+                .nav-btn-wrapper {
+                    padding-bottom: var(--spacing-xs);
+                    position: relative;
+
+                    &::after {
+                        content: "";
+                        height: 16px;
+                        border-right: 1px solid;
+                        border-color: var(--layout-border-color);
+                        position: absolute;
+                        top: 8px;
+                    }
+
+                    .btn-name {
+                        position: relative;
+                        padding: 0;
+                        border: 0;
+                        line-height: 16px;
+                        padding: var(--spacing-small);
+                    }
+                }
+            }
+
+        }
+    }
+
+}
