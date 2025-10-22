@@ -172,7 +172,7 @@ export function TaskPreview({ task, groupId, taskIdx }) {
     function onToggleTaskDetails() {
         navigate(taskId && taskId === task?.id
             ? `/board/${boardId}`
-            : `/board/${boardId}/task/${task.id}`)
+            : `/board/${boardId}/task/${task.id}/updates`)
     }
 
 

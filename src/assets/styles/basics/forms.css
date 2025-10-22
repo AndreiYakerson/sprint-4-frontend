@@ -65,7 +65,7 @@ button {
 		padding: 0.5em;
 	}
 
-	&.active:not(.nav-heaer-btn) {
+	&.active:not(.nav-heaer-btn, .btn-name) {
 		background-color: var(--primary-selected-color-btn)
 	}
 
@@ -74,7 +74,7 @@ button {
 	&:hover:not(:disabled, .btn-shrink-wrapper) {
 		background-color: var(--primary-background-hover-color);
 
-		&.active:not(.nav-heaer-btn) {
+		&.active:not(.nav-heaer-btn, .btn-name) {
 			background-color: var(--primary-selected-color-btn)
 		}
 

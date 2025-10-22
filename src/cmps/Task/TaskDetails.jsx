@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { useNavigate, useParams } from "react-router"
+import { Outlet, useNavigate, useParams } from "react-router"
 import { useSelector } from "react-redux"
 
 // services
@@ -9,6 +9,7 @@ import { getTaskById, updateTask } from "../../store/actions/board.actions"
 import { SvgIcon } from "../SvgIcon"
 import { showErrorMsg } from "../../services/event-bus.service"
 import { TitleEditor } from "./TitleEditor"
+import { NavLink } from "react-router-dom"
 
 
 export function TaskDetails() {
@@ -84,20 +85,20 @@ export function TaskDetails() {
 
                 <nav className="task-details-nav flex">
                     <div className='nav-btn-wrapper'>
-                        <button className="btn-name">Updates</button>
+                        <NavLink to='updates' className="btn btn-name">Updates</NavLink>
                     </div>
                     <div className='nav-btn-wrapper'>
-                        <button className="btn-name">Files</button>
+                        <NavLink to='files' className="btn btn-name">Files</NavLink>
                     </div>
                     <div className='nav-btn-wrapper'>
-                        <button className="btn-name">Activity Log</button>
+                        <NavLink to='log' className="btn btn-name">Activity Log</NavLink>
                     </div>
                 </nav>
 
             </header>
 
             <div className="task-details-content">
-
+                <Outlet />
             </div>
 
 
