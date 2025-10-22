@@ -1,5 +1,5 @@
 
-import { useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { useParams, useNavigate } from "react-router-dom"
 import { useSelector } from "react-redux"
 
@@ -44,6 +44,8 @@ export function TaskPreview({ task, groupId, taskIdx }) {
 
     const board = useSelector(state => state.boardModule.board)
     const cmpOrder = board?.cmpOrder || []
+    const [titleToEdit, setTitleToEdit] = useState({ taskId: task?.id, currTitle: task?.title })
+
     const [cmps, setCmps] = useState(
         [
             {
@@ -84,16 +86,6 @@ export function TaskPreview({ task, groupId, taskIdx }) {
                 }
             },
             {
-                type: 'TitleEditor',
-                info: {
-                    taskId: task?.id,
-                    label: 'Title:',
-                    propName: 'title',
-                    currTitle: task?.title,
-                }
-
-            },
-            {
                 type: 'TimelinePicker',
                 info: {
                     label: 'timeline:',
@@ -103,6 +95,7 @@ export function TaskPreview({ task, groupId, taskIdx }) {
             },
         ]
     )
+
 
 
     const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -198,6 +191,30 @@ export function TaskPreview({ task, groupId, taskIdx }) {
     }
 
 
+    /// task title
+
+    useEffect(() => {
+        if (task?.title !== titleToEdit?.currTitle) {
+            setTitleToEdit(prev => ({ ...prev, currTitle: task?.title }))
+        }
+    }, [task])
+
+    async function onUpdateTaskTitle(newTitle, activityTitle) {
+        const preTitleCopy = task?.title
+        setTitleToEdit(prev => ({ ...prev, currTitle: newTitle }))
+
+        const taskToUpdate = structuredClone(task)
+        taskToUpdate.title = newTitle
+
+        try {
+            await updateTask(boardId, groupId, taskToUpdate)
+        } catch (err) {
+            showErrorMsg('cannot update task')
+            setTitleToEdit(prev => ({ ...prev, currTitle: preTitleCopy }))
+        }
+    }
+
+
     return (
 
         <div className="task-preview" style={style} ref={setNodeRef} {...attributes}  >
@@ -237,10 +254,8 @@ export function TaskPreview({ task, groupId, taskIdx }) {
                 <div className="table-border"></div>
                 <div className="task-select"></div>
                 <div className="task-title flex align-center">
-                    <TitleEditor info={cmps.find(cmp => cmp.type === 'TitleEditor')?.info} onUpdate={(data) => {
-                        updateCmpInfo(cmps.find(cmp => cmp.type === 'TitleEditor'),
-                            'currTitle', data, `Changed title to ${data}`)
-
+                    <TitleEditor info={titleToEdit} onUpdate={(newTitle) => {
+                        onUpdateTaskTitle(newTitle, `Changed title to ${newTitle}`)
                     }} />
 
                     <div className="grab-block" ></div>

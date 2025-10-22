@@ -225,6 +225,10 @@ input {
 	font-weight: inherit;
 	color: inherit;
 
+	&:focus {
+		border-color: var(--primary-color);
+	}
+
 	&.gray {
 		border-color: var(--ui-border-color);
 	}
