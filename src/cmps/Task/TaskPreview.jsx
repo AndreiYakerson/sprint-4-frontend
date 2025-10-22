@@ -220,7 +220,12 @@ export function TaskPreview({ task, groupId, taskIdx }) {
 
     return (
 
-        <div className="task-preview" style={style} ref={setNodeRef} {...attributes}  >
+        <div
+            className={`task-preview ${isTaskCheked ? 'checked' : ''}`}
+            style={style}
+            ref={setNodeRef}
+            {...attributes}
+        >
 
 
             <div

@@ -16,6 +16,9 @@
            background-color: rgb(19, 157, 203);
        }
 
+       .task-preview.checked {
+           background-color: var(--primary-selected-color-rgb);
+       }
 
        &:has(:focus, .focus):not(.table-header) {
            background-color: var(--primary-selected-color-rgb);
@@ -87,7 +90,7 @@
        grid-template-columns: 6px 36px calc(var(--item-column) - 78px);
 
        &.checked {
-        background-color: var(--primary-selected-color-rgb);
+           background-color: var(--primary-selected-color-rgb);
        }
 
 
@@ -394,4 +397,3 @@
        }
 
    }
-
