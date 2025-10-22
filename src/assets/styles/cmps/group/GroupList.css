@@ -73,6 +73,7 @@
             justify-content: center;
             justify-self: end;
             margin-inline-end: 2px;
+            cursor: pointer;
         }
 
         .group-menu-wrapper {
