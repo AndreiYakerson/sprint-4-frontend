@@ -1,139 +1,145 @@
-# Coding Academy React Frontend
+🌅 OneDay — Task Delegation & Team Collaboration App
 
-Modern React application built with Vite, featuring a complete frontend infrastructure for teaching full-stack development.
+Plan. Delegate. Collaborate.
+A vibrant, modern workspace for managing daily goals and team productivity — beautifully crafted with React + Vite + Redux + Socket.io.
 
-## 🚀 Quick Start
 
-1. Install dependencies:
-```bash
+✨ Overview
+
+OneDay is a collaborative task management app that helps teams break down goals into actionable steps — and get them done together.
+Built for speed, clarity, and delight, it blends productivity with playful, animated micro-interactions.
+
+💡 Think “Trello meets calm focus” — everything your team needs to turn One Day into day one.
+
+🎯 Highlights
+🌈 Category	💡 Key Features
+Task Management	Assign, prioritize, and organize tasks with live updates
+Floating Popovers	Smart UI for labels, members, and status — intuitive and beautiful
+Realtime Collaboration	Socket.io integration for instant task sync and notifications
+UI & Experience	Smooth animations, colorful themes, focus-driven micro-UX
+Architecture	Modular React + Redux design with service-driven logic
+Developer Ready	Vite fast reload ⚡, ESLint, and fully mockable local services
+🧩 Tech Stack
+Layer	Tools
+Frontend	React 18 + Vite
+State Management	Redux + react-redux
+Drag & Drop	@dnd-kit + react-beautiful-dnd
+Realtime	socket.io-client
+Utilities	axios, lodash, luxon
+Styling	CSS Variables (var.css) + modular component CSS
+🎨 Design & Theming
+
+OneDay’s interface is built around color harmony, playful details, and accessibility.
+
+🎭 CSS Variables
+
+--color-primary: #6C63FF;
+--color-surface: #ffffff;
+--radius-lg: 12px;
+--transition-fast: 0.15s ease-in-out;
+
+
+🖼 Design Principles
+
+Adaptive light/dark color palettes 🌗
+
+SVG icons imported via Vite for crisp scaling
+
+Floating UI via React Portals (#portal-root)
+
+Gentle transitions on hover, focus, and popovers
+
+Consistent spacing & z-index hierarchy across UI
+
+⚙️ Quick Start
+# 1️⃣ Clone
+git clone <your-repo-url>
+cd sprint-4-frontend
+
+# 2️⃣ Install
 npm install
-```
 
-2. Start development server:
-```bash
+# 3️⃣ Run (local demo)
 npm run dev
-```
 
-## 🏗️ Project Structure
+# 4️⃣ Build for production
+npm run build && npm run preview
 
-```
+
+💬 npm run dev enables VITE_LOCAL=true for local mock services.
+For remote mode, run npm run dev:remote.
+
+🧭 Floating Popover Logic
+
+🪄 The secret sauce behind OneDay’s fluid interactivity.
+
+Component	Role
+FloatingContainerCmp.jsx	Core anchor-based popover using React Portal
+FloatingSecondary.jsx	Redux-driven variant (legacy/experimental)
+FloatingContainerCmpNotToUse.jsx	Deprecated prototype — kept for reference
+
+💡 Best Practice
+
+Keep popover state local for responsiveness.
+
+Use FloatingContainerCmp.jsx as canonical implementation.
+
+Provide a small FloatingProvider context for cross-tree triggers.
+
+Avoid Redux for transient UI (use context or local state instead).
+
+🗂 Project Structure
 src/
-├── assets/
-│   └── styles/        # SCSS modules
-│       ├── basics/    # Core styles
-│       ├── cmps/      # Component styles
-│       ├── pages/     # Page styles
-│       └── setup/     # SCSS variables & mixins
-├── cmps/              # Reusable components
-├── pages/             # Route components
-├── services/          # API and utility services
-└── store/            # Redux state management
-    ├── actions/      # Action creators
-    └── reducers/     # State reducers
-```
+ ┣ cmps/           → Reusable UI (Board, Task, Sidebar, etc.)
+ ┣ pages/          → Routed views (BoardDetails, HomePage)
+ ┣ services/       → Logic & APIs (board, user, socket, util)
+ ┣ store/          → Redux store + actions
+ ┣ assets/styles/  → var.css + global CSS
+ ┗ index.jsx       → Entry point
 
-## 🎨 Components
+🧠 Development Tips
 
-### Core Components
-- `AppHeader` - Navigation and user menu
-- `AppFooter` - Footer with service status
-- `UserMsg` - Toast notifications
-- `BoardList` - Grid display of boards with actions
-- `BoardFilter` - Search and filter interface
+Use makeId() from util.service.js for deterministic IDs.
 
+Extend color tokens in var.css for theming.
 
-### Pages
-- `BoardIndex` - Main board management
-- `UserDetails` - User profile
-- `AboutUs` - Static content with nested routes
-- `Chat` - Real-time messaging
+Replace Redux with FloatingContext for faster popover updates.
 
-## 🔄 State Management
+Keep your popovers simple, composable, and decoupled.
 
-Using Redux with the following modules:
-- `boardModule` - Board CRUD operations
-- `userModule` - Authentication and user data
-- `systemModule` - App-wide settings
+🧑‍💻 Contributing
 
-### Example Usage
-```jsx
-// In component:
-const boards = useSelector(state => state.boardModule.boards)
-const dispatch = useDispatch()
+Fork & branch: feat/your-feature
 
-// Action dispatch:
-dispatch(loadBoards())
-```
+Run npm run lint before committing
 
-## 🎯 Services
+Add screenshots or GIFs for UI changes
 
-### REST API Services
-- `board.service` - Board CRUD operations
-- `user.service` - Authentication & user management
-- `upload.service` - File uploads
+PRs welcome — clarity and color encouraged 🎨
 
-### Utility Services
-- `event-bus.service` - Pub/sub messaging
-- `socket.service` - WebSocket connection
-- `storage.service` - Local storage wrapper
-- `util.service` - Common helpers
+📸 Visual Assets & Badges to Add
+Asset	Location	Purpose
+hero.gif	/public/img/	Animated drag-drop demo
+board-item-img.svg	/public/img/	Board preview
+dashboard-item-img.svg	/public/img/	Dashboard preview
+logo.png	/public/img/	App logo
+Badges	Shields.io	Stars ⭐, CI status, Releases 🏷️
+📜 License
 
-## 🎨 Styling
+🧾 MIT License – Free to use, modify, and share.
+(Include an explicit LICENSE file in your repository.)
 
-Using SCSS modules with:
-- CSS Grid for layouts
-- Flexbox for component alignment
-- CSS Variables for theming
-- Responsive breakpoints
-- Utility classes
+💎 Layout Styles
 
-### Example Usage
-```scss
-.board-list {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: .5em;
-}
-```
+Minimal Layout: concise for developers (no hero GIF, tight spacing).
+Rich Layout (Recommended): hero animation, colorful tables, and emoji rhythm for a welcoming experience 😄
 
-## 🚦 Development Guidelines
+🌟 Credits & Inspiration
 
-1. Component Structure
-```jsx
-export function MyComponent({ prop1, prop2 }) {
-    const [state, setState] = useState(null)
-    
-    useEffect(() => {
-        // Side effects here
-    }, [])
+OneDay draws visual and structural inspiration from:
 
-    return <section className="my-component">
-        {/* JSX */}
-    </section>
-}
-```
+Vite + React starter templates (layout & readability)
 
-2. State Updates
-```jsx
-// Correct:
-setData(prevData => [...prevData, newItem])
+Trello-style Kanban interfaces (interaction design)
 
-// Avoid:
-setData([...data, newItem])
-```
-
-## 📝 Available Scripts
-
-- `npm run dev` - Start development server
-- `npm run build` - Production build
-- `npm run preview` - Preview production build
-- `npm run test` - Run tests
-
-
-## 📄 License
-MIT
-
----
-Coding Academy - Built with ❤️ for teaching modern fullstack development
-
-
+Material-UI and MERN example repos (badge and section aesthetics)
