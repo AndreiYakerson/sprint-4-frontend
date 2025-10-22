@@ -21,6 +21,7 @@ export const boardService = {
     removeGroup,
     updateGroupsOrder,
     //task 
+    getTaskById,
     addTask,
     removeTask,
     updateTask,
@@ -294,6 +295,32 @@ async function removeGroup(boardId, groupId) {
 
 
 //  task functions
+
+async function getTaskById(boardId, taskId) {
+
+    try {
+        const { board } = await getById(boardId)
+        if (!board) throw new Error(`Board ${boardId} not found`)
+
+        var foundTask = null
+
+        for (const group of board?.groups) {
+            const task = group.tasks.find(task => task.id === taskId)
+            if (task) {
+                task.groupId = group.id
+                foundTask = task
+                break
+            }
+        }
+
+        if (!foundTask) throw new Error(`Task ${taskId} not found`)
+
+        return foundTask
+
+    } catch (err) {
+        throw err
+    }
+}
 
 async function updateTasksOrder(orderedTasks, boardId, groupId) {
     try {

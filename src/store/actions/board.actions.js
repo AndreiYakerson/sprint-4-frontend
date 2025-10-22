@@ -23,10 +23,14 @@ import {
     SET_IS_BOARD_EDITOR_OPEN,
     SET_BOARD_REMOVED_MSG,
     DUPLICATE_TASK,
+
+    // task details
+    SET_TASK_DETAILS,
+
     // filter
     SET_FILTER_OPTIONS,
+
 } from '../reducers/board.reducer'
-import { SET_SIDE_BAR_OPEN } from '../reducers/system.reducer'
 
 
 
@@ -218,10 +222,24 @@ export function setBoardRemovedMsg(msg) {
     store.dispatch({ type: SET_BOARD_REMOVED_MSG, msg })
 }
 
+
+/////////////////////// Task details //////////////////////////////////////
+
+export async function getTaskById(boardId, taskId) {
+    try {
+        const task = await boardService.getTaskById(boardId, taskId)
+
+        store.dispatch({ type: SET_TASK_DETAILS, task })
+    } catch (err) {
+        console.log('Cannot get task', err)
+        throw err
+    }
+}
+
 // Columns  ///////////////////////////////////////////////////////////////
 
 export async function addColumn(board, columnType) {
-board.cmpOrder.push(columnType)
+    board.cmpOrder.push(columnType)
 
     try {
         const savedBoard = await boardService.save(board)

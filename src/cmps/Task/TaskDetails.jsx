@@ -1,8 +1,14 @@
 import { useEffect, useState } from "react"
-import { useSelector } from "react-redux"
 import { useNavigate, useParams } from "react-router"
+import { useSelector } from "react-redux"
+
+// services
+import { getTaskById, updateTask } from "../../store/actions/board.actions"
+
+// cmps
 import { SvgIcon } from "../SvgIcon"
-import { NavLink } from "react-router-dom"
+import { showErrorMsg } from "../../services/event-bus.service"
+import { TitleEditor } from "./TitleEditor"
 
 
 export function TaskDetails() {
@@ -10,27 +16,44 @@ export function TaskDetails() {
     const navigate = useNavigate()
 
     const board = useSelector(storeState => storeState.boardModule.board)
-    const [task, setTask] = useState(null)
+    const task = useSelector(storeState => storeState.boardModule.taskDetails)
+    const [titleToEdit, setTitleToEdit] = useState('')
 
 
     useEffect(() => {
-        if (taskId && board) {
-            setTaskForDetails(taskId, board)
+        if (taskId && boardId) {
+            loadTask(boardId, taskId)
         }
-    }, [board, taskId])
+    }, [taskId, board])
 
-    function setTaskForDetails(taskId, board) {
-        var foundTask = null
-        for (const group of board?.groups) {
-            const task = group.tasks.find(task => task.id === taskId)
-            if (task) {
-                foundTask = task
-                break
-            }
+    useEffect(() => {
+        if (task?.title !== titleToEdit) {
+            setTitleToEdit(task?.title)
         }
+    }, [task])
 
-        if (foundTask) {
-            setTask(foundTask)
+    async function loadTask(boardId, taskId) {
+        try {
+            await getTaskById(boardId, taskId)
+        } catch (err) {
+            console.log(err)
+            showErrorMsg('cannot load task')
+        }
+    }
+
+    async function onUpdateTaskTitle(newTitle) {
+        const preTitleCopy = task?.title
+        setTitleToEdit(newTitle)
+
+        const taskToUpdate = structuredClone(task)
+        delete taskToUpdate.groupId
+        taskToUpdate.title = newTitle
+
+        try {
+            await updateTask(board?._id, task?.groupId, taskToUpdate)
+        } catch (err) {
+            showErrorMsg('cannot update task')
+            setTitleToEdit(preTitleCopy)
         }
     }
 
@@ -51,7 +74,12 @@ export function TaskDetails() {
                 </button>
 
                 <div className="task-title-container">
-                    <h2>{task?.title}</h2>
+                    <h2>
+                        <TitleEditor
+                            info={{ currTitle: titleToEdit }}
+                            onUpdate={onUpdateTaskTitle}
+                        />
+                    </h2>
                 </div>
 
                 <nav className="task-details-nav flex">
