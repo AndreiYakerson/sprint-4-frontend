@@ -123,6 +123,12 @@
 
        }
 
+       .add-task-cell {
+            .task-name {
+                color: var(--secondary-text-color);
+            }
+       }
+
 
        /* Currently contains the X to delete a task, later three dots will appear there that will open a menu */
 
