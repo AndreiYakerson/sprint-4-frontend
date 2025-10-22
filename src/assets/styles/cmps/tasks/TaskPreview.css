@@ -39,7 +39,7 @@
 
 
        &:hover {
-           &:not(.table-header, .sum-row, :has(:focus, .focus)) {
+           &:not(.table-header, .sum-row, :has(:focus, .focus, .checked)) {
                background-color: var(--pulse-background-color-rgb);
                box-shadow: 4px 3px 6px -3px var(--ui-border-color);
 
@@ -374,8 +374,6 @@
            .svg-icon {
                cursor: pointer;
            }
-
-
 
            &:hover {
                border-color: var(--text-column);
