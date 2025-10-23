@@ -9,6 +9,9 @@ import ReactQuill from "react-quill-new"
 import { addUpdateToTask } from "../../store/actions/board.actions"
 import { formatTimeAgo } from "../../services/util.service"
 
+// img
+import noUpdatesImg from '/img/no-updates.svg'
+
 export function Updates() {
     const { boardId } = useParams()
     const task = useSelector(storeState => storeState.boardModule.taskDetails)
@@ -80,28 +83,39 @@ export function Updates() {
                 </div>
             )}
 
-            {updates?.length > 0 && (
-                <ul className="updates-list">
-                    {updates.map(update => (
-                        <li key={update?.id} className="update-item">
-                            <header className="update-header">
-                                <img
-                                    className="user-img"
-                                    src={update?.byMember?.imgUrl}
-                                    alt={update?.byMember?.fullname}
-                                />
-                                <div className="update-user-name">{update?.byMember?.fullname}</div>
-                                <div>{formatTimeAgo(update?.createdAt)}</div>
-                            </header>
+            {updates?.length > 0
+                ? (
+                    <ul className="updates-list">
+                        {updates.map(update => (
+                            <li key={update?.id} className="update-item">
+                                <header className="update-header">
+                                    <img
+                                        className="user-img"
+                                        src={update?.byMember?.imgUrl}
+                                        alt={update?.byMember?.fullname}
+                                    />
+                                    <div className="update-user-name">{update?.byMember?.fullname}</div>
+                                    <div>{formatTimeAgo(update?.createdAt)}</div>
+                                </header>
 
-                            <div
-                                className="update-txt"
-                                dangerouslySetInnerHTML={{ __html: update?.title }}
-                            />
-                        </li>
-                    ))}
-                </ul>
-            )}
+                                <div
+                                    className="update-txt"
+                                    dangerouslySetInnerHTML={{ __html: update?.title }}
+                                />
+                            </li>
+                        ))}
+                    </ul>
+                )
+                : <div className="no-updates-msg">
+                    <img src={noUpdatesImg} alt="no-updates" />
+                    <h3>No updates yet</h3>
+                    <h4>
+                        Share progress, mention a teammate,
+                        or upload a file to get things moving
+                    </h4>
+                </div>
+            }
+
         </section>
     )
 }

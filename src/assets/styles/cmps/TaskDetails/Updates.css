@@ -8,7 +8,7 @@
         border: 1px solid var(--primary-color);
         border-radius: 8px;
 
-        margin-block-end: 8px;
+        margin-block-end: 16px;
 
         .text-editor-wrapper {
             .ql-formats {
@@ -42,12 +42,42 @@
         border: 1px solid var(--ui-border-color);
         border-radius: 8px;
         padding: 16px;
-        margin-block-end: 8px;
+        margin-block-end: 16px;
 
         &:hover {
             background-color: var(--primary-background-hover-color);
             cursor: text;
         }
+    }
+
+    .no-updates-msg {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-block-start: 32px;
+
+        img {
+            height: 182px;
+            padding-bottom: var(--spacing-small);
+            width: 182px;
+        }
+
+        h3 {
+            font-weight: 700;
+            margin-block-end: 0;
+            margin-block-start: 0;
+            padding: var(--spacing-small) 0;
+            font-size: 18px;
+        }
+
+        h4 {
+            width: 70%;
+            text-align: center;
+            text-wrap-style: balance;
+            font-weight: 400;
+            font-size: 16px;
+        }
+
     }
 
     .updates-list {
