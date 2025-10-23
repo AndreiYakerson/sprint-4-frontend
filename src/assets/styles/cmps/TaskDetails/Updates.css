@@ -83,12 +83,14 @@
     .updates-list {
         display: flex;
         flex-direction: column;
-        gap: 8px;
+        gap: 16px;
 
         .update-item {
             border: 1px solid var(--ui-border-color);
             border-radius: 8px;
             padding: 16px;
+
+            animation: pop 200ms ease-in-out;
 
             .update-user-name {
                 font-weight: 700;
@@ -124,5 +126,16 @@
                 height: 40px;
             }
         }
+    }
+}
+
+
+@keyframes pop {
+    0% {
+        scale: 0.8;
+    }
+
+    100% {
+        scale: 1;
     }
 }
