@@ -9,8 +9,12 @@
      height: auto;
      padding: 8px 2px 0px 16px;
      background-color: inherit;
-     /* z-index: var(--zIndex-Layer-1); */
 
+     &.file-preview .user-label{
+         max-width: 16.8em;
+     }
+
+     /* z-index: var(--zIndex-Layer-1); */
      .user-label {
 
          display: flex;
@@ -24,6 +28,10 @@
 
          background-color: var(--primary-selected-color-rgb);
          border-radius: var(--border-radius-small);
+
+
+
+
 
          .user-name {
              overflow: hidden;

@@ -29,6 +29,7 @@ export function FileUpload({ info, onUpdate }) {
 
 
     function onToggleMenu(ev) {
+
         setAddFileAnchor(ev.currentTarget)
         setIsMenuOpen(prev => !prev)
     }
@@ -109,108 +110,91 @@ export function FileUpload({ info, onUpdate }) {
     }
 
 
-    function _onShowPopUp() {
-        if (!taskFileToShow[0]?.file) return
+    function _onShowPopUp(ev) {
+        ev.stopPropagation()
+        setIsPreviewOpen(false)
         const content = <FullScreenContainer
             imgSrc={taskFileToShow[0]?.file.dataUrl}
             imgTitle={taskFileToShow[0]?.file.name}
         />
         onSetPopUp(content)
     }
-
-    const file = taskFileToShow[0]?.file ?
-        [{
-            imgUrl: taskFileToShow[0]?.file.dataUrl,
-            fullname: taskFileToShow[0]?.file.name,
-            id: makeId()
-        }]
-        :
-        false
+    const files = [{
+        imgUrl: taskFileToShow[0]?.file.dataUrl,
+        fullname: taskFileToShow[0]?.file.name,
+        id: makeId()
+    }]
+    const file = taskFileToShow[0]?.file ? files : false
 
     return (
         <div className={`file-upload ${isDragging ? 'dragging' : ''}`}
             onClick={onToggleMenu}
-            ref={addFileRef.current}
+            ref={addFileRef}
             onDragOver={handleDragOver}
             onDragLeave={handleDragLeave}
-            onDrop={handleDrop}
-        >
+            onDrop={handleDrop}>
+
             <input
                 datatype="Drop Files Here"
                 type="file"
                 ref={fileInputRef}
                 onChange={handelFileChange}
-                style={{ display: 'none' }}
-            />
+                style={{ display: 'none' }} />
 
 
             {isDragging && dragDataType}
 
             {!isDragging &&
                 <section className={`empty-file-img-container ${!!taskFileToShow.length}`}
-                    ref={previewRef.current}
+                    ref={previewRef}
                     onMouseEnter={onHoverFile}
-                    onMouseLeave={clearHover}
-                >
+                    onMouseLeave={clearHover}>
+
                     <span className="round-plus-icon-container">
                         <span className="round-plus-icon"></span>
                     </span>
                     <img
                         className='empty-file-img' src={taskFileToShow[0]?.file.dataUrl || "/img/emptyFile.svg"}
                         onClick={_onShowPopUp}
-                        alt="Empty File Image"
-                    />
+                        alt="Empty File Image" />
+
                 </section>}
+
 
             {isMenuOpen && (
                 <FloatingContainerCmp
                     anchorEl={addFileAnchor}
-                    onClose={closeMenu}
-                >
+                    onClose={closeMenu}>
+
                     <div className="file-action-menu">
-                        {taskFileToShow[0]?.file && <ExistingMembers onRemove={onRemoveFile} members={file} />}
+                        {taskFileToShow[0]?.file &&
+                            <ExistingMembers type={'file-preview'} onRemove={onRemoveFile} members={file} />
+                        }
                         <FileUploadActionMenu
                             addFromFolder={addFromFolder}
-                            onCloseMenu={closeMenu}
-                        />
+                            onCloseMenu={closeMenu} />
+
                     </div>
                 </FloatingContainerCmp>
             )}
+
 
             {isPreviewOpen && !!taskFileToShow.length && (
                 <FloatingContainerCmp
                     anchorEl={previewRef.current}
                     onClose={closeMenu}
-                    offsetX={50}
-                    offsetY={110}
+                    offsetX={100}
+                    offsetY={100}>
 
-                >
                     <div
                         onMouseEnter={() => clearTimeout(hoverRef.current)}
-                        onMouseLeave={clearHover}
-                    >
+                        onMouseLeave={clearHover}>
                         <FilePreview
                             imgSrc={taskFileToShow[0]?.file.dataUrl}
                             imgTitle={taskFileToShow[0]?.file.name} />
                     </div>
                 </FloatingContainerCmp>
             )}
-
-            {/* {isFullScreenOpen && !!taskFileToShow.length && (
-                <FloatingContainerCmp
-                    anchorEl={previewRef.current}
-                    onClose={closeMenu}
-                    offsetX={50}
-                    offsetY={110}
-                >
-                    <div
-                        onMouseEnter={() => clearTimeout(hoverRef.current)}
-                        onMouseLeave={clearHover}
-                    >
-                        <full imgSrc={taskFileToShow[0]?.file.dataUrl} imgTitle={taskFileToShow[0]?.file.name} />
-                    </div>
-                </FloatingContainerCmp>
-            )} */}
 
         </div>
     )
