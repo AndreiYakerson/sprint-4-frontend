@@ -27,6 +27,9 @@ export const SET_TASK_ID_TO_EDIT = 'SET_TASK_ID_TO_EDIT'
 /// task details
 export const SET_TASK_DETAILS = 'SET_TASK_DETAILS'
 
+/// updates -  use comments
+export const ADD_TASK_UPDATE = 'ADD_TASK_UPDATE'
+
 /// 
 export const ADD_BOARD_MSG = 'ADD_BOARD_MSG'
 
@@ -184,6 +187,18 @@ export function boardReducer(state = initialState, action = {}) {
                 return group
             })
             // board.activities = [...board.activities, action.activity]
+            newState = { ...state, board }
+            break
+
+        ////updates 
+        case ADD_TASK_UPDATE:
+            var board = { ...state.board }
+            board.groups = state.board.groups.map(g => {
+                if (g.id !== action.groupId) return g
+                const group = { ...g }
+                group.tasks = group.tasks.map(t => (t.id !== action.task.id) ? t : action.task)
+                return group
+            })
             newState = { ...state, board }
             break
 

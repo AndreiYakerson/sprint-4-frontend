@@ -29,6 +29,7 @@ import {
 
     // filter
     SET_FILTER_OPTIONS,
+    ADD_TASK_UPDATE,
 
 } from '../reducers/board.reducer'
 
@@ -232,6 +233,18 @@ export async function getTaskById(boardId, taskId) {
         store.dispatch({ type: SET_TASK_DETAILS, task })
     } catch (err) {
         console.log('Cannot get task', err)
+        throw err
+    }
+}
+
+//// task updates
+
+export async function addUpdateToTask(boardId, groupId, taskId, UpdateTitle) {
+    try {
+        const savedTask = await boardService.addUpdate(boardId, groupId, taskId, UpdateTitle)
+        store.dispatch({ type: ADD_TASK_UPDATE, groupId, task: savedTask })
+    } catch (err) {
+        console.log('Cannot add update to task', err)
         throw err
     }
 }
