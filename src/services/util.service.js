@@ -104,7 +104,16 @@ export function cleanSearchParams(searchParams) {
     return cleanedParams
 }
 
-export function setStringDate(date) {
+export function toBase64(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader()
+
+    reader.onload = () => resolve(reader.result)   
+    reader.onerror = () => reject(new Error('File reading failed'))
+
+    reader.readAsDataURL(file)   
+  })
+}export function setStringDate(date) {
     const options = { month: "short", day: "numeric" }
     if (new Date(date).getFullYear() !== new Date().getFullYear()) {
         options.year = 'numeric'

@@ -1,0 +1,200 @@
+.file-upload {
+    display: flex;
+    place-content: center;
+    border: 2px dashed transparent;
+    transition: border-color 0.15s ease-in-out;
+    text-align: center;
+    justify-content: baseline;
+
+
+    &.dragging {
+        border-color: var(--primary-text-color);
+        place-items: anchor-center;
+    }
+
+    &:hover .empty-file-img-container {
+        transition: opacity 0s, transform 0s;
+        opacity: 1;
+        transform: scale(1);
+        animation: none;
+
+        &.true {
+            transform: scale(1.1);
+        }
+
+    }
+
+
+    &:hover .empty-file-img-container:not(.true) .empty-file-img {
+        animation: emptyFileShow 0.15s forwards;
+    }
+
+    &:hover .round-plus-icon {
+        animation: plusButtonGrow 0.15s ease-out forwards;
+    }
+
+
+    &:not(:hover) .empty-file-img-container:not(.true) {
+        animation: emptyFileHide 0.5ms .6s ease-out forwards;
+    }
+
+
+    .empty-file-img-container {
+        position: relative;
+        display: flex;
+        place-items: center;
+        opacity: 0;
+        /* pointer-events: none; */
+        transform: scale(0.9);
+        transition:
+            opacity 0.2s ease-out,
+            transform 0.2s ease-out;
+
+        &.true {
+            opacity: 1;
+
+            .empty-file-img {
+                left: 0;
+            }
+
+            .round-plus-icon-container {
+                display: none;
+            }
+        }
+
+        .empty-file-img {
+            position: relative;
+            height: 24px;
+            z-index: 1;
+        }
+
+        .round-plus-icon-container {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: var(--zIndex-Layer-10);
+
+            pointer-events: none;
+            transition: opacity 0.2s ease-in-out;
+
+
+            .round-plus-icon {
+                position: relative;
+                width: 16px;
+                height: 16px;
+                border-radius: 50%;
+                background-color: var(--primary-color);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                overflow: hidden;
+                color: var(--pulse-background-color);
+                transform-origin: center center;
+
+                &::before,
+                &::after {
+                    content: '';
+                    position: absolute;
+                    background-color: currentColor;
+                }
+
+                &::before {
+                    width: 2px;
+                    height: 60%;
+                    border-radius: 1px;
+                }
+
+                &::after {
+                    height: 2px;
+                    width: 60%;
+                    border-radius: 1px;
+                }
+            }
+        }
+    }
+}
+
+
+/* Grow on hover */
+@keyframes plusButtonGrow {
+    0% {
+        transform: scale(.65);
+    }
+
+    20% {
+        transform: scale(.75);
+    }
+
+    40% {
+        transform: scale(.85);
+    }
+
+    60% {
+        transform: scale(.95);
+    }
+
+    80% {
+        transform: scale(.975);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+
+}
+
+/* Shrink on hover-off */
+@keyframes plusButtonShrink {
+    0% {
+        transform: scale(1);
+    }
+
+    100% {
+        transform: scale(0.75);
+    }
+}
+
+/* Fade in container */
+
+@keyframes emptyFileShow {
+    0% {
+        opacity: 8;
+        scale: 1;
+    }
+
+    30% {
+        opacity: .85;
+    }
+
+    60% {
+        opacity: .9;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+/* Fade out container */
+@keyframes emptyFileHide {
+    0% {
+        opacity: 1;
+        scale: 1;
+    }
+
+    0% {
+        opacity: .9;
+        scale: .9;
+    }
+
+    0% {
+        opacity: 8;
+        scale: .8;
+    }
+
+    100% {
+        opacity: 0;
+        scale: .7;
+    }
+}

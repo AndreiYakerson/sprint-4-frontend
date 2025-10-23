@@ -178,8 +178,8 @@ export function GroupPreview({ group, groupsLength, managingType, TaskList,
         const root = document.documentElement
         const newWidth = startWidth.current + (e.pageX - startX.current)
         const varName = `--${currentColName.current}-column`
-        console.log('after:', startWidth.current)
-        console.log('newWidth:', newWidth)
+        // console.log('after:', startWidth.current)
+        // console.log('newWidth:', newWidth)
 
         if (newWidth <= 250 && currentColName.current === 'item') {
             console.log('stop:')

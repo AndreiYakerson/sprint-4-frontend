@@ -1,15 +1,17 @@
 .board-details {
     height: 100%;
 
+
     display: grid;
     grid-template-columns: 1fr auto;
-    overflow: hidden;
+
 
     .board-details-container {
         height: 100%;
         overflow: auto;
         position: relative;
         padding-block-end: 2em;
+
 
     }
 

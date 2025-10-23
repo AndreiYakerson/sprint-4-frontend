@@ -4,13 +4,23 @@
     flex-direction: column;
     width: max-content;
 
-    
+
     background-color: var(--primary-background-color);
     border-radius: var(--border-radius-medium);
     box-shadow: var(--box-shadow-medium);
 
-    transition: width .1s;
+    opacity: 0;
+    transform: scale(0.95);
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    /* pointer-events: none; */
+
     z-index: var(--zIndex-toolTip);
+
+    & .open {
+        position: absolute;
+        opacity: 1;
+        transform: scale(1);
+    }
 
     &:has(.calendar-container) {
         border-radius: 4px;

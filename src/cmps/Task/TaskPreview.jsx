@@ -25,6 +25,7 @@ import { PriorityPicker } from "../TaskCmps/PriorityCmp/PriorityPicker.jsx"
 import { MemberPicker } from "../TaskCmps/MembersCmp/MemberPicker.jsx"
 import { StatusPicker } from "../TaskCmps/StatusCmp/StatusPicker.jsx"
 import { TimelinePicker } from "../TaskCmps/TimelineCmp/TimelinePicker.jsx"
+import { FileUpload } from "../TaskCmps/FileUpload/FileUpload.jsx"
 
 
 export function TaskPreview({ task, groupId, taskIdx }) {
@@ -95,6 +96,14 @@ export function TaskPreview({ task, groupId, taskIdx }) {
                     label: 'timeline:',
                     propName: 'timeline',
                     selectedTimeline: task?.timeline,
+                }
+            },
+            {
+                type: 'FileUpload',
+                info: {
+                    label: 'file:',
+                    propName: 'file',
+                    taskFiles: task?.file || [],
                 }
             },
         ]
@@ -299,10 +308,13 @@ export function TaskPreview({ task, groupId, taskIdx }) {
 
                     <div onClick={onToggleTaskDetails} className={`task-updates-cell ${task.id === taskId ? "focus" : ""}`}>
                         <SvgIcon
-                            iconName="bubblePlus"
-                            size={20}
-                            colorName={'primaryText'}
+                            iconName={task?.updates?.length > 0 ? 'bubble' : 'bubblePlus'}
+                            size={22}
+                            colorName={task?.updates?.length > 0 ? 'primaryColor' : 'secondaryText'}
                         />
+                        {task?.updates?.length > 0 &&
+                            <span className="updates-count">{task?.updates?.length}</span>
+                        }
                     </div>
                 </div>
             </div >
@@ -341,6 +353,12 @@ export function TaskPreview({ task, groupId, taskIdx }) {
                             <DynamicCmp cmp={cmp} updateCmpInfo={updateCmpInfo} />
                         </div>
                     }
+                    if (colName === 'file') {
+                        var cmp = cmps.find(cmp => cmp?.type === 'FileUpload')
+                        return <div className="column-cell file " key={colName}>
+                            <DynamicCmp cmp={cmp} updateCmpInfo={updateCmpInfo} />
+                        </div>
+                    }
                     else {
                         return <div className="column-cell" key={idx}></div>
                     }
@@ -348,7 +366,7 @@ export function TaskPreview({ task, groupId, taskIdx }) {
                 }
                 <div className="column-cell full"></div>
             </div >
-        </div>
+        </div >
     )
 
 }
@@ -376,6 +394,10 @@ function DynamicCmp({ cmp, updateCmpInfo }) {
         case 'TimelinePicker':
             return <TimelinePicker info={cmp.info} onUpdate={(data) => {
                 updateCmpInfo(cmp, 'selectedTimeline', data, `Changed timeline dates`)
+            }} />
+        case 'FileUpload':
+            return <FileUpload info={cmp.info} onUpdate={(data) => {
+                updateCmpInfo(cmp, 'taskFiles', data, `file Uploaded `)
             }} />
         default:
             return <p>{cmp?.type}</p>

@@ -65,7 +65,6 @@ export async function onSetFloatingSecondary(content, anchor) {
 }
 
 export async function onCloseFloating() {
-    console.log("🚀 ~ onCloseFloating ~ onCloseFloating:")
 
     try {
         store.dispatch({ type: CLOSE_FLOATING })

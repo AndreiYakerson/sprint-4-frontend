@@ -4,6 +4,11 @@
     height: max-content;
     padding: 8px;
 
+    &.file-add .actions-list .menu-action:hover {
+        color: var(--primary-background-color);
+        background-color: var(--primary-color);
+    }
+
     .actions-list {
         width: 240px;
 
@@ -49,7 +54,8 @@
 
     }
 }
-.active-label .actions-menu .menu-action{
+
+.active-label .actions-menu .menu-action {
     opacity: 0.5;
     cursor: default !important;
 }

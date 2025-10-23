@@ -26,7 +26,9 @@ export const boardService = {
     removeTask,
     updateTask,
     duplicateTask,
-    updateTasksOrder
+    updateTasksOrder,
+    ///
+    addUpdate
 }
 window.cs = boardService
 
@@ -321,8 +323,6 @@ async function getTaskById(boardId, taskId) {
 
         foundTask.activities = activities
 
-        console.log('activities:', activities)
-
         return foundTask
 
     } catch (err) {
@@ -449,6 +449,45 @@ async function removeTask(boardId, groupId, taskId) {
     }
 }
 
+/// updates
+
+async function addUpdate(boardId, groupId, taskId, UpdateTitle) {
+
+    try {
+        const { board } = await getById(boardId)
+        if (!board) throw new Error(`Board ${boardId} not found`)
+
+        const group = board.groups.find(g => g.id === groupId)
+        if (!group) throw new Error(`Group ${groupId} not found`)
+
+        const taskIdx = group.tasks.findIndex(t => t.id === taskId)
+        if (taskIdx === -1) throw new Error(`Task ${taskId} not found`)
+
+        const updateToAdd = _createUpdate(UpdateTitle, _getMiniUser())
+
+        group.tasks[taskIdx] = {
+            ...group.tasks[taskIdx],
+            updates: [updateToAdd, ...(group.tasks[taskIdx]?.updates || [])]
+        }
+
+        await save(board)
+
+        return group.tasks[taskIdx]
+
+    } catch (err) {
+        throw err
+    }
+}
+
+
+function _createUpdate(UpdateTitle, miniUser) {
+    return {
+        id: makeId(),
+        title: UpdateTitle,
+        createdAt: Date.now(),
+        byMember: miniUser,
+    }
+}
 
 
 //////  Activity
@@ -574,7 +613,7 @@ function _setBaordToSave({ title = 'New board', managingType = 'items', privacy 
                         memberIds: [],
                         priority: { txt: 'Default Label', cssVar: '--group-title-clr18', id: 'default' },
                         status: { txt: 'Not Started', cssVar: '--group-title-clr18', id: 'Not Started' },
-
+                        updates: []
                     },
                     {
                         id: makeId(),
@@ -583,6 +622,7 @@ function _setBaordToSave({ title = 'New board', managingType = 'items', privacy 
                         memberIds: [],
                         priority: { txt: 'Default Label', cssVar: '--group-title-clr18', id: 'default' },
                         status: { txt: 'Not Started', cssVar: '--group-title-clr18', id: 'Not Started' },
+                        updates: []
                     },
                 ],
                 style: {
@@ -615,5 +655,6 @@ function _getEmptyTask(title = 'New Task') {
         memberIds: [],
         priority: { txt: 'Default Label', cssVar: '--group-title-clr18', id: 'default' },
         status: { id: 'default', txt: 'Not Started', cssVar: '--group-title-clr18' },
+        comments: []
     }
 }

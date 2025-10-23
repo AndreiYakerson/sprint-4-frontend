@@ -60,6 +60,11 @@
 /* Labels */
 @import "cmps/TaskCmps/PriorityCmp/labelsSelectContainer.css";
 
+/* File Upload */
+@import "cmps/TaskCmps/FileUpload/FileUpload.css";
+@import "cmps/TaskCmps/FileUpload/FilePreview.css";
+@import "cmps/TaskCmps/FileUpload/FullScreenContainer.css";
+
 /* Status */
 /* @import "cmps/TaskCmps/StatusCmp/StatusPicker.css"; */
 
@@ -74,6 +79,7 @@
 @import "cmps/tasks/TaskPreview.css";
 
 @import "cmps/TaskDetails/ActivityLog.css";
+@import "cmps/TaskDetails/Updates.css";
 
 @import "cmps/AppHeader";
 @import "cmps/AppFooter";
