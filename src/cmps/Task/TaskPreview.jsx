@@ -299,10 +299,13 @@ export function TaskPreview({ task, groupId, taskIdx }) {
 
                     <div onClick={onToggleTaskDetails} className={`task-updates-cell ${task.id === taskId ? "focus" : ""}`}>
                         <SvgIcon
-                            iconName="bubblePlus"
-                            size={20}
-                            colorName={'primaryText'}
+                            iconName={task?.updates?.length > 0 ? 'bubble' : 'bubblePlus'}
+                            size={22}
+                            colorName={task?.updates?.length > 0 ? 'primaryColor' : 'secondaryText'}
                         />
+                        {task?.updates?.length > 0 &&
+                            <span className="updates-count">{task?.updates?.length}</span>
+                        }
                     </div>
                 </div>
             </div >
@@ -348,7 +351,7 @@ export function TaskPreview({ task, groupId, taskIdx }) {
                 }
                 <div className="column-cell full"></div>
             </div >
-        </div>
+        </div >
     )
 
 }

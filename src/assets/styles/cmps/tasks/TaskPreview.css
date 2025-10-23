@@ -124,9 +124,9 @@
        }
 
        .add-task-cell {
-            .task-name {
-                color: var(--secondary-text-color);
-            }
+           .task-name {
+               color: var(--secondary-text-color);
+           }
        }
 
 
@@ -220,6 +220,7 @@
            }
 
            .task-updates-cell {
+               position: relative;
                cursor: pointer;
                display: grid;
                place-content: center;
@@ -228,6 +229,20 @@
                min-width: 36px;
 
                border-inline-start: 1px solid var(--layout-border-color);
+
+               .updates-count {
+                   position: absolute;
+                   right: 4px;
+                   top: 15px;
+                   line-height: 9px;
+                   font-size: 10px;
+                   font-weight: 400;
+                   border-radius: 10px;
+                   text-align: center;
+                   padding: 2px 4px;
+                   color: var(--text-color-on-primary);
+                   background-color: var(--primary-color);
+               }
            }
 
        }
