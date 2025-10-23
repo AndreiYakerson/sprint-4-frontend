@@ -21,6 +21,7 @@ import { MiniUser } from './MiniUser.jsx'
 export function AppHeader() {
 
 	const user = useSelector(storeState => storeState.userModule.user)
+	
 
 	const [anchorEl, setAnchorEl] = useState(null)
 	const navigate = useNavigate()
