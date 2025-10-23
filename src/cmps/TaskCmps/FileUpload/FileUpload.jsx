@@ -1,14 +1,14 @@
 import { useRef, useState } from "react";
 import { FloatingContainerCmp } from "../../FloatingContainerCmp";
 import { FileUploadActionMenu } from "./FileUploadActionMenu";
-import { toBase64 } from "../../../services/util.service";
+import { makeId, toBase64 } from "../../../services/util.service";
 import { storageService } from "../../../services/async-storage.service";
-import { updateTask } from "../../../store/actions/board.actions";
-import { ImgCmp } from "../../ImgCmp";
 import { FilePreview } from "./filePreview";
 import { useSelector } from "react-redux/es/hooks/useSelector";
 import { FullScreenContainer } from "./FullScreenContainer";
 import { onSetPopUp } from "../../../store/actions/system.actions";
+import { SvgIcon } from "../../SvgIcon";
+import { ExistingMembers } from "../MembersCmp/ExistingMembers";
 
 export function FileUpload({ info, onUpdate }) {
     const { taskFiles } = info
@@ -21,13 +21,15 @@ export function FileUpload({ info, onUpdate }) {
     const addFileRef = useRef(null)
     const previewRef = useRef(null)
     const hoverRef = useRef(null)
+    const [addFileAnchor, setAddFileAnchor] = useState(null)
     const fileInputRef = useRef(null)
     const [isDragging, setIsDragging] = useState(false);
     const dragDataType = 'drag files here'
     const taskFileToShow = taskFiles ? taskFiles : []
 
 
-    function onToggleMenu() {
+    function onToggleMenu(ev) {
+        setAddFileAnchor(ev.currentTarget)
         setIsMenuOpen(prev => !prev)
     }
 
@@ -88,33 +90,47 @@ export function FileUpload({ info, onUpdate }) {
         setIsMenuOpen(false)
     }
 
+    function onRemoveFile() {
+        let filesToSave = []
+        onUpdate(filesToSave)
+    }
+
+    function clearHover() {
+        clearTimeout(hoverRef.current)
+        hoverRef.current = setTimeout(() => {
+            setIsPreviewOpen(false)
+        }, 300)
+    }
+
     function onHoverFile() {
         if (isPreviewOpen) return setIsPreviewOpen(false)
         clearTimeout(hoverRef.current)
         setIsPreviewOpen(true)
     }
-    function clearHover() {
-        clearTimeout(hoverRef.current)
-        hoverRef.current = setTimeout(() => {
-            setIsPreviewOpen(false)
-        }, 300) // <-- 0.5 second buffer
-    }
+
 
     function _onShowPopUp() {
-        console.log("🚀 ~ _onShowPopUp ~ taskFileToShow[0]?.file.name:", taskFileToShow[0]?.file)
-        if (!taskFileToShow[0]?.file) return 
+        if (!taskFileToShow[0]?.file) return
         const content = <FullScreenContainer
-        imgSrc={taskFileToShow[0]?.file.dataUrl}
-         imgTitle={taskFileToShow[0]?.file.name}
-         />
+            imgSrc={taskFileToShow[0]?.file.dataUrl}
+            imgTitle={taskFileToShow[0]?.file.name}
+        />
         onSetPopUp(content)
     }
 
+    const file = taskFileToShow[0]?.file ?
+        [{
+            imgUrl: taskFileToShow[0]?.file.dataUrl,
+            fullname: taskFileToShow[0]?.file.name,
+            id: makeId()
+        }]
+        :
+        false
 
     return (
         <div className={`file-upload ${isDragging ? 'dragging' : ''}`}
             onClick={onToggleMenu}
-            ref={addFileRef}
+            ref={addFileRef.current}
             onDragOver={handleDragOver}
             onDragLeave={handleDragLeave}
             onDrop={handleDrop}
@@ -132,31 +148,34 @@ export function FileUpload({ info, onUpdate }) {
 
             {!isDragging &&
                 <section className={`empty-file-img-container ${!!taskFileToShow.length}`}
-                    ref={previewRef}
+                    ref={previewRef.current}
                     onMouseEnter={onHoverFile}
                     onMouseLeave={clearHover}
                 >
                     <span className="round-plus-icon-container">
                         <span className="round-plus-icon"></span>
                     </span>
-                    <img 
-                    className='empty-file-img' src={taskFileToShow[0]?.file.dataUrl || "/img/emptyFile.svg"}
-                    onClick={_onShowPopUp}
-                     alt="Empty File Image"
-                      />
+                    <img
+                        className='empty-file-img' src={taskFileToShow[0]?.file.dataUrl || "/img/emptyFile.svg"}
+                        onClick={_onShowPopUp}
+                        alt="Empty File Image"
+                    />
                 </section>}
 
-            {/* {isMenuOpen && (
+            {isMenuOpen && (
                 <FloatingContainerCmp
-                    anchorEl={fileInputRef.current}
+                    anchorEl={addFileAnchor}
                     onClose={closeMenu}
                 >
-                    <FileUploadActionMenu
-                        addFromFolder={addFromFolder}
-                        onCloseMenu={closeMenu}
-                    />
+                    <div className="file-action-menu">
+                        {taskFileToShow[0]?.file && <ExistingMembers onRemove={onRemoveFile} members={file} />}
+                        <FileUploadActionMenu
+                            addFromFolder={addFromFolder}
+                            onCloseMenu={closeMenu}
+                        />
+                    </div>
                 </FloatingContainerCmp>
-            )} */}
+            )}
 
             {isPreviewOpen && !!taskFileToShow.length && (
                 <FloatingContainerCmp
@@ -170,9 +189,9 @@ export function FileUpload({ info, onUpdate }) {
                         onMouseEnter={() => clearTimeout(hoverRef.current)}
                         onMouseLeave={clearHover}
                     >
-                        <FilePreview 
-                        imgSrc={taskFileToShow[0]?.file.dataUrl} 
-                        imgTitle={taskFileToShow[0]?.file.name} />
+                        <FilePreview
+                            imgSrc={taskFileToShow[0]?.file.dataUrl}
+                            imgTitle={taskFileToShow[0]?.file.name} />
                     </div>
                 </FloatingContainerCmp>
             )}
@@ -192,6 +211,7 @@ export function FileUpload({ info, onUpdate }) {
                     </div>
                 </FloatingContainerCmp>
             )} */}
+
         </div>
     )
 }
