@@ -7,7 +7,7 @@
     &:has(.open) {
         width: 600px;
         background-color: var(--primary-background-color);
-        box-shadow: -10px 0px 10px rgb(175, 175, 175);
+        border-inline-start: 2px solid var(--ui-border-color);
     }
 
     .task-details {

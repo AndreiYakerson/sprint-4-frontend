@@ -1,35 +1,51 @@
 .task-details-updates {
     padding: 16px;
 
-    .update-editor {
+    .update-form {
         display: grid;
         gap: 4px;
 
-        border: 1px solid blue;
-        border-radius: 20px;
-        padding: 16px;
+        border: 1px solid var(--primary-color);
+        border-radius: 8px;
+
         margin-block-end: 8px;
+
+        .text-editor-wrapper {
+            .ql-formats {
+                margin: 0;
+            }
+
+            .ql-active {
+                background-color: var(--primary-selected-color);
+                color: var(--primary-color);
+            }
+
+            button {
+                margin: 0;
+                margin-inline-end: 4px;
+            }
+
+            .ql-snow {
+                border: 0;
+            }
+        }
 
         button {
             justify-self: end;
+            margin: 8px;
         }
 
-        textarea {
-            outline: none;
-            border: none;
-            resize: none;
-            font-family: inherit;
-        }
+
     }
 
-    .box {
-        border: 1px solid gray;
-        border-radius: 20px;
+    .editor-placeholder {
+        border: 1px solid var(--ui-border-color);
+        border-radius: 8px;
         padding: 16px;
         margin-block-end: 8px;
 
         &:hover {
-            background-color: rgb(218, 218, 218);
+            background-color: var(--primary-background-hover-color);
             cursor: text;
         }
     }
@@ -40,16 +56,29 @@
         gap: 8px;
 
         .update-item {
-            border: 1px solid gray;
-            border-radius: 20px;
+            border: 1px solid var(--ui-border-color);
+            border-radius: 8px;
             padding: 16px;
 
-            .fullname {
+            .update-user-name {
                 font-weight: 700;
             }
 
-            pre {
-                font-family: inherit;
+
+            p {
+                margin: 0;
+
+                &.ql-align-justify {
+                    text-align: left;
+                }
+
+                &.ql-align-center {
+                    text-align: center;
+                }
+
+                &.ql-align-right {
+                    text-align: right;
+                }
             }
         }
 
@@ -57,6 +86,7 @@
             display: flex;
             align-items: center;
             gap: 8px;
+            margin-block-end: 16px;
 
             .user-img {
                 border-radius: 50%;

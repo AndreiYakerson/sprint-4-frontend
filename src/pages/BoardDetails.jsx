@@ -16,7 +16,7 @@ import { AppLoader } from '../cmps/AppLoader.jsx'
 import { BoardDetailsHeader } from '../cmps/Board/BoardDetailsHeader.jsx'
 import { cleanSearchParams } from '../services/util.service.js'
 import { GroupList } from '../cmps/group/GroupList.jsx'
-import { TaskDetails } from '../cmps/Task/TaskDetails.jsx'
+
 
 // img
 import noResults from '/img/no-results.svg'
@@ -42,9 +42,6 @@ export function BoardDetails() {
 
     const [searchParams, setSearchParams] = useSearchParams()
     const [filterBy, setFilterBy] = useState(boardService.getFilterFromSearchParams(searchParams))
-
-
-    console.log(board);
 
 
     const inputRef = useRef(null)
