@@ -163,3 +163,9 @@ button {
     background-color: var(--text-with-highlight)
 }
 
+#portal-root {
+    position: fixed;
+    top: 0;
+    z-index: var(--zIndex-toolTip);
+    /* very high layer for overlays */
+}

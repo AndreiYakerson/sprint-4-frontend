@@ -16,6 +16,7 @@ export function FloatingContainerCmp({
 
     useEffect(() => {
         onSetFloatingIsOpen(true)
+        
         return () => {
             onSetFloatingIsOpen(false)
         }
@@ -160,7 +161,7 @@ export function FloatingContainerCmp({
     return createPortal(
         anchorEl ? (
             <div
-                className={`fcc-container ${showTriangle ? "triangle" : ""} ${showTriangle ? trianglePos : ""}`}
+                className={`fcc-container ${showTriangle ? "triangle" : ""} ${showTriangle ? trianglePos : ""}  ${anchorEl ? 'open' : ''}`}
                 ref={popupRef}
                 style={style}
                 onClick={e => e.stopPropagation()}

@@ -1,0 +1,102 @@
+.full-screen-container {
+    /* position: relative; */
+    display: flex;
+    flex-direction: column;
+    height: 90vh;
+    width: 90vw;
+    overflow: hidden;
+
+    header {
+        display: flex;
+        /* flex-direction: column; */
+        height: 75px;
+        padding: 16px 16px 16px 32px;
+        flex-shrink: 0;
+        border-bottom: 1px solid var(--layout-border-color);
+
+
+        .header-content {
+            display: grid;
+            /* grid-template-columns: repeat(2, minmax(0, 1fr)); */
+
+            margin-inline-end: auto;
+
+
+
+
+            .file-info {
+                display: flex;
+                align-items: center;
+                gap: .5em;
+
+                img {
+                    height: 36px;
+                }
+
+                h4 {
+                    text-align: justify;
+                    margin-bottom: 0;
+                }
+
+
+
+            }
+
+        }
+
+        .delete-btn {
+            display: grid;
+            place-content: center;
+            border: none !important;
+            /* padding: 4px 8px 4px 8px; */
+            width: 32px;
+            height: 32px;
+        }
+
+    }
+
+    main {
+        display: grid;
+        grid-template-columns: auto 108px;
+        grid-template-rows: 50px auto 50px;
+        height: 100%;
+        overflow-y: auto;
+
+        .main-content {
+            grid-column: 1;
+            grid-row: 2;
+            /* display: grid;
+            grid-template-columns: .2fr 1fr .2fr;
+            grid-template-rows: 150px 1fr 150px ; */
+            grid-auto-flow: column;
+            place-content: center;
+
+            img {
+                grid-column: 2;
+                grid-row: 2;
+                place-self: center;
+                /* max-width: 80%;
+                max-height: 80%; */
+            }
+        }
+
+    }
+
+    aside {
+        grid-column: 2;
+        grid-row: 1/-1;
+        display: grid;
+        border-left: 1px solid;
+        border-color: var(--layout-border-color);
+
+        .actions {
+            display: flex;
+            padding: 12px;
+
+            >*{
+                border: none;
+                margin-bottom: 16px;
+            }
+        }
+    }
+}
