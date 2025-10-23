@@ -74,7 +74,6 @@ export function boardReducer(state = initialState, action = {}) {
 
             boards = state.boards.map(board => (board._id === action.board._id) ? action.board : board)
             if (action.board?._id === state.board?._id) {
-
                 return newState = { ...state, boards, board: action.board }
             }
             newState = { ...state, boards }
@@ -175,6 +174,11 @@ export function boardReducer(state = initialState, action = {}) {
                 return group
             })
             board.activities = [...board.activities, action.activity]
+
+            if (state?.taskDetails && state?.taskDetails?.id === action?.task?.id) {
+                var taskDetails = { ...state.taskDetails, ...action?.task, activities: [action.activity, ...state.taskDetails.activities] }
+                return newState = { ...state, board, taskDetails }
+            }
             newState = { ...state, board }
             break
 
@@ -199,6 +203,10 @@ export function boardReducer(state = initialState, action = {}) {
                 group.tasks = group.tasks.map(t => (t.id !== action.task.id) ? t : action.task)
                 return group
             })
+            if (state?.taskDetails && state?.taskDetails?.id === action?.task?.id) {
+                var taskDetails = { ...state.taskDetails, ...action?.task }
+                return newState = { ...state, board, taskDetails }
+            }
             newState = { ...state, board }
             break
 

@@ -25,7 +25,7 @@ export function TaskDetails() {
         if (taskId && boardId) {
             loadTask(boardId, taskId)
         }
-    }, [taskId, board])
+    }, [taskId])
 
     useEffect(() => {
         if (task?.title !== titleToEdit) {
@@ -51,8 +51,10 @@ export function TaskDetails() {
         delete taskToUpdate.activities
         taskToUpdate.title = newTitle
 
+        const activityTitle = `Changed title to ${newTitle}`
+
         try {
-            await updateTask(board?._id, task?.groupId, taskToUpdate)
+            await updateTask(board?._id, task?.groupId, taskToUpdate, activityTitle)
         } catch (err) {
             showErrorMsg('cannot update task')
             setTitleToEdit(preTitleCopy)
