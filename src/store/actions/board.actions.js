@@ -23,10 +23,15 @@ import {
     SET_IS_BOARD_EDITOR_OPEN,
     SET_BOARD_REMOVED_MSG,
     DUPLICATE_TASK,
+
+    // task details
+    SET_TASK_DETAILS,
+
     // filter
     SET_FILTER_OPTIONS,
+    ADD_TASK_UPDATE,
+
 } from '../reducers/board.reducer'
-import { SET_SIDE_BAR_OPEN } from '../reducers/system.reducer'
 
 
 
@@ -181,10 +186,10 @@ export async function duplicateTask(boardId, groupId, taskCopy, taskCopyIdx) {
 
 
 
-export async function updateTask(boardId, groupId, taskToUpdate) {
+export async function updateTask(boardId, groupId, taskToUpdate, activityTitle) {
     try {
-        const savedTask = await boardService.updateTask(boardId, groupId, taskToUpdate)
-        store.dispatch({ type: UPDATE_TASK, groupId, task: savedTask })
+        const { savedTask, activity } = await boardService.updateTask(boardId, groupId, taskToUpdate, activityTitle)
+        store.dispatch({ type: UPDATE_TASK, groupId, task: savedTask, activity })
     } catch (err) {
         console.log('Cannot update task', err)
         throw err
@@ -218,10 +223,36 @@ export function setBoardRemovedMsg(msg) {
     store.dispatch({ type: SET_BOARD_REMOVED_MSG, msg })
 }
 
+
+/////////////////////// Task details //////////////////////////////////////
+
+export async function getTaskById(boardId, taskId) {
+    try {
+        const task = await boardService.getTaskById(boardId, taskId)
+
+        store.dispatch({ type: SET_TASK_DETAILS, task })
+    } catch (err) {
+        console.log('Cannot get task', err)
+        throw err
+    }
+}
+
+//// task updates
+
+export async function addUpdateToTask(boardId, groupId, taskId, UpdateTitle) {
+    try {
+        const savedTask = await boardService.addUpdate(boardId, groupId, taskId, UpdateTitle)
+        store.dispatch({ type: ADD_TASK_UPDATE, groupId, task: savedTask })
+    } catch (err) {
+        console.log('Cannot add update to task', err)
+        throw err
+    }
+}
+
 // Columns  ///////////////////////////////////////////////////////////////
 
 export async function addColumn(board, columnType) {
-board.cmpOrder.push(columnType)
+    board.cmpOrder.push(columnType)
 
     try {
         const savedBoard = await boardService.save(board)

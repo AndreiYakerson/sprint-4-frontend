@@ -1,5 +1,5 @@
 
-import { useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { useParams, useNavigate } from "react-router-dom"
 import { useSelector } from "react-redux"
 
@@ -16,6 +16,7 @@ import { SvgIcon } from "../SvgIcon.jsx"
 import { ActionsMenu } from "../ActionsMenu.jsx"
 import { FloatingContainerCmp } from "../FloatingContainerCmp.jsx"
 import { useSearchParams } from "react-router-dom";
+import { setStringDate } from "../../services/util.service.js"
 
 // DynamicCmp
 import { TitleEditor } from "./TitleEditor"
@@ -32,6 +33,9 @@ export function TaskPreview({ task, groupId, taskIdx }) {
     const { boardId, taskId } = useParams()
     const [searchParams] = useSearchParams();
 
+    const [isTaskCheked, setIsTaskChecked] = useState(false)
+
+
     // dnd
     const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id: task.id, disabled: searchParams.size > 0 })
     const style = {
@@ -45,6 +49,8 @@ export function TaskPreview({ task, groupId, taskIdx }) {
 
     const board = useSelector(state => state.boardModule.board)
     const cmpOrder = board?.cmpOrder || []
+    const [titleToEdit, setTitleToEdit] = useState({ taskId: task?.id, currTitle: task?.title })
+
     const [cmps, setCmps] = useState(
         [
             {
@@ -85,16 +91,6 @@ export function TaskPreview({ task, groupId, taskIdx }) {
                 }
             },
             {
-                type: 'TitleEditor',
-                info: {
-                    taskId: task?.id,
-                    label: 'Title:',
-                    propName: 'title',
-                    currTitle: task?.title,
-                }
-
-            },
-            {
                 type: 'TimelinePicker',
                 info: {
                     label: 'timeline:',
@@ -112,6 +108,7 @@ export function TaskPreview({ task, groupId, taskIdx }) {
             },
         ]
     )
+
 
 
     const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -188,7 +185,7 @@ export function TaskPreview({ task, groupId, taskIdx }) {
     function onToggleTaskDetails() {
         navigate(taskId && taskId === task?.id
             ? `/board/${boardId}`
-            : `/board/${boardId}/task/${task.id}`)
+            : `/board/${boardId}/task/${task.id}/updates`)
     }
 
 
@@ -207,12 +204,44 @@ export function TaskPreview({ task, groupId, taskIdx }) {
     }
 
 
+    /// task title
+
+    useEffect(() => {
+        if (task?.title !== titleToEdit?.currTitle) {
+            setTitleToEdit(prev => ({ ...prev, currTitle: task?.title }))
+        }
+    }, [task])
+
+    async function onUpdateTaskTitle(newTitle, activityTitle) {
+        const preTitleCopy = task?.title
+        setTitleToEdit(prev => ({ ...prev, currTitle: newTitle }))
+
+        const taskToUpdate = structuredClone(task)
+        taskToUpdate.title = newTitle
+
+        try {
+            await updateTask(boardId, groupId, taskToUpdate, activityTitle)
+        } catch (err) {
+            showErrorMsg('cannot update task')
+            setTitleToEdit(prev => ({ ...prev, currTitle: preTitleCopy }))
+        }
+    }
+
+
     return (
 
-        <div className="task-preview" style={style} ref={setNodeRef} {...attributes}  >
+        <div
+            className={`task-preview ${isTaskCheked ? 'checked' : ''}`}
+            style={style}
+            ref={setNodeRef}
+            {...attributes}
+        >
 
 
-            <div className="sticky-cell-wrapper" {...listeners}>
+            <div
+                className={`sticky-cell-wrapper ${isTaskCheked ? 'checked' : ''}`}
+                {...listeners}
+            >
                 <div className="task-menu-wrapper">
                     <button
                         onClick={toggleIsMenuOpen}
@@ -244,22 +273,48 @@ export function TaskPreview({ task, groupId, taskIdx }) {
                 </div>
 
                 <div className="table-border"></div>
-                <div className="task-select"></div>
-                <div className="task-title flex align-center">
-                    <TitleEditor info={cmps.find(cmp => cmp.type === 'TitleEditor')?.info} onUpdate={(data) => {
-                        updateCmpInfo(cmps.find(cmp => cmp.type === 'TitleEditor'),
-                            'currTitle', data, `Changed title to ${data}`)
+                <div className="task-select">
 
+                    <div className={`checkbox-container ${isTaskCheked ? 'checked' : ''}`}>
+
+                        <label
+                            className="checkbox-label"
+                            htmlFor={task.id}
+                            style={isTaskCheked ? { opacity: 1 } : { opacity: 0 }}
+                        >
+                            <input
+                                className="select-input"
+                                id={task.id}
+                                type="checkbox"
+                                style={{ display: 'none' }}
+                                onChange={(ev) => setIsTaskChecked(ev.target.checked)}
+                            />
+                            <SvgIcon
+                                iconName="checkbox"
+                                size={16}
+                                colorName={'whiteText'}
+                            />
+                        </label>
+
+                    </div>
+
+                </div>
+                <div className="task-title flex align-center">
+                    <TitleEditor info={titleToEdit} onUpdate={(newTitle) => {
+                        onUpdateTaskTitle(newTitle, `Changed title to ${newTitle}`)
                     }} />
 
                     <div className="grab-block" ></div>
 
                     <div onClick={onToggleTaskDetails} className={`task-updates-cell ${task.id === taskId ? "focus" : ""}`}>
                         <SvgIcon
-                            iconName="bubblePlus"
-                            size={20}
-                            colorName={'primaryText'}
+                            iconName={task?.updates?.length > 0 ? 'bubble' : 'bubblePlus'}
+                            size={22}
+                            colorName={task?.updates?.length > 0 ? 'primaryColor' : 'secondaryText'}
                         />
+                        {task?.updates?.length > 0 &&
+                            <span className="updates-count">{task?.updates?.length}</span>
+                        }
                     </div>
                 </div>
             </div >
@@ -311,7 +366,7 @@ export function TaskPreview({ task, groupId, taskIdx }) {
                 }
                 <div className="column-cell full"></div>
             </div >
-        </div>
+        </div >
     )
 
 }
@@ -322,15 +377,15 @@ function DynamicCmp({ cmp, updateCmpInfo }) {
     switch (cmp?.type) {
         case 'StatusPicker':
             return <StatusPicker info={cmp.info} onUpdate={(data) => {
-                updateCmpInfo(cmp, 'selectedStatus', data, `Changed Status to ${data}`)
+                updateCmpInfo(cmp, 'selectedStatus', data, `Changed Status to ${data?.txt}`)
             }} />
         case 'DatePicker':
             return <DatePicker info={cmp?.info} onUpdate={(data) => {
-                updateCmpInfo(cmp, 'selectedDate', data, `Changed due date to ${data}`)
+                updateCmpInfo(cmp, 'selectedDate', data, `Changed due date to ${setStringDate(data?.date)}`)
             }} />
         case 'PriorityPicker':
             return <PriorityPicker info={cmp?.info} onUpdate={(data) => {
-                updateCmpInfo(cmp, 'taskPriority', data, `Changed due priority to ${data}`)
+                updateCmpInfo(cmp, 'taskPriority', data, `Changed due priority to ${data?.txt}`)
             }} />
         case 'MemberPicker':
             return <MemberPicker info={cmp.info} onUpdate={(data) => {

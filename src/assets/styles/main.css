@@ -78,6 +78,9 @@
 @import "cmps/tasks/TaskDetails.css";
 @import "cmps/tasks/TaskPreview.css";
 
+@import "cmps/TaskDetails/ActivityLog.css";
+@import "cmps/TaskDetails/Updates.css";
+
 @import "cmps/AppHeader";
 @import "cmps/AppFooter";
 @import "cmps/UserMsg";

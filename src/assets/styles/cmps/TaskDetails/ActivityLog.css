@@ -1,0 +1,31 @@
+.task-details-activity-log {
+
+    .activities-list {
+        display: flex;
+        flex-direction: column;
+
+        .activity-item {
+            display: grid;
+            grid-template-columns: 56px 30px 180px 1fr;
+            gap: 4px;
+            align-items: center;
+            min-height: 39px;
+            padding-block: 8px;
+            border-block-end: 1px solid;
+            border-color: var(--ui-border-color);
+            padding-inline: 16px;
+
+            &>* {
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                overflow: hidden;
+            }
+
+            img {
+                height: 30px;
+                width: 30px;
+                border-radius: 50%;
+            }
+        }
+    }
+}

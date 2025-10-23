@@ -1,6 +1,6 @@
 
 import { storageService } from '../async-storage.service'
-import { userService } from '../user'
+import { getLoggedinUser, userService } from '../user'
 import { getRandomGroupColor, makeId } from '../util.service'
 
 /// for filter date
@@ -21,11 +21,14 @@ export const boardService = {
     removeGroup,
     updateGroupsOrder,
     //task 
+    getTaskById,
     addTask,
     removeTask,
     updateTask,
     duplicateTask,
-    updateTasksOrder
+    updateTasksOrder,
+    ///
+    addUpdate
 }
 window.cs = boardService
 
@@ -295,6 +298,38 @@ async function removeGroup(boardId, groupId) {
 
 //  task functions
 
+async function getTaskById(boardId, taskId) {
+
+    try {
+        const { board } = await getById(boardId)
+        if (!board) throw new Error(`Board ${boardId} not found`)
+
+        var foundTask = null
+
+        for (const group of board?.groups) {
+            const task = group.tasks.find(task => task.id === taskId)
+            if (task) {
+                task.groupId = group.id
+                foundTask = task
+                break
+            }
+        }
+
+        if (!foundTask) throw new Error(`Task ${taskId} not found`)
+
+        const activities = board.activities.filter(a => {
+            return a.task.id === taskId
+        }).sort((a1, a2) => (a1?.createdAt - a2?.createdAt) * -1)
+
+        foundTask.activities = activities
+
+        return foundTask
+
+    } catch (err) {
+        throw err
+    }
+}
+
 async function updateTasksOrder(orderedTasks, boardId, groupId) {
     try {
         const { board } = await getById(boardId)
@@ -339,7 +374,7 @@ async function addTask(boardId, groupId, title, method) {
 }
 
 
-async function updateTask(boardId, groupId, taskToUpdate) {
+async function updateTask(boardId, groupId, taskToUpdate, activityTitle) {
 
     try {
         const { board } = await getById(boardId)
@@ -353,9 +388,15 @@ async function updateTask(boardId, groupId, taskToUpdate) {
 
         group.tasks[taskIdx] = { ...group.tasks[taskIdx], ...taskToUpdate }
 
+
+        const activity = _createActivity(activityTitle, _getMiniUser(),
+            _toMiniGroup(group), _toMiniTask(group.tasks[taskIdx]),)
+
+        board.activities.push(activity)
+
         await save(board)
 
-        return group.tasks[taskIdx]
+        return { savedTask: group.tasks[taskIdx], activity }
 
     } catch (err) {
         throw err
@@ -408,6 +449,88 @@ async function removeTask(boardId, groupId, taskId) {
     }
 }
 
+/// updates
+
+async function addUpdate(boardId, groupId, taskId, UpdateTitle) {
+
+    try {
+        const { board } = await getById(boardId)
+        if (!board) throw new Error(`Board ${boardId} not found`)
+
+        const group = board.groups.find(g => g.id === groupId)
+        if (!group) throw new Error(`Group ${groupId} not found`)
+
+        const taskIdx = group.tasks.findIndex(t => t.id === taskId)
+        if (taskIdx === -1) throw new Error(`Task ${taskId} not found`)
+
+        const updateToAdd = _createUpdate(UpdateTitle, _getMiniUser())
+
+        group.tasks[taskIdx] = {
+            ...group.tasks[taskIdx],
+            updates: [updateToAdd, ...(group.tasks[taskIdx]?.updates || [])]
+        }
+
+        await save(board)
+
+        return group.tasks[taskIdx]
+
+    } catch (err) {
+        throw err
+    }
+}
+
+
+function _createUpdate(UpdateTitle, miniUser) {
+    return {
+        id: makeId(),
+        title: UpdateTitle,
+        createdAt: Date.now(),
+        byMember: miniUser,
+    }
+}
+
+
+//////  Activity
+
+function _createActivity(activityTitle, miniUser, miniGroup, miniTask) {
+    return {
+        id: makeId(),
+        title: activityTitle,
+        createdAt: Date.now(),
+        byMember: miniUser,
+        group: miniGroup,
+        task: miniTask,
+    }
+}
+
+function _getMiniUser() {
+    const user = getLoggedinUser()
+    if (user) {
+        return {
+            _id: user?._id,
+            fullname: user?.fullname,
+            imgUrl: user?.imgUrl,
+        }
+    } else {
+        return {
+            _id: 'guest',
+            fullname: 'guest',
+            imgUrl: '/img/gray-avatar.svg',
+        }
+    }
+
+}
+
+function _toMiniTask({ id, title }) {
+    return { id, title }
+}
+
+function _toMiniGroup({ id, title }) {
+    return { id, title }
+}
+
+
+//////// 
 
 const DefaultPriorities = [
     {
@@ -490,7 +613,7 @@ function _setBaordToSave({ title = 'New board', managingType = 'items', privacy 
                         memberIds: [],
                         priority: { txt: 'Default Label', cssVar: '--group-title-clr18', id: 'default' },
                         status: { txt: 'Not Started', cssVar: '--group-title-clr18', id: 'Not Started' },
-
+                        updates: []
                     },
                     {
                         id: makeId(),
@@ -499,6 +622,7 @@ function _setBaordToSave({ title = 'New board', managingType = 'items', privacy 
                         memberIds: [],
                         priority: { txt: 'Default Label', cssVar: '--group-title-clr18', id: 'default' },
                         status: { txt: 'Not Started', cssVar: '--group-title-clr18', id: 'Not Started' },
+                        updates: []
                     },
                 ],
                 style: {
@@ -506,6 +630,7 @@ function _setBaordToSave({ title = 'New board', managingType = 'items', privacy 
                 },
             },
         ],
+        activities: [],
     }
 }
 
@@ -530,5 +655,6 @@ function _getEmptyTask(title = 'New Task') {
         memberIds: [],
         priority: { txt: 'Default Label', cssVar: '--group-title-clr18', id: 'default' },
         status: { id: 'default', txt: 'Not Started', cssVar: '--group-title-clr18' },
+        comments: []
     }
 }

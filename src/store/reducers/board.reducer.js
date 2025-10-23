@@ -9,12 +9,14 @@ export const ADD_BOARD = 'ADD_BOARD'
 // board actions
 export const SET_BOARD = 'SET_BOARD'
 
+// group actions
 export const SET_GROUPS = 'SET_GROUPS'
 export const ADD_GROUP = 'ADD_GROUP'
 export const UPDATE_GROUP = 'UPDATE_GROUP'
 export const REMOVE_GROUP = 'REMOVE_GROUP'
 export const SET_GROUP_ID_TO_EDIT = 'SET_GROUP_ID_TO_EDIT'
 
+// task action
 export const SET_TASKS = 'SET_TASKS'
 export const ADD_TASK = 'ADD_TASK'
 export const DUPLICATE_TASK = 'DUPLICATE_TASK'
@@ -22,6 +24,13 @@ export const UPDATE_TASK = 'UPDATE_TASK'
 export const REMOVE_TASK = 'REMOVE_TASK'
 export const SET_TASK_ID_TO_EDIT = 'SET_TASK_ID_TO_EDIT'
 
+/// task details
+export const SET_TASK_DETAILS = 'SET_TASK_DETAILS'
+
+/// updates -  use comments
+export const ADD_TASK_UPDATE = 'ADD_TASK_UPDATE'
+
+/// 
 export const ADD_BOARD_MSG = 'ADD_BOARD_MSG'
 
 export const SET_IS_BOARD_EDITOR_OPEN = 'SET_IS_BOARD_EDITOR_OPEN'
@@ -42,6 +51,7 @@ const initialState = {
     isBoardEditorOpen: false,
     boardRemovedMsg: '',
     filterOptions: [],
+    taskDetails: null,
 }
 
 export function boardReducer(state = initialState, action = {}) {
@@ -61,10 +71,10 @@ export function boardReducer(state = initialState, action = {}) {
             newState = { ...state, boards: [...state.boards, action.board] }
             break
         case UPDATE_BOARD:
-            
+
             boards = state.boards.map(board => (board._id === action.board._id) ? action.board : board)
             if (action.board?._id === state.board?._id) {
-                
+
                 return newState = { ...state, boards, board: action.board }
             }
             newState = { ...state, boards }
@@ -105,6 +115,10 @@ export function boardReducer(state = initialState, action = {}) {
             break
 
         // task actions
+        case SET_TASK_DETAILS:
+            newState = { ...state, taskDetails: action.task }
+            break
+
         case SET_TASKS:
             var board = { ...state.board }
             board.groups = state.board.groups.map(g => {
@@ -160,7 +174,7 @@ export function boardReducer(state = initialState, action = {}) {
                 group.tasks = group.tasks.map(t => (t.id !== action.task.id) ? t : action.task)
                 return group
             })
-            // board.activities = [...board.activities, action.activity]
+            board.activities = [...board.activities, action.activity]
             newState = { ...state, board }
             break
 
@@ -173,6 +187,18 @@ export function boardReducer(state = initialState, action = {}) {
                 return group
             })
             // board.activities = [...board.activities, action.activity]
+            newState = { ...state, board }
+            break
+
+        ////updates 
+        case ADD_TASK_UPDATE:
+            var board = { ...state.board }
+            board.groups = state.board.groups.map(g => {
+                if (g.id !== action.groupId) return g
+                const group = { ...g }
+                group.tasks = group.tasks.map(t => (t.id !== action.task.id) ? t : action.task)
+                return group
+            })
             newState = { ...state, board }
             break
 

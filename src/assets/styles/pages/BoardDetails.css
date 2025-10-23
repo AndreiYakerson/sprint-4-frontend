@@ -6,22 +6,6 @@
     grid-template-columns: 1fr auto;
 
 
-    .task-details-wrapper {
-        top: 0;
-        left: 0;
-        height: 100%;
-        width: 0;
-        background-color: var(--primary-background-color);
-        z-index: var(--zIndex-Layer-500);
-        transition: 200ms;
-
-        &.open {
-            width: 600px;
-            background-color: var(--primary-background-color);
-        }
-    }
-
-
     .board-details-container {
         height: 100%;
         overflow: auto;

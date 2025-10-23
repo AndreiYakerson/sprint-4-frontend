@@ -1,5 +1,5 @@
 
-  import { useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import { showErrorMsg } from "../../services/event-bus.service"
 import { useSelector } from "react-redux"
 import { setNewTaskIdToEdit } from "../../store/actions/board.actions"
@@ -13,7 +13,6 @@ export function TitleEditor({ info, onUpdate, onSetRenameBoard }) {
     const txtToHighLight = useSelector(state => state.systemModule.txtToHighLight)
 
 
-
     useEffect(() => {
         if (newTaskIdToEdit === info?.taskId) {
             setIsEditing(true)
@@ -22,11 +21,16 @@ export function TitleEditor({ info, onUpdate, onSetRenameBoard }) {
 
     }, [newTaskIdToEdit])
 
-    useState(() => {
+    useEffect(() => {
         if (info?.toRenameBoard) {
             setIsEditing(true)
         }
+        if (info?.currTitle !== nameToEdit) {
+            setNameToEdit(info?.currTitle)
+        }
     }, [info])
+
+
 
     function saveChanges() {
         setIsEditing(false)
@@ -62,7 +66,7 @@ export function TitleEditor({ info, onUpdate, onSetRenameBoard }) {
                     onKeyDown={(e) => {
                         if (e.key === "Enter") saveChanges()
                     }}
-                    placeholder={info?.placeholder ? info?.placeholder : "+ Add Item"}
+                    placeholder={info?.placeholder ? info?.placeholder : ""}
                     onClick={(ev) => ev.stopPropagation()}
                 />
                 : <span className="task-name" onClick={() => setIsEditing(true)}>

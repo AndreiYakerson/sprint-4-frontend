@@ -113,4 +113,31 @@ export function toBase64(file) {
 
     reader.readAsDataURL(file)   
   })
+}export function setStringDate(date) {
+    const options = { month: "short", day: "numeric" }
+    if (new Date(date).getFullYear() !== new Date().getFullYear()) {
+        options.year = 'numeric'
+    }
+    return new Date(date).toLocaleDateString("en-US", options)
+}
+
+
+export function formatTimeAgo(timestamp) {
+    const currDate = Date.now()
+    const Hour = 1000 * 60 * 60
+    const day = Hour * 24
+
+    if (currDate - timestamp < Hour) {
+        const timePass = currDate - timestamp
+        const Minutes = Math.floor(timePass / (1000 * 60))
+        return Minutes > 0 ? Minutes + `m` : 'now'
+    } else if (currDate - timestamp < day) {
+        const timePass = currDate - timestamp
+        const Hours = Math.floor(timePass / (Hour))
+        return Hours + `h`
+    } else {
+        const diffMs = currDate - timestamp
+        const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24))
+        return diffDays + 'd'
+    }
 }

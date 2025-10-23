@@ -15,6 +15,10 @@ import { UserMsg } from './cmps/UserMsg.jsx'
 import { LoginSignup, Login, Signup } from './pages/LoginSignup.jsx'
 import { SideBar } from './cmps/SideBar/SideBar.jsx'
 import { PopUp } from './cmps/PopUp.jsx'
+import { TaskDetails } from './cmps/Task/TaskDetails.jsx'
+import { Updates } from './cmps/TaskDetails/Updates.jsx'
+import { ActivityLog } from './cmps/TaskDetails/ActivityLog.jsx'
+import { Files } from './cmps/TaskDetails/Files.jsx'
 
 
 export function RootCmp() {
@@ -42,8 +46,13 @@ export function RootCmp() {
                     <Route path="" element={<HomePage />} />
                     <Route path="about" element={<AboutUs />} />
                     <Route path="board" element={<BoardIndex />} />
-                    <Route path="board/:boardId" element={<BoardDetails />} />
-                    <Route path="board/:boardId/task/:taskId" element={<BoardDetails />} />
+                    <Route path="board/:boardId" element={<BoardDetails />} >
+                        <Route path="task/:taskId" element={<TaskDetails />} >
+                            <Route path="updates" element={<Updates />} />
+                            <Route path="files" element={<Files />} />
+                            <Route path="log" element={<ActivityLog />} />
+                        </Route>
+                    </Route>
                     <Route path="user/:id" element={<UserDetails />} />
                     <Route path="chat" element={<ChatApp />} />
                     <Route path="auth" element={<LoginSignup />}>
