@@ -1,0 +1,20 @@
+.file-preview {
+    width: 250px;
+
+    padding: var(--spacing-small);
+
+    & .image-container {
+        height: 168px;
+
+        img {
+            height: 100%;
+            width: 100%;
+        }
+
+    }
+    
+    .file-info >*{
+        align-items: center;
+         margin: 12px 4px 4px 4px ;
+    }
+}

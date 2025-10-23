@@ -14,6 +14,7 @@ import { FilterBy } from './filterCmps/FilterBy.jsx'
 import { SortBy } from './filterCmps/SortBy.jsx'
 import { useRef, useState } from 'react'
 import { FloatingContainerCmp } from '../FloatingContainerCmp.jsx'
+import { FileUpload } from '../TaskCmps/FileUpload/FileUpload.jsx'
 
 export function BoardDetailsHeader({
     board,
@@ -36,7 +37,7 @@ export function BoardDetailsHeader({
     const filterBtnRef = useRef(null)
     const personBtnRef = useRef(null)
     const sortByRef = useRef(null)
-    
+
 
     function toggleIsFilterOpen() {
         setIsFilterOpen(!isFilterOpen)
@@ -89,7 +90,7 @@ export function BoardDetailsHeader({
     }
 
     const { byGroups, byNames, byStatuses, byPriorities, byMembers, byDueDateOp, byPerson, sortBy, dir } = filterBy
-    
+
 
     return (
         <header className='board-details-header'>
