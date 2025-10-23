@@ -1,20 +1,24 @@
 .full-screen-container {
+    /* position: relative; */
     display: flex;
     flex-direction: column;
     height: 90vh;
     width: 90vw;
-    overflow: auto;
+    overflow: hidden;
 
     header {
         display: flex;
         /* flex-direction: column; */
+        height: 75px;
+        padding: 16px 16px 16px 32px;
+        flex-shrink: 0;
         border-bottom: 1px solid var(--layout-border-color);
 
 
         .header-content {
             display: grid;
             /* grid-template-columns: repeat(2, minmax(0, 1fr)); */
-            padding: 16px 16px 16px 32px;
+
             margin-inline-end: auto;
 
 
@@ -34,42 +38,65 @@
                     margin-bottom: 0;
                 }
 
-                .delete-btn {
-                    border: none !important;
-                    /* width: 32; */
-                    /* height: 32; */
-                }
+
 
             }
+
         }
 
+        .delete-btn {
+            display: grid;
+            place-content: center;
+            border: none !important;
+            /* padding: 4px 8px 4px 8px; */
+            width: 32px;
+            height: 32px;
+        }
 
     }
 
     main {
-        display: flex;
-        width: 100%;
+        display: grid;
+        grid-template-columns: auto 108px;
+        grid-template-rows: 50px auto 50px;
         height: 100%;
+        overflow-y: auto;
 
         .main-content {
-            display: grid;
+            grid-column: 1;
+            grid-row: 2;
+            /* display: grid;
+            grid-template-columns: .2fr 1fr .2fr;
+            grid-template-rows: 150px 1fr 150px ; */
+            grid-auto-flow: column;
             place-content: center;
-            width: 100%;
 
             img {
+                grid-column: 2;
+                grid-row: 2;
                 place-self: center;
-                max-width: 80%;
-                max-height: 90%;
+                /* max-width: 80%;
+                max-height: 80%; */
             }
         }
 
-        aside {
+    }
+
+    aside {
+        grid-column: 2;
+        grid-row: 1/-1;
+        display: grid;
+        border-left: 1px solid;
+        border-color: var(--layout-border-color);
+
+        .actions {
             display: flex;
-            flex-direction: column;
-            min-width: 108px;
             padding: 12px;
-            border-left: 1px solid;
-            border-color: var(--layout-border-color);
+
+            >*{
+                border: none;
+                margin-bottom: 16px;
+            }
         }
     }
 }

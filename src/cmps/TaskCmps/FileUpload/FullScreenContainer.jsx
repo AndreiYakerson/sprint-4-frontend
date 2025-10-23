@@ -25,7 +25,26 @@ export function FullScreenContainer({ imgSrc, imgTitle, onClosePopUp }) {
 
                 </div>
                 <aside>
-
+                    <section className="actions">
+                        <button className="comment">
+                            <SvgIcon iconName='comment' size={32} />
+                            <span className="btn-text">
+                                Comment
+                            </span>
+                        </button>
+                        <button className="gallery">
+                            <SvgIcon iconName='gallery' size={32} />
+                             <span className="btn-text">
+                                Gallery
+                            </span>
+                        </button>
+                        <button className="comment">
+                            <SvgIcon iconName='info' size={32} />
+                            <span className="btn-text">
+                                Info
+                            </span>
+                        </button>
+                    </section>
                 </aside>
 
             </main>
