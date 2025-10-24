@@ -11,10 +11,11 @@ import { HoveredTextCmp } from '../HoveredTextCmp.jsx'
 import { TitleEditor } from '../Task/TitleEditor.jsx'
 import { ActionsMenu } from '../ActionsMenu.jsx'
 import { SvgIcon } from '../SvgIcon.jsx'
+import { FloatingContainerCmp } from '../FloatingContainerCmp.jsx'
 
 // images
 import boardItemLogo from '/img/board-item-img.svg'
-import { FloatingContainerCmp } from '../FloatingContainerCmp.jsx'
+import dashboardItemLogo from '/img/dashboard-item-img.svg'
 
 
 
@@ -61,8 +62,10 @@ export function BoardPreview({ board, isSideBarDisplay }) {
 
 
     async function toggleIsStarred(isStarred) {
-
         setIsStarred(isStarred)
+
+        if (board.title === 'Dashboard') return
+
         try {
             await onUpdateBoard(board, { isStarred: isStarred })
         } catch (err) {
@@ -114,13 +117,13 @@ export function BoardPreview({ board, isSideBarDisplay }) {
 
             <div className='board-img-wrapper'>
                 <img
-                    src={boardItemLogo}
+                    src={board.title === 'Dashboard' ? dashboardItemLogo : boardItemLogo}
                     alt="Board Image" className='board-img' />
             </div>
 
             <div className='board-info-items'>
                 <SvgIcon
-                    iconName="board"
+                    iconName={board.title === 'Dashboard' ? 'chart' : 'board'}
                     size={isSideBarDisplay ? 16 : 22}
                     colorName={isSideBarDisplay ? "currentColor" : ''}
                 />
@@ -141,16 +144,17 @@ export function BoardPreview({ board, isSideBarDisplay }) {
 
                 {isSideBarDisplay
                     ? <>
-                        <button
-                            className='btn-shrink-wrapper'
-                            onClick={toggleIsMenuOpen}
-                            ref={btnRef}
-                        >
-                            <div className={`btn transparent board-menu-btn ${isMenuOpen ? "menu-open" : ""} shrink`}>
-                                <SvgIcon iconName="dots" size={16} colorName="currentColor" />
-                            </div>
+                        {board.title !== 'Dashboard' &&
+                            <button
+                                className='btn-shrink-wrapper'
+                                onClick={toggleIsMenuOpen}
+                                ref={btnRef}
+                            >
+                                <div className={`btn transparent board-menu-btn ${isMenuOpen ? "menu-open" : ""} shrink`}>
+                                    <SvgIcon iconName="dots" size={16} colorName="currentColor" />
+                                </div>
 
-                        </button>
+                            </button>}
 
 
                         {isMenuOpen && <FloatingContainerCmp

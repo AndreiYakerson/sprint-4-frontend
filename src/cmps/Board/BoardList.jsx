@@ -33,7 +33,24 @@ export function BoardList({ boards, isSideBarDisplay = false }) {
     }
 
 
+
+    function onNavigateToDahsboard() {
+        navigate(`/dashboard`)
+    }
+
+
     return <ul className={`board-list ${isSideBarDisplay ? "side-bar-dispaly" : ""}`}>
+
+        <li
+            className={`board-item ${location.pathname.includes('dashboard') ? "active" : ""}`}
+            onClick={onNavigateToDahsboard}
+        >
+            <BoardPreview
+                board={{ title: 'Dashboard' }}
+                isSideBarDisplay={isSideBarDisplay}
+            />
+        </li>
+
         {boards.map(board => {
             return <li key={board._id}
                 className={`board-item ${location.pathname.includes(board._id) ? "active" : ""}`}
