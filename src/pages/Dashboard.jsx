@@ -26,16 +26,54 @@ export function Dashboard(props) {
                     <h1>Dashboard</h1>
                 </div>
                 <nav className="dashboard-nav">
-                    <div>dashboard nav</div>
+                    <div>Dashboard Nav</div>
                 </nav>
-
             </header>
 
-            <div className="dashboard-content">
 
-            </div>
+            < section className="dashboard-content">
+                <ul className="data-list">
 
-        </section>
+                    {dashboardData?.tasksCount &&
+                        <li className="data-item">
+                            <header className="data-header">
+                                All Tasks
+                            </header>
+                            <div className="data-content">
+                                <div className="item-count">
+                                    {dashboardData?.tasksCount}
+                                </div>
+                            </div>
+                        </li>
+                    }
+
+                    {dashboardData?.byStatus?.length >= 3 &&
+                        dashboardData?.byStatus.slice(0, 3).map(status => {
+                            return < li className="data-item" key={status.id}>
+                                <header className="data-header">
+                                    {status?.txt}
+                                </header>
+                                <div className="data-content">
+                                    <div className="item-count">
+                                        {status?.tasksCount}
+                                    </div>
+                                </div>
+                            </li>
+                        })
+                    }
+
+                    <li className="data-item big">
+                        <header className="data-header"></header>
+                        <div className="data-content"></div>
+                    </li>
+                    <li className="data-item big">
+                        <header className="data-header"></header>
+                        <div className="data-content"></div>
+                    </li>
+                </ul>
+            </section>
+
+        </section >
     )
 
 }
