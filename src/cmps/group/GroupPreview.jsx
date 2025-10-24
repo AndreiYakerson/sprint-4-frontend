@@ -115,7 +115,9 @@ export function GroupPreview({ group, groupsLength, managingType, TaskList,
 
     // sum data
 
-    const statuses = group?.tasks.map(t => {
+    const groupCopy = structuredClone(group)
+
+    const statuses = groupCopy?.tasks.map(t => {
         if (!t?.status) {
             return { id: 'default', txt: 'Not Started', cssVar: '--group-title-clr18' }
         } else {
@@ -124,7 +126,7 @@ export function GroupPreview({ group, groupsLength, managingType, TaskList,
     })
 
 
-    const priorities = group?.tasks.map(t => {
+    const priorities = groupCopy?.tasks.map(t => {
         if (!t?.priority) {
             return { txt: 'Default Label', cssVar: '--group-title-clr18', id: 'Default' }
         } else {
@@ -132,7 +134,7 @@ export function GroupPreview({ group, groupsLength, managingType, TaskList,
         }
     })
 
-    const dates = group?.tasks.map(t => t?.dueDate?.date).filter(d => d).sort()
+    const dates = groupCopy?.tasks.map(t => t?.dueDate?.date).filter(d => d).sort()
 
 
     /// resize columns
