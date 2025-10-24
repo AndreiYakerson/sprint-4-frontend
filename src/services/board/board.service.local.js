@@ -1,4 +1,5 @@
 
+import { functions, take } from 'lodash'
 import { storageService } from '../async-storage.service'
 import { getLoggedinUser, userService } from '../user'
 import { getRandomGroupColor, makeId } from '../util.service'
@@ -15,6 +16,8 @@ export const boardService = {
     getById,
     save,
     remove,
+    /// dashboard
+    getDashboardData,
     // group
     addGroup,
     updateGroup,
@@ -222,6 +225,116 @@ async function save(board) {
         return storageService.post(STORAGE_KEY, boardToSave)
     }
 }
+
+//// Dashboard
+
+async function getDashboardData(filterBy = {}) {
+    const boards = await storageService.query(STORAGE_KEY)
+
+    var filterdBorad = structuredClone(boards)
+
+    const tasks = filterdBorad.reduce((acc, b) => {
+        b.groups.forEach(g => {
+            if (g?.tasks?.length) acc.push(...g.tasks)
+        })
+        return acc
+    }, [])
+
+    const dashboardData = {
+        tasksCount: 0,
+        byStatus: [],
+        byMember: [],
+    }
+
+    if (!tasks?.length) {
+        return dashboardData
+    }
+
+    const statusTypes = _sumStatusesType(tasks)
+    const members = _sumMembers(filterdBorad)
+
+
+    dashboardData.tasksCount = tasks.length
+    dashboardData.byStatus = _getSumDataByStatus(tasks, statusTypes)
+    dashboardData.byMember = members?.length > 0 ? _getSumDataByMembers(tasks, members) : []
+
+    return dashboardData
+}
+
+function _sumStatusesType(tasks) {
+
+    const StatusesTypes = tasks.reduce((acc, task) => {
+        const isStatusExist = acc.find(s => s.id === task.status.id)
+        if (!isStatusExist) acc.push(task.status)
+        return acc
+    }, [])
+
+    return StatusesTypes
+}
+
+function _sumMembers(filterdBorad) {
+    const members = filterdBorad.reduce((acc, board) => {
+        if (board?.members?.length > 0) {
+            acc = [...acc, ...board.members]
+        }
+        return acc
+    }, [])
+
+    const filtedMembers = members.reduce((acc, member) => {
+        const isStatusExist = acc.find(m => m._id === member._id)
+        if (!isStatusExist) {
+            const filteredMeber = { _id: member._id, fullname: member.fullname, imgUrl: member.imgUrl }
+            acc.push(filteredMeber)
+        }
+        return acc
+    }, [])
+
+    return filtedMembers
+}
+
+function _getSumDataByStatus(tasks, statusTypes) {
+
+    const statusesCountMap = tasks.reduce((acc, task) => {
+        if (!acc[task?.status?.id]) acc[task?.status?.id] = 1
+        else acc[task?.status?.id] += 1
+        return acc
+    }, {})
+
+    var statusesSummary = Object.keys(statusesCountMap).map(statusId => {
+        var status = statusTypes.find(s => s.id === statusId)
+        status.tasksCount = statusesCountMap[statusId]
+        status.tasksPercentage = parseFloat(((statusesCountMap[statusId] / tasks.length) * 100).toFixed(1))
+        return status
+    })
+
+    return statusesSummary
+}
+
+function _getSumDataByMembers(tasks, members) {
+
+    const MembersCountMap = tasks.reduce((acc, task) => {
+        if (!task?.memberIds?.length) return acc
+
+        task.memberIds.forEach(memberId => {
+            if (!acc[memberId]) acc[memberId] = 1
+            else acc[memberId] += 1
+        })
+
+        return acc
+    }, {})
+
+
+    var membersSummary = Object.keys(MembersCountMap).map(memberId => {
+        var member = members.find(m => m._id === memberId)
+        if (!member) return
+        member.tasksCount = MembersCountMap[memberId]
+        member.tasksPercentage = parseFloat(((MembersCountMap[memberId] / tasks.length) * 100).toFixed(1))
+        return member
+    })
+
+    return membersSummary
+}
+
 
 // group functions 
 
