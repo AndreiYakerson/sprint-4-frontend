@@ -6,6 +6,7 @@ import { getRandomGroupColor, makeId } from '../util.service'
 
 /// for filter date
 import { DateTime } from "luxon"
+import { httpService } from '../http.service'
 
 // import { userService } from '../user'
 
@@ -39,7 +40,8 @@ window.cs = boardService
 // board functions
 
 async function query(filterBy = { txt: '' }) {
-    var boards = await storageService.query(STORAGE_KEY)
+    var boards = await httpService.get('board',filterBy)
+    
     const { txt, sortField, sortDir } = filterBy
 
     if (txt) {
@@ -52,8 +54,6 @@ async function query(filterBy = { txt: '' }) {
             board1[sortField].localeCompare(board2[sortField]) * +sortDir)
     }
 
-
-    boards = boards.map(({ _id, title, isStarred }) => ({ _id, title, isStarred }))
     return boards
 }
 
