@@ -94,48 +94,53 @@ export function BoardDetailsHeader({
 
     return (
         <header className='board-details-header'>
+            <section className="header-title">
 
-            <div className='action-nav'>
+                <div className='board-title'>{board?.title}</div>
+                
+                <nav className='action-nav'>
 
-                <div className='activity-log'>
-                    <button className='activity-log btn'>
+                    <div className='activity-log'>
+                        <button className='activity-log btn'>
+                            <HoveredTextCmp
+                                label="Board Members"
+                                position="down"
+                            >
+                                <MultiMemberImage members={board?.members} className='multi-members-img' />
+                            </HoveredTextCmp>
+                        </button>
+                    </div>
+
+                    
+                    <div className='invite-users'>
+                        <button className='btn-shrink-wrapper' onClick={_onShowPopUp}>
+                            <div className='btn invite shrink'>
+                                {` Invite / ${board?.members.length}`}
+                            </div>
+                        </button>
+                        
+                        <span className='copy-link'>
+                            <HoveredTextCmp
+                                label="Copy Link"
+                                position="down"
+                            >
+                                <SvgIcon iconName='sink' className='icon' size={20} />
+                            </HoveredTextCmp>
+                        </span>
+                    </div>
+
+                    <button className='more-btn'>
                         <HoveredTextCmp
-                            label="Board Members"
+                            label="Options"
                             position="down"
                         >
-                            <MultiMemberImage members={board?.members} className='multi-members-img' />
+                            <SvgIcon iconName='dots' size={24} />
                         </HoveredTextCmp>
                     </button>
-                </div>
+                </nav>
 
-                <div className='invite-users'>
-                    <button className='btn-shrink-wrapper' onClick={_onShowPopUp}>
-                        <div className='btn invite shrink'>
-                            {` Invite / ${board?.members.length}`}
-                        </div>
-                    </button>
+            </section>
 
-                    <span className='copy-link'>
-                        <HoveredTextCmp
-                            label="Copy Link"
-                            position="down"
-                        >
-                            <SvgIcon iconName='sink' className='icon' size={20} />
-                        </HoveredTextCmp>
-                    </span>
-                </div>
-
-                <button className='more-btn'>
-                    <HoveredTextCmp
-                        label="Options"
-                        position="down"
-                    >
-                        <SvgIcon iconName='dots' size={24} />
-                    </HoveredTextCmp>
-                </button>
-            </div>
-
-            <div className='board-title'>{board?.title}</div>
 
             <div className='board-nav'>
                 <div>Main Table</div>

@@ -13,7 +13,7 @@
           "title title action"
           "navigation navigation navigation"
           "contextualAction contextualAction contextualAction";
-      grid-template-columns: fit-content(800px) 1fr;
+      grid-template-columns: 800px 1fr;
       grid-template-rows: auto;
       column-gap: 16px;
       width: 100%;
@@ -21,102 +21,110 @@
       height: 100%;
       max-height: 148px;
 
-      .board-title {
-          grid-area: title;
-          font-size: 24px;
-          font-weight: 500;
-          font-family: var(--title-font-family);
-          margin: 0;
-          overflow: hidden;
-          text-overflow: ellipsis;
-          white-space: nowrap;
-          width: fit-content;
-
-          padding: 1px var(--spacing-xs);
-
-
-          &:hover {
-              background-color: var(--primary-background-hover-color);
-              cursor: pointer;
-              border-radius: var(--border-radius-small);
-          }
-      }
-
-
-
-      .action-nav {
-          grid-area: action;
+      .header-title {
+        position: relative;
           display: flex;
-          align-items: center;
 
-          justify-self: end;
-          gap: var(--spacing-small);
+          .board-title {
+              grid-area: title;
+              height: 32px;
+              font-size: 24px;
+              font-weight: 500;
+              font-family: var(--title-font-family);
+              margin: 0;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              white-space: nowrap;
+              width: fit-content;
 
-          height: var(--space-32);
+              padding: 1px var(--spacing-xs);
 
-          .activity-log {
-              display: flex;
 
-              border: none;
-              background-color: transparent;
-
-              & .multi-members-img {
-                  padding: var(--space-4) var(--space-8);
+              &:hover {
+                  background-color: var(--primary-background-hover-color);
+                  cursor: pointer;
                   border-radius: var(--border-radius-small);
+              }
+          }
 
-                  &:hover {
+
+
+          .action-nav {
+              position: fixed;
+              right: 30px;
+
+              grid-area: action;
+              display: flex;
+              align-items: center;
+
+              justify-self: end;
+              gap: var(--spacing-small);
+
+              height: var(--space-32);
+
+              .activity-log {
+                  display: flex;
+
+                  border: none;
+                  background-color: transparent;
+
+                  & .multi-members-img {
+                      padding: var(--space-4) var(--space-8);
+                      border-radius: var(--border-radius-small);
+
+                      &:hover {
+                          background-color: var(--primary-background-hover-color);
+                      }
+                  }
+              }
+
+              .invite-users {
+                  display: flex;
+                  align-items: stretch;
+
+                  color: var(--primary-text-color);
+                  background-color: transparent;
+
+                  .invite {
+                      max-height: 31px;
+                      line-height: 22px;
+                      border-color: var(--ui-border-color);
+                      border-bottom-right-radius: 0%;
+                      border-top-right-radius: 0%;
+
+                  }
+
+                  .copy-link {
+                      display: flex;
+                      place-items: center;
+                      width: 30px;
+                      border-bottom-right-radius: var(--border-radius-small);
+                      border-top-right-radius: var(--border-radius-small);
+                      border: 1px solid;
+                      border-left: none;
+                      border-color: var(--ui-border-color);
+
+                      & .icon {
+                          display: flex;
+                          place-content: center;
+                          width: 100%;
+                      }
+
+                  }
+
+                  .copy-link:hover {
                       background-color: var(--primary-background-hover-color);
                   }
               }
-          }
 
-          .invite-users {
-              display: flex;
-              align-items: stretch;
-
-              color: var(--primary-text-color);
-              background-color: transparent;
-
-              .invite {
-                  max-height: 31px;
-                  line-height: 22px;
-                  border-color: var(--ui-border-color);
-                  border-bottom-right-radius: 0%;
-                  border-top-right-radius: 0%;
+              .more-btn {
+                  width: 32px;
+                  height: 32px;
+                  border: none;
 
               }
-
-              .copy-link {
-                  display: flex;
-                  place-items: center;
-                  width: 30px;
-                  border-bottom-right-radius: var(--border-radius-small);
-                  border-top-right-radius: var(--border-radius-small);
-                  border: 1px solid;
-                  border-left: none;
-                  border-color: var(--ui-border-color);
-
-                  & .icon {
-                      display: flex;
-                      place-content: center;
-                      width: 100%;
-                  }
-
-              }
-
-              .copy-link:hover {
-                  background-color: var(--primary-background-hover-color);
-              }
-          }
-
-          .more-btn {
-              width: 32px;
-              height: 32px;
-              border: none;
-
           }
       }
-
 
       .board-nav {
           display: flex;
