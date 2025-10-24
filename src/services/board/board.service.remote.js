@@ -6,11 +6,20 @@ import { getRandomGroupColor, makeId } from '../util.service'
 
 /// for filter date
 import { DateTime } from "luxon"
+import axios from 'axios'
+
+import { functions, take } from 'lodash'
+import { storageService } from '../async-storage.service'
+import { getLoggedinUser, userService } from '../user'
+import { getRandomGroupColor, makeId } from '../util.service'
+
+/// for filter date
+import { DateTime } from "luxon"
 import { httpService } from '../http.service'
 
 // import { userService } from '../user'
 
-const STORAGE_KEY = 'board'
+const BOARD_URL = 'board/'
 
 export const boardService = {
     query,
@@ -40,25 +49,27 @@ window.cs = boardService
 // board functions
 
 async function query(filterBy = { txt: '' }) {
-    var boards = await httpService.get('board',filterBy)
-    
-    const { txt, sortField, sortDir } = filterBy
+    var boards = await httpService.get(BOARD_URL, filterBy)
+    // console.log("🚀 ~ query ~ boards:", boards)
+    // const { txt, sortField, sortDir } = filterBy
 
-    if (txt) {
-        const regex = new RegExp(filterBy.txt, 'i')
-        boards = boards.filter(board => regex.test(board.title))
-    }
+    // if (txt) {
+    //     const regex = new RegExp(filterBy.txt, 'i')
+    //     boards = boards.filter(board => regex.test(board.title))
+    // }
 
-    if (sortField === 'title') {
-        boards.sort((board1, board2) =>
-            board1[sortField].localeCompare(board2[sortField]) * +sortDir)
-    }
+    // if (sortField === 'title') {
+    //     boards.sort((board1, board2) =>
+    //         board1[sortField].localeCompare(board2[sortField]) * +sortDir)
+    // }
 
+
+    // boards = boards.map(({ _id, title, isStarred }) => ({ _id, title, isStarred }))
     return boards
 }
 
 async function getById(boardId, filterBy) {
-    var board = await storageService.get(STORAGE_KEY, boardId)
+    var board = await httpService.get(BOARD_URL, boardId)
 
     if (!board) return null
 
@@ -213,23 +224,24 @@ function getFilterOptions(board) {
 
 async function remove(boardId) {
     // throw new Error('Nope')
-    await storageService.remove(STORAGE_KEY, boardId)
+    await httpService.delete(BOARD_URL, boardId)
 }
 
 async function save(board) {
+    console.log("🚀 ~ save ~ board:", board)
 
     if (board._id) {
-        return storageService.put(STORAGE_KEY, board)
+        return httpService.put(BOARD_URL, board)
     } else {
         const boardToSave = _setBoardToSave(board)
-        return storageService.post(STORAGE_KEY, boardToSave)
+        return httpService.post(BOARD_URL, boardToSave)
     }
 }
 
 //// Dashboard
 
 async function getDashboardData(filterBy = {}) {
-    const boards = await storageService.query(STORAGE_KEY)
+    const boards = await httpService.get(BOARD_URL)
 
     var filterdBorad = structuredClone(boards)
 
