@@ -30,6 +30,9 @@ export const SET_TASK_DETAILS = 'SET_TASK_DETAILS'
 /// updates -  use comments
 export const ADD_TASK_UPDATE = 'ADD_TASK_UPDATE'
 
+//Dashboard
+export const SET_DASHBOARD_DATA = 'SET_DASHBOARD_DATA'
+
 /// 
 export const ADD_BOARD_MSG = 'ADD_BOARD_MSG'
 
@@ -52,6 +55,7 @@ const initialState = {
     boardRemovedMsg: '',
     filterOptions: [],
     taskDetails: null,
+    dashboardData: {}
 }
 
 export function boardReducer(state = initialState, action = {}) {
@@ -208,6 +212,10 @@ export function boardReducer(state = initialState, action = {}) {
                 return newState = { ...state, board, taskDetails }
             }
             newState = { ...state, board }
+            break
+
+        case SET_DASHBOARD_DATA:
+            newState = { ...state, dashboardData: action.dashboardData }
             break
 
         case SET_TASK_ID_TO_EDIT:

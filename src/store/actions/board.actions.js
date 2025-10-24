@@ -31,6 +31,9 @@ import {
     SET_FILTER_OPTIONS,
     ADD_TASK_UPDATE,
 
+    // DASHBOARD
+    SET_DASHBOARD_DATA,
+
 } from '../reducers/board.reducer'
 
 
@@ -88,8 +91,20 @@ export async function removeBoard(boardId) {
 }
 
 
-// BOARD ACTIONS
+/// Dashboard
 
+export async function loadDashboard(filterBy = {}) {
+    try {
+        const dashboardData = await boardService.getDashboardData(filterBy)
+        store.dispatch({ type: SET_DASHBOARD_DATA, dashboardData })
+    } catch (err) {
+        console.log('Cannot load dashboard', err)
+        throw err
+    }
+}
+
+
+// BOARD ACTIONS
 
 export async function loadBoard(boardId, filterBy) {
     try {
@@ -101,7 +116,6 @@ export async function loadBoard(boardId, filterBy) {
         throw err
     }
 }
-
 
 // Groups Actions ///////////////////////////////////////////////////////////////
 
