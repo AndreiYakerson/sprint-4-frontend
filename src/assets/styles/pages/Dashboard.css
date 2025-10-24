@@ -1,0 +1,38 @@
+.dashboard {
+    height: 100%;
+    background-color: #f6f7fb;
+
+
+    .dashboard-header {
+        position: sticky;
+        top: 0;
+        background-color: white;
+
+        .dashboard-name-container {
+            padding: 8px 30px;
+
+            h1 {
+                align-content: center;
+                font-size: 24px;
+                line-height: 34px;
+                font-weight: 500;
+                height: 48px;
+                margin: 0;
+            }
+        }
+
+        .dashboard-nav {
+            height: 48px;
+            width: 100%;
+            display: flex;
+            background-color: var(--primary-background-color);
+            border-top: 1px solid var(--layout-border-color);
+            border-bottom: 1px solid var(--layout-border-color);
+            align-items: center;
+
+            &>* {
+                margin-inline: 20px;
+            }
+        }
+    }
+}

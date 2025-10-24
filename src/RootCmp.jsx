@@ -19,6 +19,7 @@ import { TaskDetails } from './cmps/Task/TaskDetails.jsx'
 import { Updates } from './cmps/TaskDetails/Updates.jsx'
 import { ActivityLog } from './cmps/TaskDetails/ActivityLog.jsx'
 import { Files } from './cmps/TaskDetails/Files.jsx'
+import { Dashboard } from './pages/Dashboard.jsx'
 
 
 export function RootCmp() {
@@ -45,6 +46,7 @@ export function RootCmp() {
                 <Routes>
                     <Route path="" element={<HomePage />} />
                     <Route path="about" element={<AboutUs />} />
+                    <Route path="dashboard" element={<Dashboard />} />
                     <Route path="board" element={<BoardIndex />} />
                     <Route path="board/:boardId" element={<BoardDetails />} >
                         <Route path="task/:taskId" element={<TaskDetails />} >
