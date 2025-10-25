@@ -1,12 +1,10 @@
 
-import { functions, take } from 'lodash'
-import { storageService } from '../async-storage.service'
 import { getLoggedinUser, userService } from '../user'
 import { getRandomGroupColor, makeId } from '../util.service'
 
 /// for filter date
 import { DateTime } from "luxon"
-import axios from 'axios'
+
 import { httpService } from '../http.service'
 
 // import { userService } from '../user'
@@ -42,7 +40,6 @@ window.cs = boardService
 
 async function query(filterBy = { txt: '' }) {
     var boards = await httpService.get(BOARD_URL, filterBy)
-    // console.log("🚀 ~ query ~ boards:", boards)
     // const { txt, sortField, sortDir } = filterBy
 
     // if (txt) {
@@ -61,131 +58,131 @@ async function query(filterBy = { txt: '' }) {
 }
 
 async function getById(boardId, filterBy) {
-    var board = await httpService.get(BOARD_URL, boardId)
+    var board = await httpService.get(BOARD_URL + boardId)
 
-    if (!board) return null
+    // if (!board) return null
 
-    const filterOptions = getFilterOptions(board)
+    // const filterOptions = getFilterOptions(board)
 
-    if (filterBy?.byGroups?.length > 0) {
-        board.groups = board.groups.filter(g => filterBy.byGroups.includes(g.id))
-    }
+    // if (filterBy?.byGroups?.length > 0) {
+    //     board.groups = board.groups.filter(g => filterBy.byGroups.includes(g.id))
+    // }
 
-    if (filterBy?.byNames?.length > 0) {
-        board.groups = board.groups.filter(g => {
-            g.tasks = g.tasks.filter(t => filterBy.byNames.includes(t.title))
-            return g?.tasks?.length > 0
-        })
-    }
+    // if (filterBy?.byNames?.length > 0) {
+    //     board.groups = board.groups.filter(g => {
+    //         g.tasks = g.tasks.filter(t => filterBy.byNames.includes(t.title))
+    //         return g?.tasks?.length > 0
+    //     })
+    // }
 
 
-    if (filterBy?.byStatuses?.length > 0) {
-        board.groups = board.groups.filter(g => {
-            g.tasks = g.tasks.filter(t => filterBy.byStatuses.includes(t?.status?.id))
-            return g?.tasks?.length > 0
-        })
-    }
+    // if (filterBy?.byStatuses?.length > 0) {
+    //     board.groups = board.groups.filter(g => {
+    //         g.tasks = g.tasks.filter(t => filterBy.byStatuses.includes(t?.status?.id))
+    //         return g?.tasks?.length > 0
+    //     })
+    // }
 
-    if (filterBy?.byPriorities?.length > 0) {
-        board.groups = board.groups.filter(g => {
-            g.tasks = g.tasks.filter(t => filterBy.byPriorities.includes(t?.priority?.id))
-            return g?.tasks?.length > 0
-        })
-    }
+    // if (filterBy?.byPriorities?.length > 0) {
+    //     board.groups = board.groups.filter(g => {
+    //         g.tasks = g.tasks.filter(t => filterBy.byPriorities.includes(t?.priority?.id))
+    //         return g?.tasks?.length > 0
+    //     })
+    // }
 
-    if (filterBy?.byMembers?.length > 0) {
-        board.groups = board.groups.filter(g => {
-            g.tasks = g.tasks.filter(t => {
-                return filterBy.byMembers.some(m => t?.memberIds.includes(m))
-            })
-            return g?.tasks?.length > 0
-        })
-    }
+    // if (filterBy?.byMembers?.length > 0) {
+    //     board.groups = board.groups.filter(g => {
+    //         g.tasks = g.tasks.filter(t => {
+    //             return filterBy.byMembers.some(m => t?.memberIds.includes(m))
+    //         })
+    //         return g?.tasks?.length > 0
+    //     })
+    // }
 
-    if (filterBy?.byDueDateOp?.length > 0) {
-        const now = DateTime.local()
-        const ops = filterBy.byDueDateOp
+    // if (filterBy?.byDueDateOp?.length > 0) {
+    //     const now = DateTime.local()
+    //     const ops = filterBy.byDueDateOp
 
-        board.groups = board.groups
-            .filter(g => {
-                g.tasks = g.tasks.filter(t => {
-                    if (!t?.dueDate?.date) return false
+    //     board.groups = board.groups
+    //         .filter(g => {
+    //             g.tasks = g.tasks.filter(t => {
+    //                 if (!t?.dueDate?.date) return false
 
-                    const dueDate = DateTime.fromMillis(t.dueDate.date)
-                    const isDone = t?.status?.id === "done"
-                    const updatedAt = t?.status?.updatedAt
-                        ? DateTime.fromMillis(t.status.updatedAt)
-                        : null
+    //                 const dueDate = DateTime.fromMillis(t.dueDate.date)
+    //                 const isDone = t?.status?.id === "done"
+    //                 const updatedAt = t?.status?.updatedAt
+    //                     ? DateTime.fromMillis(t.status.updatedAt)
+    //                     : null
 
-                    return (
-                        (ops.includes("today") && dueDate.hasSame(now, "day")) ||
-                        (ops.includes("tomorrow") && dueDate.hasSame(now.plus({ days: 1 }), "day")) ||
-                        (ops.includes("yesterday") && dueDate.hasSame(now.minus({ days: 1 }), "day")) ||
+    //                 return (
+    //                     (ops.includes("today") && dueDate.hasSame(now, "day")) ||
+    //                     (ops.includes("tomorrow") && dueDate.hasSame(now.plus({ days: 1 }), "day")) ||
+    //                     (ops.includes("yesterday") && dueDate.hasSame(now.minus({ days: 1 }), "day")) ||
 
-                        (ops.includes("this week") && dueDate.hasSame(now, "week")) ||
-                        (ops.includes("last week") && dueDate.hasSame(now.minus({ weeks: 1 }), "week")) ||
-                        (ops.includes("next week") && dueDate.hasSame(now.plus({ weeks: 1 }), "week")) ||
+    //                     (ops.includes("this week") && dueDate.hasSame(now, "week")) ||
+    //                     (ops.includes("last week") && dueDate.hasSame(now.minus({ weeks: 1 }), "week")) ||
+    //                     (ops.includes("next week") && dueDate.hasSame(now.plus({ weeks: 1 }), "week")) ||
 
-                        (ops.includes("this month") && dueDate.hasSame(now, "month")) ||
-                        (ops.includes("last month") && dueDate.hasSame(now.minus({ months: 1 }), "month")) ||
-                        (ops.includes("next month") && dueDate.hasSame(now.plus({ months: 1 }), "month")) ||
+    //                     (ops.includes("this month") && dueDate.hasSame(now, "month")) ||
+    //                     (ops.includes("last month") && dueDate.hasSame(now.minus({ months: 1 }), "month")) ||
+    //                     (ops.includes("next month") && dueDate.hasSame(now.plus({ months: 1 }), "month")) ||
 
-                        (ops.includes("overdue") && !isDone && dueDate.startOf("day") < now.startOf("day")) ||
-                        (ops.includes("done on time") && isDone && updatedAt && updatedAt <= dueDate) ||
-                        (ops.includes("done overdue") && isDone && updatedAt && updatedAt > dueDate)
-                    )
-                })
-                return g => g.tasks.length > 0
-            })
-    }
+    //                     (ops.includes("overdue") && !isDone && dueDate.startOf("day") < now.startOf("day")) ||
+    //                     (ops.includes("done on time") && isDone && updatedAt && updatedAt <= dueDate) ||
+    //                     (ops.includes("done overdue") && isDone && updatedAt && updatedAt > dueDate)
+    //                 )
+    //             })
+    //             return g => g.tasks.length > 0
+    //         })
+    // }
 
-    /// Filter by specific user as opposed to a list of users ids from person filter
+    // /// Filter by specific user as opposed to a list of users ids from person filter
 
-    if (filterBy?.byPerson) {
-        board.groups = board.groups.filter(g => {
-            g.tasks = g.tasks.filter(t => t?.memberIds.includes(filterBy.byPerson))
-            return g?.tasks?.length > 0
-        })
-    }
+    // if (filterBy?.byPerson) {
+    //     board.groups = board.groups.filter(g => {
+    //         g.tasks = g.tasks.filter(t => t?.memberIds.includes(filterBy.byPerson))
+    //         return g?.tasks?.length > 0
+    //     })
+    // }
 
-    /// sort by 
+    // /// sort by 
 
-    if (filterBy?.sortBy && filterBy?.dir) {
-        if (filterBy?.sortBy === 'name') {
-            board.groups = board.groups.map(g => {
-                g.tasks = g.tasks.sort((t1, t2) => (t1?.title.localeCompare(t2?.title)) * filterBy?.dir)
-                return g
-            })
-        } else if (filterBy?.sortBy === 'date') {
-            board.groups = board.groups.map(g => {
-                g.tasks = g.tasks.sort((t1, t2) => (t1?.dueDate?.date - t2?.dueDate?.date) * filterBy?.dir)
-                return g
-            })
-        } else if (filterBy?.sortBy === 'status') {
-            board.groups = board.groups.map(g => {
-                g.tasks = g.tasks.sort((t1, t2) => (t1?.status?.txt.localeCompare(t2?.status?.txt)) * filterBy?.dir)
-                return g
-            })
-        } else if (filterBy?.sortBy === 'priority') {
-            board.groups = board.groups.map(g => {
-                g.tasks = g.tasks.sort((t1, t2) => (t1?.priority?.txt.localeCompare(t2?.priority?.txt)) * filterBy?.dir)
-                return g
-            })
-        } else if (filterBy?.sortBy === 'members') {
-            board.groups = board.groups.map(g => {
+    // if (filterBy?.sortBy && filterBy?.dir) {
+    //     if (filterBy?.sortBy === 'name') {
+    //         board.groups = board.groups.map(g => {
+    //             g.tasks = g.tasks.sort((t1, t2) => (t1?.title.localeCompare(t2?.title)) * filterBy?.dir)
+    //             return g
+    //         })
+    //     } else if (filterBy?.sortBy === 'date') {
+    //         board.groups = board.groups.map(g => {
+    //             g.tasks = g.tasks.sort((t1, t2) => (t1?.dueDate?.date - t2?.dueDate?.date) * filterBy?.dir)
+    //             return g
+    //         })
+    //     } else if (filterBy?.sortBy === 'status') {
+    //         board.groups = board.groups.map(g => {
+    //             g.tasks = g.tasks.sort((t1, t2) => (t1?.status?.txt.localeCompare(t2?.status?.txt)) * filterBy?.dir)
+    //             return g
+    //         })
+    //     } else if (filterBy?.sortBy === 'priority') {
+    //         board.groups = board.groups.map(g => {
+    //             g.tasks = g.tasks.sort((t1, t2) => (t1?.priority?.txt.localeCompare(t2?.priority?.txt)) * filterBy?.dir)
+    //             return g
+    //         })
+    //     } else if (filterBy?.sortBy === 'members') {
+    //         board.groups = board.groups.map(g => {
 
-                g.tasks = g.tasks.sort((t1, t2) => {
+    //             g.tasks = g.tasks.sort((t1, t2) => {
 
-                    const member1 = board.members.find(m => m._id === t1.memberIds[0])?.fullname || ''
-                    const member2 = board.members.find(m => m._id === t2.memberIds[0])?.fullname || ''
+    //                 const member1 = board.members.find(m => m._id === t1.memberIds[0])?.fullname || ''
+    //                 const member2 = board.members.find(m => m._id === t2.memberIds[0])?.fullname || ''
 
-                    return (member1.localeCompare(member2)) * filterBy?.dir
-                })
-                return g
-            })
-        }
-    }
-
+    //                 return (member1.localeCompare(member2)) * filterBy?.dir
+    //             })
+    //             return g
+    //         })
+    //     }
+    // }
+    const filterOptions = filterBy
     return { board, filterOptions }
 }
 
@@ -216,11 +213,10 @@ function getFilterOptions(board) {
 
 async function remove(boardId) {
     // throw new Error('Nope')
-    await httpService.delete(BOARD_URL, boardId)
+    await httpService.delete(BOARD_URL + boardId)
 }
 
 async function save(board) {
-    console.log("🚀 ~ save ~ board:", board)
 
     if (board._id) {
         return httpService.put(BOARD_URL, board)

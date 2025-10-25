@@ -11,6 +11,7 @@ import userImg8 from '/img/demoUsers/user8.png'
 import userImg9 from '/img/demoUsers/user9.png'
 import userImg10 from '/img/demoUsers/user10.png'
 import { httpService } from '../http.service'
+import { showErrorMsg } from '../event-bus.service'
 
 const usersImgs = [userImg1, userImg2, userImg3, userImg4, userImg5, userImg6, userImg7, userImg8, userImg9, userImg10,]
 const STORAGE_KEY_LOGGEDIN_USER = 'loggedinUser'
@@ -57,7 +58,7 @@ async function update({ _id }) {
 }
 
 async function login(userCred) {
-    const users = await httpService.query('user')
+    const users = await httpService.get('user')
     const user = users.find(user => user.username === userCred.username)
 
     if (user) return saveLoggedinUser(user)
@@ -65,9 +66,13 @@ async function login(userCred) {
 
 async function signup(userCred) {
     if (!userCred.imgUrl) userCred.imgUrl = 'https://cdn.pixabay.com/photo/2020/07/01/12/58/icon-5359553_1280.png'
+    try {
+        const user = await httpService.post('auth/signup', userCred)
+        return saveLoggedinUser(user)
 
-    const user = await httpService.post('user', userCred)
-    return saveLoggedinUser(user)
+    } catch (error) {
+        showErrorMsg('can not signUp')
+    }
 }
 
 
@@ -173,6 +178,7 @@ function saveLoggedinUser(user) {
         imgUrl: user.imgUrl,
         isAdmin: user.isAdmin
     }
+
     sessionStorage.setItem(STORAGE_KEY_LOGGEDIN_USER, JSON.stringify(user))
     return user
 }
@@ -183,8 +189,9 @@ async function _createAdmin() {
     const user = {
         username: 'admin',
         password: 'admin',
-        fullname: 'Mustafa Adminsky',
+        fullname: 'dandan Adminsky',
         imgUrl: user1,
+        isAdmin: true
     }
 
     const newUser = await httpService.post('user', userCred)
