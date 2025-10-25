@@ -700,7 +700,6 @@ const DefaultStatuses = [
 
 function _setBoardToSave({ title = 'New board', managingType = 'items', privacy = 'main' }) {
     return {
-        _id: makeId(),
         title,
         privacy,
         managingType,
