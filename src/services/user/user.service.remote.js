@@ -45,9 +45,8 @@ function remove(userId) {
     return httpService.remove('user', userId)
 }
 
-async function update({ _id, score }) {
+async function update({ _id }) {
     const user = await httpService.get('user', _id)
-    user.score = score
     await httpService.put('user', user)
 
     // When admin updates other user's details, do not update loggedinUser
@@ -66,7 +65,6 @@ async function login(userCred) {
 
 async function signup(userCred) {
     if (!userCred.imgUrl) userCred.imgUrl = 'https://cdn.pixabay.com/photo/2020/07/01/12/58/icon-5359553_1280.png'
-    userCred.score = 10000
 
     const user = await httpService.post('user', userCred)
     return saveLoggedinUser(user)
@@ -173,7 +171,6 @@ function saveLoggedinUser(user) {
         _id: user._id,
         fullname: user.fullname,
         imgUrl: user.imgUrl,
-        score: user.score,
         isAdmin: user.isAdmin
     }
     sessionStorage.setItem(STORAGE_KEY_LOGGEDIN_USER, JSON.stringify(user))
@@ -188,7 +185,6 @@ async function _createAdmin() {
         password: 'admin',
         fullname: 'Mustafa Adminsky',
         imgUrl: user1,
-        score: 10000,
     }
 
     const newUser = await httpService.post('user', userCred)
