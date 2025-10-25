@@ -20,13 +20,14 @@ import { MiniUser } from './MiniUser.jsx'
 
 export function AppHeader() {
 
-	const user = useSelector(storeState => storeState.userModule.user)
-	
+	const user = useSelector(storeState => storeState.userModule.user)	
 
 	const [anchorEl, setAnchorEl] = useState(null)
 	const navigate = useNavigate()
 
-
+function onShowUserPage(){
+	navigate(`/user/${user._id}`)
+}
 
 	async function onLogout() {
 		try {
@@ -209,11 +210,13 @@ export function AppHeader() {
 					</HoveredTextCmp>
 				</button>
 
-				<section className="main-mini-user">
+				<section className="main-mini-user"
+				// onClick={onShowUserPage}
+				>
 					{!user && <NavLink to="auth/login" className="login-link">Login</NavLink>}
 					{user && (
 						<div className='member-info'>
-							{/* <button onClick={onLogout}>logout</button> */}
+							<button onClick={onLogout}>logout</button>
 							<MiniUser
 								user={user}
 							/>
