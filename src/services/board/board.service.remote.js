@@ -394,17 +394,7 @@ async function updateGroup(boardId, groupToUpdate) {
 
 async function removeGroup(boardId, groupId) {
 
-    try {
-        const { board } = await getById(boardId)
-        if (!board) throw new Error(`Board ${boardId} not found`);
-
-        board.groups = board.groups.filter(group => group.id !== groupId)
-
-        return await save(board)
-
-    } catch (err) {
-        throw err
-    }
+  return await httpService.delete(`${BOARD_URL}${boardId}/${groupId}`)
 }
 
 
