@@ -39,7 +39,7 @@ async function getUsers() {
 }
 
 async function getById(userId) {
-    return await httpService.get('user', userId)
+    return await httpService.get('user' + userId)
 }
 
 function remove(userId) {
