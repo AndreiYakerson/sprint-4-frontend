@@ -217,20 +217,22 @@ async function remove(boardId) {
 }
 
 async function save(board) {
+    var savedBoard
     if (board._id) {
         try {
-            await httpService.put(BOARD_URL, board)
+         savedBoard =   await httpService.put(BOARD_URL, board)
         } catch (error) {
             console.log(' Problem updating board. ', error)
         }
     } else {
         try {
             const boardToSave = _setBoardToSave(board)
-            await httpService.post(BOARD_URL, boardToSave)
+          savedBoard =   await httpService.post(BOARD_URL, boardToSave)
         } catch (error) {
             console.log(' Problem saving board. ')
         }
     }
+    return savedBoard
 }
 
 
