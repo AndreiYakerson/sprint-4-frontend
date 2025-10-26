@@ -47,7 +47,7 @@ export function LoginSignup() {
             </div>
 
             <div className='login-welcome-msg'>
-                <img src="../../public/img/welcome-to-monday.avif" alt="welcome" />
+                <img src="/img/welcome-to-monday.avif" alt="welcome" />
             </div>
 
         </div>

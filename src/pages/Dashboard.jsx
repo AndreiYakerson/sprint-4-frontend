@@ -1,6 +1,7 @@
 import { useEffect } from "react"
 import { useSelector } from "react-redux"
 import { loadDashboard } from "../store/actions/board.actions"
+import { showErrorMsg } from "../services/event-bus.service"
 
 export function Dashboard(props) {
 
