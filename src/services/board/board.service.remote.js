@@ -219,16 +219,16 @@ async function remove(boardId) {
 async function save(board) {
     var savedBoard
     if (board._id) {
-        
+
         try {
-         savedBoard =   await httpService.put(BOARD_URL, board)
+            savedBoard = await httpService.put(BOARD_URL, board)
         } catch (error) {
             console.log(' Problem updating board. ', error)
         }
     } else {
         try {
             const boardToSave = _setBoardToSave(board)
-          savedBoard =   await httpService.post(BOARD_URL, boardToSave)
+            savedBoard = await httpService.post(BOARD_URL, boardToSave)
         } catch (error) {
             console.log(' Problem saving board. ')
         }
@@ -240,7 +240,7 @@ async function save(board) {
 //// Dashboard
 
 async function getDashboardData(filterBy = {}) {
-    const boards = await httpService.get(BOARD_URL +'dashboard')
+    const boards = await httpService.get(BOARD_URL + 'dashboard')
     // var filterdBorad = structuredClone(boards)
 
     // const tasks = filterdBorad.reduce((acc, b) => {
@@ -364,30 +364,18 @@ async function updateGroupsOrder(orderedGroups, boardId) {
 
 async function addGroup(boardId) {
     try {
-        return await httpService.put(`${BOARD_URL}${boardId}`)
-
+        return await httpService.post(`${BOARD_URL}group/${boardId}`)
     } catch (err) {
         console.log(' Problem adding group.', err)
-
         throw err
     }
 }
 
 async function updateGroup(boardId, groupToUpdate) {
+    const groupId = groupToUpdate.id
 
     try {
-        const { board } = await getById(boardId)
-        if (!board) throw new Error(`Board ${boardId} not found`);
-
-        const idx = board.groups.findIndex(group => group.id === groupToUpdate.id)
-        if (idx === -1) throw new Error(`group ${groupToUpdate.id} not found`);
-
-        board.groups[idx] = { ...board.groups[idx], ...groupToUpdate }
-
-        await save(board)
-
-        return board.groups[idx]
-
+        return await httpService.put(`${BOARD_URL}group/${boardId}/${groupId}`, groupToUpdate)
     } catch (err) {
         console.log(' Problem updating group.', err)
         throw err
