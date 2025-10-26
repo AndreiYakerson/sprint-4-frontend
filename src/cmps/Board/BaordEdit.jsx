@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom"
 import { boardService } from "../../services/board/index.js"
 import { addBoard, setIsBoardEditorOpen } from "../../store/actions/board.actions.js"
 import { SvgIcon } from "../SvgIcon.jsx"
+import { showSuccessMsg } from "../../services/event-bus.service.js"
 
 
 export function BoardEdit({ onClosePopUp }) {
@@ -27,6 +28,7 @@ export function BoardEdit({ onClosePopUp }) {
         onClosePopUp()
         try {
             const board = await addBoard(boardToEdit)
+            showSuccessMsg(' Board added with success ')
             setIsBoardEditorOpen(false)
             navigate(`/board/${board?._id}`)
 
