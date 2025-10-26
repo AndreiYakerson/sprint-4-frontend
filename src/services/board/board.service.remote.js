@@ -215,32 +215,24 @@ async function remove(boardId) {
     // throw new Error('Nope')
     await httpService.delete(BOARD_URL + boardId)
 }
+
 async function save(board) {
-    var savedBoard
     if (board._id) {
-        console.log("🚀 ~ save ~ board:", board)
-        // savedToy = await storageService.put(STORAGE_KEY, toy)
         try {
-            savedToy = await httpService.put(BOARD_URL + board.Id, board)
+            await httpService.put(BOARD_URL, board)
         } catch (error) {
             console.log(' Problem updating board. ', error)
         }
-
     } else {
-        console.log("🚀 ~ save ~ board:", board)
-        // Later, owner is set by the backend
         try {
-            console.log("🚀 ~ save ~ getLoggedinUser():", getLoggedinUser())
-            board.owner = getLoggedinUser()
-            console.log("🚀 ~ save ~ board.owner:", board.owner)
-            // savedBoard = await storageService.post(STORAGE_KEY, toy)
-            savedBoard = await httpService.post(BOARD_URL, board)
+            const boardToSave = _setBoardToSave(board)
+            await httpService.post(BOARD_URL, boardToSave)
         } catch (error) {
             console.log(' Problem saving board. ')
         }
     }
-    return savedBoard
 }
+
 
 //// Dashboard
 
@@ -369,7 +361,6 @@ async function updateGroupsOrder(orderedGroups, boardId) {
 }
 
 async function addGroup(boardId) {
-
     try {
         const { board } = await getById(boardId)
         if (!board) throw new Error(`Board ${boardId} not found`);
@@ -382,6 +373,8 @@ async function addGroup(boardId) {
         return newGroupToAdd
 
     } catch (err) {
+        console.log(' Problem adding group.', err)
+
         throw err
     }
 }
@@ -393,7 +386,7 @@ async function updateGroup(boardId, groupToUpdate) {
         if (!board) throw new Error(`Board ${boardId} not found`);
 
         const idx = board.groups.findIndex(group => group.id === groupToUpdate.id)
-        if (idx === -1) throw new Error(`Board ${groupToUpdate.id} not found`);
+        if (idx === -1) throw new Error(`group ${groupToUpdate.id} not found`);
 
         board.groups[idx] = { ...board.groups[idx], ...groupToUpdate }
 
@@ -402,6 +395,7 @@ async function updateGroup(boardId, groupToUpdate) {
         return board.groups[idx]
 
     } catch (err) {
+        console.log(' Problem updating group.', err)
         throw err
     }
 }
