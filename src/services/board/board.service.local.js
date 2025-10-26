@@ -221,7 +221,7 @@ async function save(board) {
     if (board._id) {
         return storageService.put(STORAGE_KEY, board)
     } else {
-        const boardToSave = _setBaordToSave(board)
+        const boardToSave = _setBoardToSave(board)
         return storageService.post(STORAGE_KEY, boardToSave)
     }
 }
@@ -698,7 +698,7 @@ const DefaultStatuses = [
 
 
 
-function _setBaordToSave({ title = 'New board', managingType = 'items', privacy = 'main' }) {
+function _setBoardToSave({ title = 'New board', managingType = 'items', privacy = 'main' }) {
     return {
         _id: makeId(),
         title,

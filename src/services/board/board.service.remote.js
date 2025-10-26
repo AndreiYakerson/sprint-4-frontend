@@ -394,17 +394,7 @@ async function updateGroup(boardId, groupToUpdate) {
 
 async function removeGroup(boardId, groupId) {
 
-    try {
-        const { board } = await getById(boardId)
-        if (!board) throw new Error(`Board ${boardId} not found`);
-
-        board.groups = board.groups.filter(group => group.id !== groupId)
-
-        return await save(board)
-
-    } catch (err) {
-        throw err
-    }
+    return await httpService.delete(`${BOARD_URL}${boardId}/${groupId}`)
 }
 
 
@@ -547,16 +537,7 @@ async function duplicateTask(boardId, groupId, taskCopy, TaskCopyIdx) {
 async function removeTask(boardId, groupId, taskId) {
 
     try {
-        const { board } = await getById(boardId)
-        if (!board) throw new Error(`Board ${boardId} not found`);
-
-        const idx = board.groups.findIndex(group => group.id === groupId)
-        if (idx === -1) throw new Error(`Board ${groupId} not found`);
-
-        board.groups[idx].tasks = board.groups[idx].tasks.filter(task => task.id !== taskId)
-
-        return await save(board)
-
+        return await httpService.delete(`${BOARD_URL}${boardId}/${groupId}/${taskId}`)
     } catch (err) {
         throw err
     }
@@ -700,7 +681,6 @@ const DefaultStatuses = [
 
 function _setBoardToSave({ title = 'New board', managingType = 'items', privacy = 'main' }) {
     return {
-        _id: makeId(),
         title,
         privacy,
         managingType,
