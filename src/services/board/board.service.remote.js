@@ -215,15 +215,31 @@ async function remove(boardId) {
     // throw new Error('Nope')
     await httpService.delete(BOARD_URL + boardId)
 }
-
 async function save(board) {
-
+    var savedBoard
     if (board._id) {
-        return httpService.put(BOARD_URL, board)
+        console.log("🚀 ~ save ~ board:", board)
+        // savedToy = await storageService.put(STORAGE_KEY, toy)
+        try {
+            savedToy = await httpService.put(BOARD_URL + board.Id, board)
+        } catch (error) {
+            console.log(' Problem updating board. ', error)
+        }
+
     } else {
-        const boardToSave = _setBoardToSave(board)
-        return httpService.post(BOARD_URL, boardToSave)
+        console.log("🚀 ~ save ~ board:", board)
+        // Later, owner is set by the backend
+        try {
+            console.log("🚀 ~ save ~ getLoggedinUser():", getLoggedinUser())
+            board.owner = getLoggedinUser()
+            console.log("🚀 ~ save ~ board.owner:", board.owner)
+            // savedBoard = await storageService.post(STORAGE_KEY, toy)
+            savedBoard = await httpService.post(BOARD_URL, board)
+        } catch (error) {
+            console.log(' Problem saving board. ')
+        }
     }
+    return savedBoard
 }
 
 //// Dashboard
@@ -363,7 +379,6 @@ async function addGroup(boardId) {
         board.groups.push(newGroupToAdd)
 
         await save(board)
-
         return newGroupToAdd
 
     } catch (err) {
