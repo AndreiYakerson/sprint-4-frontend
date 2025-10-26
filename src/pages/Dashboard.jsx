@@ -1,29 +1,55 @@
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { useSelector } from "react-redux"
 import { loadDashboard } from "../store/actions/board.actions"
 import { showErrorMsg } from "../services/event-bus.service"
+import { boardService } from "../services/board"
+import { SvgIcon } from "../cmps/SvgIcon"
+import {PieChart } from "../cmps/Charts/PieChart"
+import { BarChart } from "../cmps/Charts/BarChart"
 
 export function Dashboard(props) {
 
     const dashboardData = useSelector(storeState => storeState.boardModule.dashboardData)
     const boards = useSelector(storeState => storeState.boardModule.boards)
 
-    useEffect(() => {
-        onLoadDashboard()
-    }, [])
+
+    const [board, setBoard] = useState()
+    const [boardGroups, setBoardGroups] = useState()
+    const [boardsData, setBoardsData] = useState()
+
+    const [boardTasks, setBoardGroupsTasks] = useState()
+    const [boardStatuses, setBoardStatuses] = useState()
+    const [boardPriorities, setBoardPriorities] = useState()
+
 
     useEffect(() => {
-        onLoadDashboard()
+        getData()
     }, [boards])
 
-    async function onLoadDashboard() {
+
+    async function getData() {
         try {
-            await loadDashboard()
-        } catch (err) {
-            showErrorMsg('faild to load dashboard')
+            const res = await boardService.getDashboardData()
+            setBoardsData(res)
+        } catch (error) {
+            console.log('error', error)
         }
     }
+   
+//QUESTION האם אפשר למחוק את זה או שצריך את זה במידה ואנחנו מושכים מהבק?!
 
+    // useEffect(() => {
+    //     onLoadDashboard()
+    // }, [boards])
+
+    // async function onLoadDashboard() {
+    //     try {
+    //         await loadDashboard()
+    //     } catch (err) {
+    //         showErrorMsg('faild to load dashboard')
+    //     }
+    // }
+if (!boardsData) return null
     return (
         <section className="dashboard">
 
@@ -47,21 +73,20 @@ export function Dashboard(props) {
                         </header>
                         <div className="data-content">
                             <div className="item-count">
-                                {dashboardData?.tasksCount}
+                                {boardTasks?.length}
                             </div>
                         </div>
                     </li>
 
-
-                    {dashboardData?.byStatus?.length > 0 &&
-                        dashboardData?.byStatus.slice(0, 3).map(status => {
+                    { boardsData &&
+                        boardsData.byStatus.map(status => {
                             return < li className="data-item" key={status.id}>
                                 <header className="data-header">
                                     {status?.txt}
                                 </header>
                                 <div className="data-content">
                                     <div className="item-count">
-                                        {status?.tasksCount}
+                                        {status.tasksCount}
                                     </div>
                                 </div>
                             </li>
@@ -69,12 +94,37 @@ export function Dashboard(props) {
                     }
 
                     <li className="data-item big">
-                        <header className="data-header"></header>
-                        <div className="data-content"></div>
+                        <header className="data-header flex">
+                            {/* <SvgIcon iconName='dragBox' size={23} /> */}
+                            <span className="data-title">Tasks by status</span>
+                        </header>
+                        <div className="data-content">
+                            {boardsData? (
+                                <PieChart
+                                data={boardsData}
+                                />
+                            ) : (
+                                <p>Loading chart...</p>
+                            )}
+
+                        </div>
+
+
                     </li>
                     <li className="data-item big">
-                        <header className="data-header"></header>
-                        <div className="data-content"></div>
+                        <header className="data-header flex">
+                            {/* <SvgIcon iconName='dragBox' size={23} /> */}
+                            <span className="data-title">Tasks by Owner</span>
+                        </header>
+                        <div className="data-content">
+                                {boardsData? (
+                                <BarChart
+                                data={boardsData}
+                                />
+                            ) : (
+                                <p>Loading chart...</p>
+                            )}
+                        </div>
                     </li>
                 </ul>
             </section>

@@ -239,36 +239,35 @@ async function save(board) {
 //// Dashboard
 
 async function getDashboardData(filterBy = {}) {
-    const boards = await httpService.get(BOARD_URL)
+    const boards = await httpService.get(BOARD_URL +'dashboard')
+    // var filterdBorad = structuredClone(boards)
 
-    var filterdBorad = structuredClone(boards)
+    // const tasks = filterdBorad.reduce((acc, b) => {
+    //     b.groups.forEach(g => {
+    //         if (g?.tasks?.length) acc.push(...g.tasks)
+    //     })
+    //     return acc
+    // }, [])
 
-    const tasks = filterdBorad.reduce((acc, b) => {
-        b.groups.forEach(g => {
-            if (g?.tasks?.length) acc.push(...g.tasks)
-        })
-        return acc
-    }, [])
+    // const dashboardData = {
+    //     tasksCount: 0,
+    //     byStatus: [],
+    //     byMember: [],
+    // }
 
-    const dashboardData = {
-        tasksCount: 0,
-        byStatus: [],
-        byMember: [],
-    }
+    // if (!tasks?.length) {
+    //     return dashboardData
+    // }
 
-    if (!tasks?.length) {
-        return dashboardData
-    }
-
-    const statusTypes = _sumStatusesType(tasks)
-    const members = _sumMembers(filterdBorad)
+    // const statusTypes = _sumStatusesType(tasks)
+    // const members = _sumMembers(filterdBorad)
 
 
-    dashboardData.tasksCount = tasks.length
-    dashboardData.byStatus = _getSumDataByStatus(tasks, statusTypes)
-    dashboardData.byMember = members?.length > 0 ? _getSumDataByMembers(tasks, members) : []
+    // dashboardData.tasksCount = tasks.length
+    // dashboardData.byStatus = _getSumDataByStatus(tasks, statusTypes)
+    // dashboardData.byMember = members?.length > 0 ? _getSumDataByMembers(tasks, members) : []
 
-    return dashboardData
+    return boards
 }
 
 function _sumStatusesType(tasks) {
