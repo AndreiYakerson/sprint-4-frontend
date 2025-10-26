@@ -120,11 +120,12 @@ export async function loadBoard(boardId, filterBy) {
 // Groups Actions ///////////////////////////////////////////////////////////////
 
 export async function updateGroupsOrder(groups, boardId) {
+    
     try {
         await boardService.updateGroupsOrder(groups, boardId)
         store.dispatch({ type: SET_GROUPS, groups })
     } catch (err) {
-        console.log('Cannot add task', err)
+        console.log('Cannot update groups order', err)
         throw err
     }
 }

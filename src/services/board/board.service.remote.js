@@ -349,13 +349,9 @@ function _getSumDataByMembers(tasks, members) {
 // group functions 
 
 async function updateGroupsOrder(orderedGroups, boardId) {
+    
     try {
-        const { board } = await getById(boardId)
-        if (!board) throw new Error(`Board ${boardId} not found`);
-
-        board.groups = orderedGroups
-
-        return await save(board)
+        return await httpService.put(`${BOARD_URL}group/order/${boardId}`, orderedGroups )
 
     } catch (err) {
         throw err
@@ -375,7 +371,7 @@ async function updateGroup(boardId, groupToUpdate) {
     const groupId = groupToUpdate.id
 
     try {
-        return await httpService.put(`${BOARD_URL}group/${boardId}/${groupId}`, groupToUpdate)
+        return await httpService.put(`${BOARD_URL}group/${boardId}/${groupId}`,  groupToUpdate )
     } catch (err) {
         console.log(' Problem updating group.', err)
         throw err
