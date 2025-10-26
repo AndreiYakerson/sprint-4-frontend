@@ -219,6 +219,7 @@ async function remove(boardId) {
 async function save(board) {
     var savedBoard
     if (board._id) {
+        
         try {
          savedBoard =   await httpService.put(BOARD_URL, board)
         } catch (error) {
@@ -363,15 +364,7 @@ async function updateGroupsOrder(orderedGroups, boardId) {
 
 async function addGroup(boardId) {
     try {
-        const { board } = await getById(boardId)
-        if (!board) throw new Error(`Board ${boardId} not found`);
-
-        const newGroupToAdd = _getEmptyGroup()
-
-        board.groups.push(newGroupToAdd)
-
-        await save(board)
-        return newGroupToAdd
+        return await httpService.put(`${BOARD_URL}${boardId}`)
 
     } catch (err) {
         console.log(' Problem adding group.', err)
@@ -737,18 +730,7 @@ function _setBoardToSave({ title = 'New board', managingType = 'items', privacy 
     }
 }
 
-function _getEmptyGroup() {
-    return {
-        id: makeId(),
-        title: 'New group',
-        createdAt: Date.now(),
-        isCollapsed: false,
-        tasks: [],
-        style: {
-            '--group-color': getRandomGroupColor(),
-        },
-    }
-}
+
 
 function _getEmptyTask(title = 'New Task') {
     return {
