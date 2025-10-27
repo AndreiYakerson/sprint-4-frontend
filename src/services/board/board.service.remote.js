@@ -45,8 +45,9 @@ async function query(filterBy = { txt: '' }) {
 }
 
 async function getById(boardId, filterBy) {
+    const filterByToSend = JSON.stringify(filterBy)
     
-    var board = await httpService.get(BOARD_URL + boardId)
+    var board = await httpService.get(`${BOARD_URL}${boardId}/${filterByToSend}`)
     const filterOptions = getFilterOptions(board)
     return { board, filterOptions }
 }
