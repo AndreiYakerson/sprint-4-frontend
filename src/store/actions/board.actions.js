@@ -172,7 +172,7 @@ export async function updateTasksOrder(tasks, boardId, groupId) {
         await boardService.updateTasksOrder(tasks, boardId, groupId)
         store.dispatch({ type: SET_TASKS, groupId, tasks })
     } catch (err) {
-        console.log('Cannot add task', err)
+        console.log('Cannot update tasks order', err)
         throw err
     }
 }
