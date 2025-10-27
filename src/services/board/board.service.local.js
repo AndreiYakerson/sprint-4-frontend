@@ -564,7 +564,7 @@ async function removeTask(boardId, groupId, taskId) {
 
 /// updates
 
-async function addUpdate(boardId, groupId, taskId, UpdateTitle) {
+async function addUpdate(boardId, groupId, taskId, updateTitle) {
 
     try {
         const { board } = await getById(boardId)
@@ -576,7 +576,7 @@ async function addUpdate(boardId, groupId, taskId, UpdateTitle) {
         const taskIdx = group.tasks.findIndex(t => t.id === taskId)
         if (taskIdx === -1) throw new Error(`Task ${taskId} not found`)
 
-        const updateToAdd = _createUpdate(UpdateTitle, _getMiniUser())
+        const updateToAdd = _createUpdate(updateTitle, _getMiniUser())
 
         group.tasks[taskIdx] = {
             ...group.tasks[taskIdx],
@@ -593,10 +593,10 @@ async function addUpdate(boardId, groupId, taskId, UpdateTitle) {
 }
 
 
-function _createUpdate(UpdateTitle, miniUser) {
+function _createUpdate(updateTitle, miniUser) {
     return {
         id: makeId(),
-        title: UpdateTitle,
+        title: updateTitle,
         createdAt: Date.now(),
         byMember: miniUser,
     }

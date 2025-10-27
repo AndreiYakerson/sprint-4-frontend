@@ -352,28 +352,11 @@ async function removeTask(boardId, groupId, taskId) {
 
 /// updates
 
-async function addUpdate(boardId, groupId, taskId, UpdateTitle) {
+async function addUpdate(boardId, groupId, taskId, updateTitle) {
 
     try {
-        const { board } = await getById(boardId)
-        if (!board) throw new Error(`Board ${boardId} not found`)
-
-        const group = board.groups.find(g => g.id === groupId)
-        if (!group) throw new Error(`Group ${groupId} not found`)
-
-        const taskIdx = group.tasks.findIndex(t => t.id === taskId)
-        if (taskIdx === -1) throw new Error(`Task ${taskId} not found`)
-
-        const updateToAdd = _createUpdate(UpdateTitle, _getMiniUser())
-
-        group.tasks[taskIdx] = {
-            ...group.tasks[taskIdx],
-            updates: [updateToAdd, ...(group.tasks[taskIdx]?.updates || [])]
-        }
-
-        await save(board)
-
-        return group.tasks[taskIdx]
+        const res = await httpService.put(`${BOARD_URL}${boardId}/${groupId}/${taskId}/addUpdate`, { updateTitle })
+        return res
 
     } catch (err) {
         throw err
@@ -381,10 +364,10 @@ async function addUpdate(boardId, groupId, taskId, UpdateTitle) {
 }
 
 
-function _createUpdate(UpdateTitle, miniUser) {
+function _createUpdate(updateTitle, miniUser) {
     return {
         id: makeId(),
-        title: UpdateTitle,
+        title: updateTitle,
         createdAt: Date.now(),
         byMember: miniUser,
     }
