@@ -49,18 +49,22 @@ body {
     font-family: Figtree;
     font-family: var(--font-family);
 
-    line-height: 1.5;
-
-    background-color: var(--primary-background-color);
-
-    &:has(.main-site-layout) {
-        background-color: var(--surface-color);
-    }
-
-
     color: var(--primary-text-color);
-
+    line-height: 1.5;
     font-size: 0.875rem;
+
+    background-color: var(--mobile-bgcolor);
+}
+
+
+@media (min-width: 750px) {
+    body {
+        background-color: var(--primary-background-color);
+
+        &:has(.main-site-layout) {
+            background-color: var(--surface-color);
+        }
+    }
 }
 
 h1,

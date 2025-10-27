@@ -25,6 +25,8 @@
   /* site background-color */
   --surface-color: rgb(237, 241, 252);
   --primary-background-color: rgb(255, 255, 255);
+  --mobile-bgcolor: #e6e9f0;
+
   /* popup backdrop */
   --react-modal-background: rgba(41, 47, 76, 0.7);
   /* filter options */
@@ -70,6 +72,7 @@
 
   /* btns */
   --primary-color: rgb(0, 115, 234);
+  --primary-color-mobile: #1b3dff;
   --primary-hover-color: rgb(0, 96, 185);
   --primary-background-color: rgb(255, 255, 255);
   --primary-background-hover-color: rgba(103, 104, 121, 0.1);
@@ -99,16 +102,16 @@
   --group-title-clr17: rgb(125, 83, 72);
   --group-title-clr18: rgb(196, 196, 196);
   --group-title-clr19: rgb(117, 117, 117);
-  
 
-  
+
+
   /* status colors */
   --working-on-it: rgb(253, 171, 61);
   --stuck: rgb(33, 7, 12);
   --done: rgb(39, 201, 119);
   --default-label-color: rgb(196, 196, 196);
 
-/* File Upload Color */
+  /* File Upload Color */
   --file-Upload-color: #ff7575;
 
 

@@ -91,10 +91,17 @@ button {
 		color: var(--text-color-on-primary);
 		transition: 0ms;
 
+		@media (max-width: 750px) {
+			background-color: var(--primary-color-mobile);
+		}
+
+
 		&:hover {
 			background-color: var(--primary-hover-color)
 		}
 	}
+
+
 
 	&.remove-date {
 		transition: 100ms ease-in-out;

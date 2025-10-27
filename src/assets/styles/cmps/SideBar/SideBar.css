@@ -6,7 +6,7 @@
     max-height: 100%;
     padding-top: 6px;
 
-    background-color: white;
+    background-color: var(--primary-background-color);
 
     border-radius: 10px;
     box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.174);
@@ -73,22 +73,22 @@
             }
 
             &:hover {
-                color: var(--primary-text-color);
+                color: var(--primary-color-mobile);
 
                 .svg-icon {
-                    color: var(--primary-text-color);
+                    color: var(--primary-color-mobile);
                 }
             }
 
             &.active {
-                color: var(--primary-color);
+                color: var(--primary-color-mobile);
 
                 .svg-icon {
-                    color: var(--primary-color);
+                    color: var(--primary-color-mobile);
                     place-self: center;
 
                     svg {
-                        color: var(--primary-color);
+                        color: var(--primary-color-mobile);
                         place-self: center;
                     }
                 }
