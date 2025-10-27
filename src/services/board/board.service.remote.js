@@ -343,9 +343,8 @@ async function duplicateTask(boardId, groupId, taskCopy, TaskCopyIdx) {
 
 
 async function removeTask(boardId, groupId, taskId) {
-
     try {
-        return await httpService.delete(`${BOARD_URL}${boardId}/${groupId}/${taskId}`)
+        return await httpService.delete(`${BOARD_URL}task/${boardId}/${groupId}/${taskId}`)
     } catch (err) {
         throw err
     }
