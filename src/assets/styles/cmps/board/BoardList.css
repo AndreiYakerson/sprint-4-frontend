@@ -1,5 +1,4 @@
 .board-list {
-    padding-inline: 1em;
     display: grid;
     grid-template-rows: auto;
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
@@ -7,7 +6,7 @@
     align-items: stretch;
     grid-gap: 20px;
     border-radius: 2vh;
-    padding: 16px;
+    padding-block: 16px;
 
 
     &.side-bar-dispaly {
@@ -20,7 +19,6 @@
         padding: 0;
         box-shadow: none;
         border-radius: 0;
-        padding-inline: 16px;
 
         .board-item {
             border: 0;
@@ -109,4 +107,17 @@
 
     }
 
+}
+
+
+
+@media (min-width: 750px) {
+    .board-list {
+        padding-inline: 1em;
+        padding: 16px;
+
+        &.side-bar-dispaly {
+            padding-inline: 16px;
+        }
+    }
 }

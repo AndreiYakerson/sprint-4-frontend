@@ -1,41 +1,10 @@
 .board-item {
-    position: relative;
-    cursor: pointer;
-    font-size: 16px;
-    border-radius: 4px;
-
-    display: flex;
-    flex-direction: column;
-
-    padding: 8px;
-    margin-bottom: 10px;
-
-    border: 1px solid;
-    border-color: var(--layout-border-color);
-
-    height: max-content;
-
-    &:hover {
-        background-color: transparent;
-        box-shadow: var(--box-shadow-medium);
-        border-color: transparent;
-    }
 
     .board-preview {
+        cursor: pointer;
 
         .board-img-wrapper {
-            display: flex;
-            margin-bottom: 8px;
-            background-color: #cbddff;
-            border-radius: 4px;
-            justify-content: center;
-            overflow: hidden;
-            width: 100%;
-            height: 140px;
-
-            img {
-                object-fit: cover;
-            }
+            display: none;
         }
 
         .board-info-items {
@@ -49,6 +18,30 @@
                 color: var(--secondary-text-color);
             }
 
+            .board-icon-wrapper {
+                width: 40px;
+                height: 40px;
+                border-radius: 8px;
+                background-color: #cbddff;
+
+                .svg-icon {
+                    display: none !important;
+
+                    svg {
+                        display: none !important;
+                    }
+                }
+
+                .board-img-mobile {
+                    display: block;
+                    width: 40px;
+                    height: 40px;
+                    border-radius: 8px;
+                    object-fit: contain;
+                }
+            }
+
+
             .board-title {
                 flex: 1;
                 white-space: nowrap;
@@ -57,18 +50,109 @@
                 margin-inline-start: 4px;
             }
 
-
+            .star-btn {
+                background-color: transparent;
+            }
         }
 
         .workspace-info {
-            gap: 4px;
-            white-space: nowrap;
-            text-overflow: ellipsis;
-            overflow: hidden;
+            display: none;
+        }
+    }
+}
 
-            font-size: 14px;
-            font-weight: 400;
-            color: var(--secondary-text-color);
+@media (min-width: 750px) {
+    .board-item {
+        position: relative;
+        cursor: pointer;
+        font-size: 16px;
+        border-radius: 4px;
+
+        display: flex;
+        flex-direction: column;
+
+        padding: 8px;
+        margin-bottom: 10px;
+
+        border: 1px solid;
+        border-color: var(--layout-border-color);
+
+        height: max-content;
+
+        &:hover {
+            background-color: transparent;
+            box-shadow: var(--box-shadow-medium);
+            border-color: transparent;
+        }
+
+        .board-preview {
+
+            .board-img-wrapper {
+                display: flex;
+                margin-bottom: 8px;
+                background-color: #cbddff;
+                border-radius: 4px;
+                justify-content: center;
+                overflow: hidden;
+                width: 100%;
+                height: 140px;
+
+                img {
+                    object-fit: cover;
+                }
+            }
+
+            .board-info-items {
+                font-weight: 700;
+                font-size: 16px;
+                display: flex;
+                align-items: center;
+                gap: 6px;
+
+                .svg-icon {
+                    color: var(--secondary-text-color);
+                }
+
+                .board-title {
+                    flex: 1;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    margin-inline-start: 4px;
+                }
+
+                .board-icon-wrapper {
+                    width: max-content;
+                    height: max-content;
+                    border-radius: 0;
+                    background-color: transparent;
+
+                    .svg-icon {
+                        display: block !important;
+
+                        svg {
+                            display: block !important;
+                        }
+                    }
+
+                    .board-img-mobile {
+                        display: none;
+                    }
+                }
+
+            }
+
+            .workspace-info {
+                display: flex;
+                gap: 4px;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                overflow: hidden;
+
+                font-size: 14px;
+                font-weight: 400;
+                color: var(--secondary-text-color);
+            }
         }
     }
 }

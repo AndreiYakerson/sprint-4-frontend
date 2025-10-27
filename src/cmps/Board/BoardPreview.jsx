@@ -122,11 +122,19 @@ export function BoardPreview({ board, isSideBarDisplay }) {
             </div>
 
             <div className='board-info-items'>
-                <SvgIcon
-                    iconName={board.title === 'Dashboard' ? 'chart' : 'board'}
-                    size={isSideBarDisplay ? 16 : 22}
-                    colorName={isSideBarDisplay ? "currentColor" : ''}
-                />
+
+                <div className='board-icon-wrapper'>
+                    <SvgIcon
+                        iconName={board.title === 'Dashboard' ? 'chart' : 'board'}
+                        size={isSideBarDisplay ? 16 : 22}
+                        colorName={isSideBarDisplay ? "currentColor" : ''}
+                        className='board-icon'
+                    />
+                    <img
+                        src={board.title === 'Dashboard' ? dashboardItemLogo : boardItemLogo}
+                        alt="Board Image" className='board-img-mobile'
+                    />
+                </div>
 
                 {isSideBarDisplay
                     ? <div className='board-title'>
@@ -176,7 +184,7 @@ export function BoardPreview({ board, isSideBarDisplay }) {
                         </FloatingContainerCmp>}
                     </>
 
-                    : <button className='white square' onClick={(ev) => { ev.stopPropagation(), toggleIsStarred(!isStarred) }}>
+                    : <button className='transparent square star-btn' onClick={(ev) => { ev.stopPropagation(), toggleIsStarred(!isStarred) }}>
                         <SvgIcon iconName={isStarred ? 'starFull' : 'star'}
                             size={22}
                             colorName={isStarred ? "starColor" : 'secondaryText'}
