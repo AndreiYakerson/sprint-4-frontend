@@ -12,9 +12,10 @@
         padding: 3px 10px;
         font-family: var(--title-font-family);
 
+        font-size: 12px;
         margin-block: 4px;
-        font-weight: 700;
-        font-size: 1.14285714286em;
+        font-weight: 600;
+
 
         .flower-logo-container {
             display: flex;
@@ -24,19 +25,10 @@
         }
 
         .logo-text-container {
-            display: flex;
-            align-items: center;
-            height: 100%;
-
             .work-management {
                 font-weight: var(--font-weight-light);
             }
 
-        }
-
-        &:hover {
-            background-color: var(--primary-background-hover-color);
-            border-radius: var(--border-radius-small);
         }
 
         .logo-img {
@@ -46,20 +38,18 @@
         }
 
         .app-name {
-            margin-inline: 4px;
+            display: block;
         }
     }
 
 
 
     & section {
-        display: flex;
+        display: none;
         margin-inline-start: auto;
         align-items: center;
         gap: 5px;
         font-size: .8em;
-
-        /* .active {} */
 
 
         .login-link {
@@ -120,7 +110,7 @@
 }
 
 .see-plans-container {
-    display: flex;
+    display: none;
     align-items: center;
     height: 30px;
     text-wrap: nowrap;
@@ -143,4 +133,50 @@
         }
     }
 
+}
+
+
+@media (min-width: 750px) {
+    .app-header {
+        .see-plans-container {
+            display: flex;
+        }
+
+
+
+        .app-logo {
+            margin-block: 4px;
+            font-weight: 700;
+            font-size: 1.14285714286em;
+
+            .logo-text-container {
+                display: flex;
+                align-items: center;
+                height: 100%;
+
+                .work-management {
+                    font-weight: var(--font-weight-light);
+                }
+
+            }
+
+            &:hover {
+                background-color: var(--primary-background-hover-color);
+                border-radius: var(--border-radius-small);
+            }
+
+            .app-name {
+                margin-inline: 4px;
+            }
+        }
+
+
+        section {
+            display: flex;
+        }
+
+        .see-plans-container {
+            display: flex;
+        }
+    }
 }
