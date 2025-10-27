@@ -104,7 +104,14 @@ export function SideBar() {
                         <HoveredTextCmp>
                             <SvgIcon iconName="more" size={16} colorName="currentColor" />
                         </HoveredTextCmp>More
-                    </NavLink>                </nav>
+                    </NavLink>
+
+                </nav>
+
+
+                <button className="blue mobile-add-board-btn" onClick={_onShowPopUp}>
+                    <SvgIcon iconName="plus" size={20} colorName="whiteText" />
+                </button>
 
                 <div className="scrollable-content">
 

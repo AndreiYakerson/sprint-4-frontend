@@ -27,6 +27,15 @@
         flex-grow: 1
     }
 
+    .mobile-add-board-btn {
+        border-radius: 16px;
+        position: fixed;
+        right: 5vw;
+        bottom: 12vh;
+        width: 40px;
+        height: 40px;
+        box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.174);
+    }
 
     & .side-nav-list {
         display: flex;
@@ -172,6 +181,10 @@
             flex-direction: column;
             overflow: hidden;
             flex-grow: 1
+        }
+
+        .mobile-add-board-btn {
+            display: none;
         }
 
 
