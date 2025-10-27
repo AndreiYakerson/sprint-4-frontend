@@ -295,8 +295,6 @@ async function updateTasksOrder(orderedTasks, boardId, groupId) {
 }
 
 async function addTask(boardId, groupId, title, method) {
-
-    const board = await getById(boardId)
     try {
         return await httpService.post(`${BOARD_URL}task/${boardId}/${groupId}`, { title, method })
     } catch (err) {
@@ -308,27 +306,9 @@ async function addTask(boardId, groupId, title, method) {
 async function updateTask(boardId, groupId, taskToUpdate, activityTitle) {
 
     try {
-        const { board } = await getById(boardId)
-        if (!board) throw new Error(`Board ${boardId} not found`)
 
-        const group = board.groups.find(g => g.id === groupId)
-        if (!group) throw new Error(`Group ${groupId} not found`)
-
-        const taskIdx = group.tasks.findIndex(t => t.id === taskToUpdate.id)
-        if (taskIdx === -1) throw new Error(`Task ${taskToUpdate.id} not found`)
-
-        group.tasks[taskIdx] = { ...group.tasks[taskIdx], ...taskToUpdate }
-
-
-        const activity = _createActivity(activityTitle, _getMiniUser(),
-            _toMiniGroup(group), _toMiniTask(group.tasks[taskIdx]),)
-
-        board.activities.push(activity)
-
-        await save(board)
-
-        return { savedTask: group.tasks[taskIdx], activity }
-
+        const updatedTask = await httpService.put(`${BOARD_URL}${boardId}/${groupId}/${taskToUpdate.id}`, { taskToUpdate, activityTitle })
+        return updatedTask
     } catch (err) {
         throw err
     }
