@@ -6,6 +6,7 @@ import { getRandomGroupColor, makeId } from '../util.service'
 import { DateTime } from "luxon"
 
 import { httpService } from '../http.service'
+import { filter } from 'lodash'
 
 // import { userService } from '../user'
 
@@ -44,8 +45,10 @@ async function query(filterBy = { txt: '' }) {
 }
 
 async function getById(boardId, filterBy) {
+    console.log('filterBy:',filterBy);
+    
     var board = await httpService.get(BOARD_URL + boardId)
-    const filterOptions = filterBy
+    const filterOptions = getFilterOptions(board)
     return { board, filterOptions }
 }
 
