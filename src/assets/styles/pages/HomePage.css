@@ -3,6 +3,7 @@
     grid-template-rows: 72px 1fr max-content;
     min-height: 100vh;
     height: 100%;
+    background-color: var(--primary-background-color);
 
     .home-page-header {
         width: 100%;
@@ -10,16 +11,10 @@
         padding-left: 32px;
         padding-right: 32px;
         z-index: 555;
-        background-color: #ffffff;
+        background-color: var(--primary-background-color);
         -webkit-transition: background-color 200ms ease;
         transition: background-color 200ms ease;
-        display: -webkit-box;
-        display: -webkit-flex;
-        display: -ms-flexbox;
         display: flex;
-        -webkit-align-items: center;
-        -webkit-box-align: center;
-        -ms-flex-align: center;
         align-items: center;
 
         .home-page-logo {
@@ -43,7 +38,11 @@
         }
 
         .home-page-header-nav {
-            margin-inline-end: auto;
+            width: 100%;
+            display: none;
+            align-items: center;
+            justify-content: space-between;
+            margin-inline-start: 8px;
         }
     }
 
@@ -53,6 +52,7 @@
 
         .welcome-box {
             display: grid;
+            grid-template-rows: repeat(3, max-content);
             align-items: start;
             justify-items: center;
 
@@ -70,12 +70,12 @@
                 margin-block-end: 16px;
                 font-weight: 200;
                 line-height: 110%;
-                font-size: 72px;
+                font-size: 30px;
                 text-align: center;
             }
 
             h2 {
-                font-size: 1.125rem;
+                font-size: 12px;
                 line-height: 32px;
                 text-align: center;
                 margin-block-end: 1em;
@@ -93,5 +93,32 @@
     .home-page-footer {
         padding: 40px;
         text-align: center;
+    }
+}
+
+
+@media (min-width: 750px) {
+    .home-page {
+        .home-page-header {
+            .home-page-header-nav {
+                display: flex;
+            }
+        }
+
+        .home-page-main-content {
+            min-height: 100%;
+            padding-block-end: 1em;
+
+            .welcome-box {
+                h1 {
+                    font-size: 72px;
+                }
+
+                h2 {
+                    font-size: 1.125rem;
+                }
+
+            }
+        }
     }
 }

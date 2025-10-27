@@ -18,26 +18,30 @@ export function HomePage() {
 
 
                 <nav className='home-page-header-nav'>
-                    {['Products', 'Solutions', 'Resources', 'Enterprise'].map(navbtn => {
-                        return <NavLink to='/' key={navbtn} className='btn nav-heaer-btn'>
-                            <span>{navbtn}</span>
+                    <div>
+                        {['Products', 'Solutions', 'Resources', 'Enterprise'].map(navbtn => {
+                            return <NavLink to='/' key={navbtn} className='btn nav-heaer-btn'>
+                                <span>{navbtn}</span>
 
-                        </NavLink>
-                    })}
+                            </NavLink>
+                        })}
+                    </div>
+
+                    <div className='flex align-center'>
+                        <div>
+                            <Link to="/auth/login" className='btn nav-heaer-btn login'>
+                                Login
+                            </Link>
+                        </div>
+
+                        <Link to="/board" className='btn get-started-btn'>
+                            <span>
+                                Get Started
+                            </span>
+                            <SvgIcon iconName="arrowRight" size={12} colorName="currentColor" />
+                        </Link>
+                    </div>
                 </nav>
-
-                <div>
-                    <Link to="/auth/login" className='btn nav-heaer-btn login'>
-                        Login
-                    </Link>
-                </div>
-
-                <Link to="/board" className='btn get-started-btn'>
-                    <span>
-                        Get Started
-                    </span>
-                    <SvgIcon iconName="arrowRight" size={12} colorName="currentColor" />
-                </Link>
 
             </header>
 
