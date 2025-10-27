@@ -45,7 +45,7 @@ async function query(filterBy = { txt: '' }) {
 
 async function getById(boardId, filterBy) {
     var board = await httpService.get(BOARD_URL + boardId)
-    const filterOptions = filterBy
+    const filterOptions = getFilterOptions(board)
     return { board, filterOptions }
 }
 
