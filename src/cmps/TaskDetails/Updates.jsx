@@ -35,6 +35,16 @@ export function Updates() {
     }
 
     useEffect(() => {
+        if (isEditing && quillRef.current) {
+            const editor = quillRef.current.getEditor()
+            editor.focus();
+            const length = editor.getLength();
+            editor.setSelection(length, 0);
+        }
+    }, [isEditing])
+
+
+    useEffect(() => {
         function handleClickOutside(ev) {
             if (!isEditing) return
             const wrapperEl = editorWrapperRef.current
@@ -102,7 +112,7 @@ export function Updates() {
                                     className="update-txt"
 
                                     // Correct Access Path
-                                    dangerouslySetInnerHTML={{ __html:update?.title?.updateTitle}} />
+                                    dangerouslySetInnerHTML={{ __html: update?.title?.updateTitle }} />
                             </li>;
                         })}
                     </ul>
