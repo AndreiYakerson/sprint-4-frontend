@@ -149,7 +149,7 @@ export function TaskPreview({ task, groupId, taskIdx }) {
 
         try {
             await updateTask(boardId, groupId, updatedTask, activityTitle)
-            showSuccessMsg(`Task updated`)
+            showSuccessMsg(`Task updated Successfully `)
 
             //If the status was updated successfully, in order to synchronize the status with the due date, 
             // this function updates the status data in the due date component.
@@ -192,7 +192,6 @@ export function TaskPreview({ task, groupId, taskIdx }) {
     async function onDuplicateTask(task) {
         const taskCopy = structuredClone(task)
         taskCopy.title = taskCopy.title + ' (copy)'
-        delete taskCopy?.id, delete taskCopy.createdAt
 
         try {
             await duplicateTask(boardId, groupId, taskCopy, taskIdx + 1)
@@ -221,6 +220,7 @@ export function TaskPreview({ task, groupId, taskIdx }) {
 
         try {
             await updateTask(boardId, groupId, taskToUpdate, activityTitle)
+            showSuccessMsg(`Task updated Successfully `)
         } catch (err) {
             showErrorMsg('cannot update task')
             setTitleToEdit(prev => ({ ...prev, currTitle: preTitleCopy }))

@@ -231,9 +231,9 @@ async function save(board) {
 async function getDashboardData(filterBy = {}) {
     const boards = await storageService.query(STORAGE_KEY)
 
-    var filterdBorad = structuredClone(boards)
+    var filteredBoard = structuredClone(boards)
 
-    const tasks = filterdBorad.reduce((acc, b) => {
+    const tasks = filteredBoard.reduce((acc, b) => {
         b.groups.forEach(g => {
             if (g?.tasks?.length) acc.push(...g.tasks)
         })
@@ -251,7 +251,7 @@ async function getDashboardData(filterBy = {}) {
     }
 
     const statusTypes = _sumStatusesType(tasks)
-    const members = _sumMembers(filterdBorad)
+    const members = _sumMembers(filteredBoard)
 
 
     dashboardData.tasksCount = tasks.length
@@ -272,24 +272,24 @@ function _sumStatusesType(tasks) {
     return StatusesTypes
 }
 
-function _sumMembers(filterdBorad) {
-    const members = filterdBorad.reduce((acc, board) => {
+function _sumMembers(filteredBoard) {
+    const members = filteredBoard.reduce((acc, board) => {
         if (board?.members?.length > 0) {
             acc = [...acc, ...board.members]
         }
         return acc
     }, [])
 
-    const filtedMembers = members.reduce((acc, member) => {
+    const filteredMembers = members.reduce((acc, member) => {
         const isStatusExist = acc.find(m => m._id === member._id)
         if (!isStatusExist) {
-            const filteredMeber = { _id: member._id, fullname: member.fullname, imgUrl: member.imgUrl }
-            acc.push(filteredMeber)
+            const filteredMember = { _id: member._id, fullname: member.fullname, imgUrl: member.imgUrl }
+            acc.push(filteredMember)
         }
         return acc
     }, [])
 
-    return filtedMembers
+    return filteredMembers
 }
 
 function _getSumDataByStatus(tasks, statusTypes) {

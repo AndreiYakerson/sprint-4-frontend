@@ -1,5 +1,5 @@
 
-import {useRef, useState } from "react"
+import { useRef, useState } from "react"
 import { useParams, useNavigate } from "react-router-dom"
 import { useSelector } from "react-redux"
 
@@ -125,7 +125,7 @@ export function TaskOverlay({ task, groupId, taskIdx }) {
 
         try {
             await updateTask(boardId, groupId, updatedTask, activityTitle)
-            showSuccessMsg(`Task updated`)
+            showSuccessMsg(`Task updated Successfully `)
 
             //If the status was updated successfully, in order to synchronize the status with the due date, 
             // this function updates the status data in the due date component.
@@ -164,29 +164,13 @@ export function TaskOverlay({ task, groupId, taskIdx }) {
             : `/board/${boardId}/task/${task.id}`)
     }
 
-
-    async function onDuplicateTask(task) {
-        const taskCopy = structuredClone(task)
-        taskCopy.title = taskCopy.title + ' (copy)'
-        delete taskCopy?.id, delete taskCopy.createdAt
-
-        try {
-            await duplicateTask(boardId, groupId, taskCopy, taskIdx + 1)
-            showSuccessMsg('task duplicated to the board')
-        } catch (err) {
-            console.log(err)
-            showErrorMsg('cannot duplicate task')
-        }
-    }
-
-
     return (
 
         <div className="task-preview" style={style} ref={setNodeRef} {...attributes}  >
 
 
             <div className="sticky-cell-wrapper" {...listeners}>
-                
+
 
                 <div className="table-border"></div>
                 <div className="task-select"></div>

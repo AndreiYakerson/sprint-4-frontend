@@ -7,7 +7,7 @@ import { getTaskById, updateTask } from "../../store/actions/board.actions"
 
 // cmps
 import { SvgIcon } from "../SvgIcon"
-import { showErrorMsg } from "../../services/event-bus.service"
+import { showErrorMsg, showSuccessMsg } from "../../services/event-bus.service"
 import { TitleEditor } from "./TitleEditor"
 import { NavLink } from "react-router-dom"
 
@@ -43,6 +43,7 @@ export function TaskDetails() {
     }
 
     async function onUpdateTaskTitle(newTitle) {
+        console.log("🚀 ~ onUpdateTaskTitle ~ newTitle:", newTitle)
         const preTitleCopy = task?.title
         setTitleToEdit(newTitle)
 
@@ -55,6 +56,7 @@ export function TaskDetails() {
 
         try {
             await updateTask(board?._id, task?.groupId, taskToUpdate, activityTitle)
+            showSuccessMsg('task updated successfully')
         } catch (err) {
             showErrorMsg('cannot update task')
             setTitleToEdit(preTitleCopy)
