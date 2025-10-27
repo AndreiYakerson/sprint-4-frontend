@@ -228,7 +228,7 @@ async function removeGroup(boardId, groupId) {
 //  task functions
 
 async function getTaskById(boardId, taskId) {
-
+    
     try {
 
         const { board } = await getById(boardId)
@@ -244,7 +244,7 @@ async function getTaskById(boardId, taskId) {
         //         break
         //     }
         // }
-        const foundTask = await httpService.get(`${BOARD_URL}${boardId}/task/${taskId}`)
+        const foundTask = await httpService.get(`${BOARD_URL}taskDetails/${boardId}/${taskId}`)
 
         if (!foundTask) throw new Error(`Task ${taskId} not found`)
 
