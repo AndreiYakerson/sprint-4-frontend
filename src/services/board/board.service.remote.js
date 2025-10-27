@@ -314,33 +314,14 @@ async function updateTask(boardId, groupId, taskToUpdate, activityTitle) {
     }
 }
 
-
-
-async function duplicateTask(boardId, groupId, taskCopy, TaskCopyIdx) {
-
+async function duplicateTask(boardId, groupId, taskCopy) {
+        
     try {
-        const { board } = await getById(boardId)
-        if (!board) throw new Error(`Board ${boardId} not found`);
-
-        const idx = board.groups.findIndex(group => group.id === groupId)
-        if (idx === -1) throw new Error(`group ${groupId} not found`);
-
-        taskCopy.id = makeId()
-        taskCopy.createdAt = Date.now()
-
-        board.groups[idx].tasks.splice(TaskCopyIdx, 0, taskCopy)
-
-        await save(board)
-
-        return taskCopy
-
+        return await httpService.post(`${BOARD_URL}task/duplicate/${boardId}/${groupId}`, { taskCopy })
     } catch (err) {
         throw err
     }
 }
-
-
-
 
 async function removeTask(boardId, groupId, taskId) {
     try {

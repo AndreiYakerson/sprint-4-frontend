@@ -164,22 +164,6 @@ export function TaskOverlay({ task, groupId, taskIdx }) {
             : `/board/${boardId}/task/${task.id}`)
     }
 
-
-    async function onDuplicateTask(task) {
-        const taskCopy = structuredClone(task)
-        taskCopy.title = taskCopy.title + ' (copy)'
-        delete taskCopy?.id, delete taskCopy.createdAt
-
-        try {
-            await duplicateTask(boardId, groupId, taskCopy, taskIdx + 1)
-            showSuccessMsg('task duplicated to the board')
-        } catch (err) {
-            console.log(err)
-            showErrorMsg('cannot duplicate task')
-        }
-    }
-
-
     return (
 
         <div className="task-preview" style={style} ref={setNodeRef} {...attributes}  >

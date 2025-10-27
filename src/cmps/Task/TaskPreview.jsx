@@ -192,7 +192,6 @@ export function TaskPreview({ task, groupId, taskIdx }) {
     async function onDuplicateTask(task) {
         const taskCopy = structuredClone(task)
         taskCopy.title = taskCopy.title + ' (copy)'
-        delete taskCopy?.id, delete taskCopy.createdAt
 
         try {
             await duplicateTask(boardId, groupId, taskCopy, taskIdx + 1)
