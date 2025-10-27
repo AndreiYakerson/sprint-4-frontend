@@ -297,24 +297,7 @@ async function updateTasksOrder(orderedTasks, boardId, groupId) {
 async function addTask(boardId, groupId, title, method) {
 
     try {
-        const { board } = await getById(boardId)
-        if (!board) throw new Error(`Board ${boardId} not found`);
-
-        const idx = board.groups.findIndex(group => group.id === groupId)
-        if (idx === -1) throw new Error(`group ${groupId} not found`);
-
-        const newTaskToAdd = _getEmptyTask(title)
-
-        if (method === 'unshift') {
-            board.groups[idx].tasks.unshift(newTaskToAdd)
-        } else {
-            board.groups[idx].tasks.push(newTaskToAdd)
-        }
-
-        await save(board)
-
-        return newTaskToAdd
-
+        return await httpService.post(`${BOARD_URL}task/${boardId}/${groupId}`, { title, method })
     } catch (err) {
         throw err
     }
@@ -573,14 +556,3 @@ function _setBoardToSave({ title = 'New board', managingType = 'items', privacy 
 
 
 
-function _getEmptyTask(title = 'New Task') {
-    return {
-        id: makeId(),
-        title: title,
-        createdAt: Date.now(),
-        memberIds: [],
-        priority: { txt: 'Default Label', cssVar: '--group-title-clr18', id: 'default' },
-        status: { id: 'default', txt: 'Not Started', cssVar: '--group-title-clr18' },
-        comments: []
-    }
-}
