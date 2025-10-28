@@ -84,6 +84,7 @@ export async function loadUser(userId) {
 }
 
 export async function loginDemoUsers(users) {
+    console.log("🚀 ~ loginDemoUsers ~ users:", users)
     try {
         store.dispatch({ type: LOADING_START })
         store.dispatch({ type: SET_USERS, users })
