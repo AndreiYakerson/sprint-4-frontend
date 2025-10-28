@@ -16,7 +16,6 @@ export function Dashboard(props) {
     const [board, setBoard] = useState()
     const [boardGroups, setBoardGroups] = useState()
     const [boardsData, setBoardsData] = useState()
-    console.log("🚀 ~ Dashboard ~ boardsData:", boardsData)
 
     const [boardTasks, setBoardGroupsTasks] = useState()
     const [boardStatuses, setBoardStatuses] = useState()
@@ -65,7 +64,7 @@ export function Dashboard(props) {
 
 
             < section className="dashboard-content">
-                <ul className="data-list">
+                <ul className="data-list small">
 
 
                     <li className="data-item">
@@ -81,8 +80,9 @@ export function Dashboard(props) {
 
                     {boardsData &&
                         boardsData.byStatus.map(status => {
+                            if (status.id === 'Not Started') return
                             return < li className="data-item" key={status.id}>
-                                <header className="data-header">
+                                <header className="data-header text-overflow">
                                     {status?.txt}
                                 </header>
                                 <div className="data-content">
@@ -93,9 +93,11 @@ export function Dashboard(props) {
                             </li>
                         })
                     }
+                </ul>
+                <ul className="data-list big">
 
                     <li className="data-item big">
-                        <header className="data-header flex">
+                        <header className="data-header flex  text-overflow">
                             {/* <SvgIcon iconName='dragBox' size={23} /> */}
                             <span className="data-title">Tasks by status</span>
                         </header>
@@ -109,11 +111,10 @@ export function Dashboard(props) {
                             )}
 
                         </div>
-
-
                     </li>
+
                     <li className="data-item big">
-                        <header className="data-header flex">
+                        <header className="data-header flex  text-overflow">
                             {/* <SvgIcon iconName='dragBox' size={23} /> */}
                             <span className="data-title">Tasks by Owner</span>
                         </header>
