@@ -61,7 +61,7 @@
 
           .action-nav {
               position: fixed;
-              right: 38px;
+              right: 30px;
 
               display: flex;
               align-items: center;
@@ -154,8 +154,15 @@
 
       .board-actions {
           position: fixed;
-          bottom: 0;
+          bottom: 16px;
           padding-block: 16px;
+
+          border-radius: 8px;
+          box-shadow: 5px 5px 15px black;
+          overflow-x: hidden;
+          background-color: white;
+          width: 96vw;
+          margin-inline: 2vw;
 
           .btn-shrink-wrapper {
               display: none;
@@ -163,10 +170,19 @@
 
           .board-action-btn {
               display: flex;
+              justify-content: space-between;
               font-size: 15px;
               max-height: 32px;
               scale: none !important;
 
+              .txt {
+                  display: none;
+                  padding: 0;
+              }
+
+              .mini-x {
+                  display: none;
+              }
 
               & .search-btn {
                   display: flex;
@@ -188,6 +204,7 @@
                   }
 
                   & .txt {
+                      display: block;
                       padding: 1px 0px 1px 5px;
                   }
 
@@ -379,6 +396,25 @@
               position: relative;
               grid-area: contextualAction;
               display: flex;
+
+              /* // reset mobile vals */
+              overflow: visible;
+              background-color: transparent;
+              width: max-content;
+              margin-inline: 0;
+              box-shadow: none;
+              border-radius: 0;
+              bottom: 0;
+
+              .board-action-btn {
+                  .txt {
+                      display: block;
+                  }
+              }
+
+              .txt {
+                  display: block;
+              }
 
               .btn-shrink-wrapper {
                   display: block;
