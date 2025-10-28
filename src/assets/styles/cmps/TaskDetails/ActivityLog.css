@@ -6,8 +6,8 @@
 
         .activity-item {
             display: grid;
-            grid-template-columns: 56px 30px 180px 1fr;
-            gap: 4px;
+            grid-template-columns: 56px 30px 1fr;
+            gap: 8px;
             align-items: center;
             min-height: 39px;
             padding-block: 8px;
@@ -21,10 +21,37 @@
                 overflow: hidden;
             }
 
+            .task-name-log {
+                display: none;
+            }
+
             img {
                 height: 30px;
                 width: 30px;
                 border-radius: 50%;
+            }
+        }
+    }
+}
+
+
+@media (min-width: 750px) {
+    .task-details-activity-log {
+        .activities-list {
+            .activity-item {
+                display: grid;
+                grid-template-columns: 56px 30px 180px 1fr;
+                gap: 4px;
+
+                &>* {
+                    white-space: nowrap;
+                    text-overflow: ellipsis;
+                    overflow: hidden;
+                }
+
+                .task-name-log {
+                    display: block;
+                }
             }
         }
     }

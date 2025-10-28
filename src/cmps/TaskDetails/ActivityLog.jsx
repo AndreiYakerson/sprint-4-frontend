@@ -15,7 +15,7 @@ export function ActivityLog(props) {
                         return <li key={a?.id} className="activity-item">
                             <div>{formatTimeAgo(a?.createdAt)}</div>
                             <div><img src={a?.byMember?.imgUrl} alt={a?.byMember?.fullname} /></div>
-                            <div>{a?.task?.title}</div>
+                            <div className="task-name-log">{a?.task?.title}</div>
                             <div>{a?.title}</div>
                         </li>
                     })}

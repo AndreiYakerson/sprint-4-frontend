@@ -2,10 +2,11 @@
     z-index: var(--zIndex-toolTip);
     height: 100%;
     width: 0;
-    transition: 200ms ease-in-out;
+    transition: width 200ms ease-in-out;
+
 
     &:has(.open) {
-        width: 600px;
+        width: 100vw;
         background-color: var(--primary-background-color);
         border-inline-start: 2px solid var(--ui-border-color);
     }
@@ -82,4 +83,14 @@
         }
     }
 
+}
+
+
+@media (min-width: 750px) {
+    .task-details-wrapper {
+
+        &:has(.open) {
+            width: 600px;
+        }
+    }
 }
