@@ -45,7 +45,7 @@ export function HomePage() {
 
                 <div className='welcome-box'>
                     <h1>
-                        One AI work platform <br></br>
+                        OneDay work platform <br></br>
                         for any kind of work
                     </h1>
                     <h2>Plan and execute work across projects, sales, marketing, IT,<br></br>

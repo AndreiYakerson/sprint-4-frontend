@@ -212,11 +212,12 @@ function onShowUserPage(){
 
 				<section className="main-mini-user"
 				// onClick={onShowUserPage}
+				onClick={onLogout}
 				>
 					{!user && <NavLink to="auth/login" className="login-link">Login</NavLink>}
 					{user && (
 						<div className='member-info'>
-							<button onClick={onLogout}>logout</button>
+							{/* <button onClick={onLogout}>logout</button> */}
 							<MiniUser
 								user={user}
 							/>

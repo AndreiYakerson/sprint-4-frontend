@@ -34,10 +34,12 @@
     /* gap: 9px; */
 
     .label-list-edit-container {
+        position: relative;
         display: flex;
         place-items: center;
 
         .more-icon-btn {
+            position: relative;
             display: flex;
             justify-content: center;
             align-items: center;

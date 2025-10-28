@@ -16,6 +16,7 @@ import { CmpList } from "../CmpList.jsx";
 import { IndividualGroupCollapse } from "./IndividualGroupCollapse.jsx";
 import { useSearchParams } from "react-router-dom";
 import { FloatingContainerCmp } from "../FloatingContainerCmp.jsx";
+import { showSuccessMsg } from "../../services/event-bus.service.js";
 
 export function GroupPreview({ group, groupsLength, managingType, TaskList,
     onRemoveGroup, onUpdateGroup, onAddTask, onAddGroup, onOpenGroupEditor, onAddColumn, onRemoveColumn }) {
@@ -440,7 +441,9 @@ export function GroupPreview({ group, groupsLength, managingType, TaskList,
             <ActionsMenu
                 onCloseMenu={onCloseMenu}
                 isHrShown={false}
-                onRemoveItem={() => onRemoveColumn(columnType)}
+                onRemoveItem={() => {
+                    showSuccessMsg(' Column removed')
+                    onRemoveColumn(columnType)}}
             />
         </FloatingContainerCmp>
         }
