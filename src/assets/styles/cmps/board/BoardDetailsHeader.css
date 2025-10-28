@@ -17,12 +17,11 @@
       background-color: var(--primary-background-color);
       z-index: 200;
 
-      padding: 18px 30px 0 38px;
+      padding: 18px 16px 0 16px;
 
       width: 100%;
-
       height: 100%;
-      max-height: 105px;
+      max-height: 107px;
 
       .header-title {
           position: relative;
@@ -32,7 +31,7 @@
 
           .mobile-back-btn {
               position: fixed;
-              left: 38px;
+              left: 16px;
           }
 
           .board-title {
@@ -61,7 +60,7 @@
 
           .action-nav {
               position: fixed;
-              right: 30px;
+              right: 24px;
 
               display: flex;
               align-items: center;
@@ -178,10 +177,6 @@
               .txt {
                   display: none;
                   padding: 0;
-              }
-
-              .mini-x {
-                  display: none;
               }
 
               & .search-btn {
@@ -315,6 +310,7 @@
           column-gap: 16px;
           row-gap: 0;
 
+          padding: 18px 30px 0 38px;
           max-height: 148px;
 
           .header-title {

@@ -26,7 +26,7 @@ button {
 
 		&:has(.add-group) {
 			position: sticky;
-			left: 36px;
+			left: 10px;
 		}
 	}
 
@@ -229,6 +229,20 @@ button {
 		}
 	}
 }
+
+@media (min-width: 750px) {
+
+	.btn,
+	button {
+		&.btn-shrink-wrapper {
+			&:has(.add-group) {
+				position: sticky;
+				left: 36px;
+			}
+		}
+	}
+}
+
 
 .img-input,
 input {

@@ -212,6 +212,7 @@ export function GroupPreview({ group, groupsLength, managingType, TaskList,
 
     ///////////////////////////////////  Collapsed group ///////////////////////////////
 
+
     if (isCollapsed)
         return (
             <IndividualGroupCollapse

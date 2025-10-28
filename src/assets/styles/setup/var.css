@@ -260,3 +260,10 @@
   /* --primary-color: #0073ea; */
 
 }
+
+
+@media (max-width: 750px) {
+  :root {
+    --item-column: 200px;
+  }
+}

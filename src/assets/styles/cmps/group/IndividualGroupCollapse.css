@@ -22,7 +22,7 @@
 
             .group-title-row {
                 position: sticky;
-                left: 36px;
+                left: 10px;
 
                 display: grid;
                 gap: 0;
@@ -32,6 +32,7 @@
 
                 height: 100%;
                 width: 100%;
+                margin-inline-start: 0;
 
                 .group-bar {
                     position: relative;
@@ -54,6 +55,10 @@
 
                         width: 36px;
                         height: 70px;
+
+                        .group-menu {
+                            display: none;
+                        }
                     }
 
                 }
@@ -134,4 +139,28 @@
     }
 
 
+}
+
+
+@media (min-width: 750px) {
+    .group-container {
+
+
+        &.individual-collapse {
+            .table-row.table-header {
+                .group-title-row {
+                    position: sticky;
+                    left: 36px;
+
+                    .group-bar {
+                        .group-menu-wrapper {
+                            .group-menu {
+                                display: flex;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
 }

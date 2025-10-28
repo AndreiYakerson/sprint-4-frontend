@@ -5,7 +5,7 @@
        grid-column: 1/-1;
        height: 36px;
        background-color: var(--primary-background-color);
-       margin-inline-start: 36px;
+       margin-inline-start: 10px;
 
        &.drag-preview {
            display: grid;
@@ -83,11 +83,11 @@
 
    .sticky-cell-wrapper {
        position: sticky;
-       left: 36px;
+       left: 10px;
        background-color: white;
 
        display: grid;
-       grid-template-columns: 6px 36px calc(var(--item-column) - 78px);
+       grid-template-columns: 6px calc(var(--item-column) - 16px);
 
        &.checked {
            background-color: var(--primary-selected-color-rgb);
@@ -363,7 +363,7 @@
    }
 
    .task-select {
-       display: flex;
+       display: none;
        align-items: center;
        justify-content: center;
 
@@ -417,4 +417,25 @@
            }
        }
 
+   }
+
+
+   @media (min-width: 750px) {
+       .table-row {
+           margin-inline-start: 36px;
+       }
+
+       .sticky-cell-wrapper {
+           position: sticky;
+           left: 36px;
+           background-color: white;
+
+           display: grid;
+           grid-template-columns: 6px 36px calc(var(--item-column) - 78px);
+       }
+
+
+       .task-select {
+           display: flex;
+       }
    }
