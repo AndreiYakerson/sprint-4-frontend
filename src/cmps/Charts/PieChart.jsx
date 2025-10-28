@@ -2,6 +2,7 @@ import Chart from 'chart.js/auto'
 import { useEffect, useRef } from "react"
 
 export function PieChart({ data }) {
+  console.log("🚀 ~ PieChart ~ data:", data)
   const canvasRef = useRef(null)
   const chartRef = useRef(null)
 
@@ -10,8 +11,12 @@ export function PieChart({ data }) {
     const ctx = canvasRef.current.getContext("2d")
     if (chartRef.current) chartRef.current.destroy()
 
+    const root = getComputedStyle(document.documentElement)
     const labels = data.byStatus.map(s => s.txt)
     const values = data.byStatus.map(s => s.tasksCount)
+    const colors = data.byStatus.map(s =>
+      root.getPropertyValue(s.cssVar.trim()).trim() || '#ccc')
+    console.log("🚀 ~ PieChart ~ colors:", colors)
 
     chartRef.current = new Chart(ctx, {
       type: "pie",
@@ -19,7 +24,7 @@ export function PieChart({ data }) {
         labels,
         datasets: [{
           data: values,
-          backgroundColor: ["#00C853", "#FFD600", "#D50000"],
+          backgroundColor: colors,
         }],
       },
       options: {

@@ -2,6 +2,7 @@ import { useRef, useEffect } from "react"
 import Chart from "chart.js/auto"
 
 export function BarChart({ data }) {
+  console.log("🚀 ~ BarChart ~ data:", data)
   const canvasRef = useRef(null)
   const chartRef = useRef(null)
 
@@ -9,10 +10,15 @@ export function BarChart({ data }) {
     if (!data?.byStatus?.length) return
     const ctx = canvasRef.current.getContext("2d")
     if (chartRef.current) chartRef.current.destroy()
+    const root = getComputedStyle(document.documentElement)
 
     const labels = data.byStatus.map(s => s.txt)
     const values = data.byStatus.map(s => s.tasksCount)
-
+    const colors = data.byStatus.map(s =>
+      
+      root.getPropertyValue(s.cssVar.trim()).trim() || '#ccc')
+    console.log("🚀 ~ PieChart ~ colors:", colors)
+    
     chartRef.current = new Chart(ctx, {
       type: "bar",
       data: {
