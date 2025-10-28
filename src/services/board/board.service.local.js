@@ -132,7 +132,7 @@ async function getById(boardId, filterBy) {
                         (ops.includes("done overdue") && isDone && updatedAt && updatedAt > dueDate)
                     )
                 })
-                return g => g.tasks.length > 0
+                return g?.tasks?.length > 0
             })
     }
 
