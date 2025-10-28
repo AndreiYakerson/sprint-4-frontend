@@ -1,0 +1,44 @@
+.group-list {
+
+    &.groups-loader {
+        animation: fadeinout 400ms ease-in;
+
+        .group-container {
+            .group-header {
+
+                .group-title-row {
+
+                    .group-title-wrapper {
+                        background: linear-gradient(90deg, white 25%, rgb(239, 239, 239) 50%, white 75%);
+                        background-size: 200% 100%;
+                        animation: shimmer 1s infinite linear;
+                    }
+                }
+            }
+
+
+            .table-row {
+                background: linear-gradient(90deg, white 25%, rgb(239, 239, 239) 50%, white 75%);
+                background-size: 200% 100%;
+                animation: shimmer 1s infinite linear;
+                pointer-events: none;
+
+                .table-border {
+                    background-color: rgba(128, 128, 128, 0.359);
+                }
+
+                .sticky-cell-wrapper {
+                    &:not(:has(.border-radius-block)) {
+                        background-color: transparent;
+                    }
+                }
+
+                .border-radius-block {
+                    background-color: transparent;
+                }
+
+            }
+
+        }
+    }
+}

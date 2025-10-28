@@ -171,8 +171,11 @@ button {
     background-color: var(--text-with-highlight)
 }
 
- #portal-root {
+#portal-root {
     position: fixed;
     top: 0;
     z-index: var(--zIndex-toolTip);
 }
+
+
+

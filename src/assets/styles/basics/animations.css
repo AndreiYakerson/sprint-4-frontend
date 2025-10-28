@@ -53,3 +53,49 @@
     background-position: -9825px 0;
   }
 }
+
+
+.shimmer-block {
+  display: block;
+  min-width: 50px;
+  min-height: 20px;
+  width: 50%;
+  height: 50%;
+  margin: auto;
+  border-radius: 8px;
+  background: linear-gradient(90deg, rgb(221, 221, 221) 25%, rgb(183, 183, 183) 50%, rgb(221, 221, 221) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1s infinite linear;
+  margin-inline-end: 8px;
+
+  &.title {
+    min-width: 200px;
+  }
+
+  &.btn-size {
+    min-width: 70px;
+    min-height: 30px;
+  }
+}
+
+
+
+@keyframes shimmer {
+  0% {
+    background-position: -100% 0;
+  }
+
+  100% {
+    background-position: 100% 0;
+  }
+}
+
+@keyframes fandin {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}

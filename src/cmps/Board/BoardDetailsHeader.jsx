@@ -29,6 +29,7 @@ export function BoardDetailsHeader({
     filterBy,
     filterOptions,
     onSetFilterBy,
+    isBoardLoading
 }) {
 
     const [isFilterOpen, setIsFilterOpen] = useState(false)
@@ -102,7 +103,13 @@ export function BoardDetailsHeader({
                     back
                 </Link>
 
-                <div className='board-title'>{board?.title}</div>
+                <div className='board-title'>
+                    {isBoardLoading
+                        ? <div className='shimmer-block title'></div>
+                        : board?.title
+                    }
+
+                </div>
 
                 <nav className='action-nav'>
 
@@ -163,108 +170,121 @@ export function BoardDetailsHeader({
 
             <div className='board-actions'>
 
-                <button
-                    onClick={() => onAddTask(board?.groups[0]?.id, `New ${board?.managingType}`, 'unshift')}
-                    disabled={!board?.groups?.length}
-                    className='btn-shrink-wrapper'>
-                    <div className='btn blue add-btn shrink'>
-                        New {board?.managingType}
-                    </div>
-                </button>
+                {isBoardLoading
+                    ? <div className='shimmer-block btn-size '></div>
+                    : <button
+                        onClick={() => onAddTask(board?.groups[0]?.id, `New ${board?.managingType}`, 'unshift')}
+                        disabled={!board?.groups?.length}
+                        className='btn-shrink-wrapper'>
+                        <div className='btn blue add-btn shrink'>
+                            New {board?.managingType}
+                        </div>
+                    </button>}
 
-                <section className='board-action-btn'>
 
-                    {/*  Search Button */}
-                    <div className={`search-btn btn ${isSearchOpen} ${!!inputValue.length ? 'hasValue' : ''}`} onClick={onOpenSearchBar}>
-                        <span className="icon">
-                            <SvgIcon iconName='searchGlass' size={20} colorName='currentColor' />
-                        </span>
+                {isBoardLoading
+                    ? <section className='board-action-btn'>
+                        <div className='shimmer-block'></div>
+                        <div className='shimmer-block'></div>
+                        <div className='shimmer-block'></div>
+                        <div className='shimmer-block'></div>
+                    </section>
+                    : <section className='board-action-btn'>
 
-                        {!isSearchOpen ? (
-                            <span className='txt'>Search</span>
-                        ) : (
-                            <div className='open-search'>
-                                <input type="text"
-                                    className='search-txt'
-                                    placeholder='Search This Board'
-                                    onChange={(ev) => handelChange(ev)}
-                                    onBlur={isSearching}
-                                    ref={inputRef}
-                                    value={inputValue}
-                                />
-                                <section className="actions">
-                                    <button
-                                        className={`delete-btn hover-show up ${inputValue ? true : false}`}
-                                        data-type={' Clear Search'}
-                                        onClick={onClearInput}>
-                                        <SvgIcon iconName='xMark' size={16} colorName='secondaryText' />
-                                    </button>
+                        {/*  Search Button */}
+                        <div className={`search-btn btn ${isSearchOpen} ${!!inputValue.length ? 'hasValue' : ''}`} onClick={onOpenSearchBar}>
+                            <span className="icon">
+                                <SvgIcon iconName='searchGlass' size={20} colorName='currentColor' />
+                            </span>
 
-                                    {/* <button className='search-option-btn hover-show up' data-type={'Search Options'} >
+                            {!isSearchOpen ? (
+                                <span className='txt'>Search</span>
+                            ) : (
+                                <div className='open-search'>
+                                    <input type="text"
+                                        className='search-txt'
+                                        placeholder='Search This Board'
+                                        onChange={(ev) => handelChange(ev)}
+                                        onBlur={isSearching}
+                                        ref={inputRef}
+                                        value={inputValue}
+                                    />
+                                    <section className="actions">
+                                        <button
+                                            className={`delete-btn hover-show up ${inputValue ? true : false}`}
+                                            data-type={' Clear Search'}
+                                            onClick={onClearInput}>
+                                            <SvgIcon iconName='xMark' size={16} colorName='secondaryText' />
+                                        </button>
+
+                                        {/* <button className='search-option-btn hover-show up' data-type={'Search Options'} >
                                         <SvgIcon iconName='searchOptions' size={16} colorName='secondaryText' />
                                     </button> */}
-                                </section>
-                            </div>
-                        )}
-                    </div>
+                                    </section>
+                                </div>
+                            )}
+                        </div>
 
-                    {/*  Person Filter */}
+                        {/*  Person Filter */}
 
-                    <button className={`person-btn hover-show up ${isPersonFilterOpen || byPerson ? "active" : ""}`}
-                        data-type='Filter board by Person'
-                        ref={personBtnRef}
-                        onClick={toggleIsPersonFilterOpen}
-                    >
-                        {byPerson
-                            ? <img src={board?.members?.find(m => m._id === byPerson)?.imgUrl || ''}
-                                alt="selected person" className='selected-person' />
-                            : <span className="icon">
-                                <SvgIcon iconName='person' size={20} colorName={`secondaryText`} />
+                        <button className={`person-btn hover-show up ${isPersonFilterOpen || byPerson ? "active" : ""}`}
+                            data-type='Filter board by Person'
+                            ref={personBtnRef}
+                            onClick={toggleIsPersonFilterOpen}
+                        >
+                            {byPerson
+                                ? <img src={board?.members?.find(m => m._id === byPerson)?.imgUrl || ''}
+                                    alt="selected person" className='selected-person' />
+                                : <span className="icon">
+                                    <SvgIcon iconName='person' size={20} colorName={`secondaryText`} />
+                                </span>
+                            }
+                            <span className='txt'>Person</span>
+                            {byPerson &&
+                                <div onClick={(ev) => {
+                                    ev.stopPropagation()
+                                    onSetFilterBy({ byPerson: '' })
+                                    onClosePersonFilter()
+                                }}>
+                                    <SvgIcon
+                                        iconName='xMark' size={12}
+                                        colorName={`currentColor`}
+                                        className='mini-x' />
+                                </div>
+                            }
+                        </button>
+
+                        {/* Filter */}
+
+                        <button className={`filter-btn hover-show up ${isFilterOpen || filterByNum > 0 ? "active" : ""}`}
+                            data-type={'filter board by Anything'}
+                            ref={filterBtnRef}
+                            onClick={toggleIsFilterOpen}
+                        >
+                            <span className="icon">
+                                <SvgIcon iconName='filter' size={20} colorName='secondaryText' />
                             </span>
-                        }
-                        <span className='txt'>Person</span>
-                        {byPerson &&
-                            <div onClick={(ev) => {
-                                ev.stopPropagation()
-                                onSetFilterBy({ byPerson: '' })
-                                onClosePersonFilter()
-                            }}>
-                                <SvgIcon
-                                    iconName='xMark' size={12}
-                                    colorName={`currentColor`}
-                                    className='mini-x' />
-                            </div>
-                        }
-                    </button>
+                            <span className='txt'>Filter {filterByNum ? `/ ${filterByNum}` : ""}</span>
+                        </button>
 
-                    {/* Filter */}
+                        {/* ↕ Sort */}
 
-                    <button className={`filter-btn hover-show up ${isFilterOpen || filterByNum > 0 ? "active" : ""}`}
-                        data-type={'filter board by Anything'}
-                        ref={filterBtnRef}
-                        onClick={toggleIsFilterOpen}
-                    >
-                        <span className="icon">
-                            <SvgIcon iconName='filter' size={20} colorName='secondaryText' />
-                        </span>
-                        <span className='txt'>Filter {filterByNum ? `/ ${filterByNum}` : ""}</span>
-                    </button>
+                        <button
+                            className={`sort-btn hover-show up ${isSortOpen || sortBy ? "active" : ""}`}
+                            data-type={'Sort board by Any Column'}
+                            ref={sortByRef}
+                            onClick={toggleIsSortOpen}
+                        >
+                            <span className="icon">
+                                <SvgIcon iconName='sortArrows' size={20} colorName='secondaryText' />
+                            </span>
+                            <span className='txt'>Sort {sortBy ? ' / 1' : ""}</span>
+                        </button>
 
-                    {/* ↕ Sort */}
+                    </section>
+                }
 
-                    <button
-                        className={`sort-btn hover-show up ${isSortOpen || sortBy ? "active" : ""}`}
-                        data-type={'Sort board by Any Column'}
-                        ref={sortByRef}
-                        onClick={toggleIsSortOpen}
-                    >
-                        <span className="icon">
-                            <SvgIcon iconName='sortArrows' size={20} colorName='secondaryText' />
-                        </span>
-                        <span className='txt'>Sort {sortBy ? ' / 1' : ""}</span>
-                    </button>
 
-                </section>
             </div>
 
 

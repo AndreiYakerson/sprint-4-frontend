@@ -20,6 +20,7 @@ import { GroupList } from '../cmps/group/GroupList.jsx'
 
 // img
 import noResults from '/img/no-results.svg'
+import { GroupLoader } from '../cmps/group/GroupLoader.jsx'
 
 
 export function BoardDetails() {
@@ -39,6 +40,7 @@ export function BoardDetails() {
     const [isSearchOpen, setIsSearchOpen] = useState(false)
     const [searchValues, setSearchValues] = useState(false)
     const [inputValue, setInputValue] = useState('')
+    const [isBoardLoading, setIsBoardLoading] = useState(false)
 
     const [searchParams, setSearchParams] = useSearchParams()
     const [filterBy, setFilterBy] = useState(boardService.getFilterFromSearchParams(searchParams))
@@ -67,12 +69,17 @@ export function BoardDetails() {
 
 
     async function onLoadBoard(boardId, filterBy) {
+        setIsBoardLoading(true)
         try {
             if (boardRemovedMsg) setBoardRemovedMsg('')
             await loadBoard(boardId, filterBy)
         } catch (err) {
             console.log(err)
             showErrorMsg('faild to laod board')
+        } finally {
+            setTimeout(() => {
+                setIsBoardLoading(false)
+            }, 500)
         }
     }
 
@@ -195,29 +202,38 @@ export function BoardDetails() {
                     filterBy={filterBy}
                     filterOptions={filterOptions}
                     onSetFilterBy={onSetFilterBy}
+                    isBoardLoading={isBoardLoading}
                 />
 
-                {boardGroupsToShow?.length > 0
-                    ? < GroupList
-                        groups={boardGroupsToShow}
-                        managingType={board?.managingType}
-                    />
-                    : <div className='no-results-msg'>
-                        <img src={noResults} alt="no-results" />
-                        <div className="no-results-title">No results were found</div>
-                    </div>
-                }
+                {isBoardLoading ? (
+                    <GroupLoader />
+                ) : (
+                    <>
+                        {boardGroupsToShow?.length > 0 ? (
+                            <GroupList
+                                groups={boardGroupsToShow}
+                                managingType={board?.managingType}
+                            />
+                        ) : (
+                            <div className='no-results-msg'>
+                                <img src={noResults} alt="no-results" />
+                                <div className="no-results-title">No results were found</div>
+                            </div>
+                        )}
 
-
-                {board?.groups?.length > 0 && boardGroupsToShow?.length > 0 &&
-                    <button
-                        className='btn-shrink-wrapper'
-                        onClick={() => onAddGroup(board?._id)}>
-                        <div className='btn add-group shrink flex'>
-                            <SvgIcon iconName="plus" size={20} />
-                            <span>Add new group</span>
-                        </div>
-                    </button>}
+                        {board?.groups?.length > 0 && boardGroupsToShow?.length > 0 && (
+                            <button
+                                className='btn-shrink-wrapper'
+                                onClick={() => onAddGroup(board?._id)}
+                            >
+                                <div className='btn add-group shrink flex'>
+                                    <SvgIcon iconName="plus" size={20} />
+                                    <span>Add new group</span>
+                                </div>
+                            </button>
+                        )}
+                    </>
+                )}
             </div>
 
             <div className='task-details-wrapper'>
