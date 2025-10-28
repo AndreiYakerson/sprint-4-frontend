@@ -395,6 +395,10 @@
                 display: flex;
                 gap: 8px;
                 margin-inline-end: 4px;
+
+                button {
+                    cursor: auto;
+                }
             }
 
             .boards-title-workspaces {
