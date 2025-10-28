@@ -11,11 +11,13 @@ export function Dashboard(props) {
 
     const dashboardData = useSelector(storeState => storeState.boardModule.dashboardData)
     const boards = useSelector(storeState => storeState.boardModule.boards)
+    console.log('boards', boards)
 
 
     const [board, setBoard] = useState()
     const [boardGroups, setBoardGroups] = useState()
     const [boardsData, setBoardsData] = useState()
+    console.log("🚀 ~ Dashboard ~ boardsData:", boardsData)
 
     const [boardTasks, setBoardGroupsTasks] = useState()
     const [boardStatuses, setBoardStatuses] = useState()
@@ -30,6 +32,7 @@ export function Dashboard(props) {
     async function getData() {
         try {
             const res = await boardService.getDashboardData()
+            console.log("🚀 ~ getData ~ res:", res)
             setBoardsData(res)
         } catch (error) {
             console.log('error', error)
@@ -73,7 +76,7 @@ export function Dashboard(props) {
                         </header>
                         <div className="data-content">
                             <div className="item-count">
-                                {boardTasks?.length}
+                                {boardsData.tasksCount}
                             </div>
                         </div>
                     </li>
@@ -101,7 +104,7 @@ export function Dashboard(props) {
                             {/* <SvgIcon iconName='dragBox' size={23} /> */}
                             <span className="data-title">Tasks by status</span>
                         </header>
-                        <div className="data-content">
+                        <div className="data-content pei">
                             {boardsData ? (
                                 <PieChart
                                     data={boardsData}
@@ -118,7 +121,7 @@ export function Dashboard(props) {
                             {/* <SvgIcon iconName='dragBox' size={23} /> */}
                             <span className="data-title">Tasks by Owner</span>
                         </header>
-                        <div className="data-content">
+                        <div className="data-content chart">
                             {boardsData ? (
                                 <BarChart
                                     data={boardsData}

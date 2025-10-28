@@ -2,32 +2,31 @@ import { useRef, useEffect } from "react"
 import Chart from "chart.js/auto"
 
 export function BarChart({ data }) {
-  console.log("🚀 ~ BarChart ~ data:", data)
   const canvasRef = useRef(null)
   const chartRef = useRef(null)
 
   useEffect(() => {
-    if (!data?.byStatus?.length) return
+    if (!data?.byPriority?.length) return
     const ctx = canvasRef.current.getContext("2d")
     if (chartRef.current) chartRef.current.destroy()
     const root = getComputedStyle(document.documentElement)
+    const filteredStatusData = data.byPriority.filter(s => s.id !== 'default');
 
-    const labels = data.byStatus.map(s => s.txt)
-    const values = data.byStatus.map(s => s.tasksCount)
-    const colors = data.byStatus.map(s =>
-      
-      root.getPropertyValue(s.cssVar.trim()).trim() || '#ccc')
-    console.log("🚀 ~ PieChart ~ colors:", colors)
-    
+    const labels = filteredStatusData.filter(s => s.txt !== 'Default Label').map(s => s.txt)
+    const values = filteredStatusData.map(s => s.tasksCount)
+    const colors = filteredStatusData
+      .filter(s => s.txt !== 'Default Label')
+      .map(s => root.getPropertyValue(s.cssVar.trim()).trim() || '#ccc')
+
     chartRef.current = new Chart(ctx, {
       type: "bar",
       data: {
         labels,
         datasets: [
           {
-            label: "Tasks by Status",
+            label: "Tasks by Priority",
             data: values,
-            backgroundColor: ["#00C853", "#FFD600", "#D50000"],
+            backgroundColor: colors,
             borderRadius: 6,
             barThickness: 40,
           },
@@ -35,6 +34,7 @@ export function BarChart({ data }) {
       },
       options: {
         responsive: true,
+        maintainAspectRatio: false,
         plugins: {
           legend: { display: false },
           title: { display: true, text: "Tasks by Status" },
@@ -52,7 +52,13 @@ export function BarChart({ data }) {
           y: {
             beginAtZero: true,
             ticks: { stepSize: 1 },
+            grid: {
+                    color: 'rgb(236 236 236 / 50%)', 
+                },
           },
+          x:{ grid: {
+                    color: '', 
+                },}
         },
       },
     })
@@ -60,5 +66,6 @@ export function BarChart({ data }) {
     return () => chartRef.current.destroy()
   }, [data])
 
-  return <canvas ref={canvasRef}></canvas>
+  // Add style to the canvas element
+  return <canvas ref={canvasRef} style={{ height: '100%' }}></canvas>
 }

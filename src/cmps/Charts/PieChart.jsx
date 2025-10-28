@@ -2,7 +2,6 @@ import Chart from 'chart.js/auto'
 import { useEffect, useRef } from "react"
 
 export function PieChart({ data }) {
-  console.log("🚀 ~ PieChart ~ data:", data)
   const canvasRef = useRef(null)
   const chartRef = useRef(null)
 
@@ -10,13 +9,12 @@ export function PieChart({ data }) {
     if (!data?.byStatus?.length) return
     const ctx = canvasRef.current.getContext("2d")
     if (chartRef.current) chartRef.current.destroy()
+    const filteredStatusData = data.byStatus.filter(s => s.id !== 'default');
 
     const root = getComputedStyle(document.documentElement)
-    const labels = data.byStatus.map(s => s.txt)
-    const values = data.byStatus.map(s => s.tasksCount)
-    const colors = data.byStatus.map(s =>
-      root.getPropertyValue(s.cssVar.trim()).trim() || '#ccc')
-    console.log("🚀 ~ PieChart ~ colors:", colors)
+    const labels = filteredStatusData.map(s => s.txt);
+    const values = filteredStatusData.map(s => s.tasksCount);
+    const colors = filteredStatusData.map(s => root.getPropertyValue(s.cssVar.trim()).trim() || '#ccc');
 
     chartRef.current = new Chart(ctx, {
       type: "pie",
@@ -29,10 +27,20 @@ export function PieChart({ data }) {
       },
       options: {
         responsive: true,
+        maintainAspectRatio: false,
+        layout: {
+          padding: {
+            right: 10, // Increase this value to move the pie chart further left
+          }
+        },
         plugins: {
           legend: {
             position: "right",
+
             labels: {
+              // font:{size:20},
+              usePointStyle: true,
+              padding: 20,
               generateLabels: (chart) => {
                 const total = chart.data.datasets[0].data.reduce((a, b) => a + b, 0)
                 return chart.data.labels.map((label, i) => ({
