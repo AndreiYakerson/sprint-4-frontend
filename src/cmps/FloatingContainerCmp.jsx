@@ -16,7 +16,7 @@ export function FloatingContainerCmp({
 
     useEffect(() => {
         onSetFloatingIsOpen(true)
-        
+
         return () => {
             onSetFloatingIsOpen(false)
         }
@@ -70,6 +70,7 @@ export function FloatingContainerCmp({
 
         const updatePosition = (ev) => {
             // Ignore scroll events that originate inside anchorEl
+            if (window.innerWidth < 750) return
             if (ev) {
                 if (popupRef.current.contains(ev.target) || anchorEl.contains(ev.target)) return
             }
@@ -149,11 +150,29 @@ export function FloatingContainerCmp({
     // if (!anchorEl) return null
 
     useLayoutEffect(() => {
-        setStyle(prev => ({
-            ...prev,
-            transform: isVisible ? 'scale(1)' : 'scale(0)',
-            opacity: isVisible ? 1 : 0,
-        }))
+        if (window.innerWidth < 750) {
+            setStyle({
+                position: 'fixed',
+                top: '50%',
+                left: '50%',
+                transform: 'translate(-50%, -50%) scale(1)',
+                zIndex: 1000,
+                opacity: 1,
+                transition: 'transform 0.2s ease, opacity 0.2s ease',
+            })
+        } else {
+            setStyle(prev => ({
+                ...prev,
+                transform: isVisible ? 'scale(1)' : 'scale(0)',
+                opacity: isVisible ? 1 : 0,
+            }))
+        }
+
+        // setStyle(prev => ({
+        //     ...prev,
+        //     transform: isVisible ? 'scale(1)' : 'scale(0)',
+        //     opacity: isVisible ? 1 : 0,
+        // }))
     }, [isVisible])
 
 
