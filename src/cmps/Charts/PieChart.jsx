@@ -38,7 +38,7 @@ export function PieChart({ data }) {
             position: "right",
 
             labels: {
-              // font:{size:20},
+              font:{size:16},
               usePointStyle: true,
               padding: 20,
               generateLabels: (chart) => {
