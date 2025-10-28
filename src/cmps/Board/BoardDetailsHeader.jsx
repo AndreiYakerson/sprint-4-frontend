@@ -15,6 +15,7 @@ import { SortBy } from './filterCmps/SortBy.jsx'
 import { useRef, useState } from 'react'
 import { FloatingContainerCmp } from '../FloatingContainerCmp.jsx'
 import { FileUpload } from '../TaskCmps/FileUpload/FileUpload.jsx'
+import { Link } from 'react-router-dom'
 
 export function BoardDetailsHeader({
     board,
@@ -94,10 +95,15 @@ export function BoardDetailsHeader({
 
     return (
         <header className='board-details-header'>
+
             <section className="header-title">
 
+                <Link to="/board" className='btn mobile-back-btn'>
+                    back
+                </Link>
+
                 <div className='board-title'>{board?.title}</div>
-                
+
                 <nav className='action-nav'>
 
                     <div className='activity-log'>
@@ -111,14 +117,14 @@ export function BoardDetailsHeader({
                         </button>
                     </div>
 
-                    
+
                     <div className='invite-users'>
                         <button className='btn-shrink-wrapper' onClick={_onShowPopUp}>
                             <div className='btn invite shrink'>
                                 {` Invite / ${board?.members.length}`}
                             </div>
                         </button>
-                        
+
                         <span className='copy-link'>
                             <HoveredTextCmp
                                 label="Copy Link"
@@ -144,7 +150,16 @@ export function BoardDetailsHeader({
 
             <div className='board-nav'>
                 <div>Main Table</div>
+
             </div>
+
+            <button
+                className=' transparent mobile-add-btn'
+                onClick={() => onAddTask(board?.groups[0]?.id, `New ${board?.managingType}`, 'unshift')}
+                disabled={!board?.groups?.length}
+            >
+                <SvgIcon iconName='plus' size={20} colorName='secondaryText' />
+            </button>
 
             <div className='board-actions'>
 
@@ -162,7 +177,7 @@ export function BoardDetailsHeader({
                     {/*  Search Button */}
                     <div className={`search-btn btn ${isSearchOpen} ${!!inputValue.length ? 'hasValue' : ''}`} onClick={onOpenSearchBar}>
                         <span className="icon">
-                            <SvgIcon iconName='searchGlass' size={20} colorName='secondaryText' />
+                            <SvgIcon iconName='searchGlass' size={20} colorName='currentColor' />
                         </span>
 
                         {!isSearchOpen ? (

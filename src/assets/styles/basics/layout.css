@@ -30,7 +30,7 @@
         }
 
         .app-main-content {
-            height: calc(100vh - 48px);
+            height: 100vh;
             overflow: auto;
             border-radius: 12px 0 0 0;
         }
@@ -57,6 +57,13 @@
                         }
                     }
                 }
+            }
+
+            &:has(.board-details) {
+                .app-header {
+                    display: none;
+                }
+
             }
         }
     }

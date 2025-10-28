@@ -211,6 +211,23 @@ button {
 		}
 	}
 
+	&.mobile-add-btn {
+		color: var(--primary-color-mobile);
+		background-color: var(--primary-selected-color-btn);
+		width: 30px;
+
+		&:hover {
+			background-color: var(--primary-selected-color-btn);
+		}
+
+		.svg-icon {
+			color: var(--primary-color-mobile);
+
+			svg {
+				color: var(--primary-color-mobile);
+			}
+		}
+	}
 }
 
 .img-input,
