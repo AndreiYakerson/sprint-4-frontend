@@ -183,8 +183,7 @@ export function FileUpload({ info, onUpdate }) {
                 <FloatingContainerCmp
                     anchorEl={previewRef.current}
                     onClose={closeMenu}
-                    offsetX={100}
-                    offsetY={100}>
+                    >
 
                     <div
                         onMouseEnter={() => clearTimeout(hoverRef.current)}

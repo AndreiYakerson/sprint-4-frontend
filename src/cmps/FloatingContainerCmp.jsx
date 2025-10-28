@@ -16,7 +16,7 @@ export function FloatingContainerCmp({
 
     useEffect(() => {
         onSetFloatingIsOpen(true)
-        
+
         return () => {
             onSetFloatingIsOpen(false)
         }
@@ -109,18 +109,18 @@ export function FloatingContainerCmp({
                     if (showTriangle) setTrianglePos('down')
                 }
             }
-
             let left = anchorRect.left + window.scrollX
 
             if (centeredX) {
                 left = anchorRect.left + window.scrollX + anchorRect.width / 2 - popupWidth / 2
             }
 
-            if (left + popupWidth > windowWidth - SPACING) left = windowWidth - popupWidth - SPACING
-
-            if (left < SPACING) left = SPACING
-
+            // ✅ Apply offset and clamp within viewport
             left += offsetX
+            const viewLeft = window.scrollX
+            const viewRight = window.scrollX + window.innerWidth
+            left = Math.max(viewLeft + SPACING, Math.min(left, viewRight - popupWidth - SPACING))
+
 
             setStyle({
                 position: 'absolute',
@@ -157,19 +157,18 @@ export function FloatingContainerCmp({
     }, [isVisible])
 
 
-
+    if ( !anchorEl) return null
     return createPortal(
-        anchorEl ? (
-            <div
-                className={`fcc-container ${showTriangle ? "triangle" : ""} ${showTriangle ? trianglePos : ""}  ${anchorEl ? 'open' : ''}`}
-                ref={popupRef}
-                style={style}
-                onClick={e => e.stopPropagation()}
-            >
-                {children}
-            </div>
-        ) : null,
+        <div
+            className={`fcc-container ${showTriangle ? "triangle" : ""} ${trianglePos}`}
+            ref={popupRef}
+            style={style}
+            onClick={e => e.stopPropagation()}
+        >
+            {children}
+        </div>,
         document.getElementById('portal-root')
     )
+
 }
 
