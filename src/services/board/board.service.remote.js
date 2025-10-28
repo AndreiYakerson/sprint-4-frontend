@@ -2,9 +2,6 @@
 import { getLoggedinUser, userService } from '../user'
 import { getRandomGroupColor, makeId } from '../util.service'
 
-/// for filter date
-import { DateTime } from "luxon"
-
 import { httpService } from '../http.service'
 import { filter } from 'lodash'
 
