@@ -80,39 +80,32 @@ function createDemoUsersForLoggedUsers(num) {
     var professions = [
         'pizza Chef',
         'Pastry Chef',
-        'Baker',
+        'cold-line cook',
         'hot-line cook',
         'hot-line cook',
-        'Head Chef',
-        'Pastry Chef',
-        'Baker',
-        'hot-line cook',
-        'hot-line cook',]
+    ]
 
     var names = [
-        'Liam OConnell',
-        'Sofia Fernandez',
-        'Kai Nakamura',
-        'Chloe Davies',
-        'Elijah Vance',
-        'Aisha Khan',
-        'Asked jo',
-        'Benjamin Chen',
-        'Grace Dubois',
-        'Samuel Rivera',
-        'Olivia Mason'
+        'Emma Ruiz',
+        'Logan Park',
+        'Natalie Brooks',
+        'Omar Haddad',
+        'Clara Vance',
+        'Theo Marin',
+        'Jade Emerson',
+
     ]
 
     var users = []
-    for (let i = 5; i < num; i++) {
+    for (let i = 0; i < num; i++) {
 
         const user = {
             _id: makeId(),
             fullname: names[i],
             password: `user ${i + 1}`,
-            profession: professions.splice(getRandomIntInclusive(0, professions.length), 1)[0],
+            profession: professions[i],
             tags: ['member'],
-            imgUrl: usersImgs[i]
+            imgUrl: usersImgs[i + 5]
         }
         users.push(user)
     }
@@ -126,27 +119,17 @@ function createDemoUsersForBoard(num) {
         'Head Chef',
         'Pastry Chef',
         'Baker',
+        'cold-line cook',
         'hot-line cook',
-        'hot-line cook',
-        'Head Chef',
-        'Pastry Chef',
-        'Baker',
-        'hot-line cook',
-        'hot-line cook',
-
     ]
 
     var names = [
-        'Liam OConnell',
-        'Sofia Fernandez',
-        'Kai Nakamura',
-        'Chloe Davies',
-        'Elijah Vance',
         'Aisha Khan',
         'Benjamin Chen',
         'Grace Dubois',
         'Samuel Rivera',
-        'Olivia Mason'
+        'Olivia Mason',
+
     ]
 
     var users = []
@@ -155,7 +138,7 @@ function createDemoUsersForBoard(num) {
             _id: makeId(),
             fullname: names[i],
             password: `user ${i + 1}`,
-            profession: professions.splice(getRandomIntInclusive(0, professions.length), 1)[0],
+            profession: professions[i],
             tags: ['member'],
             imgUrl: usersImgs[i]
 

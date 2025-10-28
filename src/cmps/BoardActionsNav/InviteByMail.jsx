@@ -4,6 +4,7 @@ import { useEffect, useState } from "react"
 import { updateBoard } from "../../store/actions/board.actions"
 import { showSuccessMsg } from "../../services/event-bus.service"
 import { loginDemoUsers } from "../../store/actions/user.actions"
+import { userService } from "../../services/user"
 
 export function InviteByMail({ onClosePopUp }) {
     const user = useSelector(state => state.userModule.user)
@@ -15,23 +16,23 @@ export function InviteByMail({ onClosePopUp }) {
 
     //demo logged users
     useEffect(() => {
-        if (!users.length) {
-            console.log(' Setting demo user to LocalStorage ')
-            loginDemoUsers(userService.createDemoUsersForLoggedUsers(10))
-        }
+        // if (!users.length > 5) {
+                console.log(' Setting demo user to LocalStorage ')
+            loginDemoUsers(userService.createDemoUsersForLoggedUsers(5))
+        // }
     }, [])
 
 
-   async function onSelectMember(member) {
-        const newBoard = {...board, members:[...board.members,member ]}
-       try {
-         updateBoard(newBoard)
-         showSuccessMsg(' Member add board')
-         onClosePopUp()
-       } catch (error) {
-        console.log(" Invite by mail. Problem updating member" , error)
-        
-       }
+    async function onSelectMember(member) {
+        const newBoard = { ...board, members: [...board.members, member] }
+        try {
+            updateBoard(newBoard)
+            showSuccessMsg(' Member add board')
+            onClosePopUp()
+        } catch (error) {
+            console.log(" Invite by mail. Problem updating member", error)
+
+        }
     }
 
     function handelChange(ev) {
