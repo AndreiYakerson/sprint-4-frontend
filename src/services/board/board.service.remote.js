@@ -43,36 +43,14 @@ async function query(filterBy = { txt: '' }) {
 
 async function getById(boardId, filterBy) {
     const filterByToSend = JSON.stringify(filterBy)
-    
-    var board = await httpService.get(`${BOARD_URL}${boardId}/${filterByToSend}`)
-    const filterOptions = getFilterOptions(board)
+
+    var { board, filterOptions } = await httpService.get(`${BOARD_URL}${boardId}/${filterByToSend}`)
+
     return { board, filterOptions }
 }
 
 
-function getFilterOptions(board) {
-    const filterOptions = {}
 
-    filterOptions.groups = board.groups.map(g => {
-        return { id: g.id, title: g.title, color: g.style['--group-color'], taskSum: g?.tasks?.length }
-    })
-
-
-    const nameCounts = board.groups.reduce((acc, g) => {
-        g.tasks.forEach(t => {
-            if (acc[t.title]) acc[t.title] += 1
-            else acc[t.title] = 1
-        })
-
-        return acc
-    }, {})
-
-    filterOptions.names = Object.entries(nameCounts).map(([name, count]) => {
-        return { name, count }
-    })
-
-    return filterOptions
-}
 
 async function remove(boardId) {
     // throw new Error('Nope')
@@ -104,7 +82,7 @@ async function save(board) {
 
 async function getDashboardData(filterBy = {}) {
     return await httpService.get(BOARD_URL + 'dashboard')
-  
+
 }
 
 function _sumStatusesType(tasks) {
@@ -225,7 +203,7 @@ async function removeGroup(boardId, groupId) {
 //  task functions
 
 async function getTaskById(boardId, taskId) {
-    
+
     try {
 
         const { board } = await getById(boardId)
@@ -288,7 +266,7 @@ async function updateTask(boardId, groupId, taskToUpdate, activityTitle) {
 }
 
 async function duplicateTask(boardId, groupId, taskCopy) {
-        
+
     try {
         return await httpService.post(`${BOARD_URL}task/duplicate/${boardId}/${groupId}`, { taskCopy })
     } catch (err) {
