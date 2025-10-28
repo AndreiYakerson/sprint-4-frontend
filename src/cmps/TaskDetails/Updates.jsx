@@ -35,6 +35,16 @@ export function Updates() {
     }
 
     useEffect(() => {
+        if (isEditing && quillRef.current) {
+            const editor = quillRef.current.getEditor()
+            editor.focus();
+            const length = editor.getLength();
+            editor.setSelection(length, 0);
+        }
+    }, [isEditing])
+
+
+    useEffect(() => {
         function handleClickOutside(ev) {
             if (!isEditing) return
             const wrapperEl = editorWrapperRef.current
@@ -86,8 +96,8 @@ export function Updates() {
             {updates?.length > 0
                 ? (
                     <ul className="updates-list">
-                        {updates.map(update => (
-                            <li key={update?.id} className="update-item">
+                        {updates.map(update => {
+                            return <li key={update?.id} className="update-item">
                                 <header className="update-header">
                                     <img
                                         className="user-img"
@@ -100,10 +110,11 @@ export function Updates() {
 
                                 <div
                                     className="update-txt"
-                                    dangerouslySetInnerHTML={{ __html: update?.title }}
-                                />
-                            </li>
-                        ))}
+
+                                    // Correct Access Path
+                                    dangerouslySetInnerHTML={{ __html: update?.title?.updateTitle }} />
+                            </li>;
+                        })}
                     </ul>
                 )
                 : <div className="no-updates-msg">

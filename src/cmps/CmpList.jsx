@@ -1,5 +1,6 @@
 import { useEffect } from "react"
 import { SvgIcon } from "./SvgIcon"
+import { showSuccessMsg } from "../services/event-bus.service"
 
 export function CmpList({ cmps, onAddColumn, onClose }) {
 
@@ -11,6 +12,7 @@ export function CmpList({ cmps, onAddColumn, onClose }) {
 
     function selectCmp(cmp) {
         onAddColumn(cmp)
+        showSuccessMsg(' Column added ')
         onClose()
     }
 

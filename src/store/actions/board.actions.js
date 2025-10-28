@@ -254,9 +254,9 @@ export async function getTaskById(boardId, taskId) {
 
 //// task updates
 
-export async function addUpdateToTask(boardId, groupId, taskId, UpdateTitle) {
+export async function addUpdateToTask(boardId, groupId, taskId, updateTitle) {
     try {
-        const savedTask = await boardService.addUpdate(boardId, groupId, taskId, UpdateTitle)
+        const savedTask = await boardService.addUpdate(boardId, groupId, taskId, updateTitle)
         store.dispatch({ type: ADD_TASK_UPDATE, groupId, task: savedTask })
     } catch (err) {
         console.log('Cannot add update to task', err)

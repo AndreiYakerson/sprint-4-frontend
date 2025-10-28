@@ -47,7 +47,7 @@ export function FileUpload({ info, onUpdate }) {
 
         try {
             var base64 = await toBase64(file)
-
+            
             fileItem = {
                 title: file.name,
                 file: {
@@ -56,13 +56,12 @@ export function FileUpload({ info, onUpdate }) {
                     dataUrl: base64
                 }
             }
-            await storageService.post('tasksFiles', fileItem)
+            
         } catch (error) {
             console.log(' Problem uploading file to storage', error)
         }
         if (taskFiles) filesToSave = [...taskFiles, fileItem]
         else filesToSave = [fileItem]
-
         onUpdate(filesToSave)
     }
 
@@ -111,6 +110,7 @@ export function FileUpload({ info, onUpdate }) {
 
 
     function _onShowPopUp(ev) {
+        if (ev.target.src === 'http://localhost:5174/img/emptyFile.svg') return
         ev.stopPropagation()
         setIsPreviewOpen(false)
         const content = <FullScreenContainer
@@ -183,8 +183,7 @@ export function FileUpload({ info, onUpdate }) {
                 <FloatingContainerCmp
                     anchorEl={previewRef.current}
                     onClose={closeMenu}
-                    offsetX={100}
-                    offsetY={100}>
+                >
 
                     <div
                         onMouseEnter={() => clearTimeout(hoverRef.current)}

@@ -79,17 +79,11 @@ export function LabelsListEdit({ labels, onUpdateLabels, onSwitchEditMode, onClo
         setIsColorPickerOpen(false)
     }
 
-    function onOpenActionMenu(ev, id) {
+    function onOpenActionMenu(ev, label) {
         onCloseColorPallet()
         setAnchorEl(ev.currentTarget)
-        let labelToEdit;
-        if (id === 'default') {
-            labelToEdit = { id: 'default', txt: 'Default Label', cssVar: ' --group-title-clr18' };
-        } else {
-            labelToEdit = labelsToUpdate.find(label => label.id === id);
-        }
         setIsActionMenuOpen(true)
-        setEditingLabel(labelToEdit)
+        setEditingLabel(label)
     }
 
     function onCloseMenu() {
@@ -158,7 +152,7 @@ export function LabelsListEdit({ labels, onUpdateLabels, onSwitchEditMode, onClo
                         </section>
 
                         <button className={`more-icon-btn ${anchorEl && editingLabel?.id === label?.id ? "open" : ""}`}
-                            onClick={(ev) => onOpenActionMenu(ev, label.id)}>
+                            onClick={(ev) => onOpenActionMenu(ev, label)}>
                             <SvgIcon iconName='dots' size={16} />
                         </button>
 

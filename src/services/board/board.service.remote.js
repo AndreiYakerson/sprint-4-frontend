@@ -2,10 +2,8 @@
 import { getLoggedinUser, userService } from '../user'
 import { getRandomGroupColor, makeId } from '../util.service'
 
-/// for filter date
-import { DateTime } from "luxon"
-
 import { httpService } from '../http.service'
+import { filter } from 'lodash'
 
 // import { userService } from '../user'
 
@@ -44,8 +42,10 @@ async function query(filterBy = { txt: '' }) {
 }
 
 async function getById(boardId, filterBy) {
-    var board = await httpService.get(BOARD_URL + boardId)
-    const filterOptions = filterBy
+    const filterByToSend = JSON.stringify(filterBy)
+    
+    var board = await httpService.get(`${BOARD_URL}${boardId}/${filterByToSend}`)
+    const filterOptions = getFilterOptions(board)
     return { board, filterOptions }
 }
 
@@ -103,35 +103,8 @@ async function save(board) {
 //// Dashboard
 
 async function getDashboardData(filterBy = {}) {
-    const boards = await httpService.get(BOARD_URL + 'dashboard')
-    // var filterdBorad = structuredClone(boards)
-
-    // const tasks = filterdBorad.reduce((acc, b) => {
-    //     b.groups.forEach(g => {
-    //         if (g?.tasks?.length) acc.push(...g.tasks)
-    //     })
-    //     return acc
-    // }, [])
-
-    // const dashboardData = {
-    //     tasksCount: 0,
-    //     byStatus: [],
-    //     byMember: [],
-    // }
-
-    // if (!tasks?.length) {
-    //     return dashboardData
-    // }
-
-    // const statusTypes = _sumStatusesType(tasks)
-    // const members = _sumMembers(filterdBorad)
-
-
-    // dashboardData.tasksCount = tasks.length
-    // dashboardData.byStatus = _getSumDataByStatus(tasks, statusTypes)
-    // dashboardData.byMember = members?.length > 0 ? _getSumDataByMembers(tasks, members) : []
-
-    return boards
+    return await httpService.get(BOARD_URL + 'dashboard')
+  
 }
 
 function _sumStatusesType(tasks) {
@@ -252,7 +225,7 @@ async function removeGroup(boardId, groupId) {
 //  task functions
 
 async function getTaskById(boardId, taskId) {
-
+    
     try {
 
         const { board } = await getById(boardId)
@@ -268,7 +241,7 @@ async function getTaskById(boardId, taskId) {
         //         break
         //     }
         // }
-        const foundTask = await httpService.get(`${BOARD_URL}${boardId}/task/${taskId}`)
+        const foundTask = await httpService.get(`${BOARD_URL}taskDetails/${boardId}/${taskId}`)
 
         if (!foundTask) throw new Error(`Task ${taskId} not found`)
 
@@ -333,28 +306,11 @@ async function removeTask(boardId, groupId, taskId) {
 
 /// updates
 
-async function addUpdate(boardId, groupId, taskId, UpdateTitle) {
+async function addUpdate(boardId, groupId, taskId, updateTitle) {
 
     try {
-        const { board } = await getById(boardId)
-        if (!board) throw new Error(`Board ${boardId} not found`)
-
-        const group = board.groups.find(g => g.id === groupId)
-        if (!group) throw new Error(`Group ${groupId} not found`)
-
-        const taskIdx = group.tasks.findIndex(t => t.id === taskId)
-        if (taskIdx === -1) throw new Error(`Task ${taskId} not found`)
-
-        const updateToAdd = _createUpdate(UpdateTitle, _getMiniUser())
-
-        group.tasks[taskIdx] = {
-            ...group.tasks[taskIdx],
-            updates: [updateToAdd, ...(group.tasks[taskIdx]?.updates || [])]
-        }
-
-        await save(board)
-
-        return group.tasks[taskIdx]
+        const res = await httpService.put(`${BOARD_URL}${boardId}/${groupId}/${taskId}/addUpdate`, { updateTitle })
+        return res
 
     } catch (err) {
         throw err
@@ -362,55 +318,14 @@ async function addUpdate(boardId, groupId, taskId, UpdateTitle) {
 }
 
 
-function _createUpdate(UpdateTitle, miniUser) {
+function _createUpdate(updateTitle, miniUser) {
     return {
         id: makeId(),
-        title: UpdateTitle,
+        title: updateTitle,
         createdAt: Date.now(),
         byMember: miniUser,
     }
 }
-
-
-//////  Activity
-
-function _createActivity(activityTitle, miniUser, miniGroup, miniTask) {
-    return {
-        id: makeId(),
-        title: activityTitle,
-        createdAt: Date.now(),
-        byMember: miniUser,
-        group: miniGroup,
-        task: miniTask,
-    }
-}
-
-function _getMiniUser() {
-    const user = getLoggedinUser()
-    if (user) {
-        return {
-            _id: user?._id,
-            fullname: user?.fullname,
-            imgUrl: user?.imgUrl,
-        }
-    } else {
-        return {
-            _id: 'guest',
-            fullname: 'guest',
-            imgUrl: '/img/gray-avatar.svg',
-        }
-    }
-
-}
-
-function _toMiniTask({ id, title }) {
-    return { id, title }
-}
-
-function _toMiniGroup({ id, title }) {
-    return { id, title }
-}
-
 
 //////// 
 

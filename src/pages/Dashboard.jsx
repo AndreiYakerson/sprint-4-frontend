@@ -4,7 +4,7 @@ import { loadDashboard } from "../store/actions/board.actions"
 import { showErrorMsg } from "../services/event-bus.service"
 import { boardService } from "../services/board"
 import { SvgIcon } from "../cmps/SvgIcon"
-import {PieChart } from "../cmps/Charts/PieChart"
+import { PieChart } from "../cmps/Charts/PieChart"
 import { BarChart } from "../cmps/Charts/BarChart"
 
 export function Dashboard(props) {
@@ -16,6 +16,7 @@ export function Dashboard(props) {
     const [board, setBoard] = useState()
     const [boardGroups, setBoardGroups] = useState()
     const [boardsData, setBoardsData] = useState()
+    console.log("🚀 ~ Dashboard ~ boardsData:", boardsData)
 
     const [boardTasks, setBoardGroupsTasks] = useState()
     const [boardStatuses, setBoardStatuses] = useState()
@@ -35,8 +36,8 @@ export function Dashboard(props) {
             console.log('error', error)
         }
     }
-   
-//QUESTION האם אפשר למחוק את זה או שצריך את זה במידה ואנחנו מושכים מהבק?!
+
+    //QUESTION האם אפשר למחוק את זה או שצריך את זה במידה ואנחנו מושכים מהבק?!
 
     // useEffect(() => {
     //     onLoadDashboard()
@@ -49,7 +50,7 @@ export function Dashboard(props) {
     //         showErrorMsg('faild to load dashboard')
     //     }
     // }
-if (!boardsData) return null
+    if (!boardsData) return null
     return (
         <section className="dashboard">
 
@@ -78,7 +79,7 @@ if (!boardsData) return null
                         </div>
                     </li>
 
-                    { boardsData &&
+                    {boardsData &&
                         boardsData.byStatus.map(status => {
                             return < li className="data-item" key={status.id}>
                                 <header className="data-header">
@@ -99,9 +100,9 @@ if (!boardsData) return null
                             <span className="data-title">Tasks by status</span>
                         </header>
                         <div className="data-content">
-                            {boardsData? (
+                            {boardsData ? (
                                 <PieChart
-                                data={boardsData}
+                                    data={boardsData}
                                 />
                             ) : (
                                 <p>Loading chart...</p>
@@ -117,9 +118,9 @@ if (!boardsData) return null
                             <span className="data-title">Tasks by Owner</span>
                         </header>
                         <div className="data-content">
-                                {boardsData? (
+                            {boardsData ? (
                                 <BarChart
-                                data={boardsData}
+                                    data={boardsData}
                                 />
                             ) : (
                                 <p>Loading chart...</p>
