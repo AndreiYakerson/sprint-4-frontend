@@ -346,6 +346,10 @@
                 margin-block-end: 16px;
                 transition: opacity 800ms;
             }
+
+            .dashboard-item {
+                display: none;
+            }
         }
 
         .no-fav-board-msg {

@@ -42,7 +42,7 @@ export function BoardList({ boards, isSideBarDisplay = false }) {
     return <ul className={`board-list ${isSideBarDisplay ? "side-bar-dispaly" : ""}`}>
 
         <li
-            className={`board-item ${location.pathname.includes('dashboard') ? "active" : ""}`}
+            className={`board-item  ${location.pathname.includes('dashboard') ? "active" : ""} dashboard-item`}
             onClick={onNavigateToDahsboard}
         >
             <BoardPreview
