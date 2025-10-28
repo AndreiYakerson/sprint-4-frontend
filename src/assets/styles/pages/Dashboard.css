@@ -1,5 +1,6 @@
 .dashboard {
     min-height: 100%;
+
     background-color: #f6f7fb;
 
     .dashboard-header {
@@ -38,11 +39,24 @@
     .dashboard-content {
 
         .data-list {
-            display: grid;
-            grid-template-columns: repeat(4, minmax(193px, 1fr));
-            gap: 16px;
-            padding: 16px;
-            transition: width 200ms ease-in-out;
+
+            &.small {
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
+                gap: 16px;
+                padding: 16px;
+                transition: width 200ms ease-in-out;
+            }
+
+            &.big {
+                display: grid;
+                grid-auto-flow: column;
+                grid-template-columns: repeat(auto-fit, minmax(50%, 1fr));
+                gap: 16px;
+                padding: 16px;
+                transition: width 200ms ease-in-out;
+                /* height: 100%; */
+            }
 
 
             .data-item {
@@ -58,8 +72,9 @@
 
 
                 &.big {
-                    grid-column: span 2;
-                    min-height: 396px;
+                    flex: 1 1 calc(50% - 16px);
+                    /* min-height: 600px; */
+
                 }
 
                 .data-header {
@@ -72,11 +87,15 @@
                     font-size: 18px;
                     font-weight: 500;
                     align-content: center;
+
+
                 }
 
                 .data-content {
-                    /* display: grid; */
+                    display: grid;
                     height: 100%;
+                   align-items: flex-end;
+justify-content: center;
 
                     .item-count {
                         font-size: 32px;
@@ -94,5 +113,6 @@
 
             /* padding: var(--spacing-small) 0; */
         }
+
     }
 }

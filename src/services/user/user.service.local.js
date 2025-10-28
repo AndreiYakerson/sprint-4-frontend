@@ -73,16 +73,16 @@ async function signup(userCred) {
 
 function createDemoUsersForLoggedUsers(num) {
     var professions = [
+        'pizza Chef',
+        'Pastry Chef',
+        'Baker',
+        'hot-line cook',
+        'hot-line cook',
         'Head Chef',
-        'Junior Developer',
-        'Data Scientist',
-        'UX Designer',
-        'Registered Nurse (RN)',
-        'Financial Analyst',
-        'Solar Panel Installer',
-        'Technical Writer',
-        'Elementary School Teacher',
-        'Urban Planner']
+        'Pastry Chef',
+        'Baker',
+        'hot-line cook',
+        'hot-line cook',]
 
     var names = [
         'Liam OConnell',
@@ -119,15 +119,17 @@ function createDemoUsersForLoggedUsers(num) {
 function createDemoUsersForBoard(num) {
     var professions = [
         'Head Chef',
-        'Junior Developer',
-        'Data Scientist',
-        'UX Designer',
-        'Registered Nurse (RN)',
-        'Financial Analyst',
-        'Solar Panel Installer',
-        'Technical Writer',
-        'Elementary School Teacher',
-        'Urban Planner']
+        'Pastry Chef',
+        'Baker',
+        'hot-line cook',
+        'hot-line cook',
+        'Head Chef',
+        'Pastry Chef',
+        'Baker',
+        'hot-line cook',
+        'hot-line cook',
+
+    ]
 
     var names = [
         'Liam OConnell',
