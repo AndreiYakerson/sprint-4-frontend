@@ -69,7 +69,9 @@ export function BoardDetails() {
 
 
     async function onLoadBoard(boardId, filterBy) {
-        setIsBoardLoading(true)
+        if (!board || board?._id !== boardId) {
+            setIsBoardLoading(true)
+        }
         try {
             if (boardRemovedMsg) setBoardRemovedMsg('')
             await loadBoard(boardId, filterBy)
@@ -77,9 +79,11 @@ export function BoardDetails() {
             console.log(err)
             showErrorMsg('faild to laod board')
         } finally {
-            setTimeout(() => {
-                setIsBoardLoading(false)
-            }, 500)
+            if (isBoardLoading) {
+                setTimeout(() => {
+                    setIsBoardLoading(false)
+                }, 500)
+            }
         }
     }
 
