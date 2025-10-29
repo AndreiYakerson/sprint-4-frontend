@@ -52,12 +52,13 @@
 
         .welcome-box {
             display: grid;
-            grid-template-rows: repeat(3, max-content);
-            align-items: start;
+            grid-template-rows: repeat(3, 1fr);
+            align-items: baseline;
             justify-items: center;
 
             height: 100%;
-
+            gap: 50px;
+            
             margin: 0 16px;
             margin-block-end: 16px;
 
