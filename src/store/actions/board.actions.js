@@ -298,9 +298,12 @@ export async function removeColumn(board, columnType) {
 
 /// socket fncs
 
-
 export function onAddTaskFromSocket({ addedTask, groupId, method }) {
     store.dispatch({ type: ADD_TASK, groupId, task: addedTask, method })
+}
+
+export function onUpdateTasksOrder({ groupId, tasks }) {
+    store.dispatch({ type: SET_TASKS, groupId, tasks })
 }
 
 export function onDuplicateTask({ groupId, savedTask, taskCopyIdx }) {

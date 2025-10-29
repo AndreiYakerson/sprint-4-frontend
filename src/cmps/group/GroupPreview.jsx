@@ -17,6 +17,8 @@ import { IndividualGroupCollapse } from "./IndividualGroupCollapse.jsx";
 import { useSearchParams } from "react-router-dom";
 import { FloatingContainerCmp } from "../FloatingContainerCmp.jsx";
 import { showSuccessMsg } from "../../services/event-bus.service.js";
+import { SOCKET_EVENT_UPDATE_TASKS_ORDER, socketService } from "../../services/socket.service.js";
+import { onUpdateTasksOrder } from "../../store/actions/board.actions.js";
 
 export function GroupPreview({ group, groupsLength, managingType, TaskList,
     onRemoveGroup, onUpdateGroup, onAddTask, onAddGroup, onOpenGroupEditor, onAddColumn, onRemoveColumn }) {
@@ -209,6 +211,24 @@ export function GroupPreview({ group, groupsLength, managingType, TaskList,
         document.removeEventListener("mousemove", handleMouseMove)
         document.removeEventListener("mouseup", handleMouseUp)
     }
+
+
+    /// socket
+
+
+    useEffect(() => {
+        socketService.on(SOCKET_EVENT_UPDATE_TASKS_ORDER, onUpdateTasksOrderFromSockt)
+        return () => {
+            socketService.off(SOCKET_EVENT_UPDATE_TASKS_ORDER)
+        }
+    }, [])
+
+    function onUpdateTasksOrderFromSockt({ groupId, tasks }) {
+        if (groupId === group?.id) {
+            onUpdateTasksOrder({ groupId, tasks })
+        }
+    }
+
 
 
     ///////////////////////////////////  Collapsed group ///////////////////////////////
@@ -444,7 +464,8 @@ export function GroupPreview({ group, groupsLength, managingType, TaskList,
                 isHrShown={false}
                 onRemoveItem={() => {
                     showSuccessMsg(' Column removed')
-                    onRemoveColumn(columnType)}}
+                    onRemoveColumn(columnType)
+                }}
             />
         </FloatingContainerCmp>
         }
