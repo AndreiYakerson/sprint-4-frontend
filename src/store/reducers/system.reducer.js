@@ -18,7 +18,7 @@ export const SET_IS_APP_LOADING = 'SET_IS_APP_LOADING'
 
 const initialState = {
   isLoading: false,
-  isSideBarOpen: true,
+  isSideBarOpen: false,
   isPopUpOpen: false,
   popUp: { isOpen: false, content: null },
   floating: { isOpen: false, content: null, anchor: null },
