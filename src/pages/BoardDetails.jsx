@@ -6,9 +6,9 @@ import { useSelector } from 'react-redux'
 // services
 import { boardService } from '../services/board/index.js'
 import { showSuccessMsg, showErrorMsg } from '../services/event-bus.service'
-import { addGroup, loadBoard, setBoardRemovedMsg } from '../store/actions/board.actions.js'
+import { addGroup, loadBoard, onAddTaskFromSocket, onRemoveTask, setBoardRemovedMsg } from '../store/actions/board.actions.js'
 import { onSetHighLightedTxt } from '../store/actions/system.actions.js'
-import { SOCKET_EMIT_SET_BOARD, socketService } from '../services/socket.service.js'
+import { SOCKET_EMIT_SET_BOARD, SOCKET_EVENT_ADD_TASK, SOCKET_EVENT_REMOVE_TASK, socketService } from '../services/socket.service.js'
 
 // cmps
 import { SvgIcon } from '../cmps/SvgIcon.jsx'
@@ -192,6 +192,19 @@ export function BoardDetails() {
             socketService.emit(SOCKET_EMIT_SET_BOARD, boardId)
         }
     }, [boardId])
+
+
+
+    useEffect(() => {
+        socketService.on(SOCKET_EVENT_ADD_TASK, onAddTaskFromSocket)
+        socketService.on(SOCKET_EVENT_REMOVE_TASK, onRemoveTask)
+
+        return () => {
+            socketService.off(SOCKET_EVENT_ADD_TASK)
+            socketService.off(SOCKET_EVENT_REMOVE_TASK)
+        }
+    }, [])
+
 
 
 
