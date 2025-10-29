@@ -8,7 +8,7 @@ import { boardService } from '../services/board/index.js'
 import { showSuccessMsg, showErrorMsg } from '../services/event-bus.service'
 import { addGroup, loadBoard, onAddTaskFromSocket, onDuplicateTask, onRemoveTask, setBoardRemovedMsg } from '../store/actions/board.actions.js'
 import { onSetHighLightedTxt } from '../store/actions/system.actions.js'
-import { SOCKET_EMIT_SET_BOARD, SOCKET_EVENT_ADD_TASK, SOCKET_EVENT_DUPLICATE_TASK, SOCKET_EVENT_REMOVE_TASK, SOCKET_EVENT_UPDATE_BOARD, SOCKET_EVENT_UPDATE_GROUP, socketService } from '../services/socket.service.js'
+import { SOCKET_EMIT_SET_BOARD, SOCKET_EVENT_ADD_TASK, SOCKET_EVENT_DUPLICATE_TASK, SOCKET_EVENT_REMOVE_TASK, SOCKET_EVENT_UPDATE_BOARD, SOCKET_EVENT_UPDATE_GROUP, SOCKET_EVENT_USER_ASSIGNED, socketService } from '../services/socket.service.js'
 
 // cmps
 import { SvgIcon } from '../cmps/SvgIcon.jsx'
@@ -204,6 +204,7 @@ export function BoardDetails() {
         socketService.on(SOCKET_EVENT_REMOVE_TASK, onRemoveTask)
         socketService.on(SOCKET_EVENT_UPDATE_GROUP, handleGroupUpdate)
         socketService.on(SOCKET_EVENT_UPDATE_BOARD, handleBoardUpdate)
+        socketService.on(SOCKET_EVENT_USER_ASSIGNED, handleUserMsg)
 
         return () => {
             socketService.off(SOCKET_EVENT_ADD_TASK)
@@ -211,7 +212,6 @@ export function BoardDetails() {
             socketService.off(SOCKET_EVENT_REMOVE_TASK)
             socketService.off(SOCKET_EVENT_UPDATE_GROUP)
             socketService.off(SOCKET_EVENT_UPDATE_BOARD)
-
         }
     }, [])
 
@@ -222,6 +222,10 @@ export function BoardDetails() {
 
     function handleGroupUpdate({ addedGroup }) {
         dispatch({ type: UPDATE_GROUP, group: addedGroup })
+    }
+
+    function handleUserMsg({ boardId, taskId }) {
+        showSuccessMsg(`You’ve been assigned to a new task!`)
     }
 
 
