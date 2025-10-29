@@ -1,8 +1,6 @@
 import { SvgIcon } from "../../SvgIcon"
 
 export function ExistingMembers({members,onRemove,type = ''}) {
-console.log("🚀 ~ ExistingMembers ~ type:", type)
-console.log("🚀 ~ ExistingMembers ~ members:", members)
 
     return (
         <div className={`existing-members ${type}`}>
