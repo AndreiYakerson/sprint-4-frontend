@@ -11,7 +11,7 @@ button {
 	border-color: var(--ui-border-color);
 	border-radius: 4px;
 
-	transition: 100ms ease-in-out;
+	transition: background-color 100ms ease-in-out, width 100ms ease-in-out;
 
 	&.btn-shrink-wrapper {
 		padding: 0;
@@ -128,8 +128,6 @@ button {
 	}
 
 	&.filter-btn {
-		margin-inline-end: 6px;
-
 		.svg-icon {
 			min-width: 24px;
 
@@ -239,6 +237,10 @@ button {
 				position: sticky;
 				left: 36px;
 			}
+		}
+
+		&.filter-btn {
+			margin-inline-end: 6px;
 		}
 	}
 }
