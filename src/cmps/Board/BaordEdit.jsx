@@ -13,6 +13,7 @@ export function BoardEdit({ onClosePopUp }) {
     const boardComposeData = boardService.getBoardComposeData()
 
     const [boardToEdit, setBoardToEdit] = useState(boardComposeData?.emptyBoard)
+    const [isLoading, setIsLoading] = useState(false)
 
     function handleChange({ target }) {
         var { value, name } = target
@@ -23,17 +24,22 @@ export function BoardEdit({ onClosePopUp }) {
     async function onSave(ev) {
         ev.preventDefault()
 
+        setIsLoading(true)
+
         if (!boardToEdit.name) boardToEdit.name = 'New board'
         if (!boardToEdit.managingType) boardToEdit.managingType = 'items'
-        onClosePopUp()
         try {
             const board = await addBoard(boardToEdit)
             showSuccessMsg(' Board added with success ')
+
+            onClosePopUp()
             setIsBoardEditorOpen(false)
             navigate(`/board/${board?._id}`)
 
         } catch (err) {
             console.log('err:', err)
+        } finally {
+            setIsLoading(false)
         }
     }
 
@@ -141,7 +147,12 @@ export function BoardEdit({ onClosePopUp }) {
                     <button type="button"
                         className="white"
                         onClick={onClosePopUp}>Cancel</button>
-                    <button type="submit" className="blue">Create Board</button>
+                    <button type="submit" className="blue submit-btn">
+                        {isLoading
+                            ? <div className="mini-loader"></div>
+                            : <>Create Board</>
+                        }
+                    </button>
                 </div>
             </form>
         </section >

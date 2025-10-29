@@ -164,6 +164,15 @@
             font-size: 1.14285714286em;
             padding: 8px 16px;
         }
+
+        .submit-btn {
+            min-width: 134px;
+
+            .mini-loader {
+                width: 25px;
+                height: 25px;
+            }
+        }
     }
 }
 
