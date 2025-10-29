@@ -159,7 +159,7 @@ export function SideBar() {
 
                             <div className="boards-title-workspaces flex align-center">
                                 <div className="workspaces-icon">M</div>
-                                <span>My Boards</span>
+                                <div className="text-overflow">My Boards</div>
                             </div>
 
                             <button className="blue square" onClick={toggleIsMenuOpen} ref={btnMenuRef}>
