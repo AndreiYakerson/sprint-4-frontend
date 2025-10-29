@@ -105,7 +105,12 @@ export function GroupPreview({ group, groupsLength, managingType, TaskList,
     async function onSetGroupToUpdate(group, newVals) {
         const prevGroupInfo = { ...groupInfoToEdit }
 
-        setGroupInfoToEdit(prev => ({ ...prev, ...newVals, color: style['--group-color'] }))
+        // setGroupInfoToEdit(prev => ({ ...prev, ...newVals, color: style['--group-color'] }))
+        setGroupInfoToEdit(prev => ({
+            ...prev,
+            ...newVals,
+            color: newVals?.style?.['--group-color'] || prev.color,
+        }))
 
         const groupToUpdate = { ...structuredClone(group), ...newVals }
 
@@ -264,212 +269,231 @@ export function GroupPreview({ group, groupsLength, managingType, TaskList,
         )
 
     ///////////////////////////////  group  /////////////////////////////////
+    // return <div
+    //     className="group-container"
+    //     ref={setNodeRef}
+    //     {...attributes}
+    //     style={{
+    //         ...style,
+    //         ...groupInfoToEdit?.style,
+    //         opacity: isDragging ? 0.5 : 1,
+    //         zIndex: isDragging ? 10 : 'auto',
+    //     }}
+    // >
 
-    return <div
-        className="group-container"
-        ref={setNodeRef}
-        {...attributes}
-        style={{
-            ...style,
-            ...groupInfoToEdit?.style,
-            opacity: isDragging ? 0.5 : 1,
-            zIndex: isDragging ? 10 : 'auto',
-        }}
-    >
-        <header
-            className="group-header"
+    return (
+        <div
+            className="group-container"
+            ref={setNodeRef}
+            {...attributes}
+            style={{
+                ...style,
+                ...group?.style,
+                opacity: isDragging ? 0.5 : 1,
+                zIndex: isDragging ? 10 : 'auto',
+            }}
         >
-            <div className="group-title-row" {...listeners}>
-                <div className="group-menu-wrapper">
-                    <button onClick={toggleIsGroupMenuOpen}
-                        className={`white group-menu ${isGroupMenuOpen ? "menu-open" : ""}`}
-                        ref={btnRef}>
+            <header className="group-header">
+                <div className="group-title-row" {...listeners}>
+                    <div className="group-menu-wrapper">
+                        <button
+                            onClick={toggleIsGroupMenuOpen}
+                            className={`white group-menu ${isGroupMenuOpen ? "menu-open" : ""}`}
+                            ref={btnRef}
+                        >
+                            <SvgIcon iconName="dots" size={22} colorName="primaryText" />
+                        </button>
+
+                        {isGroupMenuOpen && (
+                            <FloatingContainerCmp
+                                anchorEl={btnRef.current}
+                                onClose={onCloseMenu}
+                                offsetX={40}
+                                offsetY={35}
+                                enforceLimit={true}
+                            >
+                                <ActionsMenu
+                                    onCloseMenu={onCloseMenu}
+                                    onRemoveGroup={() => onRemoveGroup(group?.id)}
+                                    groupsLength={groupsLength}
+                                    onAddGroup={onAddGroup}
+                                    onRenameGroup={() => onOpenGroupEditor(group?.id)}
+                                />
+                            </FloatingContainerCmp>
+                        )}
+                    </div>
+
+                    <div className="collapse-group-toggle" onClick={() => onToggleCollapsed(true)}>
                         <SvgIcon
-                            iconName="dots"
+                            iconName={isCollapsed ? "chevronRight" : "chevronDown"}
                             size={22}
-                            colorName={'primaryText'}
+                            colorName="currentColor"
                         />
-                    </button>
+                    </div>
 
-                    {isGroupMenuOpen && <FloatingContainerCmp
-                        anchorEl={btnRef.current}
-                        onClose={onCloseMenu}
-                        offsetX={40}
-                        offsetY={35}
-                        enforceLimit={true}
-                    >
-                        <ActionsMenu
-                            onCloseMenu={onCloseMenu}
-                            onRemoveGroup={() => onRemoveGroup(group?.id)}
-                            groupsLength={groupsLength}
-                            onAddGroup={onAddGroup}
-                            onRenameGroup={() => onOpenGroupEditor(group?.id)}
+                    <div className="group-title-wrapper flex">
+                        <GroupTitleEditor
+                            info={groupInfoToEdit}
+                            onUpdate={(newVals) => onSetGroupToUpdate(group, newVals)}
                         />
-                    </FloatingContainerCmp>}
+                    </div>
 
+                    <div className="task-count">
+                        {group?.tasks?.length > 0 ? `${group?.tasks?.length} Tasks` : "No Tasks"}
+                    </div>
+                    <div className="temporary-white-block"></div>
                 </div>
-                <div className="collapse-group-toggle" onClick={() => onToggleCollapsed(true)}>
-                    <SvgIcon
-                        iconName={isCollapsed ? "chevronRight" : "chevronDown"}
-                        size={22}
-                        colorName={'currentColor'}
-                    />
-                </div>
-                <div className="group-title-wrapper flex" >
-                    <GroupTitleEditor
-                        info={groupInfoToEdit}
-                        onUpdate={(newVals) => onSetGroupToUpdate(group, newVals)}
-                    />
-                </div>
-                <div className="task-count" >
-                    {group?.tasks?.length > 0 ? `${group?.tasks?.length} Tasks`
-                        : 'No Tasks'}
-                </div>
-                <div className="temporary-white-block" ></div>
-            </div>
-            <div className="temporary-white-block"></div>
 
+                <div className="temporary-white-block"></div>
 
-            <div className="table-row table-header">
+                <div className="table-row table-header">
+                    <div className="sticky-cell-wrapper">
+                        <div className="task-menu-wrapper"></div>
+                        <div className="table-border"></div>
+                        <div className="task-select"></div>
+                        <div className="task-title">
+                            <span>{managingType}</span>
+                        </div>
+                        <div
+                            className="resize-btn"
+                            onMouseDown={(ev) => handleMouseDown(ev, "item")}
+                        ></div>
+                    </div>
+
+                    <div className="task-columns flex">
+                        {cmpOrder.map((colName) => (
+                            <div key={colName} className={`column-cell ${getColumnType(colName)}`}>
+                                <span>{colName}</span>
+                                <button
+                                    className={`transparent column-menu-btn ${elColumnMenu && columnType === colName ? "open" : ""
+                                        }`}
+                                    key={colName}
+                                    ref={columnBtnRef}
+                                    onClick={(ev) => toggleIsColumnMenuOpen(ev, colName)}
+                                >
+                                    <SvgIcon
+                                        iconName="dots"
+                                        size={22}
+                                        colorName="secondaryText"
+                                    />
+                                </button>
+                                <div
+                                    className="resize-btn"
+                                    onMouseDown={(ev) => handleMouseDown(ev, colName)}
+                                ></div>
+                            </div>
+                        ))}
+
+                        <div className="column-cell full last-column">
+                            <button
+                                className={`add-column ${anchorEl ? "rotate" : ""}`}
+                                onClick={(ev) => setAnchorEl(ev.currentTarget)}
+                            >
+                                <SvgIcon
+                                    iconName="plus"
+                                    size={18}
+                                    colorName="secondaryText"
+                                />
+                            </button>
+
+                            {anchorEl && (
+                                <FloatingContainerCmp
+                                    anchorEl={anchorEl}
+                                    enforceLimit={true}
+                                    centeredX={true}
+                                    onClose={onCloseCmpList}
+                                >
+                                    <CmpList
+                                        cmps={board.cmpOrder}
+                                        group={group}
+                                        onClose={onCloseCmpList}
+                                        onAddColumn={onAddColumn}
+                                    />
+                                </FloatingContainerCmp>
+                            )}
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <TaskList tasks={group.tasks} groupId={group.id} />
+
+            <div className="table-row">
                 <div className="sticky-cell-wrapper">
                     <div className="task-menu-wrapper"></div>
                     <div className="table-border"></div>
                     <div className="task-select"></div>
-                    <div className="task-title">
-                        <span>{managingType}</span>
+                    <div className="add-task-cell">
+                        <TitleEditor
+                            info={{
+                                label: "Title:",
+                                propName: "title",
+                                placeholder: `+ Add ${managingType}`,
+                            }}
+                            onUpdate={(title) => onAddTask(group?.id, title)}
+                        />
                     </div>
-                    <div
-                        className="resize-btn"
-                        onMouseDown={(ev) => handleMouseDown(ev, 'item')}
-                    ></div>
+                </div>
+                <div className="task-columns flex">
+                    <div className="column-cell full"></div>
+                </div>
+            </div>
+
+            <div className="table-row sum-row">
+                <div className="sticky-cell-wrapper">
+                    <div className="task-menu-wrapper"></div>
+                    <div className="border-radius-block">
+                        <span></span>
+                    </div>
                 </div>
 
                 <div className="task-columns flex">
-                    {cmpOrder.map((colName) => (
-                        <div key={colName} className={`column-cell ${getColumnType(colName)}`}>
-                            <span>{colName}</span>
-
-                            <button
-                                className={` transparent column-menu-btn ${elColumnMenu && columnType === colName ? "open" : ""}`}
-                                key={colName}
-                                ref={columnBtnRef}
-                                onClick={(ev) => toggleIsColumnMenuOpen(ev, colName)}>
-                                <SvgIcon
-                                    iconName="dots"
-                                    size={22}
-                                    colorName={'secondaryText'}
-                                />
-                            </button>
-
-                            <div
-                                className="resize-btn"
-                                onMouseDown={(ev) => handleMouseDown(ev, colName)}
-                            ></div>
-                        </div>
-                    ))}
-
-                    <div className="column-cell full last-column">
-                        <button
-                            className={`add-column ${anchorEl ? 'rotate' : ''}`}
-                            onClick={(ev) => setAnchorEl(ev.currentTarget)}
-
-                        >
-                            <SvgIcon
-                                iconName="plus"
-                                size={18}
-                                colorName={'secondaryText'}
-                            />
-                        </button>
-                        {anchorEl &&
-                            <FloatingContainerCmp
-                                anchorEl={anchorEl}
-                                enforceLimit={true}
-                                centeredX={true}
-                                onClose={onCloseCmpList}
-                            >
-                                <CmpList
-                                    cmps={board.cmpOrder}
-                                    onClose={onCloseCmpList}
-                                    onAddColumn={onAddColumn}
-                                />
-
-                            </FloatingContainerCmp>
-                        }
-                    </div>
-                </div>
-
-            </div>
-        </header >
-
-        <TaskList tasks={group.tasks} groupId={group.id} />
-
-        <div className="table-row">
-            <div className="sticky-cell-wrapper">
-                <div className="task-menu-wrapper"></div>
-                <div className="table-border"></div>
-                <div className="task-select"></div>
-                <div className="add-task-cell">
-                    <TitleEditor info={{ label: 'Title:', propName: 'title', placeholder: `+ Add ${managingType}` }}
-                        onUpdate={(title) => onAddTask(group?.id, title)} />
+                    {cmpOrder.map((colName) => {
+                        if (colName === "date")
+                            return (
+                                <div key={colName} className="column-cell due-date">
+                                    <DateSum dates={dates} />
+                                </div>
+                            )
+                        if (colName === "status")
+                            return (
+                                <div key={colName} className="column-cell status">
+                                    <LabelSum info={{ labels: statuses, type: "status" }} />
+                                </div>
+                            )
+                        if (colName === "priority")
+                            return (
+                                <div key={colName} className="column-cell priority">
+                                    <LabelSum info={{ labels: priorities, type: "priority" }} />
+                                </div>
+                            )
+                        return (
+                            <div key={colName} className={`column-cell ${getColumnType(colName)}`}>
+                                <span></span>
+                            </div>
+                        )
+                    })}
+                    <div className="column-cell full"></div>
                 </div>
             </div>
 
-            <div className="task-columns flex">
-                <div className="column-cell full"></div>
-            </div>
+            {elColumnMenu && (
+                <FloatingContainerCmp
+                    anchorEl={elColumnMenu}
+                    onClose={onCloseMenu}
+                    offsetX={30}
+                    offsetY={45}
+                >
+                    <ActionsMenu
+                        onCloseMenu={onCloseMenu}
+                        isHrShown={false}
+                        onRemoveItem={() => {
+                            showSuccessMsg("Column removed")
+                            onRemoveColumn(columnType)
+                        }}
+                    />
+                </FloatingContainerCmp>
+            )}
         </div>
-
-        <div className="table-row sum-row">
-            <div className="sticky-cell-wrapper">
-                <div className="task-menu-wrapper"></div>
-                <div className="border-radius-block">
-                    <span></span>
-                </div>
-            </div>
-
-            <div className="task-columns flex">
-                {cmpOrder.map(colName => {
-                    if (colName === 'date') {
-                        return <div key={colName} className="column-cell due-date">
-                            <DateSum dates={dates} />
-                        </div>
-                    } else if (colName === 'status') {
-                        return <div key={colName} className="column-cell status">
-                            <LabelSum info={{ labels: statuses, type: 'status' }} />
-                        </div>
-                    } else if (colName === 'priority') {
-                        return <div key={colName} className="column-cell priority">
-                            <LabelSum info={{ labels: priorities, type: 'priority' }} />
-                        </div>
-                    } else {
-                        return <div key={colName} className={`column-cell ${getColumnType(colName)}`}>
-                            <span></span>
-                        </div>
-                    }
-
-                })}
-                <div className="column-cell full"></div>
-            </div>
-        </div>
-
-
-        {elColumnMenu && <FloatingContainerCmp
-            anchorEl={elColumnMenu}
-            onClose={onCloseMenu}
-            offsetX={30}
-            offsetY={45}
-        >
-            <ActionsMenu
-                onCloseMenu={onCloseMenu}
-                isHrShown={false}
-                onRemoveItem={() => {
-                    showSuccessMsg(' Column removed')
-                    onRemoveColumn(columnType)
-                }}
-            />
-        </FloatingContainerCmp>
-        }
-
-    </div >
+    )
 }
-

@@ -1,14 +1,14 @@
 
 import { useEffect, useRef, useState } from 'react'
 import { Outlet, useNavigate, useParams, useSearchParams } from 'react-router-dom'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 // services
 import { boardService } from '../services/board/index.js'
 import { showSuccessMsg, showErrorMsg } from '../services/event-bus.service'
 import { addGroup, loadBoard, onAddTaskFromSocket, onDuplicateTask, onRemoveTask, setBoardRemovedMsg } from '../store/actions/board.actions.js'
 import { onSetHighLightedTxt } from '../store/actions/system.actions.js'
-import { SOCKET_EMIT_SET_BOARD, SOCKET_EVENT_ADD_TASK, SOCKET_EVENT_DUPLICATE_TASK, SOCKET_EVENT_REMOVE_TASK, socketService } from '../services/socket.service.js'
+import { SOCKET_EMIT_SET_BOARD, SOCKET_EVENT_ADD_TASK, SOCKET_EVENT_DUPLICATE_TASK, SOCKET_EVENT_REMOVE_TASK, SOCKET_EVENT_UPDATE_BOARD, SOCKET_EVENT_UPDATE_GROUP, socketService } from '../services/socket.service.js'
 
 // cmps
 import { SvgIcon } from '../cmps/SvgIcon.jsx'
@@ -22,11 +22,13 @@ import { GroupLoader } from '../cmps/group/GroupLoader.jsx'
 
 // img
 import noResults from '/img/no-results.svg'
+import { UPDATE_BOARD, UPDATE_GROUP } from '../store/reducers/board.reducer.js'
 
 
 export function BoardDetails() {
     const [anchorEl, setAnchorEl] = useState(false)
     const navigate = useNavigate()
+    const dispatch = useDispatch()
 
     const { boardId } = useParams()
 
@@ -196,18 +198,31 @@ export function BoardDetails() {
 
 
     useEffect(() => {
+        console.log('🔔 registering group listener')
         socketService.on(SOCKET_EVENT_ADD_TASK, onAddTaskFromSocket)
         socketService.on(SOCKET_EVENT_DUPLICATE_TASK, onDuplicateTask)
         socketService.on(SOCKET_EVENT_REMOVE_TASK, onRemoveTask)
+        socketService.on(SOCKET_EVENT_UPDATE_GROUP, handleGroupUpdate)
+        socketService.on(SOCKET_EVENT_UPDATE_BOARD, handleBoardUpdate)
 
         return () => {
             socketService.off(SOCKET_EVENT_ADD_TASK)
             socketService.off(SOCKET_EVENT_DUPLICATE_TASK)
             socketService.off(SOCKET_EVENT_REMOVE_TASK)
+            socketService.off(SOCKET_EVENT_UPDATE_GROUP)
+            socketService.off(SOCKET_EVENT_UPDATE_BOARD)
+
         }
     }, [])
 
 
+    function handleBoardUpdate(updatedBoard) {
+        dispatch({ type: UPDATE_BOARD, board: updatedBoard })
+    }
+
+    function handleGroupUpdate({ addedGroup }) {
+        dispatch({ type: UPDATE_GROUP, group: addedGroup })
+    }
 
 
     if (isAppLoading) return <AppLoader />
