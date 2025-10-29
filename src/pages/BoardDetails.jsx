@@ -8,6 +8,7 @@ import { boardService } from '../services/board/index.js'
 import { showSuccessMsg, showErrorMsg } from '../services/event-bus.service'
 import { addGroup, loadBoard, setBoardRemovedMsg } from '../store/actions/board.actions.js'
 import { onSetHighLightedTxt } from '../store/actions/system.actions.js'
+import { SOCKET_EMIT_SET_BOARD, socketService } from '../services/socket.service.js'
 
 // cmps
 import { SvgIcon } from '../cmps/SvgIcon.jsx'
@@ -16,11 +17,11 @@ import { AppLoader } from '../cmps/AppLoader.jsx'
 import { BoardDetailsHeader } from '../cmps/Board/BoardDetailsHeader.jsx'
 import { cleanSearchParams } from '../services/util.service.js'
 import { GroupList } from '../cmps/group/GroupList.jsx'
+import { GroupLoader } from '../cmps/group/GroupLoader.jsx'
 
 
 // img
 import noResults from '/img/no-results.svg'
-import { GroupLoader } from '../cmps/group/GroupLoader.jsx'
 
 
 export function BoardDetails() {
@@ -86,7 +87,6 @@ export function BoardDetails() {
             }
         }
     }
-
 
     function onCloseMenu() {
         setSearchAnchor(false)
@@ -183,6 +183,16 @@ export function BoardDetails() {
             container.removeEventListener('scroll', onScroll)
         })
     }, [board, isAppLoading])
+
+
+    /// socket 
+
+    useEffect(() => {
+        if (boardId) {
+            socketService.emit(SOCKET_EMIT_SET_BOARD, boardId)
+        }
+    }, [boardId])
+
 
 
     if (isAppLoading) return <AppLoader />

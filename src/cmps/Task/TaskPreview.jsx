@@ -8,7 +8,7 @@ import { useSortable } from "@dnd-kit/sortable"
 import { CSS } from "@dnd-kit/utilities"
 
 // services
-import { duplicateTask, removeTask, updateTask } from "../../store/actions/board.actions.js"
+import { duplicateTask, onUpdateTask, removeTask, updateTask } from "../../store/actions/board.actions.js"
 import { showErrorMsg, showSuccessMsg } from "../../services/event-bus.service"
 
 // cmps
@@ -26,6 +26,8 @@ import { MemberPicker } from "../TaskCmps/MembersCmp/MemberPicker.jsx"
 import { StatusPicker } from "../TaskCmps/StatusCmp/StatusPicker.jsx"
 import { TimelinePicker } from "../TaskCmps/TimelineCmp/TimelinePicker.jsx"
 import { FileUpload } from "../TaskCmps/FileUpload/FileUpload.jsx"
+import { SOCKET_EVENT_UPDATE_TASK, socketService } from "../../services/socket.service.js"
+import { take } from "lodash"
 
 
 export function TaskPreview({ task, groupId, taskIdx }) {
@@ -225,6 +227,82 @@ export function TaskPreview({ task, groupId, taskIdx }) {
             showErrorMsg('cannot update task')
             setTitleToEdit(prev => ({ ...prev, currTitle: preTitleCopy }))
         }
+    }
+
+
+    /// socket
+
+    useEffect(() => {
+        socketService.on(SOCKET_EVENT_UPDATE_TASK, onUpdateTaskFromSocket)
+
+        return () => socketService.off(SOCKET_EVENT_UPDATE_TASK)
+    }, [])
+
+    function onUpdateTaskFromSocket(taskData) {
+        const { savedTask, activity } = taskData
+
+        if (savedTask?.id === task.id) {
+            onUpdateCmpsFromSocket(savedTask)
+            onUpdateTask(groupId, savedTask, activity)
+        }
+    }
+
+    function onUpdateCmpsFromSocket(task) {
+        setCmps([
+            {
+                type: 'StatusPicker',
+                info: {
+                    label: 'Status:',
+                    propName: 'status',
+                    selectedStatus: task.status,
+
+                }
+            },
+            {
+                type: 'MemberPicker',
+                info: {
+                    label: 'Members:',
+                    propName: 'memberIds',
+                    selectedMemberIds: task.memberIds || [],
+
+                }
+            },
+            {
+                type: 'PriorityPicker',
+                info: {
+                    label: 'priority:',
+                    propName: 'priority',
+                    taskPriority: task.priority,
+                    boardPriorities: board.priorities,
+
+                }
+            },
+            {
+                type: 'DatePicker',
+                info: {
+                    label: 'Due date:',
+                    propName: 'dueDate',
+                    selectedDate: task?.dueDate,
+                    selectedStatus: task.status,
+                }
+            },
+            {
+                type: 'TimelinePicker',
+                info: {
+                    label: 'timeline:',
+                    propName: 'timeline',
+                    selectedTimeline: task?.timeline,
+                }
+            },
+            {
+                type: 'FileUpload',
+                info: {
+                    label: 'file:',
+                    propName: 'file',
+                    taskFiles: task?.file || [],
+                }
+            },
+        ])
     }
 
 

@@ -120,7 +120,7 @@ export async function loadBoard(boardId, filterBy) {
 // Groups Actions ///////////////////////////////////////////////////////////////
 
 export async function updateGroupsOrder(groups, boardId) {
-    
+
     try {
         await boardService.updateGroupsOrder(groups, boardId)
         store.dispatch({ type: SET_GROUPS, groups })
@@ -295,6 +295,12 @@ export async function removeColumn(board, columnType) {
 }
 
 
+
+/// socket fncs
+
+export function onUpdateTask(groupId, savedTask, activity) {
+    store.dispatch({ type: UPDATE_TASK, groupId, task: savedTask, activity })
+}
 
 
 
