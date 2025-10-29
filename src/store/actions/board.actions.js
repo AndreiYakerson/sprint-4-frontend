@@ -302,6 +302,10 @@ export function onUpdateTask(groupId, savedTask, activity) {
     store.dispatch({ type: UPDATE_TASK, groupId, task: savedTask, activity })
 }
 
+export function onAddUpdateMsgToTask(groupId, savedTask) {
+    store.dispatch({ type: ADD_TASK_UPDATE, groupId, task: savedTask })
+}
+
 
 
 

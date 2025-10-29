@@ -12,7 +12,9 @@ export const SOCKET_EVENT_REVIEW_REMOVED = 'review-removed'
 export const SOCKET_EVENT_REVIEW_ABOUT_YOU = 'review-about-you'
 
 export const SOCKET_EMIT_SET_BOARD = 'set-board-id'
+
 export const SOCKET_EVENT_UPDATE_TASK = 'event-update-task'
+export const SOCKET_EVENT_UPDATE_MSG = 'event-add-update-msg'
 
 
 const SOCKET_EMIT_LOGIN = 'set-user-socket'

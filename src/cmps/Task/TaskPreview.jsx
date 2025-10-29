@@ -8,7 +8,7 @@ import { useSortable } from "@dnd-kit/sortable"
 import { CSS } from "@dnd-kit/utilities"
 
 // services
-import { duplicateTask, onUpdateTask, removeTask, updateTask } from "../../store/actions/board.actions.js"
+import { duplicateTask, onAddUpdateMsgToTask, onUpdateTask, removeTask, updateTask } from "../../store/actions/board.actions.js"
 import { showErrorMsg, showSuccessMsg } from "../../services/event-bus.service"
 
 // cmps
@@ -26,7 +26,7 @@ import { MemberPicker } from "../TaskCmps/MembersCmp/MemberPicker.jsx"
 import { StatusPicker } from "../TaskCmps/StatusCmp/StatusPicker.jsx"
 import { TimelinePicker } from "../TaskCmps/TimelineCmp/TimelinePicker.jsx"
 import { FileUpload } from "../TaskCmps/FileUpload/FileUpload.jsx"
-import { SOCKET_EVENT_UPDATE_TASK, socketService } from "../../services/socket.service.js"
+import { SOCKET_EVENT_UPDATE_MSG, SOCKET_EVENT_UPDATE_TASK, socketService } from "../../services/socket.service.js"
 import { take } from "lodash"
 
 
@@ -234,8 +234,12 @@ export function TaskPreview({ task, groupId, taskIdx }) {
 
     useEffect(() => {
         socketService.on(SOCKET_EVENT_UPDATE_TASK, onUpdateTaskFromSocket)
+        socketService.on(SOCKET_EVENT_UPDATE_MSG, onAddUpdate)
 
-        return () => socketService.off(SOCKET_EVENT_UPDATE_TASK)
+        return () => {
+            socketService.off(SOCKET_EVENT_UPDATE_TASK)
+            socketService.off(SOCKET_EVENT_UPDATE_MSG)
+        }
     }, [])
 
     function onUpdateTaskFromSocket(taskData) {
@@ -303,6 +307,12 @@ export function TaskPreview({ task, groupId, taskIdx }) {
                 }
             },
         ])
+    }
+
+    function onAddUpdate(updatedTask) {
+        if (updatedTask?.id === task.id) {
+            onAddUpdateMsgToTask(groupId, updatedTask)
+        }
     }
 
 
