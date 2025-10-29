@@ -30,9 +30,6 @@ export function GroupList({ groups, managingType }) {
     const board = useSelector(state => state.boardModule.board)
 
 
-    
-
-
     const mouseSensor = useSensor(MouseSensor, {
         activationConstraint: {
             distance: 15,
@@ -51,7 +48,6 @@ export function GroupList({ groups, managingType }) {
 
         try {
             await updateGroup(boardId, groupToUpdate)
-            showSuccessMsg('group updated successfully')
         } catch (err) {
             console.log(err)
             showErrorMsg('cannot update group')
@@ -85,7 +81,7 @@ export function GroupList({ groups, managingType }) {
 
     function onRemoveColumn(colName) {
         removeColumn(board, colName)
-        
+
     }
 
     // This needs to be improved, add the group's IDX, and add the new one below it.
