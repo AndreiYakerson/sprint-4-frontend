@@ -486,6 +486,7 @@
 
         .group-title-row {
             display: grid;
+            left: 0;
             grid-template-columns: 36px 32px max-content 1fr;
             margin-inline-start: 0;
 
