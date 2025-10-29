@@ -99,8 +99,11 @@ export function BoardDetailsHeader({
 
             <section className="header-title">
 
-                <Link to="/board" className='btn mobile-back-btn'>
-                    back
+                <Link to="/board" className='btn transparent mobile-back-btn'>
+                    <SvgIcon
+                        iconName="arrowLeft"
+                        size={20}
+                    />
                 </Link>
 
                 <div className='board-title'>
