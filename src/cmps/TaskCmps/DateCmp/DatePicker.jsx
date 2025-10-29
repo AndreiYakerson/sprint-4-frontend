@@ -47,6 +47,12 @@ export function DatePicker({ info, onUpdate }) {
         }
     }, [info?.selectedStatus, dateToEdit?.date])
 
+    useEffect(() => {
+        if (info?.selectedDate !== dateToEdit) {
+            setDateToEdit(info?.selectedDate)
+        }
+    }, [info])
+
 
     function calculateDateStatus(statusInfo) {
         const now = Date.now()

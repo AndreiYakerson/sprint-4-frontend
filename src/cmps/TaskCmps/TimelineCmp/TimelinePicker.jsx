@@ -27,6 +27,17 @@ export function TimelinePicker({ info, onUpdate }) {
         }
     }, [dates])
 
+    useEffect(() => {
+        if (info?.selectedTimeline?.startDate !== dates.startDate ||
+            info?.selectedTimeline?.endDate !== dates.endDate
+        ) {
+            setDates({
+                startDate: info?.selectedTimeline?.startDate,
+                endDate: info?.selectedTimeline?.endDate
+            })
+        }
+    }, [info])
+
     function onSaveDate(newDates) {
         setDates(newDates)
     }
