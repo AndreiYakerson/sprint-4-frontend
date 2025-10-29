@@ -303,10 +303,13 @@ export function onAddTaskFromSocket({ addedTask, groupId, method }) {
     store.dispatch({ type: ADD_TASK, groupId, task: addedTask, method })
 }
 
+export function onDuplicateTask({ groupId, savedTask, taskCopyIdx }) {
+    store.dispatch({ type: DUPLICATE_TASK, groupId, taskCopy: savedTask, taskCopyIdx })
+}
+
 export function onUpdateTask(groupId, savedTask, activity) {
     store.dispatch({ type: UPDATE_TASK, groupId, task: savedTask, activity })
 }
-
 export function onRemoveTask({ groupId, taskId }) {
     store.dispatch({ type: REMOVE_TASK, groupId, taskId })
 }
