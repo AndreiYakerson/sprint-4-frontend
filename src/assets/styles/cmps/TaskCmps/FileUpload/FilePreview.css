@@ -5,6 +5,8 @@
 
     & .image-container {
         height: 168px;
+        background-color: var(--dark-background-on-secondary-color);
+        border-radius: var(--border-radius-small);
 
         img {
 
@@ -14,9 +16,9 @@
         }
 
     }
-    
-    .file-info >*{
+
+    .file-info>* {
         align-items: center;
-         margin: 12px 4px 4px 4px ;
+        margin: 12px 4px 4px 4px;
     }
 }

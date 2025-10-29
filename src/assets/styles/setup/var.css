@@ -37,6 +37,8 @@
 
   /* hover background-color  */
   --primary-background-hover-color: rgba(103, 104, 121, 0.1);
+  --dark-background-on-secondary-color : rgb(246 247 251);
+
   /* active selected background-color: ; */
   --primary-selected-color: rgba(194, 213, 255, 0.40);
   --primary-selected-color-btn: #cce5ff;
@@ -53,7 +55,6 @@
   --link-color: #1f76c2;
   --disabled-text-color: rgba(50, 51, 56, 0.38);
   --text-with-highlight: rgb(204 233 255);
-
   /* border */
   --application-border-color: rgb(230, 233, 239);
   --layout-border-color: rgb(208, 212, 228);
