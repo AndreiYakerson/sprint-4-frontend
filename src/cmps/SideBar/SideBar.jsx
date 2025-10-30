@@ -1,4 +1,4 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
 
@@ -17,8 +17,13 @@ import { BoardEdit } from "../Board/BaordEdit.jsx";
 import favStarIcon from '/img/fav-star-icon.svg'
 import { ActionsMenu } from "../ActionsMenu.jsx";
 import { FloatingContainerCmp } from "../FloatingContainerCmp.jsx";
+import { SOCKET_EVENT_UPDATE_BOARD, socketService } from "../../services/socket.service.js";
+import { UPDATE_BOARD } from "../../store/reducers/board.reducer.js";
 
 export function SideBar() {
+
+    const dispatch = useDispatch()
+
     const isSideBarOpen = useSelector(state => state.systemModule.isSideBarOpen)
     const isAppLoading = useSelector(state => state.systemModule.isAppLoading)
     const boards = useSelector(storeState => storeState.boardModule.boards)
@@ -68,6 +73,20 @@ export function SideBar() {
     }
 
     const favoritesBoards = boards.filter(b => b.isStarred)
+
+    ///  socket
+
+    useEffect(() => {
+        socketService.on(SOCKET_EVENT_UPDATE_BOARD, handleBoardUpdate)
+
+        return () => {
+            socketService.off(SOCKET_EVENT_UPDATE_BOARD)
+        }
+    }, [])
+
+    function handleBoardUpdate({ updatedBoard }) {
+        dispatch({ type: UPDATE_BOARD, board: updatedBoard })
+    }
 
     return (
         <div className={`side-bar ${isSideBarOpen ? "is-open" : "close"} ${isAppLoading ? "app-loading" : ""}`}
