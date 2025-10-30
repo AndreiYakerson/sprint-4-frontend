@@ -274,10 +274,10 @@ export function TimelineCalendar({ dateInfo, onUpDate, onSetIsEditing }) {
                     })}
                 </ul>
 
-                <ul className="date-num-list">
+                <ul className="days-list">
                     {daysOfMonth.map((dayOfMonth, dayOfMonthIndex) => {
                         return <li key={dayOfMonthIndex}>
-                            <span className={`day-num ${getDayCellClasses(dayOfMonth)}`}
+                            <span className={`day-cell ${getDayCellClasses(dayOfMonth)}`}
                                 onClick={() => onSetActiveDay(dayOfMonth)}>
                                 {dayOfMonth.day}
                             </span>

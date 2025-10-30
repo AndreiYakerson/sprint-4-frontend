@@ -156,7 +156,7 @@ export function DatePicker({ info, onUpdate }) {
             >
                 <Calendar
                     dateInfo={dateToEdit}
-                    onUpDate={onSaveDate}
+                    onUpdate={onSaveDate}
                     onSetIsEditing={onSetIsEditing}
                 />
             </FloatingContainerCmp>}
