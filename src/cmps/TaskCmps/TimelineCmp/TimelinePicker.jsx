@@ -1,5 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 
+// services
+import { calculateDaysBetweenDates, formatDate } from "../../../services/util.service";
+
 //cmps
 import { SvgIcon } from "../../SvgIcon";
 import { TimelineCalendar } from "./TimelineCalendar";
@@ -72,7 +75,7 @@ export function TimelinePicker({ info, onUpdate }) {
         const start = startDate
         const end = endDate
 
-        if (!end || setStringDate(start) === setStringDate(end)) {
+        if (!end || formatDate(start) === formatDate(end)) {
 
             if (today < start) {
                 return setSumDateInfo(({ start: start, end: null, daysDiff: 1, timeElapsedPercent: 0 }))
@@ -81,35 +84,20 @@ export function TimelinePicker({ info, onUpdate }) {
             }
 
         } else {
-            const daysDiff = CalculateDaysBetweenDays(start, end)
+            const daysDiff = calculateDaysBetweenDates(start, end)
 
             if (today < start) {
                 return setSumDateInfo(({ start: start, end: end, daysDiff: daysDiff, timeElapsedPercent: 0 }))
             } else if (today < start || today > end) {
                 return setSumDateInfo(({ start: start, end: end, daysDiff: daysDiff, timeElapsedPercent: 100 }))
             } else {
-                const daysPast = CalculateDaysBetweenDays(end, today)
+                const daysPast = calculateDaysBetweenDates(end, today)
                 const elapsedPercent = (daysPast / daysDiff) * 100
 
                 return setSumDateInfo(({ start: start, end: end, daysDiff: daysDiff, timeElapsedPercent: elapsedPercent }))
             }
         }
     }
-
-    function setStringDate(date) {
-        const options = { month: "short", day: "numeric" }
-        if (new Date(date).getFullYear() !== new Date().getFullYear()) {
-            options.year = 'numeric'
-        }
-        return new Date(date).toLocaleDateString("en-US", options)
-    }
-
-    function CalculateDaysBetweenDays(srart, end) {
-        const diffInMs = Math.abs(srart - end)
-        const diffInDays = Math.ceil(diffInMs / (1000 * 60 * 60 * 24))
-        return diffInDays
-    }
-
 
 
     const { start, end, daysDiff, timeElapsedPercent } = sumDateInfo
@@ -127,7 +115,7 @@ export function TimelinePicker({ info, onUpdate }) {
                 >
                     {hovered
                         ? `${start && end ? daysDiff : 1}d`
-                        : (start && end ? `${setStringDate(start)} - ${setStringDate(end)}` : `${setStringDate(start)}`)
+                        : (start && end ? `${formatDate(start)} - ${formatDate(end)}` : `${formatDate(start)}`)
                     }
                 </div>
                 : <div className="dates-container"

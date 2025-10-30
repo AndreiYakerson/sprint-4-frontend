@@ -1,4 +1,9 @@
-import { useEffect, useRef, useState, useLayoutEffect } from "react"
+import { useEffect, useRef, useState } from "react"
+
+// services
+import { calculateDaysBetweenDates, formatDate, formatTime } from "../../../services/util.service.js"
+
+//cmps
 import { Calendar } from "./Calendar"
 import { SvgIcon } from "../../SvgIcon"
 import { HoveredTextCmp } from "../../HoveredTextCmp"
@@ -9,10 +14,72 @@ export function DatePicker({ info, onUpdate }) {
     const [isEditing, setIsEditing] = useState(false)
     const datePickerRef = useRef()
 
-    const [titleMsg, setTitleMsg] = useState('')
+    const [statusMessage, setStatusMessage] = useState('')
     const [statusIcon, setStatusIcon] = useState('emptyCircle')
     const [statusColor, setStatusColor] = useState('secondaryText')
     const [iconSize, setIconSize] = useState(16)
+
+
+    useEffect(() => {
+        if (info?.selectedDate !== dateToEdit) {
+            setDateToEdit(info?.selectedDate)
+        }
+    }, [info])
+
+    useEffect(() => {
+        if (dateToEdit?.date) {
+
+            const { updatedAt = Date.now(), id = '' } = info?.selectedStatus || {}
+            handleStatusUpdate({ updatedAt, id })
+
+        }
+    }, [info?.selectedStatus, dateToEdit?.date])
+
+
+    function handleStatusUpdate(statusInfo) {
+        const { updatedAt, id } = statusInfo
+        const selectedDate = dateToEdit?.date
+        const diffInDays = calculateDaysBetweenDates(selectedDate, updatedAt)
+        const isAfterDeadline = updatedAt > selectedDate
+        const isDone = id === 'done'
+
+        if (isAfterDeadline) return setStatusAfterDeadline(isDone, diffInDays)
+        if (isDone) return setStatusDoneInTime()
+
+        setStatusUpcoming(diffInDays)
+    }
+
+    function setStatusAfterDeadline(isDone, diffInDays) {
+        const dayWord = diffInDays > 1 ? "days" : "day"
+        const msg = isDone
+            ? `Done ${diffInDays} ${dayWord} after deadline`
+            : `${diffInDays} ${dayWord} overdue`
+
+        setStatusMessage(msg)
+        setStatusIcon('ExclamationMarkCircle')
+        setStatusColor(isDone ? "positive" : "negative")
+        setIconSize(18)
+    }
+
+    function setStatusDoneInTime() {
+        setStatusMessage('Done in time')
+        setStatusIcon('vMark')
+        setStatusColor('positive')
+        setIconSize(18)
+    }
+
+    function setStatusUpcoming(diffInDays) {
+        const msg =
+            diffInDays === 0 ? 'Today' :
+                diffInDays === 1 ? 'Tomorrow' :
+                    `${diffInDays} Days left`
+
+        setStatusMessage(msg)
+        setStatusIcon(diffInDays < 7 ? `day${diffInDays}` : 'emptyCircle')
+        setStatusColor('secondaryText')
+        setIconSize(16)
+    }
+
 
     function onSaveDate(dateInfo) {
         onUpdate(dateInfo)
@@ -20,6 +87,10 @@ export function DatePicker({ info, onUpdate }) {
         setIsEditing(false)
     }
 
+    function onRemoveDate(ev) {
+        ev.stopPropagation()
+        onSaveDate({ date: '', isTimeShow: false })
+    }
 
     function onSetIsEditing(isEditing) {
         setIsEditing(isEditing)
@@ -30,91 +101,9 @@ export function DatePicker({ info, onUpdate }) {
     }
 
 
-    function setDate(date) {
-        return new Date(date).toLocaleDateString("en-US", setOptions(date))
-    }
-
-    function setTime(time) {
-        const options = { hour: "2-digit", minute: "2-digit", hour12: "true" }
-        return new Date(time).toLocaleTimeString("en-US", options)
-    }
-
-
-    useEffect(() => {
-        if (dateToEdit?.date) {
-            const date = info?.selectedStatus ? info?.selectedStatus : { updatedAt: new Date() }
-            calculateDateStatus(date)
-        }
-    }, [info?.selectedStatus, dateToEdit?.date])
-
-    useEffect(() => {
-        if (info?.selectedDate !== dateToEdit) {
-            setDateToEdit(info?.selectedDate)
-        }
-    }, [info])
-
-
-    function calculateDateStatus(statusInfo) {
-        const now = Date.now()
-        const diffInMs = statusInfo?.updatedAt
-            ? Math.abs(dateToEdit.date - statusInfo.updatedAt)
-            : Math.abs(dateToEdit.date - now)
-        const diffInDays = Math.floor(diffInMs / (1000 * 60 * 60 * 24))
-
-        if (statusInfo.updatedAt > dateToEdit.date && dateToEdit.isTimeShow ||
-            statusInfo.updatedAt > dateToEdit.date || !statusInfo?.updatedAt && now > dateToEdit.date
-        ) {
-            const msg = statusInfo.id === 'done' ?
-                `Done ${diffInDays} ${diffInDays > 1 ? "days" : "day"} after deadline` :
-                `${diffInDays} ${diffInDays > 1 ? "days" : "day"} overdue`
-            setTitleMsg(msg)
-            setStatusIcon('ExclamationMarkCircle')
-
-
-            setStatusColor(statusInfo.id === 'done' ? "positive" : "negative")
-            setIconSize(18)
-            return
-        }
-
-        if (statusInfo.id === 'done') {
-            setTitleMsg('Done in time')
-            setStatusIcon('vMark')
-            setStatusColor('positive')
-            setIconSize(18)
-            return
-        }
-
-        var msg = ''
-        if (diffInDays === 0) {
-            msg = 'Today'
-        } else {
-            msg = `${diffInDays > 1 ? `${diffInDays} Days left` : "Tomorrow"}`
-        }
-
-        setTitleMsg(msg)
-
-        setIconSize(16)
-
-        if (diffInDays < 7) {
-            setStatusIcon(`day${diffInDays}`)
-        } else {
-            setStatusIcon('emptyCircle')
-        }
-
-        setStatusColor('secondaryText')
-    }
-
-
-    function setOptions(date) {
-        const options = { month: "short", day: "numeric" }
-        if (new Date(date).getFullYear() !== new Date().getFullYear()) {
-            options.year = 'numeric'
-        }
-        return options
-    }
-
     return (
-        <section className={`date-picker ${isEditing ? "focus" : ""}`}
+        <section
+            className={`date-picker ${isEditing ? "focus" : ""}`}
             ref={datePickerRef} onClick={toggleIsEditing}
         >
 
@@ -122,15 +111,8 @@ export function DatePicker({ info, onUpdate }) {
                 className="date-to-edit flex align-center"
                 onClick={() => setIsEditing(true)} >
 
-                <SvgIcon
-                    iconName={statusIcon}
-                    size={iconSize}
-                    colorName={statusColor}
-                    className='time-icon'
-                />
-
-                {/* <HoveredTextCmp
-                    label={titleMsg}
+                <HoveredTextCmp
+                    label={statusMessage}
                     position="up"
                 >
                     <SvgIcon
@@ -139,24 +121,23 @@ export function DatePicker({ info, onUpdate }) {
                         colorName={statusColor}
                         className='time-icon'
                     />
-                </HoveredTextCmp> */}
+                </HoveredTextCmp>
 
-                <div className={`selected-time ${info?.selectedStatus?.id === 'done' ? "done" : ""}`}>
+                <div className={`selected-date ${info?.selectedStatus?.id === 'done' ? "done" : ""}`}>
                     <div>
-                        {setDate(dateToEdit?.date)}
-                        {dateToEdit?.isTimeShow && <span>, {setTime(dateToEdit?.date)}</span>}
+                        {formatDate(dateToEdit?.date)}
+                        {dateToEdit?.isTimeShow && <span>, {formatTime(dateToEdit?.date)}</span>}
                     </div>
                 </div>
 
 
                 <button
                     className="remove-date"
-                    onClick={(ev) => { onSaveDate({ date: '', isTimeShow: false }), ev.stopPropagation() }}>
+                    onClick={onRemoveDate}>
                     <SvgIcon iconName="xMark" size={16} />
                 </button>
-            </div>}
-
-
+            </div>
+            }
 
 
             {!isEditing && !dateToEdit?.date &&

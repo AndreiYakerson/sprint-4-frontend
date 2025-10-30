@@ -105,21 +105,37 @@ export function cleanSearchParams(searchParams) {
 }
 
 export function toBase64(file) {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader()
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader()
 
-    reader.onload = () => resolve(reader.result)   
-    reader.onerror = () => reject(new Error('File reading failed'))
+        reader.onload = () => resolve(reader.result)
+        reader.onerror = () => reject(new Error('File reading failed'))
 
-    reader.readAsDataURL(file)   
-  })
-}export function setStringDate(date) {
+        reader.readAsDataURL(file)
+    })
+
+
+} export function formatDate(date) {
+
     const options = { month: "short", day: "numeric" }
     if (new Date(date).getFullYear() !== new Date().getFullYear()) {
         options.year = 'numeric'
     }
+
     return new Date(date).toLocaleDateString("en-US", options)
 }
+
+export function formatTime(time) {
+    const options = { hour: "2-digit", minute: "2-digit", hour12: "true" }
+    return new Date(time).toLocaleTimeString("en-US", options)
+}
+
+export function calculateDaysBetweenDates(srart, end) {
+    const diffInMs = Math.abs(srart - end)
+    const diffInDays = Math.ceil(diffInMs / (1000 * 60 * 60 * 24))
+    return diffInDays
+}
+
 
 
 export function formatTimeAgo(timestamp) {
@@ -141,3 +157,5 @@ export function formatTimeAgo(timestamp) {
         return diffDays + 'd'
     }
 }
+
+
