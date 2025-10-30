@@ -8,8 +8,8 @@ import { boardService } from '../services/board/index.js'
 import { showSuccessMsg, showErrorMsg } from '../services/event-bus.service'
 import { addGroup, loadBoard, onAddTaskFromSocket, onDuplicateTask, onRemoveTask, setBoardRemovedMsg } from '../store/actions/board.actions.js'
 import { onSetHighLightedTxt } from '../store/actions/system.actions.js'
-import { SOCKET_EMIT_SET_BOARD, SOCKET_EVENT_Add_GROUP, SOCKET_EVENT_ADD_TASK, SOCKET_EVENT_DUPLICATE_TASK, SOCKET_EVENT_REMOVE_GROUP, SOCKET_EVENT_REMOVE_TASK, SOCKET_EVENT_UPDATE_BOARD, SOCKET_EVENT_USER_ASSIGNED, socketService } from '../services/socket.service.js'
-import { ADD_GROUP, REMOVE_GROUP, UPDATE_BOARD } from '../store/reducers/board.reducer.js'
+import { SOCKET_EMIT_SET_BOARD, SOCKET_EVENT_Add_GROUP, SOCKET_EVENT_ADD_TASK, SOCKET_EVENT_DUPLICATE_TASK, SOCKET_EVENT_REMOVE_GROUP, SOCKET_EVENT_REMOVE_TASK, SOCKET_EVENT_UPDATE_BOARD, SOCKET_EVENT_UPDATE_GROUPS_ORDER, SOCKET_EVENT_USER_ASSIGNED, socketService } from '../services/socket.service.js'
+import { ADD_GROUP, REMOVE_GROUP, SET_GROUPS, UPDATE_BOARD } from '../store/reducers/board.reducer.js'
 
 // cmps
 import { SvgIcon } from '../cmps/SvgIcon.jsx'
@@ -206,6 +206,7 @@ export function BoardDetails() {
         // group
         socketService.on(SOCKET_EVENT_Add_GROUP, handleGroupAdd)
         socketService.on(SOCKET_EVENT_REMOVE_GROUP, handleGroupRemove)
+        socketService.on(SOCKET_EVENT_UPDATE_GROUPS_ORDER, handleUpdateGroupOrder)
         // board
         socketService.on(SOCKET_EVENT_UPDATE_BOARD, handleBoardUpdate)
         // user
@@ -219,6 +220,7 @@ export function BoardDetails() {
             // group
             socketService.off(SOCKET_EVENT_Add_GROUP)
             socketService.off(SOCKET_EVENT_REMOVE_GROUP)
+            socketService.off(SOCKET_EVENT_UPDATE_GROUPS_ORDER)
             // board
             socketService.off(SOCKET_EVENT_UPDATE_BOARD)
         }
@@ -235,6 +237,10 @@ export function BoardDetails() {
 
     function handleGroupRemove({ groupId }) {
         dispatch({ type: REMOVE_GROUP, groupId })
+    }
+
+    function handleUpdateGroupOrder({ groups }) {
+        dispatch({ type: SET_GROUPS, groups })
     }
 
     function handleUserMsg({ boardId, taskId }) {
