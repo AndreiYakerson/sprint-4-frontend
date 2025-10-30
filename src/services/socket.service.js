@@ -27,6 +27,7 @@ export const SOCKET_EVENT_UPDATE_MSG = 'event-add-update-msg'
 
 export const SOCKET_EVENT_UPDATE_GROUP = 'event-update-group'
 
+
 const SOCKET_EMIT_LOGIN = 'set-user-socket'
 const SOCKET_EMIT_LOGOUT = 'unset-user-socket'
 

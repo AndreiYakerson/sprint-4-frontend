@@ -16,6 +16,7 @@ export function GroupTitleEditor({ info, onUpdate }) {
     const editorRef = useRef()
 
 
+
     useEffect(() => {
 
         return (() => {
@@ -23,6 +24,13 @@ export function GroupTitleEditor({ info, onUpdate }) {
         })
 
     }, [])
+
+    useEffect(() => {
+        if (info.title !== titleToEdit.title ||
+            info.color !== titleToEdit.color) {
+            setTitleToEdit(info)
+        }
+    }, [info])
 
     useEffect(() => {
         if (newGroupIdToEdit === info?.groupId) {

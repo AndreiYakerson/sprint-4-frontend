@@ -11,14 +11,15 @@ import { ActionsMenu } from "../ActionsMenu.jsx";
 import { LabelSum } from "../TaskCmps/SumCmps/LabelSum.Jsx";
 import { DateSum } from "../TaskCmps/SumCmps/DateSum.jsx";
 import { getColumnType } from "../../services/util.service.js";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { CmpList } from "../CmpList.jsx";
 import { IndividualGroupCollapse } from "./IndividualGroupCollapse.jsx";
 import { useSearchParams } from "react-router-dom";
 import { FloatingContainerCmp } from "../FloatingContainerCmp.jsx";
 import { showSuccessMsg } from "../../services/event-bus.service.js";
-import { SOCKET_EVENT_UPDATE_TASKS_ORDER, socketService } from "../../services/socket.service.js";
+import { SOCKET_EVENT_UPDATE_GROUP, SOCKET_EVENT_UPDATE_TASKS_ORDER, socketService } from "../../services/socket.service.js";
 import { onUpdateTasksOrder } from "../../store/actions/board.actions.js";
+import { UPDATE_GROUP } from "../../store/reducers/board.reducer.js";
 
 export function GroupPreview({ group, groupsLength, managingType, TaskList,
     onRemoveGroup, onUpdateGroup, onAddTask, onAddGroup, onOpenGroupEditor, onAddColumn, onRemoveColumn }) {
@@ -219,14 +220,17 @@ export function GroupPreview({ group, groupsLength, managingType, TaskList,
 
 
     /// socket
-
+    const dispatch = useDispatch()
 
     useEffect(() => {
         socketService.on(SOCKET_EVENT_UPDATE_TASKS_ORDER, onUpdateTasksOrderFromSockt)
+        socketService.on(SOCKET_EVENT_UPDATE_GROUP, handleGroupUpdate)
         return () => {
             socketService.off(SOCKET_EVENT_UPDATE_TASKS_ORDER)
+            socketService.off(SOCKET_EVENT_UPDATE_GROUP)
         }
     }, [])
+
 
     function onUpdateTasksOrderFromSockt({ groupId, tasks }) {
         if (groupId === group?.id) {
@@ -234,6 +238,19 @@ export function GroupPreview({ group, groupsLength, managingType, TaskList,
         }
     }
 
+    function handleGroupUpdate({ updatedGroup }) {
+        if (updatedGroup?.id === group?.id) {
+
+            dispatch({ type: UPDATE_GROUP, group: updatedGroup })
+
+            setGroupInfoToEdit({
+                groupId: updatedGroup?.id,
+                title: updatedGroup?.title,
+                color: updatedGroup?.style['--group-color'],
+                style: updatedGroup?.style
+            })
+        }
+    }
 
 
     ///////////////////////////////////  Collapsed group ///////////////////////////////
