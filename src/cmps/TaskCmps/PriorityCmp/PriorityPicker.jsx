@@ -44,6 +44,8 @@ export function PriorityPicker({ info, onUpdate }) {
                 <FloatingContainerCmp
                     anchorEl={priorityRef.current}
                     onClose={() => setIsOpen(false)}
+                    centeredX={true}
+                    showTriangle={true}
                 >
                     <LabelSelect
                         type="priority"

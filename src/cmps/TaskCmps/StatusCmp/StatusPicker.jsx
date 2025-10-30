@@ -73,6 +73,8 @@ export function StatusPicker({ info, onUpdate }) {
                 <FloatingContainerCmp
                     anchorEl={statusRef.current}
                     onClose={() => setIsOpen(false)}
+                    centeredX={true}
+                    showTriangle={true}
                 >
                     <LabelSelect
                         type="status"
