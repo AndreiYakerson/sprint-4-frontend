@@ -17,8 +17,8 @@ import { BoardEdit } from "../Board/BaordEdit.jsx";
 import favStarIcon from '/img/fav-star-icon.svg'
 import { ActionsMenu } from "../ActionsMenu.jsx";
 import { FloatingContainerCmp } from "../FloatingContainerCmp.jsx";
-import { SOCKET_EVENT_UPDATE_BOARD, socketService } from "../../services/socket.service.js";
-import { UPDATE_BOARD } from "../../store/reducers/board.reducer.js";
+import { SOCKET_EVENT_ADD_BOARD, SOCKET_EVENT_UPDATE_BOARD, socketService } from "../../services/socket.service.js";
+import { ADD_BOARD, UPDATE_BOARD } from "../../store/reducers/board.reducer.js";
 
 export function SideBar() {
 
@@ -77,12 +77,17 @@ export function SideBar() {
     ///  socket
 
     useEffect(() => {
+        socketService.on(SOCKET_EVENT_ADD_BOARD, handleBoardAdd)
         socketService.on(SOCKET_EVENT_UPDATE_BOARD, handleBoardUpdate)
 
         return () => {
             socketService.off(SOCKET_EVENT_UPDATE_BOARD)
         }
     }, [])
+
+    function handleBoardAdd({ newBoard }) {
+        dispatch({ type: ADD_BOARD, board: newBoard })
+    }
 
     function handleBoardUpdate({ updatedBoard }) {
         dispatch({ type: UPDATE_BOARD, board: updatedBoard })

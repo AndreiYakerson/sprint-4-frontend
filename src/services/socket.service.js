@@ -16,6 +16,8 @@ export const SOCKET_EVENT_REVIEW_REMOVED = 'review-removed'
 export const SOCKET_EVENT_REVIEW_ABOUT_YOU = 'review-about-you'
 
 export const SOCKET_EMIT_SET_BOARD = 'set-board-id'
+
+export const SOCKET_EVENT_ADD_BOARD = 'event-add-board'
 export const SOCKET_EVENT_UPDATE_BOARD = 'event-update-board'
 
 export const SOCKET_EVENT_ADD_TASK = 'event-add-task'
