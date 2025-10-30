@@ -11,6 +11,8 @@ import { BoardList } from '../cmps/Board/BoardList'
 import { SvgIcon } from '../cmps/SvgIcon'
 import { AppLoader } from '../cmps/AppLoader'
 import { userService } from '../services/user'
+import { makeId } from '../services/util.service'
+import { signup } from '../store/actions/user.actions'
 
 
 export function BoardIndex({ setIsSideBarOpen }) {
@@ -23,9 +25,10 @@ export function BoardIndex({ setIsSideBarOpen }) {
     const user = userService.getLoggedinUser()
 
 
-    
+
 
     useEffect(() => {
+        if (!user)  onSignupGuest()
         loadBoards(filterBy)
     }, [filterBy])
 
@@ -37,6 +40,19 @@ export function BoardIndex({ setIsSideBarOpen }) {
             showErrorMsg('Cannot remove board')
         }
     }
+
+    async function onSignupGuest() {
+        const users = await userService.getUsers()
+        const credentials = {
+            username: `HappyGuest${users.length + 1}`,
+            password: `HappyGuest${users.length + 1}`,
+            fullname: 'HappyGuest',
+        }
+        const user = await signup(credentials)
+        console.log(' Guest user signed up', user)
+    }
+
+
 
     async function onUpdateBoard(board, valsToUpdate) {
 
