@@ -17,8 +17,8 @@ import { BoardEdit } from "../Board/BaordEdit.jsx";
 import favStarIcon from '/img/fav-star-icon.svg'
 import { ActionsMenu } from "../ActionsMenu.jsx";
 import { FloatingContainerCmp } from "../FloatingContainerCmp.jsx";
-import { SOCKET_EVENT_ADD_BOARD, SOCKET_EVENT_UPDATE_BOARD, socketService } from "../../services/socket.service.js";
-import { ADD_BOARD, UPDATE_BOARD } from "../../store/reducers/board.reducer.js";
+import { SOCKET_EVENT_ADD_BOARD, SOCKET_EVENT_REMOVE_BOARD, SOCKET_EVENT_UPDATE_BOARD, socketService } from "../../services/socket.service.js";
+import { ADD_BOARD, REMOVE_BOARD, UPDATE_BOARD } from "../../store/reducers/board.reducer.js";
 
 export function SideBar() {
 
@@ -79,9 +79,12 @@ export function SideBar() {
     useEffect(() => {
         socketService.on(SOCKET_EVENT_ADD_BOARD, handleBoardAdd)
         socketService.on(SOCKET_EVENT_UPDATE_BOARD, handleBoardUpdate)
+        socketService.on(SOCKET_EVENT_REMOVE_BOARD, handleBoardRemove)
 
         return () => {
+            socketService.off(SOCKET_EVENT_ADD_BOARD)
             socketService.off(SOCKET_EVENT_UPDATE_BOARD)
+            socketService.off(SOCKET_EVENT_REMOVE_BOARD)
         }
     }, [])
 
@@ -91,6 +94,10 @@ export function SideBar() {
 
     function handleBoardUpdate({ updatedBoard }) {
         dispatch({ type: UPDATE_BOARD, board: updatedBoard })
+    }
+
+    function handleBoardRemove({ boardId }) {
+        dispatch({ type: REMOVE_BOARD, boardId })
     }
 
     return (

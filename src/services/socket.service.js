@@ -19,6 +19,7 @@ export const SOCKET_EMIT_SET_BOARD = 'set-board-id'
 
 export const SOCKET_EVENT_ADD_BOARD = 'event-add-board'
 export const SOCKET_EVENT_UPDATE_BOARD = 'event-update-board'
+export const SOCKET_EVENT_REMOVE_BOARD = 'event-remove-board'
 
 export const SOCKET_EVENT_ADD_TASK = 'event-add-task'
 export const SOCKET_EVENT_DUPLICATE_TASK = 'event-duplicate-task'
