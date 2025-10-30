@@ -59,7 +59,7 @@ export function TitleEditor({ info, onUpdate, onSetRenameBoard }) {
                     name="task-title"
                     id="task-title"
                     className='task-title-input'
-                    value={nameToEdit}
+                    value={nameToEdit || ''}
                     autoFocus
                     onChange={(ev) => setNameToEdit(ev.target.value)}
                     onBlur={() => saveChanges()}
