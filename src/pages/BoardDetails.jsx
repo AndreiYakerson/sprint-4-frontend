@@ -8,8 +8,8 @@ import { boardService } from '../services/board/index.js'
 import { showSuccessMsg, showErrorMsg } from '../services/event-bus.service'
 import { addGroup, loadBoard, onAddTaskFromSocket, onDuplicateTask, onRemoveTask, setBoardRemovedMsg } from '../store/actions/board.actions.js'
 import { onSetHighLightedTxt } from '../store/actions/system.actions.js'
-import { SOCKET_EMIT_SET_BOARD, SOCKET_EVENT_Add_GROUP, SOCKET_EVENT_ADD_TASK, SOCKET_EVENT_DUPLICATE_TASK, SOCKET_EVENT_REMOVE_TASK, SOCKET_EVENT_UPDATE_BOARD, SOCKET_EVENT_USER_ASSIGNED, socketService } from '../services/socket.service.js'
-import { ADD_GROUP, UPDATE_BOARD } from '../store/reducers/board.reducer.js'
+import { SOCKET_EMIT_SET_BOARD, SOCKET_EVENT_Add_GROUP, SOCKET_EVENT_ADD_TASK, SOCKET_EVENT_DUPLICATE_TASK, SOCKET_EVENT_REMOVE_GROUP, SOCKET_EVENT_REMOVE_TASK, SOCKET_EVENT_UPDATE_BOARD, SOCKET_EVENT_USER_ASSIGNED, socketService } from '../services/socket.service.js'
+import { ADD_GROUP, REMOVE_GROUP, UPDATE_BOARD } from '../store/reducers/board.reducer.js'
 
 // cmps
 import { SvgIcon } from '../cmps/SvgIcon.jsx'
@@ -199,19 +199,28 @@ export function BoardDetails() {
 
     useEffect(() => {
         console.log('🔔 registering group listener')
+        // task
         socketService.on(SOCKET_EVENT_ADD_TASK, onAddTaskFromSocket)
         socketService.on(SOCKET_EVENT_DUPLICATE_TASK, onDuplicateTask)
         socketService.on(SOCKET_EVENT_REMOVE_TASK, onRemoveTask)
-        socketService.on(SOCKET_EVENT_UPDATE_BOARD, handleBoardUpdate)
+        // group
         socketService.on(SOCKET_EVENT_Add_GROUP, handleGroupAdd)
+        socketService.on(SOCKET_EVENT_REMOVE_GROUP, handleGroupRemove)
+        // board
+        socketService.on(SOCKET_EVENT_UPDATE_BOARD, handleBoardUpdate)
+        // user
         socketService.on(SOCKET_EVENT_USER_ASSIGNED, handleUserMsg)
 
         return () => {
+            // task
             socketService.off(SOCKET_EVENT_ADD_TASK)
             socketService.off(SOCKET_EVENT_DUPLICATE_TASK)
             socketService.off(SOCKET_EVENT_REMOVE_TASK)
-            socketService.off(SOCKET_EVENT_UPDATE_BOARD)
+            // group
             socketService.off(SOCKET_EVENT_Add_GROUP)
+            socketService.off(SOCKET_EVENT_REMOVE_GROUP)
+            // board
+            socketService.off(SOCKET_EVENT_UPDATE_BOARD)
         }
     }, [])
 
@@ -222,6 +231,10 @@ export function BoardDetails() {
 
     function handleGroupAdd({ newGroup }) {
         dispatch({ type: ADD_GROUP, group: newGroup })
+    }
+
+    function handleGroupRemove({ groupId }) {
+        dispatch({ type: REMOVE_GROUP, groupId })
     }
 
     function handleUserMsg({ boardId, taskId }) {
