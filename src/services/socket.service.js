@@ -25,6 +25,7 @@ export const SOCKET_EVENT_UPDATE_TASKS_ORDER = 'event-update-tasks-order'
 export const SOCKET_EVENT_REMOVE_TASK = 'event-remove-task'
 export const SOCKET_EVENT_UPDATE_MSG = 'event-add-update-msg'
 
+export const SOCKET_EVENT_Add_GROUP = 'event-add-group'
 export const SOCKET_EVENT_UPDATE_GROUP = 'event-update-group'
 
 

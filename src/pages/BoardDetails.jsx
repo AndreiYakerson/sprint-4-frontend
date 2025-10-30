@@ -8,8 +8,8 @@ import { boardService } from '../services/board/index.js'
 import { showSuccessMsg, showErrorMsg } from '../services/event-bus.service'
 import { addGroup, loadBoard, onAddTaskFromSocket, onDuplicateTask, onRemoveTask, setBoardRemovedMsg } from '../store/actions/board.actions.js'
 import { onSetHighLightedTxt } from '../store/actions/system.actions.js'
-import { SOCKET_EMIT_SET_BOARD, SOCKET_EVENT_ADD_TASK, SOCKET_EVENT_DUPLICATE_TASK, SOCKET_EVENT_REMOVE_TASK, SOCKET_EVENT_UPDATE_BOARD, SOCKET_EVENT_USER_ASSIGNED, socketService } from '../services/socket.service.js'
-import { UPDATE_BOARD } from '../store/reducers/board.reducer.js'
+import { SOCKET_EMIT_SET_BOARD, SOCKET_EVENT_Add_GROUP, SOCKET_EVENT_ADD_TASK, SOCKET_EVENT_DUPLICATE_TASK, SOCKET_EVENT_REMOVE_TASK, SOCKET_EVENT_UPDATE_BOARD, SOCKET_EVENT_USER_ASSIGNED, socketService } from '../services/socket.service.js'
+import { ADD_GROUP, UPDATE_BOARD } from '../store/reducers/board.reducer.js'
 
 // cmps
 import { SvgIcon } from '../cmps/SvgIcon.jsx'
@@ -203,6 +203,7 @@ export function BoardDetails() {
         socketService.on(SOCKET_EVENT_DUPLICATE_TASK, onDuplicateTask)
         socketService.on(SOCKET_EVENT_REMOVE_TASK, onRemoveTask)
         socketService.on(SOCKET_EVENT_UPDATE_BOARD, handleBoardUpdate)
+        socketService.on(SOCKET_EVENT_Add_GROUP, handleGroupAdd)
         socketService.on(SOCKET_EVENT_USER_ASSIGNED, handleUserMsg)
 
         return () => {
@@ -210,6 +211,7 @@ export function BoardDetails() {
             socketService.off(SOCKET_EVENT_DUPLICATE_TASK)
             socketService.off(SOCKET_EVENT_REMOVE_TASK)
             socketService.off(SOCKET_EVENT_UPDATE_BOARD)
+            socketService.off(SOCKET_EVENT_Add_GROUP)
         }
     }, [])
 
@@ -218,6 +220,9 @@ export function BoardDetails() {
         dispatch({ type: UPDATE_BOARD, board: updatedBoard })
     }
 
+    function handleGroupAdd({ newGroup }) {
+        dispatch({ type: ADD_GROUP, group: newGroup })
+    }
 
     function handleUserMsg({ boardId, taskId }) {
         showSuccessMsg(`You’ve been assigned to a new task!`)
