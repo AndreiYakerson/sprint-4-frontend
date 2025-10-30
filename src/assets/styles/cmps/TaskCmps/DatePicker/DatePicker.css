@@ -41,6 +41,9 @@
         align-items: center;
         gap: 6px;
 
+        .svg-wrapper {
+            position: relative;
+        }
 
         .time-icon {
             margin-inline-start: 6px;

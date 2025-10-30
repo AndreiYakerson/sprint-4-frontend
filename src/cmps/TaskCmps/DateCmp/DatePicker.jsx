@@ -6,8 +6,9 @@ import { calculateDaysBetweenDates, formatDate, formatTime } from "../../../serv
 //cmps
 import { Calendar } from "./Calendar"
 import { SvgIcon } from "../../SvgIcon"
-import { HoveredTextCmp } from "../../HoveredTextCmp"
 import { FloatingContainerCmp } from "../../FloatingContainerCmp.jsx"
+
+
 
 export function DatePicker({ info, onUpdate }) {
     const [dateToEdit, setDateToEdit] = useState(info?.selectedDate)
@@ -18,6 +19,7 @@ export function DatePicker({ info, onUpdate }) {
     const [statusIcon, setStatusIcon] = useState('emptyCircle')
     const [statusColor, setStatusColor] = useState('secondaryText')
     const [iconSize, setIconSize] = useState(16)
+
 
 
     useEffect(() => {
@@ -100,6 +102,18 @@ export function DatePicker({ info, onUpdate }) {
         setIsEditing(!isEditing)
     }
 
+    /// tooltip
+
+
+    const [tooltipData, setTooltipData] = useState({ isShow: false, text: '', el: null });
+
+    function onSetShowTooltip(isShown, text, el) {
+        if (isShown) {
+            setTooltipData({ isShow: true, text, el })
+        } else {
+            setTooltipData({ isShow: false, text: "", el: null })
+        }
+    }
 
     return (
         <section
@@ -111,17 +125,19 @@ export function DatePicker({ info, onUpdate }) {
                 className="date-to-edit flex align-center"
                 onClick={() => setIsEditing(true)} >
 
-                <HoveredTextCmp
-                    label={statusMessage}
-                    position="up"
+                <div
+                    className="svg-wrapper"
+                    onMouseEnter={(ev) => onSetShowTooltip(true, statusMessage, ev.currentTarget)}
+                    onMouseLeave={() => onSetShowTooltip(false, '', null)}
                 >
                     <SvgIcon
                         iconName={statusIcon}
                         size={iconSize}
                         colorName={statusColor}
-                        className='time-icon'
+                        className="time-icon"
                     />
-                </HoveredTextCmp>
+
+                </div>
 
                 <div className={`selected-date ${info?.selectedStatus?.id === 'done' ? "done" : ""}`}>
                     <div>
@@ -160,6 +176,21 @@ export function DatePicker({ info, onUpdate }) {
                     onSetIsEditing={onSetIsEditing}
                 />
             </FloatingContainerCmp>}
+
+
+
+            {tooltipData?.isShow && tooltipData?.el && <FloatingContainerCmp
+                anchorEl={tooltipData?.el}
+                onClose={() => console.log('')}
+                centeredX={true}
+                showTriangle={true}
+                offsetX={3}
+                offsetY={-3}
+                isTooltip={true}
+            >
+                <div className="tooltip-text">{tooltipData?.text}</div>
+            </FloatingContainerCmp>}
+
 
         </section>
     )
