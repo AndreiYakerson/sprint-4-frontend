@@ -2,6 +2,7 @@
 import { Link, NavLink } from 'react-router-dom'
 import logoImg from '/img/logo.png'
 import { SvgIcon } from '../cmps/SvgIcon'
+import { VideoLama } from '../cmps/HomePageCmps/VideoLama'
 export function HomePage() {
 
     return (
@@ -61,6 +62,8 @@ export function HomePage() {
                         <SvgIcon iconName="arrowRight" size={12} colorName="currentColor" />
                     </Link>
                 </div>
+
+                <VideoLama />
 
             </main>
 
