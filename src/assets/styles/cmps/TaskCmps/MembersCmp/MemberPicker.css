@@ -15,9 +15,6 @@
     }
 
     .user-img {
-        height: 30px;
-        width: 30px;
-
         position: relative;
         display: flex;
         border-radius: var(--border-radius-big);
@@ -27,6 +24,10 @@
             border: 2px solid var(--pulse-background-color);
         }
 
+        &.img {
+            height: 30px;
+            width: 30px;
+        }
 
         .person {
             position: relative;
