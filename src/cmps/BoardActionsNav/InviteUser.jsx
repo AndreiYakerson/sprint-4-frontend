@@ -97,7 +97,7 @@ export function InviteUser({ onClosePopUp }) {
                                         {member.fullname}
                                     </span>
                                     <span className="user-profession">
-                                        {member.profession}
+                                        {member.profession ? `(${member.profession})` : ''}
                                     </span>
                                 </section>
                             </div>
