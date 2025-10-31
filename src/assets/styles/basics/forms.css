@@ -137,27 +137,6 @@ button {
 		}
 	}
 
-	&.nav-heaer-btn {
-		background-color: transparent;
-		border: none;
-
-		font-size: 0.875rem;
-		align-items: center;
-		padding: 8px 10px;
-		color: #535768;
-		transition: color 200ms ease;
-		border-radius: 8px;
-
-
-		&.login {
-			margin-inline-end: 8px;
-		}
-
-		&:hover {
-			background-color: #F0F3FF;
-			color: #5034FF;
-		}
-	}
 
 	&.get-started-btn {
 		display: flex;
@@ -209,6 +188,18 @@ button {
 		}
 	}
 
+	&.nav-heaer-btn {
+		background-color: transparent;
+		border-radius: 0;
+		border: none;
+
+		font-size: 0.875rem;
+		align-items: center;
+		padding: 8px 10px;
+		color: #535768;
+
+	}
+
 	&.mobile-add-btn {
 		color: var(--primary-color-mobile);
 		background-color: var(--primary-selected-color-btn);
@@ -241,6 +232,28 @@ button {
 
 		&.filter-btn {
 			margin-inline-end: 6px;
+		}
+
+		&.nav-heaer-btn {
+			background-color: transparent;
+			border: none;
+
+			font-size: 0.875rem;
+			align-items: center;
+			padding: 8px 10px;
+			color: #535768;
+			transition: color 200ms ease;
+			border-radius: 8px;
+
+
+			&.login {
+				margin-inline-end: 8px;
+			}
+
+			&:hover {
+				background-color: #F0F3FF;
+				color: #5034FF;
+			}
 		}
 	}
 }

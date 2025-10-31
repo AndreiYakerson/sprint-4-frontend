@@ -107,4 +107,9 @@
 
 @import "cmps/BoardActionsNav/InviteByMail.css";
 
+/* Home cmps */
+
+@import "cmps/HomePageCmps/VideoLama.css";
+
+
 /* Pages */
