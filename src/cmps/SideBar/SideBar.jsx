@@ -72,7 +72,7 @@ export function SideBar() {
         setIsMenuOpen(false)
     }
 
-    const favoritesBoards = boards.filter(b => b.isStarred)
+    const favoritesBoards = boards?.filter(b => b.isStarred) || []
 
     ///  socket
 
