@@ -1,6 +1,8 @@
 import Axios from 'axios'
 
-const BASE_URL = import.meta.env.VITE_API_URL || '/api/'
+const BASE_URL = process.env.NODE_ENV === 'production'
+    ? '/api/'
+    : '//localhost:3030/api/'
 
 const axios = Axios.create({ withCredentials: true })
 
@@ -22,7 +24,7 @@ export const httpService = {
 async function ajax(endpoint, method = 'GET', data = null) {
     const url = `${BASE_URL}${endpoint}`
     const params = (method === 'GET') ? data : null
-    
+
     const options = { url, method, data, params }
 
     try {
