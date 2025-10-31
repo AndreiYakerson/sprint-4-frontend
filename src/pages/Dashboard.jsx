@@ -6,6 +6,7 @@ import { boardService } from "../services/board"
 import { SvgIcon } from "../cmps/SvgIcon"
 import { PieChart } from "../cmps/Charts/PieChart"
 import { BarChart } from "../cmps/Charts/BarChart"
+import { CustomPieChart } from "../cmps/Charts/CustomPieChart"
 
 export function Dashboard(props) {
 
@@ -17,7 +18,6 @@ export function Dashboard(props) {
     const [board, setBoard] = useState()
     const [boardGroups, setBoardGroups] = useState()
     const [boardsData, setBoardsData] = useState()
-    console.log("🚀 ~ Dashboard ~ boardsData:", boardsData)
 
     const [boardTasks, setBoardGroupsTasks] = useState()
     const [boardStatuses, setBoardStatuses] = useState()
@@ -32,7 +32,6 @@ export function Dashboard(props) {
     async function getData() {
         try {
             const res = await boardService.getDashboardData()
-            console.log("🚀 ~ getData ~ res:", res)
             setBoardsData(res)
         } catch (error) {
             console.log('error', error)
@@ -83,7 +82,7 @@ export function Dashboard(props) {
 
                     {boardsData &&
                         boardsData.byStatus.map(status => {
-                            if (status.id === 'Not Started') return
+                            // if (status.id === 'default') return
                             return < li className="data-item" key={status.id}>
                                 <header className="data-header text-overflow">
                                     {status?.txt}
@@ -106,7 +105,7 @@ export function Dashboard(props) {
                         </header>
                         <div className="data-content pei">
                             {boardsData ? (
-                                <PieChart
+                                <CustomPieChart
                                     data={boardsData}
                                 />
                             ) : (
