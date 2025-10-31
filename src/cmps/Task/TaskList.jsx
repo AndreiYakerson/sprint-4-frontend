@@ -8,7 +8,7 @@ import { showErrorMsg, showSuccessMsg } from "../../services/event-bus.service.j
 
 // cmps
 import { TaskPreview } from "../Task/TaskPreview"
-import { closestCorners, DndContext, DragOverlay, MouseSensor, useSensor, useSensors } from "@dnd-kit/core"
+import { closestCorners, DndContext, DragOverlay, MouseSensor, TouchSensor, useSensor, useSensors } from "@dnd-kit/core"
 import { arrayMove, SortableContext, verticalListSortingStrategy } from "@dnd-kit/sortable"
 import { TaskOverlay } from "./TaskOverlay.jsx"
 
@@ -32,12 +32,17 @@ export function TaskList({ tasks, groupId }) {
     const mouseSensor = useSensor(MouseSensor, {
         activationConstraint: {
             distance: 10,
-            // delay: 0,
-            // tolerance: 50, 
         },
     });
 
-    const sensors = useSensors(mouseSensor);
+    const touchSensor = useSensor(TouchSensor, {
+        activationConstraint: {
+            delay: 250,
+            tolerance: 5,
+        },
+    });
+
+    const sensors = useSensors(mouseSensor, touchSensor);
 
     async function onUpdateTasksOrder(tasks, groupId) {
         try {
@@ -111,18 +116,18 @@ export function TaskList({ tasks, groupId }) {
 
                     })}
                 </SortableContext>
-                    
-                    <DragOverlay>
-                        {activeId ? (
-                            <div className="table-row drag-preview">
-                                <TaskOverlay
-                                    task={localTasks.find(task => task.id === activeId)}
-                                    groupId={groupId}
-                                    isDragPreview
-                                />
-                            </div>
-                        ) : null}
-                    </DragOverlay>
+
+                <DragOverlay>
+                    {activeId ? (
+                        <div className="table-row drag-preview">
+                            <TaskOverlay
+                                task={localTasks.find(task => task.id === activeId)}
+                                groupId={groupId}
+                                isDragPreview
+                            />
+                        </div>
+                    ) : null}
+                </DragOverlay>
             </section >
 
         </DndContext>
