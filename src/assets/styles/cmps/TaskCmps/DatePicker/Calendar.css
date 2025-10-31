@@ -67,12 +67,12 @@
             grid-column: 1/-1;
             margin-block-end: 4px;
 
-            &.date-num-list {
+            &.days-list {
 
                 li {
                     place-items: center;
 
-                    .day-num {
+                    .day-cell {
                         cursor: pointer;
                         display: block;
                         align-content: center;

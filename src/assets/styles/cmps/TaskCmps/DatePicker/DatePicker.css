@@ -32,6 +32,8 @@
         min-width: 40%;
         margin: 0 5px;
         opacity: 0;
+
+        transition: opacity 200ms ease-in-out;
     }
 
 
@@ -39,6 +41,9 @@
         align-items: center;
         gap: 6px;
 
+        .svg-wrapper {
+            position: relative;
+        }
 
         .time-icon {
             margin-inline-start: 6px;
@@ -51,7 +56,7 @@
             }
         }
 
-        .selected-time {
+        .selected-date {
             overflow: hidden;
             margin-inline-end: 25px;
 

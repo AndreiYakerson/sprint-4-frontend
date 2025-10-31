@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react"
 
+import { calculateDaysBetweenDates, formatDate } from "../../../services/util.service";
+
 export function DateSum({ dates }) {
 
     const [hovered, setHovered] = useState(false);
@@ -22,7 +24,7 @@ export function DateSum({ dates }) {
         const start = dates[0]
         const end = dates[dates?.length - 1]
 
-        if (!end || setStringDate(start) === setStringDate(end)) {
+        if (!end || formatDate(start) === formatDate(end)) {
 
             if (today < start) {
                 return setSumDateInfo(({ start: start, end: null, daysDiff: 1, timeElapsedPercent: 0 }))
@@ -31,14 +33,14 @@ export function DateSum({ dates }) {
             }
 
         } else {
-            const daysDiff = CalculateDaysBetweenDays(start, end)
+            const daysDiff = calculateDaysBetweenDates(start, end)
 
             if (today < start) {
                 return setSumDateInfo(({ start: start, end: end, daysDiff: daysDiff, timeElapsedPercent: 0 }))
             } else if (today < start || today > end) {
                 return setSumDateInfo(({ start: start, end: end, daysDiff: daysDiff, timeElapsedPercent: 100 }))
             } else {
-                const daysPast = CalculateDaysBetweenDays(dates[0], today)
+                const daysPast = calculateDaysBetweenDates(dates[0], today)
                 const elapsedPercent = (daysPast / daysDiff) * 100
 
                 return setSumDateInfo(({ start: start, end: end, daysDiff: daysDiff, timeElapsedPercent: elapsedPercent }))
@@ -46,19 +48,7 @@ export function DateSum({ dates }) {
         }
     }
 
-    function setStringDate(date) {
-        const options = { month: "short", day: "numeric" }
-        if (new Date(date).getFullYear() !== new Date().getFullYear()) {
-            options.year = 'numeric'
-        }
-        return new Date(date).toLocaleDateString("en-US", options)
-    }
 
-    function CalculateDaysBetweenDays(srart, end) {
-        const diffInMs = Math.abs(srart - end)
-        const diffInDays = Math.ceil(diffInMs / (1000 * 60 * 60 * 24))
-        return diffInDays
-    }
 
 
     const { start, end, daysDiff, timeElapsedPercent } = sumDateInfo
@@ -74,7 +64,7 @@ export function DateSum({ dates }) {
                 >
                     {hovered
                         ? `${start && end ? daysDiff : 1}d`
-                        : (start && end ? `${setStringDate(start)} - ${setStringDate(end)}` : `${setStringDate(start)}`)
+                        : (start && end ? `${formatDate(start)} - ${formatDate(end)}` : `${formatDate(start)}`)
                     }
                 </div>
                 : <div className="dates-container"> - </div>

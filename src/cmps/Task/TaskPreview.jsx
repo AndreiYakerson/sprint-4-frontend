@@ -16,7 +16,7 @@ import { SvgIcon } from "../SvgIcon.jsx"
 import { ActionsMenu } from "../ActionsMenu.jsx"
 import { FloatingContainerCmp } from "../FloatingContainerCmp.jsx"
 import { useSearchParams } from "react-router-dom";
-import { setStringDate } from "../../services/util.service.js"
+import { formatDate } from "../../services/util.service.js"
 
 // DynamicCmp
 import { TitleEditor } from "./TitleEditor"
@@ -27,7 +27,6 @@ import { StatusPicker } from "../TaskCmps/StatusCmp/StatusPicker.jsx"
 import { TimelinePicker } from "../TaskCmps/TimelineCmp/TimelinePicker.jsx"
 import { FileUpload } from "../TaskCmps/FileUpload/FileUpload.jsx"
 import { SOCKET_EVENT_UPDATE_MSG, SOCKET_EVENT_UPDATE_TASK, socketService } from "../../services/socket.service.js"
-import { take } from "lodash"
 
 
 export function TaskPreview({ task, groupId, taskIdx }) {
@@ -469,7 +468,7 @@ function DynamicCmp({ cmp, updateCmpInfo }) {
             }} />
         case 'DatePicker':
             return <DatePicker info={cmp?.info} onUpdate={(data) => {
-                updateCmpInfo(cmp, 'selectedDate', data, `Changed due date to ${setStringDate(data?.date)}`)
+                updateCmpInfo(cmp, 'selectedDate', data, `Changed due date to ${formatDate(data?.date)}`)
             }} />
         case 'PriorityPicker':
             return <PriorityPicker info={cmp?.info} onUpdate={(data) => {

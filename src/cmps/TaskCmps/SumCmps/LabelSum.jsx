@@ -85,32 +85,41 @@ export function LabelSum({ info }) {
     }
 
 
+    const [tooltipData, setTooltipData] = useState({ isShow: false, text: '', el: null });
+
+    function onSetShowTooltip(isShown, text, el) {
+        if (isShown) {
+            setTooltipData({ isShow: true, text, el })
+        } else {
+            setTooltipData({ isShow: false, text: "", el: null })
+        }
+    }
+
+
 
     return (
         <section className="labels-sum">
-            <div className="label-list" ref={listRef} onClick={toggleIsMenuOpen}>
+            <ul className="label-list" ref={listRef} onClick={toggleIsMenuOpen}>
                 {labels?.length > 0 && getLabelsStats(labels).map((label) => {
                     if (isLabelsFilterd) {
                         if (label.id === 'done' || label.id === 'critical') {
-                            return <HoveredTextCmp
+                            return <li
                                 key={label.id}
-                                label={label.msg}
-                                position={'up'}
                                 style={{ width: label.percentage + "%", backgroundColor: `var(${label.cssVar})` }}
-                            >
-                            </HoveredTextCmp>
+                                onMouseEnter={(ev) => onSetShowTooltip(true, label?.msg, ev.currentTarget)}
+                                onMouseLeave={() => onSetShowTooltip(false, '', null)}
+                            ></li>
                         }
                     } else {
-                        return <HoveredTextCmp
+                        return <li
                             key={label.id}
-                            label={label.msg}
-                            position={'up'}
                             style={{ width: label.percentage + "%", backgroundColor: `var(${label.cssVar})` }}
-                        >
-                        </HoveredTextCmp>
+                            onMouseEnter={(ev) => onSetShowTooltip(true, label?.msg, ev.currentTarget)}
+                            onMouseLeave={() => onSetShowTooltip(false, '', null)}
+                        ></li>
                     }
                 })}
-            </div>
+            </ul>
 
             {
                 isMenuOpen && <FloatingContainerCmp
@@ -126,6 +135,18 @@ export function LabelSum({ info }) {
                     />
                 </FloatingContainerCmp>
             }
+
+            {tooltipData?.isShow && tooltipData?.el && <FloatingContainerCmp
+                anchorEl={tooltipData?.el}
+                onClose={() => console.log('')}
+                centeredX={true}
+                showTriangle={true}
+                offsetX={3}
+                offsetY={-3}
+                isTooltip={true}
+            >
+                <div className="tooltip-text">{tooltipData?.text}</div>
+            </FloatingContainerCmp>}
 
         </section >
     )

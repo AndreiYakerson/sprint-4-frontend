@@ -6,7 +6,8 @@ import { useSelector } from 'react-redux'
 export function FloatingContainerCmp({
     anchorEl, children, onClose,
     offsetX = 0, offsetY = 0, centeredX = false,
-    showTriangle = false, enforceLimit = false
+    showTriangle = false, enforceLimit = false,
+    isTooltip = false
 }) {
 
     const [style, setStyle] = useState({})
@@ -177,7 +178,9 @@ export function FloatingContainerCmp({
     }, [isVisible])
 
 
+
     if (!anchorEl) return null
+    if (isTooltip && window.innerWidth < 750) return null
     return createPortal(
         <div
             className={`fcc-container ${showTriangle ? "triangle" : ""} ${trianglePos}`}

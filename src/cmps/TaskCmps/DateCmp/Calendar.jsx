@@ -5,22 +5,13 @@ import { DateTime, Info, Interval } from "luxon"
 import { SvgIcon } from "../../SvgIcon.jsx"
 import { CustomSelect } from "../../CustomSelect.jsx"
 
-export function Calendar({ dateInfo, onUpDate, onSetIsEditing }) {
+export function Calendar({ dateInfo, onUpdate, onSetIsEditing }) {
     const today = DateTime.local().setLocale("en")
     const weekDays = Info.weekdays("short", { locale: "en" })
     const months = Info.months("long", { locale: "en" })
     const years = Array.from({ length: 50 }, (_, i) => today.year - 25 + i)
 
-    /// Think of a better way to avoid lots of renderings of the hours over and over again
-    const times = useMemo(() => {
-        const arr = []
-        for (let h = 0; h < 24; h++) {
-            for (let m of [0, 30]) {
-                arr.push(DateTime.fromObject({ hour: h, minute: m }).toFormat("hh:mm a"))
-            }
-        }
-        return arr
-    }, [])
+    const timeOptions = useMemo(generateTimes, [])
 
     const [firstDayOfMonth, setFirstDayOfMonth] = useState(today.startOf('month'))
     const [activeDay, setActiveDay] = useState(null)
@@ -33,8 +24,8 @@ export function Calendar({ dateInfo, onUpDate, onSetIsEditing }) {
         firstDayOfMonth.endOf('month').endOf('week')
     ).splitBy({ day: 1 }).map(day => day.start)
 
-    useEffect(() => {
 
+    useEffect(() => {
         if (dateInfo?.date) {
             const parsedDate = DateTime.fromMillis(Number(dateInfo.date))
 
@@ -46,14 +37,23 @@ export function Calendar({ dateInfo, onUpDate, onSetIsEditing }) {
         }
     }, [])
 
+    useEffect(() => {
+        const parsed = DateTime.fromFormat(inputDate, "MM/dd/yyyy")
+        if (parsed.isValid) {
+            setActiveDay(parsed)
+            setFirstDayOfMonth(parsed.startOf("month"))
+        }
+    }, [inputDate])
 
-    function onPrevMonth() {
+
+    function handleGoToPrevMonth() {
         setFirstDayOfMonth(firstDayOfMonth.minus({ month: 1 }))
     }
-    function onNextMonth() {
+    function handleGoToNextMonth() {
         setFirstDayOfMonth(firstDayOfMonth.plus({ month: 1 }))
     }
-    function onToday() {
+
+    function handleGoToToday() {
         setFirstDayOfMonth(today.startOf("month"))
         setActiveDay(today.startOf("day"))
         setInputDate(today.toFormat("MM/dd/yyyy"))
@@ -69,16 +69,17 @@ export function Calendar({ dateInfo, onUpDate, onSetIsEditing }) {
         setFirstDayOfMonth(firstDayOfMonth.set({ month: monthIndex + 1 }))
     }
 
+    function toggleIsTimeShow() {
+        setIsTimeShow(!isTimeShow)
+    }
+
     function onSetActiveDay(dayOfMonth) {
         const parsedTime = DateTime.fromFormat(inputTime, "hh:mm a")
-        const newDate = dayOfMonth.set({
-            hour: parsedTime.hour,
-            minute: parsedTime.minute
-        })
+        const newDate = dayOfMonth.set({ hour: parsedTime.hour, minute: parsedTime.minute })
 
         setActiveDay(newDate)
         setInputDate(newDate.toFormat("MM/dd/yyyy"))
-        onUpDate({ date: newDate.ts, isTimeShow })
+        onUpdate({ date: newDate.ts, isTimeShow })
         onSetIsEditing(false)
     }
 
@@ -89,32 +90,62 @@ export function Calendar({ dateInfo, onUpDate, onSetIsEditing }) {
             minute: parsedTime.minute
         })
 
-        onUpDate({ date: newDate.ts, isTimeShow })
+        onUpdate({ date: newDate.ts, isTimeShow })
         onSetIsEditing(false)
     }
 
 
-    useEffect(() => {
-        const parsed = DateTime.fromFormat(inputDate, "MM/dd/yyyy")
-        if (parsed.isValid) {
-            setActiveDay(parsed)
-            setFirstDayOfMonth(parsed.startOf("month"))
+    // util funcs
+
+    function generateTimes() {
+        const hours = []
+        for (let hour = 0; hour < 24; hour++) {
+            for (let minute of [0, 30]) {
+                hours.push(DateTime.fromObject({ hour, minute }).toFormat("hh:mm a"))
+            }
         }
-    }, [inputDate])
+        return hours
+    }
 
 
-    function toggleIsTimeShow() {
-        setIsTimeShow(!isTimeShow)
+    function getDayCellClasses(dayOfMonth) {
+
+        var classes = []
+
+        if (dayOfMonth.month !== firstDayOfMonth.month) {
+            classes.push('inactive')
+        }
+
+        if (activeDay?.startOf("day").toISODate() === dayOfMonth?.startOf("day").toISODate()) {
+            classes.push('active')
+        }
+
+        if (today.startOf("day").toISODate() === dayOfMonth?.toISODate()) {
+            classes.push('today')
+        }
+
+        return classes.join(' ')
+
     }
 
     return (
-        <section className={`calendar-container focus`} onClick={(ev) => ev.stopPropagation()}>
+        <section
+            className={`calendar-container focus`}
+            onClick={(ev) => ev.stopPropagation()}
+        >
+
             <div className="btns-actions flex justify-between">
-                <button onClick={onToday}>Today</button>
-                <button onClick={toggleIsTimeShow} className={`white icon-svg ${isTimeShow ? "active" : ""}`}>
+                <button onClick={handleGoToToday}>Today</button>
+
+                <button
+                    onClick={toggleIsTimeShow}
+                    className={`white icon-svg ${isTimeShow ? "active" : ""}`}
+                >
                     <SvgIcon iconName="clock" size={20} />
                 </button>
+
             </div>
+
 
             <div className="date-time-input">
                 <input
@@ -124,17 +155,15 @@ export function Calendar({ dateInfo, onUpDate, onSetIsEditing }) {
                     value={inputDate}
                     autoFocus
                     onChange={(ev) => setInputDate(ev.target.value)}
-                    onKeyDown={(e) => {
-                        if (e.key === "Enter") onSaveDate()
-                    }}
+                    onKeyDown={(ev) => { if (ev.key === "Enter") onSaveDate() }}
                 />
 
                 {isTimeShow && (
                     <CustomSelect
                         labelsInfo={{
                             selectedLabel: inputTime,
-                            options: times,
-                            type: "times"
+                            options: timeOptions,
+                            type: "timeOptions"
                         }}
                         onSaveLabels={(val) => setInputTime(val)}
                     />
@@ -167,36 +196,48 @@ export function Calendar({ dateInfo, onUpDate, onSetIsEditing }) {
                 </div>
 
                 <div>
-                    <button onClick={onPrevMonth} className="white icon-svg">
-                        <SvgIcon iconName="chevronLeft" size={20} /></button>
-                    <button onClick={onNextMonth} className="white icon-svg">
-                        <SvgIcon iconName="chevronRight" size={20} /></button>
-                </div>
+                    <button
+                        onClick={handleGoToPrevMonth}
+                        className="white icon-svg"
+                    >
+                        <SvgIcon iconName="chevronLeft" size={20} />
+                    </button>
 
+                    <button
+                        onClick={handleGoToNextMonth}
+                        className="white icon-svg"
+                    >
+                        <SvgIcon iconName="chevronRight" size={20} />
+                    </button>
+                </div>
             </div>
 
 
             <div className="calendar-table">
-                <ul className="flex">
-                    {weekDays.map((weekDay, weekDayIndex) => {
-                        return <li key={weekDayIndex}>{weekDay}</li>
-                    })}
+
+                <ul className="week-days-list flex">
+                    {weekDays.map((weekDay, idx) => (
+                        <li key={idx}>{weekDay}</li>
+                    ))}
                 </ul>
 
-                <ul className="date-num-list">
-                    {daysOfMonth.map((dayOfMonth, dayOfMonthIndex) => {
-                        return <li key={dayOfMonthIndex}>
-                            <span className={`day-num
-                             ${dayOfMonth.month !== firstDayOfMonth.month ? "inactive" : ""}
-                             ${activeDay?.startOf("day").toISODate() === dayOfMonth?.startOf("day").toISODate() ? 'active' : ''}
-                             ${today.startOf("day").toISODate() === dayOfMonth?.toISODate() ? 'today' : ''}`}
-                                onClick={() => onSetActiveDay(dayOfMonth)}>
+                <ul className="days-list">
+
+                    {daysOfMonth.map((dayOfMonth, idx) => (
+                        <li key={idx}>
+                            <span
+                                className={`day-cell ${getDayCellClasses(dayOfMonth)}`}
+                                onClick={() => onSetActiveDay(dayOfMonth)}
+                            >
                                 {dayOfMonth.day}
                             </span>
                         </li>
-                    })}
+                    ))}
+
                 </ul>
             </div>
+
         </section >
     )
 }
+
