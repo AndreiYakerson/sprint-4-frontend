@@ -295,7 +295,8 @@ function _setBoardToSave({ title = 'New board', managingType = 'items', privacy 
         statuses: DefaultStatuses,
         cmpOrder: ['members', 'status', 'date'],
         // Demo Members
-        members: userService.createDemoUsersForBoard(5),
+        // members: userService.createDemoUsersForBoard(5),
+        members: [],
         groups: [
             {
                 id: makeId(),
