@@ -14,7 +14,7 @@ import { addColumn, addGroup, addTask, removeColumn, removeGroup, setNewGroupIdT
 import { TaskList } from "../Task/TaskList";
 import { GroupPreview } from "./GroupPreview";
 import { GroupCollapsed } from "./GroupCollapsed";
-import { closestCorners, DndContext, DragOverlay, MouseSensor, useSensor, useSensors } from "@dnd-kit/core";
+import { closestCorners, DndContext, DragOverlay, MouseSensor, TouchSensor, useSensor, useSensors } from "@dnd-kit/core";
 import { arrayMove, SortableContext, verticalListSortingStrategy } from "@dnd-kit/sortable";
 import { GroupOverlay } from "./GroupOverlay";
 
@@ -36,7 +36,14 @@ export function GroupList({ groups, managingType }) {
         },
     });
 
-    const sensors = useSensors(mouseSensor);
+    const touchSensor = useSensor(TouchSensor, {
+        activationConstraint: {
+            delay: 250, 
+            tolerance: 5, 
+        },
+    });
+
+    const sensors = useSensors(mouseSensor, touchSensor);
 
 
     useEffect(() => {
