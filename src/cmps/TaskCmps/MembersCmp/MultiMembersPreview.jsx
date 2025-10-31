@@ -11,7 +11,7 @@ export function MultiMembersPreview({ members, onSetHoveredUser, isAnimation, on
                             onMouseLeave={onClearHover}
                             onMouseOver={(ev) => onSetHoveredUser(member, ev.currentTarget)}
                         >
-                            <img src={member.imgUrl} alt={member.fullname} className="user-img" />
+                            <img src={member.imgUrl} alt={member.fullname} className="user-img img" />
                         </div>
                     )
                 }

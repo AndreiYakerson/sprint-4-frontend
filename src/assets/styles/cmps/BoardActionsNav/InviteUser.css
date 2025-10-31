@@ -76,22 +76,30 @@
 
                     img {
                         width: 32px;
+                        height: 32px;
                     }
 
                     .user-name-and-pro {
-                        display: grid;
+                        display: flex;
                         text-align: justify;
+
+                        gap: 10px;
 
                         .user-profession {
                             color: var(--secondary-text-color);
                         }
+
+                        ::first-letter {
+                            text-transform: uppercase;
+                        }
                     }
+
                 }
 
                 & .user-actions {
                     display: flex;
                     gap: 8px;
-                   
+
 
                     &.owner {
                         button {

@@ -104,7 +104,7 @@ function createDemoUsersForLoggedUsers(num) {
             fullname: names[i],
             password: `user ${i + 1}`,
             profession: professions[i],
-            tags: ['member'],
+            // tags: ['member'],
             imgUrl: usersImgs[i + 5]
         }
         users.push(user)
@@ -139,7 +139,7 @@ function createDemoUsersForBoard(num) {
             fullname: names[i],
             password: `user ${i + 1}`,
             profession: professions[i],
-            tags: ['member'],
+            // tags: ['member'],
             imgUrl: usersImgs[i]
 
         }
@@ -161,7 +161,8 @@ function saveLoggedinUser(user) {
         _id: user._id,
         fullname: user.fullname,
         imgUrl: user.imgUrl,
-        isAdmin: user.isAdmin
+        isAdmin: user.isAdmin,
+        profession: user.profession
     }
 
     sessionStorage.setItem(STORAGE_KEY_LOGGEDIN_USER, JSON.stringify(user))

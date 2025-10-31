@@ -13,6 +13,7 @@ export function PieChart({ data }) {
 
     const root = getComputedStyle(document.documentElement)
     const labels = filteredStatusData.map(s => s.txt);
+    // למה לא להראות את הnot started
     const values = filteredStatusData.map(s => s.tasksCount);
     const colors = filteredStatusData.map(s => root.getPropertyValue(s.cssVar.trim()).trim() || '#ccc');
 
@@ -35,20 +36,8 @@ export function PieChart({ data }) {
         },
         plugins: {
           legend: {
+              display:false,
             position: "right",
-
-            labels: {
-              font:{size:16},
-              usePointStyle: true,
-              padding: 20,
-              generateLabels: (chart) => {
-                const total = chart.data.datasets[0].data.reduce((a, b) => a + b, 0)
-                return chart.data.labels.map((label, i) => ({
-                  text: `${label} (${((chart.data.datasets[0].data[i] / total) * 100).toFixed(1)}%)`,
-                  fillStyle: chart.data.datasets[0].backgroundColor[i],
-                }))
-              },
-            },
           },
         },
       },

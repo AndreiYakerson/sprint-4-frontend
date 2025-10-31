@@ -180,6 +180,7 @@ export async function updateTasksOrder(tasks, boardId, groupId) {
 export async function addTask(boardId, groupId, title, method = '') {
     try {
         const task = await boardService.addTask(boardId, groupId, title, method)
+        console.log("🚀 ~ addTask ~ task:", task)
         store.dispatch({ type: ADD_TASK, groupId, task, method })
         if (method === 'unshift') setNewTaskIdToEdit(task?.id)
     } catch (err) {

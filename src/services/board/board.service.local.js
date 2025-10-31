@@ -501,7 +501,7 @@ async function updateTask(boardId, groupId, taskToUpdate, activityTitle) {
 
         group.tasks[taskIdx] = { ...group.tasks[taskIdx], ...taskToUpdate }
 
-
+        
         const activity = _createActivity(activityTitle, _getMiniUser(),
             _toMiniGroup(group), _toMiniTask(group.tasks[taskIdx]),)
 

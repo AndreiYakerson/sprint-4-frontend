@@ -54,7 +54,7 @@ export function StatusPicker({ info, onUpdate }) {
         onCloseFloating()
     }
 
-    const labelToShow = label ? label : labels.find(status => status.id === 'Not Started')
+    const labelToShow = label ? label : labels.find(status => status.id === 'default')
 
     return (
         <div ref={statusRef} className={`labels-select-container ${isOpen ? "focus" : ""}`}
