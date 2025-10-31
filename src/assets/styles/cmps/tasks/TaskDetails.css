@@ -27,6 +27,18 @@
         .task-details-content {
             height: 100%;
 
+            .mini-loader-wrapper {
+                padding: 20px;
+
+                .mini-loader {
+                    height: 50px;
+                    width: 50px;
+                    background: conic-gradient(#0000 10%, blue);
+                }
+            }
+
+
+
             &>* {
                 height: 100%;
                 max-height: calc(100vh - 180px);
@@ -38,6 +50,27 @@
             padding: 20px 20px 0px 20px;
             border-bottom: 1px solid;
             border-color: var(--layout-border-color);
+
+            .task-title-container {
+                display: grid;
+                min-height: 36px;
+
+                h2 {
+                    margin: 0;
+                }
+
+                &:has(.task-name) {
+                    padding-block: 2px;
+                }
+
+                &:has(.shimmer-block) {
+                    justify-self: start;
+                }
+
+                .shimmer-block {
+                    width: 200px;
+                }
+            }
 
 
             .task-details-nav {

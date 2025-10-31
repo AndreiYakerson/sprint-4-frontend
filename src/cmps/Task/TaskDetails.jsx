@@ -18,7 +18,9 @@ export function TaskDetails() {
 
     const board = useSelector(storeState => storeState.boardModule.board)
     const task = useSelector(storeState => storeState.boardModule.taskDetails)
+
     const [titleToEdit, setTitleToEdit] = useState('')
+    const [isTaskLoading, setIsTaskLoading] = useState(false)
 
 
     useEffect(() => {
@@ -34,11 +36,16 @@ export function TaskDetails() {
     }, [task])
 
     async function loadTask(boardId, taskId) {
+        setIsTaskLoading(true)
         try {
             await getTaskById(boardId, taskId)
         } catch (err) {
             console.log(err)
             showErrorMsg('cannot load task')
+        } finally {
+            setTimeout(() => {
+                setIsTaskLoading(false)
+            }, 100)
         }
     }
 
@@ -67,9 +74,9 @@ export function TaskDetails() {
         navigate(`/board/${boardId}`)
     }
 
-    if (!task) return
+    // if (!task) return
     return (
-        <div className={`task-details ${task ? "open" : ""}`}>
+        <div className={`task-details ${taskId ? "open" : ""}`}>
 
             <header className="task-details-header">
 
@@ -80,12 +87,15 @@ export function TaskDetails() {
                 </button>
 
                 <div className="task-title-container">
-                    <h2>
-                        <TitleEditor
-                            info={{ currTitle: titleToEdit }}
-                            onUpdate={onUpdateTaskTitle}
-                        />
-                    </h2>
+                    {isTaskLoading
+                        ? <div className="shimmer-block"></div>
+                        : <h2>
+                            <TitleEditor
+                                info={{ currTitle: titleToEdit }}
+                                onUpdate={onUpdateTaskTitle}
+                            />
+                        </h2>
+                    }
                 </div>
 
                 <nav className="task-details-nav flex">
@@ -103,7 +113,12 @@ export function TaskDetails() {
             </header>
 
             <div className="task-details-content">
-                <Outlet />
+                {isTaskLoading
+                    ? <div className="mini-loader-wrapper">
+                        <div className="mini-loader"></div>
+                    </div>
+                    : <Outlet />
+                }
             </div>
 
 
