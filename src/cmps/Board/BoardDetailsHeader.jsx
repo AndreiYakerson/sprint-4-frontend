@@ -8,7 +8,7 @@ import { showErrorMsg, showSuccessMsg } from '../../services/event-bus.service.j
 import { SvgIcon } from '../SvgIcon.jsx'
 import { HoveredTextCmp } from '../HoveredTextCmp.jsx'
 import { MultiMemberImage } from '../MultiMemberImage.jsx'
-import { InviteByMail } from '../BoardActionsNav/InviteByMail.jsx'
+import { InviteUser } from '../BoardActionsNav/InviteUser.jsx'
 import { PersonFilter } from './filterCmps/PersonFilter.jsx'
 import { FilterBy } from './filterCmps/FilterBy.jsx'
 import { SortBy } from './filterCmps/SortBy.jsx'
@@ -75,7 +75,7 @@ export function BoardDetailsHeader({
     // popup
 
     function _onShowPopUp() {
-        const content = <InviteByMail />
+        const content = <InviteUser />
         onSetPopUp(content)
     }
 

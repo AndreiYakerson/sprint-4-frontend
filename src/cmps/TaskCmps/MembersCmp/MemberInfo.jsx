@@ -3,7 +3,7 @@ import { SvgIcon } from '../../SvgIcon'
 export function MemberInfo({ user }) {
     const timeNow = new Date().toLocaleTimeString()
     const curLocation = ' pardes-hana'
-
+const userTag = user.isAdmin ? 'admin' : 'member' 
     return (
         <div className="member-card-wrapper">
             <article className='member-card-content'>
@@ -18,9 +18,7 @@ export function MemberInfo({ user }) {
                             {curLocation}
                         </div>
                         <div className="user-member-tags-container">
-                            {user.tags?.map(tag => {
-                                return <span key={tag} className="tag-label">{tag}</span>
-                            })}
+                            {<span className="tag-label">{userTag}</span>}
                         </div>
                     </section>
 

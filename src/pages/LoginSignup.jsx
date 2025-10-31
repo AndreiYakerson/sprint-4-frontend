@@ -170,6 +170,15 @@ export function Signup() {
                 onChange={handleChange}
                 required
             />
+
+            <input
+                type="profession"
+                name="profession"
+                value={credentials.profession}
+                placeholder="What's Your Profession ? "
+                onChange={handleChange}
+            />
+
             <input
                 type="password"
                 name="password"

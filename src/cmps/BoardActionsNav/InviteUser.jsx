@@ -6,23 +6,35 @@ import { showSuccessMsg } from "../../services/event-bus.service"
 import { loginDemoUsers } from "../../store/actions/user.actions"
 import { userService } from "../../services/user"
 
-export function InviteByMail({ onClosePopUp }) {
+export function InviteUser({ onClosePopUp }) {
     const user = useSelector(state => state.userModule.user)
-    const users = useSelector(state => state.userModule.users)
+    // const users = useSelector(state => state.userModule.users)
     const board = useSelector(state => state.boardModule.board)
 
+    const [users, setUsers] = useState()
     const [searchValues, setSearchValues] = useState([])
     const [inputValue, setInputValue] = useState('')
 
     //demo logged users
     useEffect(() => {
-        // if (!users.length > 5) {
-                console.log(' Setting demo user to LocalStorage ')
-            loginDemoUsers(userService.createDemoUsersForLoggedUsers(5))
-        // }
+        if (!users) {
+            getSavedUsers()
+            //     console.log(' Setting demo user to LocalStorage ')
+            // loginDemoUsers(userService.createDemoUsersForLoggedUsers(5))
+        }
     }, [])
 
 
+    async function getSavedUsers() {
+        try {
+            const users = await userService.getUsers()
+            setUsers(users)
+            showSuccessMsg('saved users loaded')
+        } catch (error) {
+            console.log("cant fetch users", error)
+
+        }
+    }
     async function onSelectMember(member) {
         const newBoard = { ...board, members: [...board.members, member] }
         try {
