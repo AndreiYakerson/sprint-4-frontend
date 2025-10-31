@@ -6,6 +6,8 @@ import { useEffect, useState } from 'react'
 import { loadFromStorage, saveToStorage } from '../../../services/util.service'
 import { onSetPopUp } from '../../../store/actions/system.actions'
 import { InviteByMail } from '../../BoardActionsNav/InviteByMail'
+import { userService } from '../../../services/user'
+
 
 // COMPONENTS
 
