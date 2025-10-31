@@ -20,15 +20,15 @@ export function BoardIndex({ setIsSideBarOpen }) {
     const isAppLoading = useSelector(state => state.systemModule.isAppLoading)
     const boards = useSelector(storeState => storeState.boardModule.boards)
 
+    const [user, setUser] = useState(userService.getLoggedinUser())
     const [filterBy, setFilterBy] = useState(boardService.getDefaultFilter())
     const [isCollapse, setIsCollapse] = useState(false)
-    const user = userService.getLoggedinUser()
 
 
 
 
     useEffect(() => {
-        if (!user)  onSignupGuest()
+        if (!user) onSignupGuest()
         loadBoards(filterBy)
     }, [filterBy])
 
@@ -49,7 +49,7 @@ export function BoardIndex({ setIsSideBarOpen }) {
             fullname: 'HappyGuest',
         }
         const user = await signup(credentials)
-        console.log(' Guest user signed up', user)
+        setUser(user)
     }
 
 
@@ -71,7 +71,7 @@ export function BoardIndex({ setIsSideBarOpen }) {
         setIsCollapse(!isCollapse)
     }
 
-    if (isAppLoading) return <AppLoader />
+    if (isAppLoading || !user) return <AppLoader />
     return (
         <section className="board-index">
             <header className='board-index-header'>
