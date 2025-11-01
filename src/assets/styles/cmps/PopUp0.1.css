@@ -14,7 +14,7 @@
     /* background-color: var(--react-modal-background); */
 
 
-    &:has(.board-edit, .invite-by-mail) {
+    &:has(.board-edit, .invite-user) {
         background-color: var(--react-modal-background);
     }
 

@@ -1,7 +1,8 @@
-.invite-by-mail-wrapper {
+.invite-user-wrapper {
     width: 605px;
+    overflow-x: hidden;
 
-    .invite-by-mail {
+    .invite-user {
         display: flex;
         position: relative;
         flex-direction: column;
