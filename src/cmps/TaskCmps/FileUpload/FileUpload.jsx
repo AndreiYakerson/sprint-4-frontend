@@ -110,7 +110,7 @@ export function FileUpload({ info, onUpdate }) {
 
 
     function _onShowPopUp(ev) {
-        if (ev.target.src === 'http://localhost:5174/img/emptyFile.svg') return
+        if (!taskFileToShow.length) return
         ev.stopPropagation()
         setIsPreviewOpen(false)
         const content = <FullScreenContainer
@@ -173,7 +173,6 @@ export function FileUpload({ info, onUpdate }) {
                         <FileUploadActionMenu
                             addFromFolder={addFromFolder}
                             onCloseMenu={closeMenu} />
-
                     </div>
                 </FloatingContainerCmp>
             )}
@@ -184,7 +183,6 @@ export function FileUpload({ info, onUpdate }) {
                     anchorEl={previewRef.current}
                     onClose={closeMenu}
                 >
-
                     <div
                         onMouseEnter={() => clearTimeout(hoverRef.current)}
                         onMouseLeave={clearHover}>
