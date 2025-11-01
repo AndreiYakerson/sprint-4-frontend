@@ -48,7 +48,9 @@
     .group-title-row {
         position: sticky;
         left: 10px;
-        /* height: 40px; */
+        min-height: 40px;
+        max-height: 40px;
+
         z-index: var(--zIndex-Layer-50);
 
         display: grid;
@@ -489,6 +491,8 @@
             left: 0;
             grid-template-columns: 36px 32px max-content 1fr;
             margin-inline-start: 0;
+            min-height: 40px;
+            max-height: 40px;
 
             .group-menu-wrapper {
                 display: block;

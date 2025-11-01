@@ -24,7 +24,7 @@ export function TaskDetails() {
 
 
     useEffect(() => {
-        if (taskId && boardId) {
+        if (taskId && boardId && task?.id !== taskId) {
             loadTask(boardId, taskId)
         }
     }, [taskId])
@@ -45,7 +45,7 @@ export function TaskDetails() {
         } finally {
             setTimeout(() => {
                 setIsTaskLoading(false)
-            }, 100)
+            }, 20)
         }
     }
 
