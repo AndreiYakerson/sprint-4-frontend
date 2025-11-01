@@ -51,6 +51,7 @@ export function InviteUser({ onClosePopUp }) {
         const UserToSearch = ev.target.value
         setInputValue(UserToSearch)
         const regex = new RegExp(UserToSearch, 'i')
+
         const foundUsers = users.filter(u => regex.test(u.fullname) || regex.test(u.profession))
             .filter(u => !board.members.some(m => m._id === u._id))
 
@@ -58,6 +59,9 @@ export function InviteUser({ onClosePopUp }) {
         else setSearchValues(foundUsers)
     }
 
+
+    const usersToAdd = !searchValues.length ? users?.filter(u => !board.members?.some(m => m._id === u._id)) : searchValues
+    if (!usersToAdd) return null
     return (
 
         <div className="invite-by-mail-wrapper">
@@ -84,7 +88,9 @@ export function InviteUser({ onClosePopUp }) {
                         className="build-txt flex">
                         <SvgIcon iconName='Building' size={20} colorName="secondaryText" />
                         {`Anyone at ${user?.fullname}'s Team can access this board`}</span>
-                    {searchValues?.map((member, idx) => {
+
+
+                    {usersToAdd?.map((member, idx) => {
                         return <button
                             onClick={() => onSelectMember(member, idx)}
                             key={member._id}
