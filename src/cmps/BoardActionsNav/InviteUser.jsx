@@ -52,6 +52,7 @@ export function InviteUser({ onClosePopUp }) {
         setInputValue(UserToSearch)
         const regex = new RegExp(UserToSearch, 'i')
 
+
         const foundUsers = users.filter(u => regex.test(u.fullname) || regex.test(u.profession))
             .filter(u => !board.members.some(m => m._id === u._id))
 
