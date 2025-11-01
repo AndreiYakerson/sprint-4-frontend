@@ -37,6 +37,12 @@ export function GroupPreview({ group, groupsLength, managingType, TaskList,
 
     const [isCollapsed, setIscollapsed] = useState(group?.isCollapsed)
 
+    useEffect(() => {
+        if (group?.isCollapsed !== isCollapsed) {
+            setIscollapsed(group?.isCollapsed)
+        }
+    }, [group])
+
     async function onToggleCollapsed(isCollapsed) {
 
         setIscollapsed(isCollapsed)
