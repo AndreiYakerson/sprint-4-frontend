@@ -82,6 +82,7 @@
 
 @import "cmps/TaskDetails/ActivityLog.css";
 @import "cmps/TaskDetails/Updates.css";
+@import "cmps/TaskDetails/File.css";
 
 @import "cmps/AppHeader";
 @import "cmps/AppFooter";

@@ -102,9 +102,9 @@ export function TaskDetails() {
                     <div className='nav-btn-wrapper'>
                         <NavLink to='updates' className="btn btn-name">Updates</NavLink>
                     </div>
-                    {/* <div className='nav-btn-wrapper'>
+                    <div className='nav-btn-wrapper'>
                         <NavLink to='files' className="btn btn-name">Files</NavLink>
-                    </div> */}
+                    </div>
                     <div className='nav-btn-wrapper'>
                         <NavLink to='log' className="btn btn-name">Activity Log</NavLink>
                     </div>
