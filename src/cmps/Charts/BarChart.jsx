@@ -55,10 +55,14 @@ export function BarChart({ data }) {
             grid: {
                     color: 'rgb(236 236 236 / 50%)', 
                 },
+                border: {
+              display: false, // 👈 hides left/outer line
+            },
           },
           x:{ grid: {
-                    color: '', 
-                },}
+                    color: 'rgb(236 236 236 / 0%)', 
+                },
+              }
         },
       },
     })

@@ -82,7 +82,7 @@ export function Dashboard(props) {
 
                     {boardsData &&
                         boardsData.byStatus.map(status => {
-                            // if (status.id === 'default') return
+                            if (status.id === 'default') return
                             return < li className="data-item" key={status.id}>
                                 <header className="data-header text-overflow">
                                     {status?.txt}

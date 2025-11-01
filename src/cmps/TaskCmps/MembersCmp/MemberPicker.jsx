@@ -33,7 +33,7 @@ export function MemberPicker({ info, onUpdate }) {
     }, [isOpenMemberPicker])
 
     function onSetHoveredUser(user, anchor) {
-        if (isPickerOpenRef.current) return
+        if (isPickerOpenRef.current || window.innerWidth <= 750) return
         setSelectedUser(user)
         setHoveredAnchor(anchor)
         setIsOpenHoveredUser(true)

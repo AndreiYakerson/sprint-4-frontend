@@ -1,9 +1,19 @@
 import Chart from 'chart.js/auto'
-import { useEffect, useRef } from "react"
+import { useEffect, useRef, useState } from "react"
 
 export function PieChart({ data }) {
   const canvasRef = useRef(null)
   const chartRef = useRef(null)
+
+  // const [windowWidth, setWindowWidth] = useState(window.innerWidth)
+
+  // useEffect(() => {
+  //   function handleResize() {
+  //     setWindowWidth(window.innerWidth)
+  //   }
+  //   window.addEventListener('resize', handleResize)
+  //   return () => window.removeEventListener('resize', handleResize)
+  // }, [])
 
   useEffect(() => {
     if (!data?.byStatus?.length) return
@@ -36,7 +46,7 @@ export function PieChart({ data }) {
         },
         plugins: {
           legend: {
-              display:false,
+            display: false,
             position: "right",
           },
         },
