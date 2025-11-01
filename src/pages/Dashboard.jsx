@@ -32,6 +32,7 @@ export function Dashboard(props) {
     async function getData() {
         try {
             const res = await boardService.getDashboardData()
+            console.log("🚀 ~ getData ~ res:", res)
             setBoardsData(res)
         } catch (error) {
             console.log('error', error)

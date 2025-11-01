@@ -2,6 +2,7 @@ import { useRef, useEffect } from "react"
 import Chart from "chart.js/auto"
 
 export function BarChart({ data }) {
+  console.log("🚀 ~ BarChart ~ data:", data)
   const canvasRef = useRef(null)
   const chartRef = useRef(null)
 
@@ -11,6 +12,7 @@ export function BarChart({ data }) {
     if (chartRef.current) chartRef.current.destroy()
     const root = getComputedStyle(document.documentElement)
     const filteredStatusData = data.byPriority.filter(s => s.id !== 'default');
+    console.log("🚀 ~ BarChart ~ filteredStatusData:", filteredStatusData)
 
     const labels = filteredStatusData.filter(s => s.txt !== 'Default Label').map(s => s.txt)
     const values = filteredStatusData.map(s => s.tasksCount)
@@ -37,14 +39,32 @@ export function BarChart({ data }) {
         maintainAspectRatio: false,
         plugins: {
           legend: { display: false },
-          title: { display: true, text: "Tasks by Status" },
+          title: {
+            display: true,
+            text: "Count",
+            position: 'left',
+            color: 'rgb(103, 104, 121 , 50%)',
+            fullSize: true,
+            rotation: 90,
+            font: {
+              size: 10,
+            },
+          },
           tooltip: {
+            usePointStyle: true,
+            pointStyle: 'circle',
+            boxPadding: 2,
+            bodyFont: { size: 10 },
+            bodyAlign: 'left',
             callbacks: {
               label: (ctx) => {
-                const total = ctx.dataset.data.reduce((a, b) => a + b, 0)
-                const pct = ((ctx.parsed.y / total) * 100).toFixed(1)
-                return `${ctx.parsed.y} tasks (${pct}%)`
+                return ctx.label || '';
               },
+              afterLabel: (ctx) => {
+                const value = ctx.parsed.y;
+                return `Count: ${value} tasks`;
+              },
+              title: () => [],
             },
           },
         },
@@ -53,16 +73,17 @@ export function BarChart({ data }) {
             beginAtZero: true,
             ticks: { stepSize: 1 },
             grid: {
-                    color: 'rgb(236 236 236 / 50%)', 
-                },
-                border: {
+              color: 'rgb(236 236 236 / 50%)',
+            },
+            border: {
               display: false, // 👈 hides left/outer line
             },
           },
-          x:{ grid: {
-                    color: 'rgb(236 236 236 / 0%)', 
-                },
-              }
+          x: {
+            grid: {
+              color: 'rgb(236 236 236 / 0%)',
+            },
+          }
         },
       },
     })
