@@ -19,10 +19,15 @@
 
         .table-row.table-header {
             position: relative;
+            min-height: 65px;
+            max-height: 65px;
 
             .group-title-row {
                 position: sticky;
                 left: 10px;
+
+                min-height: 65px;
+                max-height: 65px;
 
                 display: grid;
                 gap: 0;
@@ -30,8 +35,7 @@
                 grid-template-rows: 1fr max-content;
                 border-inline-end: 1px solid var(--layout-border-color);
 
-                height: 100%;
-                width: 100%;
+
                 margin-inline-start: 0;
 
                 .group-bar {
@@ -127,7 +131,8 @@
                 display: grid;
                 grid-template-columns: 1fr;
                 grid-template-rows: 1fr 1fr;
-
+                min-height: 65px;
+                max-height: 65px;
             }
         }
 
