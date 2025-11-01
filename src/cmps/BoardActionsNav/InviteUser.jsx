@@ -8,7 +8,6 @@ import { userService } from "../../services/user"
 
 export function InviteUser({ onClosePopUp }) {
     const user = useSelector(state => state.userModule.user)
-    // const users = useSelector(state => state.userModule.users)
     const board = useSelector(state => state.boardModule.board)
 
     const [users, setUsers] = useState()
@@ -19,8 +18,6 @@ export function InviteUser({ onClosePopUp }) {
     useEffect(() => {
         if (!users) {
             getSavedUsers()
-            //     console.log(' Setting demo user to LocalStorage ')
-            // loginDemoUsers(userService.createDemoUsersForLoggedUsers(5))
         }
     }, [])
 
