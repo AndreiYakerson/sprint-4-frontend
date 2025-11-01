@@ -19,6 +19,7 @@
         display: flex;
         border-radius: var(--border-radius-big);
         place-self: center;
+        object-fit: cover;
 
         &:not(:has(.person)) {
             border: 2px solid var(--pulse-background-color);
