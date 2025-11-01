@@ -235,7 +235,7 @@ export function BoardDetails() {
         dispatch({ type: SET_GROUPS, groups })
     }
 
-    function handleUserMsg({ boardId, taskId }) {
+    function handleUserMsg() {
         showSuccessMsg(`You’ve been assigned to a new task!`)
     }
 

@@ -12,12 +12,14 @@ import { showErrorMsg } from "../../../services/event-bus.service"
 import { MultiMembersPreview } from "./MultiMembersPreview"
 import { onCloseFloating } from "../../../store/actions/system.actions"
 import { FloatingContainerCmp } from "../../FloatingContainerCmp.jsx"
+import { SOCKET_EMIT_USER_ASSIGNED, socketService } from "../../../services/socket.service.js"
 
 export function MemberPicker({ info, onUpdate }) {
     const { selectedMemberIds } = info
     const [membersSelectEl, setMembersSelectEl] = useState(null)
     const [isAnimation, setIsAnimation] = useState(false)
     const board = useSelector(state => state.boardModule.board)
+    const loggedinUser = useSelector(state => state.userModule.user)
     const floating = useSelector(state => state.systemModule.floating)
 
     const [selectedUser, setSelectedUser] = useState(null)
@@ -72,6 +74,16 @@ export function MemberPicker({ info, onUpdate }) {
         return board.members?.find(member => member._id === memberId)
     }).filter(Boolean)
 
+
+    function onEmitAssignedUser(member) {
+        if (!member?._id || loggedinUser._id === member?._id) return
+        const assignedData = {
+            userId: member?._id,
+            boardId: board._id
+        }
+        socketService.emit(SOCKET_EMIT_USER_ASSIGNED, assignedData)
+    }
+
     return (
         <article className={`member-picker ${isOpenMemberPicker ? "focus" : ""}`} onClick={ev => openMemberSelect(ev)}>
             {!!membersToShow.length ?
@@ -92,6 +104,7 @@ export function MemberPicker({ info, onUpdate }) {
                         members={board.members}
                         onClose={closeMemberSelect}
                         onUpdate={updateTaskMembers}
+                        onEmitAssignedUser={onEmitAssignedUser}
                     />
                 </FloatingContainerCmp>
             )}

@@ -6,8 +6,9 @@ export const SOCKET_EMIT_SEND_MSG = 'chat-send-msg'
 export const SOCKET_EMIT_SET_TOPIC = 'chat-set-topic'
 
 export const SOCKET_EMIT_USER_WATCH = 'user-watch'
-export const SOCKET_EVENT_USER_ASSIGNED = 'event-user-assigned'
 
+export const SOCKET_EMIT_USER_ASSIGNED = 'emit-user-assigned'
+export const SOCKET_EVENT_USER_ASSIGNED = 'event-user-assigned'
 
 export const SOCKET_EVENT_ADD_MSG = 'chat-add-msg'
 export const SOCKET_EVENT_USER_UPDATED = 'user-updated'

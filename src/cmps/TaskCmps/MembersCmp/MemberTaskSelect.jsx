@@ -11,7 +11,7 @@ import { userService } from '../../../services/user'
 
 // COMPONENTS
 
-export function MemberTaskSelect({ selectedMemberIds, onClose, members, onInvite, onUpdate }) {
+export function MemberTaskSelect({ selectedMemberIds, onClose, members, onInvite, onUpdate, onEmitAssignedUser }) {
 
     const [inputValue, setInputValue] = useState('')
     // const board = useSelector(state => state.boardModule.board)
@@ -54,8 +54,10 @@ export function MemberTaskSelect({ selectedMemberIds, onClose, members, onInvite
     function onSelectMember(member) {
         const taskMembersIds = [...selectedMemberIds, member._id]
         onUpdate(taskMembersIds)
+        onEmitAssignedUser(member)
         onClose()
     }
+
 
     function onRemoveMember(memberId) {
         const memberIds = selectedMemberIds.filter(id => id !== memberId)
