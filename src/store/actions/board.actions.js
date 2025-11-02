@@ -94,8 +94,10 @@ export async function removeBoard(boardId) {
 /// Dashboard
 
 export async function loadDashboard(filterBy = {}) {
+
     try {
         const dashboardData = await boardService.getDashboardData(filterBy)
+        console.log(dashboardData);
         store.dispatch({ type: SET_DASHBOARD_DATA, dashboardData })
     } catch (err) {
         console.log('Cannot load dashboard', err)

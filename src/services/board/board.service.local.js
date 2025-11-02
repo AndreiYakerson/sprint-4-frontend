@@ -258,6 +258,8 @@ async function getDashboardData(filterBy = {}) {
     dashboardData.byStatus = _getSumDataByStatus(tasks, statusTypes)
     dashboardData.byMember = members?.length > 0 ? _getSumDataByMembers(tasks, members) : []
 
+    console.log('dashboardData:', dashboardData)
+
     return dashboardData
 }
 
@@ -501,7 +503,7 @@ async function updateTask(boardId, groupId, taskToUpdate, activityTitle) {
 
         group.tasks[taskIdx] = { ...group.tasks[taskIdx], ...taskToUpdate }
 
-        
+
         const activity = _createActivity(activityTitle, _getMiniUser(),
             _toMiniGroup(group), _toMiniTask(group.tasks[taskIdx]),)
 

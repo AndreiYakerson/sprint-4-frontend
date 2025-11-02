@@ -79,6 +79,12 @@
   }
 }
 
+.shimmer {
+  background: linear-gradient(90deg, rgb(221, 221, 221) 25%, rgb(183, 183, 183) 50%, rgb(221, 221, 221) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1s infinite linear;
+}
+
 @media (min-width: 750px) {
   .shimmer-block {
     width: 50%;
